@@ -1,0 +1,31 @@
+/*
+ * Copyright (c) 2023 Roc Streaming authors
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+syntax = "proto3";
+
+package rcp.proto;
+
+service DeviceManagerProtocol
+{
+    rpc ping(None) returns (None) {}
+
+    rpc add_device(AddDeviceArgs) returns (None) {}
+    rpc remove_device(RemoveDeviceArgs) returns (None) {}
+}
+
+message None
+{
+}
+
+message AddDeviceArgs
+{
+}
+
+message RemoveDeviceArgs
+{
+}

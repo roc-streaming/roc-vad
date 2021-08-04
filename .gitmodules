@@ -1,0 +1,15 @@
+[submodule "3rdparty/libASPL"]
+	path = 3rdparty/libASPL
+	url = https://github.com/gavv/libASPL.git
+[submodule "3rdparty/CLI11"]
+	path = 3rdparty/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "3rdparty/gRPC"]
+	path = 3rdparty/gRPC
+	url = https://github.com/grpc/grpc.git
+[submodule "3rdparty/roc"]
+	path = 3rdparty/roc
+	url = https://github.com/roc-streaming/roc-toolkit.git
+[submodule "3rdparty/spdlog"]
+	path = 3rdparty/spdlog
+	url = https://github.com/gabime/spdlog.git

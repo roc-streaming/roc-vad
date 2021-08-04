@@ -1,0 +1,146 @@
+include(ExternalProject)
+
+# Roc
+ExternalProject_Add(roc
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/roc
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND
+    scons -Q -C ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/roc
+      --disable-tools --disable-shared --enable-static --build-3rdparty=all
+  INSTALL_COMMAND
+    scons -Q -C ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/roc
+      --disable-tools --disable-shared --enable-static --build-3rdparty=all
+      --prefix=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix install
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix/include
+)
+link_directories(
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix/lib
+)
+
+# libASPL
+ExternalProject_Add(libASPL
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libASPL
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix/include
+)
+list(PREPEND CMAKE_PREFIX_PATH
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix/lib/cmake
+)
+
+# gRPC
+ExternalProject_Add(gRPC
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/gRPC
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    -DBUILD_TESTING=OFF
+    -DgRPC_BUILD_TESTS=OFF
+    -DgRPC_BUILD_CODEGEN=ON
+    -DgRPC_BUILD_CSHARP_EXT=OFF
+    -DgRPC_BUILD_GRPC_CPP_PLUGIN=ON
+    -DgRPC_BUILD_GRPC_CSHARP_PLUGIN=OFF
+    -DgRPC_BUILD_GRPC_NODE_PLUGIN=OFF
+    -DgRPC_BUILD_GRPC_OBJECTIVE_C_PLUGIN=OFF
+    -DgRPC_BUILD_GRPC_PHP_PLUGIN=OFF
+    -DgRPC_BUILD_GRPC_PYTHON_PLUGIN=OFF
+    -DgRPC_BUILD_GRPC_RUBY_PLUGIN=OFF
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/include
+)
+list(PREPEND CMAKE_PREFIX_PATH
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/lib/cmake
+)
+get_filename_component(GRPC_BIN_DIR
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/bin
+  ABSOLUTE
+)
+
+# spdlog
+ExternalProject_Add(spdlog
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/spdlog
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix/include
+)
+list(PREPEND CMAKE_PREFIX_PATH
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix/lib/cmake
+)
+
+# CLI111
+ExternalProject_Add(CLI11
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/CLI11
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/CLI11-prefix
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    -DCLI11_SINGLE_FILE=ON
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/CLI11-prefix/include
+)
+
+# List
+set(ALL_DEPENDENCIES
+  roc
+  libASPL
+  gRPC
+  spdlog
+  CLI11
+  )
+
+list(REVERSE ALL_DEPENDENCIES)
+
+set(OTHER_DEPENDENCIES ${ALL_DEPENDENCIES})
+foreach(DEPENDENCY IN LISTS ALL_DEPENDENCIES)
+  list(REMOVE_ITEM OTHER_DEPENDENCIES ${DEPENDENCY})
+  if(OTHER_DEPENDENCIES)
+    add_dependencies(${DEPENDENCY}
+      ${OTHER_DEPENDENCIES}
+      )
+  endif()
+endforeach()
+
+# Commit
+add_custom_command(
+  COMMENT "Commit bootstrap"
+  DEPENDS ${ALL_DEPENDENCIES}
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
+  COMMAND touch ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
+)
+add_custom_target(CommitBootstrap ALL
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
+)

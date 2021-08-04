@@ -1,0 +1,21 @@
+/*
+ * Copyright (c) 2023 Roc Streaming authors
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#include "cmd_device.hpp"
+#include "cmd_device_add.hpp"
+
+using namespace rcp;
+
+CmdDevice::CmdDevice(CLI::App& parent)
+{
+    auto command = parent.add_subcommand("device", "device manipulation commands");
+
+    register_command(command);
+
+    register_subcommand(std::make_shared<CmdDeviceAdd>(*command));
+}

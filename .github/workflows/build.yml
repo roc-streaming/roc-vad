@@ -1,0 +1,47 @@
+name: "build"
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+  pull_request:
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 0 * * 1'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        macos: [11, 12, latest]
+
+    runs-on: macos-${{ matrix.macos }}
+    name: macos-${{ matrix.macos }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: brew install scons pkg-config autoconf automake libtool
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+
+      - name: Build
+        run: make
+
+      - name: Install
+        run: sudo make install
