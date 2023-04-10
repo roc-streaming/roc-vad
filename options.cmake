@@ -3,8 +3,8 @@ option(BOOTSTRAP "Bootstrap dependencies and exit" OFF)
 message(STATUS "Bootstrap mode: ${BOOTSTRAP}")
 
 # plugin address
-set(PLUGIN_ADDRESS "127.0.0.1:9712"
-  CACHE STRING "Specify plugin RPC address"
+set(PLUGIN_SOCKET "127.0.0.1:9712"
+  CACHE STRING "Specify plugin RPC socket address"
 )
 
 # plugin uuid

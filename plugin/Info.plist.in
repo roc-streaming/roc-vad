@@ -45,7 +45,7 @@
 	<string></string>
 	<key>sandboxSafe</key>
 	<true/>
-	<key>RpcBindAddress</key>
-	<string>${PLUGIN_ADDRESS}</string>
+	<key>RpcSocketAddress</key>
+	<string>${PLUGIN_SOCKET}</string>
   </dict>
 </plist>

@@ -25,7 +25,7 @@ Driver::Driver()
 
     grpc::ServerBuilder builder;
 
-    // TODO: retrieve bind address from Info.plist (RpcBindAddress)
+    // TODO: retrieve bind address from Info.plist (RpcSocketAddress)
     builder.AddListeningPort("127.0.0.1:9712", grpc::InsecureServerCredentials());
     builder.RegisterService(deviceManager_.get());
 
