@@ -15,7 +15,7 @@ set(PLUGIN_NAME "rcp_plugin")
 set(PLUGIN_BUNDLE "org.rocstreaming.coreaudioplugin")
 set(PLUGIN_COPYRIGHT "Copyright (c) Roc Streaming authors")
 
-set(TOOL_NAME "rcp-ctl")
+set(TOOL_NAME "rcpadm")
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")

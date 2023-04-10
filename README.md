@@ -54,7 +54,7 @@ This command will restart macOS sound server. Usually it's enough, but some apps
 First, check that sound server plugin was successfully loaded:
 
 ```
-$ rcp-ctl info
+$ rcpadm info
 plugin is loaded
 
 plugin:
