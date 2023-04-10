@@ -27,6 +27,8 @@ grpc::Status DeviceManager::get_info(grpc::ServerContext* context,
     const proto::None* request,
     proto::Info* response)
 {
+    std::unique_lock lock(device_mutex_);
+
     response->set_version(BuildInfo::version);
     response->set_commit(BuildInfo::commit);
 
@@ -37,6 +39,8 @@ grpc::Status DeviceManager::add_device(grpc::ServerContext* context,
     const proto::AddDeviceArgs* request,
     proto::None* response)
 {
+    std::unique_lock lock(device_mutex_);
+
     devices_["TODO"] = std::make_shared<Device>(plugin_);
 
     return grpc::Status::OK;
@@ -46,6 +50,8 @@ grpc::Status DeviceManager::delete_device(grpc::ServerContext* context,
     const proto::DeleteDeviceArgs* request,
     proto::None* response)
 {
+    std::unique_lock lock(device_mutex_);
+
     devices_.erase("TODO");
 
     return grpc::Status::OK;

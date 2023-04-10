@@ -14,6 +14,7 @@
 #include <aspl/Plugin.hpp>
 
 #include <memory>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 
@@ -46,6 +47,7 @@ public:
 private:
     std::shared_ptr<aspl::Plugin> plugin_;
 
+    std::mutex device_mutex_;
     std::unordered_map<std::string, std::shared_ptr<Device>> devices_;
 };
 
