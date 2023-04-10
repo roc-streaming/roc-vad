@@ -8,9 +8,8 @@
 
 #include "cmd_compound.hpp"
 
-#include <spdlog/spdlog.h>
-
 #include <cassert>
+#include <iostream>
 #include <optional>
 
 using namespace rcp;
@@ -49,9 +48,8 @@ bool CmdCompound::execute()
     }
 
     if (!result) {
-        spdlog::error(
-            "Missing sub-command\n"
-            "Run with --help for more information.");
+        std::cerr << "Missing sub-command\n";
+        std::cerr << "Run with --help for more information.\n";
 
         result = false;
     }

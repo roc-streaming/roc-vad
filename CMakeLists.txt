@@ -5,9 +5,11 @@ include(options.cmake)
 project(roc_coreaudio_plugin CXX)
 
 set(PROJECT_VERSION ${GIT_TAG})
+set(PROJECT_COMMIT ${GIT_COMMIT})
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(PROTO_NAME "rcp_proto")
+set(COMMON_LIB "rcp_common")
+set(PROTO_LIB "rcp_proto")
 
 set(PLUGIN_NAME "rcp_plugin")
 set(PLUGIN_BUNDLE "org.rocstreaming.coreaudioplugin")
@@ -42,24 +44,26 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 include_directories(SYSTEM
+  "common"
   "plugin/proto"
 )
 
 include(3rdparty/dependencies.cmake)
 
 if(NOT BOOTSTRAP)
+  add_subdirectory(common)
   add_subdirectory(plugin/proto)
   add_subdirectory(plugin)
   add_subdirectory(tool)
 
-  add_dependencies(${PROTO_NAME}
+  add_dependencies(${PROTO_LIB}
     ${ALL_DEPENDENCIES}
   )
 
   foreach(TARGET IN ITEMS ${PLUGIN_NAME} ${TOOL_NAME})
     add_dependencies(${TARGET}
       ${ALL_DEPENDENCIES}
-      ${PROTO_NAME}
+      ${PROTO_LIB}
     )
   endforeach()
 endif()

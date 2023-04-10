@@ -10,7 +10,8 @@ add_library(${PLUGIN_NAME} MODULE
 )
 
 target_link_libraries(${PLUGIN_NAME} PRIVATE
-  ${PROTO_NAME}
+  ${COMMON_LIB}
+  ${PROTO_LIB}
 )
 
 target_link_libraries(${PLUGIN_NAME} PRIVATE

@@ -8,6 +8,7 @@
 
 #include "cmd_root.hpp"
 #include "cmd_device.hpp"
+#include "cmd_info.hpp"
 
 using namespace rcp;
 
@@ -15,5 +16,6 @@ CmdRoot::CmdRoot(CLI::App& parent)
 {
     register_command(&parent);
 
+    register_subcommand(std::make_shared<CmdInfo>(parent));
     register_subcommand(std::make_shared<CmdDevice>(parent));
 }

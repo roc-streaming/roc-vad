@@ -14,12 +14,20 @@ service DeviceManagerProtocol
 {
     rpc ping(None) returns (None) {}
 
+    rpc get_info(None) returns (Info) {}
+
     rpc add_device(AddDeviceArgs) returns (None) {}
     rpc remove_device(RemoveDeviceArgs) returns (None) {}
 }
 
 message None
 {
+}
+
+message Info
+{
+    string version = 1;
+    string commit = 2;
 }
 
 message AddDeviceArgs

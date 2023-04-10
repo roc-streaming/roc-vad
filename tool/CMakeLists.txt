@@ -7,22 +7,20 @@ add_executable(${TOOL_NAME}
   "cmd_compound.cpp"
   "cmd_device.cpp"
   "cmd_device_add.cpp"
+  "cmd_info.cpp"
   "cmd_root.cpp"
   "connector.cpp"
   "main.cpp"
 )
 
 target_link_libraries(${TOOL_NAME} PRIVATE
-  ${PROTO_NAME}
+  ${COMMON_LIB}
+  ${PROTO_LIB}
 )
 
 target_link_libraries(${TOOL_NAME} PRIVATE
   gRPC::grpc++_unsecure
   spdlog::spdlog
-)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${TOOL_NAME}
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")

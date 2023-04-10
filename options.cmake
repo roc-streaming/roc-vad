@@ -34,7 +34,7 @@ if(NOT CMAKE_CXX_COMPILER_LAUNCHER)
   endif(CCACHE_PROGRAM)
 endif()
 
-# git tag
+# git info
 set(GIT_TAG "" CACHE STRING "Override git tag")
 if(NOT GIT_TAG)
   if(NOT Git_FOUND)
@@ -44,6 +44,13 @@ if(NOT GIT_TAG)
     endif()
   endif()
   if(Git_FOUND)
+    execute_process(
+      RESULTS_VARIABLE GIT_RESULT
+      OUTPUT_VARIABLE GIT_COMMIT
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+      COMMAND sh -c "cd \"${PROJECT_SOURCE_DIR}\" && git rev-parse HEAD"
+    )
     execute_process(
       RESULTS_VARIABLE GIT_RESULT
       OUTPUT_VARIABLE GIT_TAG
@@ -57,8 +64,13 @@ if(NOT GIT_TAG)
     endif()
   endif()
 endif()
+if(GIT_COMMIT)
+  message(STATUS "Found git commit: ${GIT_COMMIT}")
+endif()
 if(GIT_TAG)
   message(STATUS "Found git tag: ${GIT_TAG}")
+else()
+  set(GIT_TAG "0.0.0")
 endif()
 
 # git submodules

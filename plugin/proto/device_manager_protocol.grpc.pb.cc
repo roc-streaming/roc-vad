@@ -24,6 +24,7 @@ namespace proto {
 
 static const char* DeviceManagerProtocol_method_names[] = {
   "/rcp.proto.DeviceManagerProtocol/ping",
+  "/rcp.proto.DeviceManagerProtocol/get_info",
   "/rcp.proto.DeviceManagerProtocol/add_device",
   "/rcp.proto.DeviceManagerProtocol/remove_device",
 };
@@ -36,8 +37,9 @@ std::unique_ptr< DeviceManagerProtocol::Stub> DeviceManagerProtocol::NewStub(con
 
 DeviceManagerProtocol::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_ping_(DeviceManagerProtocol_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_add_device_(DeviceManagerProtocol_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_remove_device_(DeviceManagerProtocol_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_get_info_(DeviceManagerProtocol_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_add_device_(DeviceManagerProtocol_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_remove_device_(DeviceManagerProtocol_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DeviceManagerProtocol::Stub::ping(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::None* response) {
@@ -59,6 +61,29 @@ void DeviceManagerProtocol::Stub::async::ping(::grpc::ClientContext* context, co
 ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* DeviceManagerProtocol::Stub::AsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncpingRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status DeviceManagerProtocol::Stub::get_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::Info* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rcp::proto::None, ::rcp::proto::Info, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_get_info_, context, request, response);
+}
+
+void DeviceManagerProtocol::Stub::async::get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rcp::proto::None, ::rcp::proto::Info, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_info_, context, request, response, std::move(f));
+}
+
+void DeviceManagerProtocol::Stub::async::get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_info_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* DeviceManagerProtocol::Stub::PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rcp::proto::Info, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_get_info_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* DeviceManagerProtocol::Stub::Asyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncget_infoRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -123,6 +148,16 @@ DeviceManagerProtocol::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DeviceManagerProtocol_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::None, ::rcp::proto::Info, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](DeviceManagerProtocol::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rcp::proto::None* req,
+             ::rcp::proto::Info* resp) {
+               return service->get_info(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DeviceManagerProtocol_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::AddDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DeviceManagerProtocol::Service* service,
              ::grpc::ServerContext* ctx,
@@ -131,7 +166,7 @@ DeviceManagerProtocol::Service::Service() {
                return service->add_device(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      DeviceManagerProtocol_method_names[2],
+      DeviceManagerProtocol_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DeviceManagerProtocol::Service* service,
@@ -146,6 +181,13 @@ DeviceManagerProtocol::Service::~Service() {
 }
 
 ::grpc::Status DeviceManagerProtocol::Service::ping(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DeviceManagerProtocol::Service::get_info(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response) {
   (void) context;
   (void) request;
   (void) response;

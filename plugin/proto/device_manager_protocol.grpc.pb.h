@@ -51,6 +51,13 @@ class DeviceManagerProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>> PrepareAsyncping(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>>(PrepareAsyncpingRaw(context, request, cq));
     }
+    virtual ::grpc::Status get_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::Info* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>> Asyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>>(Asyncget_infoRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>>(PrepareAsyncget_infoRaw(context, request, cq));
+    }
     virtual ::grpc::Status add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::rcp::proto::None* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>> Asyncadd_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>>(Asyncadd_deviceRaw(context, request, cq));
@@ -70,6 +77,8 @@ class DeviceManagerProtocol final {
       virtual ~async_interface() {}
       virtual void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) = 0;
       virtual void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void remove_device(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) = 0;
@@ -81,6 +90,8 @@ class DeviceManagerProtocol final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* AsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* Asyncremove_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
@@ -95,6 +106,13 @@ class DeviceManagerProtocol final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>> PrepareAsyncping(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>>(PrepareAsyncpingRaw(context, request, cq));
+    }
+    ::grpc::Status get_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::Info* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>> Asyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>>(Asyncget_infoRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>>(PrepareAsyncget_infoRaw(context, request, cq));
     }
     ::grpc::Status add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::rcp::proto::None* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>> Asyncadd_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) {
@@ -115,6 +133,8 @@ class DeviceManagerProtocol final {
      public:
       void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) override;
       void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, std::function<void(::grpc::Status)>) override;
+      void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, ::grpc::ClientUnaryReactor* reactor) override;
       void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) override;
       void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) override;
       void remove_device(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) override;
@@ -132,11 +152,14 @@ class DeviceManagerProtocol final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* AsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* Asyncremove_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncremove_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_ping_;
+    const ::grpc::internal::RpcMethod rpcmethod_get_info_;
     const ::grpc::internal::RpcMethod rpcmethod_add_device_;
     const ::grpc::internal::RpcMethod rpcmethod_remove_device_;
   };
@@ -147,6 +170,7 @@ class DeviceManagerProtocol final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status ping(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response);
+    virtual ::grpc::Status get_info(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response);
     virtual ::grpc::Status add_device(::grpc::ServerContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response);
     virtual ::grpc::Status remove_device(::grpc::ServerContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response);
   };
@@ -171,12 +195,32 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_get_info() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_info(::grpc::ServerContext* context, ::rcp::proto::None* request, ::grpc::ServerAsyncResponseWriter< ::rcp::proto::Info>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_add_device() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(2);
     }
     ~WithAsyncMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -187,7 +231,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestadd_device(::grpc::ServerContext* context, ::rcp::proto::AddDeviceArgs* request, ::grpc::ServerAsyncResponseWriter< ::rcp::proto::None>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -196,7 +240,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_remove_device() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_remove_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -207,10 +251,10 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestremove_device(::grpc::ServerContext* context, ::rcp::proto::RemoveDeviceArgs* request, ::grpc::ServerAsyncResponseWriter< ::rcp::proto::None>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_ping<WithAsyncMethod_add_device<WithAsyncMethod_remove_device<Service > > > AsyncService;
+  typedef WithAsyncMethod_ping<WithAsyncMethod_get_info<WithAsyncMethod_add_device<WithAsyncMethod_remove_device<Service > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_ping : public BaseClass {
    private:
@@ -239,18 +283,45 @@ class DeviceManagerProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::None* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_get_info() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::rcp::proto::None, ::rcp::proto::Info>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response) { return this->get_info(context, request, response); }));}
+    void SetMessageAllocatorFor_get_info(
+        ::grpc::MessageAllocator< ::rcp::proto::None, ::rcp::proto::Info>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rcp::proto::None, ::rcp::proto::Info>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_info(
+      ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodCallback(1,
+      ::grpc::Service::MarkMethodCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response) { return this->add_device(context, request, response); }));}
     void SetMessageAllocatorFor_add_device(
         ::grpc::MessageAllocator< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -271,13 +342,13 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_remove_device() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response) { return this->remove_device(context, request, response); }));}
     void SetMessageAllocatorFor_remove_device(
         ::grpc::MessageAllocator< ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -292,7 +363,7 @@ class DeviceManagerProtocol final {
     virtual ::grpc::ServerUnaryReactor* remove_device(
       ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::RemoveDeviceArgs* /*request*/, ::rcp::proto::None* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_ping<WithCallbackMethod_add_device<WithCallbackMethod_remove_device<Service > > > CallbackService;
+  typedef WithCallbackMethod_ping<WithCallbackMethod_get_info<WithCallbackMethod_add_device<WithCallbackMethod_remove_device<Service > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_ping : public BaseClass {
@@ -312,12 +383,29 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_get_info() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_add_device() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(2);
     }
     ~WithGenericMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -334,7 +422,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_remove_device() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_remove_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -366,12 +454,32 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_get_info() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_info(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_add_device() {
-      ::grpc::Service::MarkMethodRaw(1);
+      ::grpc::Service::MarkMethodRaw(2);
     }
     ~WithRawMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -382,7 +490,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestadd_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -391,7 +499,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_remove_device() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_remove_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -402,7 +510,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestremove_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -428,12 +536,34 @@ class DeviceManagerProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_get_info() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->get_info(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_info(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodRawCallback(1,
+      ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->add_device(context, request, response); }));
@@ -455,7 +585,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_remove_device() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->remove_device(context, request, response); }));
@@ -499,12 +629,39 @@ class DeviceManagerProtocol final {
     virtual ::grpc::Status Streamedping(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rcp::proto::None,::rcp::proto::None>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_get_info : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_get_info() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rcp::proto::None, ::rcp::proto::Info>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rcp::proto::None, ::rcp::proto::Info>* streamer) {
+                       return this->Streamedget_info(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_get_info() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status Streamedget_info(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rcp::proto::None,::rcp::proto::Info>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_add_device() {
-      ::grpc::Service::MarkMethodStreamed(1,
+      ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
           ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>(
             [this](::grpc::ServerContext* context,
@@ -531,7 +688,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_remove_device() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None>(
             [this](::grpc::ServerContext* context,
@@ -552,9 +709,9 @@ class DeviceManagerProtocol final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status Streamedremove_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rcp::proto::RemoveDeviceArgs,::rcp::proto::None>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_remove_device<Service > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_remove_device<Service > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_remove_device<Service > > > StreamedService;
+  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_remove_device<Service > > > > StreamedService;
 };
 
 }  // namespace proto

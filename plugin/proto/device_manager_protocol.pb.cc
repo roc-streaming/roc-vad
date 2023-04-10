@@ -33,6 +33,20 @@ struct NoneDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NoneDefaultTypeInternal _None_default_instance_;
+PROTOBUF_CONSTEXPR Info::Info(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.commit_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct InfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR InfoDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~InfoDefaultTypeInternal() {}
+  union {
+    Info _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 InfoDefaultTypeInternal _Info_default_instance_;
 PROTOBUF_CONSTEXPR AddDeviceArgs::AddDeviceArgs(
     ::_pbi::ConstantInitialized) {}
 struct AddDeviceArgsDefaultTypeInternal {
@@ -57,7 +71,7 @@ struct RemoveDeviceArgsDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveDeviceArgsDefaultTypeInternal _RemoveDeviceArgs_default_instance_;
 }  // namespace proto
 }  // namespace rcp
-static ::_pb::Metadata file_level_metadata_device_5fmanager_5fprotocol_2eproto[3];
+static ::_pb::Metadata file_level_metadata_device_5fmanager_5fprotocol_2eproto[4];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_device_5fmanager_5fprotocol_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_device_5fmanager_5fprotocol_2eproto = nullptr;
 
@@ -68,6 +82,14 @@ const uint32_t TableStruct_device_5fmanager_5fprotocol_2eproto::offsets[] PROTOB
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rcp::proto::Info, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rcp::proto::Info, _impl_.version_),
+  PROTOBUF_FIELD_OFFSET(::rcp::proto::Info, _impl_.commit_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rcp::proto::AddDeviceArgs, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -83,31 +105,35 @@ const uint32_t TableStruct_device_5fmanager_5fprotocol_2eproto::offsets[] PROTOB
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::rcp::proto::None)},
-  { 6, -1, -1, sizeof(::rcp::proto::AddDeviceArgs)},
-  { 12, -1, -1, sizeof(::rcp::proto::RemoveDeviceArgs)},
+  { 6, -1, -1, sizeof(::rcp::proto::Info)},
+  { 14, -1, -1, sizeof(::rcp::proto::AddDeviceArgs)},
+  { 20, -1, -1, sizeof(::rcp::proto::RemoveDeviceArgs)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::rcp::proto::_None_default_instance_._instance,
+  &::rcp::proto::_Info_default_instance_._instance,
   &::rcp::proto::_AddDeviceArgs_default_instance_._instance,
   &::rcp::proto::_RemoveDeviceArgs_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_device_5fmanager_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\035device_manager_protocol.proto\022\trcp.pro"
-  "to\"\006\n\004None\"\017\n\rAddDeviceArgs\"\022\n\020RemoveDev"
-  "iceArgs2\277\001\n\025DeviceManagerProtocol\022*\n\004pin"
-  "g\022\017.rcp.proto.None\032\017.rcp.proto.None\"\000\0229\n"
-  "\nadd_device\022\030.rcp.proto.AddDeviceArgs\032\017."
-  "rcp.proto.None\"\000\022\?\n\rremove_device\022\033.rcp."
-  "proto.RemoveDeviceArgs\032\017.rcp.proto.None\""
-  "\000b\006proto3"
+  "to\"\006\n\004None\"\'\n\004Info\022\017\n\007version\030\001 \001(\t\022\016\n\006c"
+  "ommit\030\002 \001(\t\"\017\n\rAddDeviceArgs\"\022\n\020RemoveDe"
+  "viceArgs2\357\001\n\025DeviceManagerProtocol\022*\n\004pi"
+  "ng\022\017.rcp.proto.None\032\017.rcp.proto.None\"\000\022."
+  "\n\010get_info\022\017.rcp.proto.None\032\017.rcp.proto."
+  "Info\"\000\0229\n\nadd_device\022\030.rcp.proto.AddDevi"
+  "ceArgs\032\017.rcp.proto.None\"\000\022\?\n\rremove_devi"
+  "ce\022\033.rcp.proto.RemoveDeviceArgs\032\017.rcp.pr"
+  "oto.None\"\000b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_device_5fmanager_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_device_5fmanager_5fprotocol_2eproto = {
-    false, false, 289, descriptor_table_protodef_device_5fmanager_5fprotocol_2eproto,
+    false, false, 378, descriptor_table_protodef_device_5fmanager_5fprotocol_2eproto,
     "device_manager_protocol.proto",
-    &descriptor_table_device_5fmanager_5fprotocol_2eproto_once, nullptr, 0, 3,
+    &descriptor_table_device_5fmanager_5fprotocol_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_device_5fmanager_5fprotocol_2eproto::offsets,
     file_level_metadata_device_5fmanager_5fprotocol_2eproto, file_level_enum_descriptors_device_5fmanager_5fprotocol_2eproto,
     file_level_service_descriptors_device_5fmanager_5fprotocol_2eproto,
@@ -163,6 +189,259 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*None::GetClassData() const { r
 
 // ===================================================================
 
+class Info::_Internal {
+ public:
+};
+
+Info::Info(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rcp.proto.Info)
+}
+Info::Info(const Info& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Info* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.version_){}
+    , decltype(_impl_.commit_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.version_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.version_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_version().empty()) {
+    _this->_impl_.version_.Set(from._internal_version(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.commit_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.commit_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_commit().empty()) {
+    _this->_impl_.commit_.Set(from._internal_commit(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:rcp.proto.Info)
+}
+
+inline void Info::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.version_){}
+    , decltype(_impl_.commit_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.version_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.version_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.commit_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.commit_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Info::~Info() {
+  // @@protoc_insertion_point(destructor:rcp.proto.Info)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Info::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.version_.Destroy();
+  _impl_.commit_.Destroy();
+}
+
+void Info::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Info::Clear() {
+// @@protoc_insertion_point(message_clear_start:rcp.proto.Info)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.version_.ClearToEmpty();
+  _impl_.commit_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Info::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string version = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_version();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rcp.proto.Info.version"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string commit = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_commit();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rcp.proto.Info.commit"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Info::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rcp.proto.Info)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string version = 1;
+  if (!this->_internal_version().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rcp.proto.Info.version");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_version(), target);
+  }
+
+  // string commit = 2;
+  if (!this->_internal_commit().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_commit().data(), static_cast<int>(this->_internal_commit().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rcp.proto.Info.commit");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_commit(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rcp.proto.Info)
+  return target;
+}
+
+size_t Info::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rcp.proto.Info)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string version = 1;
+  if (!this->_internal_version().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_version());
+  }
+
+  // string commit = 2;
+  if (!this->_internal_commit().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_commit());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Info::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Info::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Info::GetClassData() const { return &_class_data_; }
+
+
+void Info::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Info*>(&to_msg);
+  auto& from = static_cast<const Info&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rcp.proto.Info)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_version().empty()) {
+    _this->_internal_set_version(from._internal_version());
+  }
+  if (!from._internal_commit().empty()) {
+    _this->_internal_set_commit(from._internal_commit());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Info::CopyFrom(const Info& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rcp.proto.Info)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Info::IsInitialized() const {
+  return true;
+}
+
+void Info::InternalSwap(Info* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.version_, lhs_arena,
+      &other->_impl_.version_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.commit_, lhs_arena,
+      &other->_impl_.commit_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Info::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_device_5fmanager_5fprotocol_2eproto_getter, &descriptor_table_device_5fmanager_5fprotocol_2eproto_once,
+      file_level_metadata_device_5fmanager_5fprotocol_2eproto[1]);
+}
+
+// ===================================================================
+
 class AddDeviceArgs::_Internal {
  public:
 };
@@ -198,7 +477,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddDeviceArgs::GetClassData() 
 ::PROTOBUF_NAMESPACE_ID::Metadata AddDeviceArgs::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_device_5fmanager_5fprotocol_2eproto_getter, &descriptor_table_device_5fmanager_5fprotocol_2eproto_once,
-      file_level_metadata_device_5fmanager_5fprotocol_2eproto[1]);
+      file_level_metadata_device_5fmanager_5fprotocol_2eproto[2]);
 }
 
 // ===================================================================
@@ -238,7 +517,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveDeviceArgs::GetClassData
 ::PROTOBUF_NAMESPACE_ID::Metadata RemoveDeviceArgs::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_device_5fmanager_5fprotocol_2eproto_getter, &descriptor_table_device_5fmanager_5fprotocol_2eproto_once,
-      file_level_metadata_device_5fmanager_5fprotocol_2eproto[2]);
+      file_level_metadata_device_5fmanager_5fprotocol_2eproto[3]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -248,6 +527,10 @@ PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::rcp::proto::None*
 Arena::CreateMaybeMessage< ::rcp::proto::None >(Arena* arena) {
   return Arena::CreateMessageInternal< ::rcp::proto::None >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rcp::proto::Info*
+Arena::CreateMaybeMessage< ::rcp::proto::Info >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rcp::proto::Info >(arena);
 }
 template<> PROTOBUF_NOINLINE ::rcp::proto::AddDeviceArgs*
 Arena::CreateMaybeMessage< ::rcp::proto::AddDeviceArgs >(Arena* arena) {

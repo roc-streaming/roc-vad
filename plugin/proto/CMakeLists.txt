@@ -38,10 +38,10 @@ foreach(FILE IN LISTS PROTO_FILES)
   )
 endforeach()
 
-add_library(${PROTO_NAME} STATIC
+add_library(${PROTO_LIB} STATIC
   ${GENERATED_SOURCES}
 )
 
-set_target_properties(${PROTO_NAME} PROPERTIES
+set_target_properties(${PROTO_LIB} PROPERTIES
   COMPILE_FLAGS "-w"
 )

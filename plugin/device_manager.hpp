@@ -23,6 +23,10 @@ public:
         const proto::None* request,
         proto::None* response) override;
 
+    grpc::Status get_info(grpc::ServerContext* context,
+        const proto::None* request,
+        proto::Info* response) override;
+
     grpc::Status add_device(grpc::ServerContext* context,
         const proto::AddDeviceArgs* request,
         proto::None* response) override;

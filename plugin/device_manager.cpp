@@ -7,6 +7,7 @@
  */
 
 #include "device_manager.hpp"
+#include "build_info.hpp"
 
 namespace rcp {
 
@@ -19,6 +20,16 @@ grpc::Status DeviceManager::ping(grpc::ServerContext* context,
     const proto::None* request,
     proto::None* response)
 {
+    return grpc::Status::OK;
+}
+
+grpc::Status DeviceManager::get_info(grpc::ServerContext* context,
+    const proto::None* request,
+    proto::Info* response)
+{
+    response->set_version(BuildInfo::version);
+    response->set_commit(BuildInfo::commit);
+
     return grpc::Status::OK;
 }
 

@@ -50,6 +50,9 @@ namespace proto {
 class AddDeviceArgs;
 struct AddDeviceArgsDefaultTypeInternal;
 extern AddDeviceArgsDefaultTypeInternal _AddDeviceArgs_default_instance_;
+class Info;
+struct InfoDefaultTypeInternal;
+extern InfoDefaultTypeInternal _Info_default_instance_;
 class None;
 struct NoneDefaultTypeInternal;
 extern NoneDefaultTypeInternal _None_default_instance_;
@@ -60,6 +63,7 @@ extern RemoveDeviceArgsDefaultTypeInternal _RemoveDeviceArgs_default_instance_;
 }  // namespace rcp
 PROTOBUF_NAMESPACE_OPEN
 template<> ::rcp::proto::AddDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::AddDeviceArgs>(Arena*);
+template<> ::rcp::proto::Info* Arena::CreateMaybeMessage<::rcp::proto::Info>(Arena*);
 template<> ::rcp::proto::None* Arena::CreateMaybeMessage<::rcp::proto::None>(Arena*);
 template<> ::rcp::proto::RemoveDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::RemoveDeviceArgs>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -186,6 +190,175 @@ class None final :
 };
 // -------------------------------------------------------------------
 
+class Info final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rcp.proto.Info) */ {
+ public:
+  inline Info() : Info(nullptr) {}
+  ~Info() override;
+  explicit PROTOBUF_CONSTEXPR Info(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Info(const Info& from);
+  Info(Info&& from) noexcept
+    : Info() {
+    *this = ::std::move(from);
+  }
+
+  inline Info& operator=(const Info& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Info& operator=(Info&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Info& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Info* internal_default_instance() {
+    return reinterpret_cast<const Info*>(
+               &_Info_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(Info& a, Info& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Info* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Info* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Info* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Info>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Info& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Info& from) {
+    Info::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Info* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rcp.proto.Info";
+  }
+  protected:
+  explicit Info(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kCommitFieldNumber = 2,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string commit = 2;
+  void clear_commit();
+  const std::string& commit() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_commit(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_commit();
+  PROTOBUF_NODISCARD std::string* release_commit();
+  void set_allocated_commit(std::string* commit);
+  private:
+  const std::string& _internal_commit() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_commit(const std::string& value);
+  std::string* _internal_mutable_commit();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rcp.proto.Info)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr commit_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_device_5fmanager_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class AddDeviceArgs final :
     public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:rcp.proto.AddDeviceArgs) */ {
  public:
@@ -233,7 +406,7 @@ class AddDeviceArgs final :
                &_AddDeviceArgs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(AddDeviceArgs& a, AddDeviceArgs& b) {
     a.Swap(&b);
@@ -351,7 +524,7 @@ class RemoveDeviceArgs final :
                &_RemoveDeviceArgs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(RemoveDeviceArgs& a, RemoveDeviceArgs& b) {
     a.Swap(&b);
@@ -433,6 +606,110 @@ class RemoveDeviceArgs final :
 
 // -------------------------------------------------------------------
 
+// Info
+
+// string version = 1;
+inline void Info::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& Info::version() const {
+  // @@protoc_insertion_point(field_get:rcp.proto.Info.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Info::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rcp.proto.Info.version)
+}
+inline std::string* Info::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:rcp.proto.Info.version)
+  return _s;
+}
+inline const std::string& Info::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void Info::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Info::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Info::release_version() {
+  // @@protoc_insertion_point(field_release:rcp.proto.Info.version)
+  return _impl_.version_.Release();
+}
+inline void Info::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rcp.proto.Info.version)
+}
+
+// string commit = 2;
+inline void Info::clear_commit() {
+  _impl_.commit_.ClearToEmpty();
+}
+inline const std::string& Info::commit() const {
+  // @@protoc_insertion_point(field_get:rcp.proto.Info.commit)
+  return _internal_commit();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Info::set_commit(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.commit_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rcp.proto.Info.commit)
+}
+inline std::string* Info::mutable_commit() {
+  std::string* _s = _internal_mutable_commit();
+  // @@protoc_insertion_point(field_mutable:rcp.proto.Info.commit)
+  return _s;
+}
+inline const std::string& Info::_internal_commit() const {
+  return _impl_.commit_.Get();
+}
+inline void Info::_internal_set_commit(const std::string& value) {
+  
+  _impl_.commit_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Info::_internal_mutable_commit() {
+  
+  return _impl_.commit_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Info::release_commit() {
+  // @@protoc_insertion_point(field_release:rcp.proto.Info.commit)
+  return _impl_.commit_.Release();
+}
+inline void Info::set_allocated_commit(std::string* commit) {
+  if (commit != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.commit_.SetAllocated(commit, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.commit_.IsDefault()) {
+    _impl_.commit_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rcp.proto.Info.commit)
+}
+
+// -------------------------------------------------------------------
+
 // AddDeviceArgs
 
 // -------------------------------------------------------------------
@@ -442,6 +719,8 @@ class RemoveDeviceArgs final :
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
