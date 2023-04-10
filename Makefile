@@ -13,9 +13,6 @@ build:
 	cd build && cmake -DBOOTSTRAP=OFF ..
 	cd build && make --no-print-directory -j$(NUM_CPU)
 
-install:
-	cd build && make install
-
 clean:
 	rm -rf bin build
 
@@ -34,3 +31,15 @@ info:
 fmt:
 	find -type f -name '*.[ch]pp' -not -path './3rdparty/*' -not -name '*.pb.*' \
 		| xargs clang-format --verbose -i
+
+install:
+	cp bin/rcp-ctl /usr/local/bin/
+	mkdir -p /Library/Audio/Plug-Ins/HAL/
+	cp -a bin/rcp_plugin.driver /Library/Audio/Plug-Ins/HAL/
+
+uninstall:
+	rm -f /usr/local/bin/rcp-ctl
+	rm -rf /Library/Audio/Plug-Ins/HAL/rcp_plugin.driver
+
+kickstart:
+	launchctl kickstart -k system/com.apple.audio.coreaudiod
