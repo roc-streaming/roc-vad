@@ -56,6 +56,9 @@ extern DeleteDeviceArgsDefaultTypeInternal _DeleteDeviceArgs_default_instance_;
 class Info;
 struct InfoDefaultTypeInternal;
 extern InfoDefaultTypeInternal _Info_default_instance_;
+class LogMessage;
+struct LogMessageDefaultTypeInternal;
+extern LogMessageDefaultTypeInternal _LogMessage_default_instance_;
 class None;
 struct NoneDefaultTypeInternal;
 extern NoneDefaultTypeInternal _None_default_instance_;
@@ -65,6 +68,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::rcp::proto::AddDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::AddDeviceArgs>(Arena*);
 template<> ::rcp::proto::DeleteDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::DeleteDeviceArgs>(Arena*);
 template<> ::rcp::proto::Info* Arena::CreateMaybeMessage<::rcp::proto::Info>(Arena*);
+template<> ::rcp::proto::LogMessage* Arena::CreateMaybeMessage<::rcp::proto::LogMessage>(Arena*);
 template<> ::rcp::proto::None* Arena::CreateMaybeMessage<::rcp::proto::None>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace rcp {
@@ -359,6 +363,159 @@ class Info final :
 };
 // -------------------------------------------------------------------
 
+class LogMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rcp.proto.LogMessage) */ {
+ public:
+  inline LogMessage() : LogMessage(nullptr) {}
+  ~LogMessage() override;
+  explicit PROTOBUF_CONSTEXPR LogMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  LogMessage(const LogMessage& from);
+  LogMessage(LogMessage&& from) noexcept
+    : LogMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline LogMessage& operator=(const LogMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline LogMessage& operator=(LogMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const LogMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const LogMessage* internal_default_instance() {
+    return reinterpret_cast<const LogMessage*>(
+               &_LogMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(LogMessage& a, LogMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(LogMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(LogMessage* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  LogMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<LogMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const LogMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const LogMessage& from) {
+    LogMessage::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LogMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rcp.proto.LogMessage";
+  }
+  protected:
+  explicit LogMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTextFieldNumber = 1,
+  };
+  // string text = 1;
+  void clear_text();
+  const std::string& text() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_text(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_text();
+  PROTOBUF_NODISCARD std::string* release_text();
+  void set_allocated_text(std::string* text);
+  private:
+  const std::string& _internal_text() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_text(const std::string& value);
+  std::string* _internal_mutable_text();
+  public:
+
+  // @@protoc_insertion_point(class_scope:rcp.proto.LogMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_device_5fmanager_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class AddDeviceArgs final :
     public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:rcp.proto.AddDeviceArgs) */ {
  public:
@@ -406,7 +563,7 @@ class AddDeviceArgs final :
                &_AddDeviceArgs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(AddDeviceArgs& a, AddDeviceArgs& b) {
     a.Swap(&b);
@@ -524,7 +681,7 @@ class DeleteDeviceArgs final :
                &_DeleteDeviceArgs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(DeleteDeviceArgs& a, DeleteDeviceArgs& b) {
     a.Swap(&b);
@@ -710,6 +867,60 @@ inline void Info::set_allocated_commit(std::string* commit) {
 
 // -------------------------------------------------------------------
 
+// LogMessage
+
+// string text = 1;
+inline void LogMessage::clear_text() {
+  _impl_.text_.ClearToEmpty();
+}
+inline const std::string& LogMessage::text() const {
+  // @@protoc_insertion_point(field_get:rcp.proto.LogMessage.text)
+  return _internal_text();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void LogMessage::set_text(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.text_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rcp.proto.LogMessage.text)
+}
+inline std::string* LogMessage::mutable_text() {
+  std::string* _s = _internal_mutable_text();
+  // @@protoc_insertion_point(field_mutable:rcp.proto.LogMessage.text)
+  return _s;
+}
+inline const std::string& LogMessage::_internal_text() const {
+  return _impl_.text_.Get();
+}
+inline void LogMessage::_internal_set_text(const std::string& value) {
+  
+  _impl_.text_.Set(value, GetArenaForAllocation());
+}
+inline std::string* LogMessage::_internal_mutable_text() {
+  
+  return _impl_.text_.Mutable(GetArenaForAllocation());
+}
+inline std::string* LogMessage::release_text() {
+  // @@protoc_insertion_point(field_release:rcp.proto.LogMessage.text)
+  return _impl_.text_.Release();
+}
+inline void LogMessage::set_allocated_text(std::string* text) {
+  if (text != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.text_.SetAllocated(text, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.text_.IsDefault()) {
+    _impl_.text_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rcp.proto.LogMessage.text)
+}
+
+// -------------------------------------------------------------------
+
 // AddDeviceArgs
 
 // -------------------------------------------------------------------
@@ -719,6 +930,8 @@ inline void Info::set_allocated_commit(std::string* commit) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

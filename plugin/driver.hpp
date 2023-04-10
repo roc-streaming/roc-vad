@@ -9,8 +9,10 @@
 #pragma once
 
 #include "device_manager.hpp"
+#include "log_manager.hpp"
 
 #include <aspl/Driver.hpp>
+#include <aspl/Plugin.hpp>
 
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
@@ -32,10 +34,12 @@ public:
 
 private:
     std::shared_ptr<aspl::Driver> driver_;
+    std::shared_ptr<aspl::Plugin> plugin_;
 
-    std::unique_ptr<DeviceManager> deviceManager_;
+    std::shared_ptr<LogManager> log_manager_;
+    std::shared_ptr<DeviceManager> device_manager_;
 
-    std::unique_ptr<grpc::Server> rpcServer_;
+    std::unique_ptr<grpc::Server> rpc_server_;
 };
 
 } // namespace rcp

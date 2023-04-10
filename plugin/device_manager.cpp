@@ -9,10 +9,14 @@
 #include "device_manager.hpp"
 #include "build_info.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace rcp {
 
-DeviceManager::DeviceManager(const std::shared_ptr<aspl::Plugin>& plugin)
-    : plugin_(plugin)
+DeviceManager::DeviceManager(std::shared_ptr<LogManager> log_manager,
+    std::shared_ptr<aspl::Plugin> plugin)
+    : log_manager_(log_manager)
+    , plugin_(plugin)
 {
 }
 
@@ -20,6 +24,10 @@ grpc::Status DeviceManager::ping(grpc::ServerContext* context,
     const proto::None* request,
     proto::None* response)
 {
+    // no lock
+
+    spdlog::debug("received ping command");
+
     return grpc::Status::OK;
 }
 
@@ -27,10 +35,27 @@ grpc::Status DeviceManager::get_info(grpc::ServerContext* context,
     const proto::None* request,
     proto::Info* response)
 {
-    std::unique_lock lock(device_mutex_);
+    // no lock
+
+    spdlog::debug("received get_info command");
 
     response->set_version(BuildInfo::version);
     response->set_commit(BuildInfo::commit);
+
+    return grpc::Status::OK;
+}
+
+grpc::Status DeviceManager::stream_logs(grpc::ServerContext* context,
+    const proto::None* request,
+    grpc::ServerWriter<proto::LogMessage>* writer)
+{
+    // no lock
+
+    spdlog::debug("received stream_logs command");
+
+    auto log_sender = log_manager_->attach_sender(*writer);
+
+    log_sender->wait_eof();
 
     return grpc::Status::OK;
 }
@@ -39,7 +64,9 @@ grpc::Status DeviceManager::add_device(grpc::ServerContext* context,
     const proto::AddDeviceArgs* request,
     proto::None* response)
 {
-    std::unique_lock lock(device_mutex_);
+    std::unique_lock device_lock(device_mutex_);
+
+    spdlog::debug("received add_device command");
 
     devices_["TODO"] = std::make_shared<Device>(plugin_);
 
@@ -50,7 +77,9 @@ grpc::Status DeviceManager::delete_device(grpc::ServerContext* context,
     const proto::DeleteDeviceArgs* request,
     proto::None* response)
 {
-    std::unique_lock lock(device_mutex_);
+    std::unique_lock device_lock(device_mutex_);
+
+    spdlog::debug("received delete_device command");
 
     devices_.erase("TODO");
 

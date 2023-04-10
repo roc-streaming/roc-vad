@@ -10,6 +10,7 @@
 
 #include "device.hpp"
 #include "device_manager_protocol.hpp"
+#include "log_manager.hpp"
 
 #include <aspl/Plugin.hpp>
 
@@ -23,7 +24,8 @@ namespace rcp {
 class DeviceManager : public proto::DeviceManagerProtocol::Service
 {
 public:
-    DeviceManager(const std::shared_ptr<aspl::Plugin>& plugin);
+    DeviceManager(std::shared_ptr<LogManager> log_manager,
+        std::shared_ptr<aspl::Plugin> plugin);
 
     DeviceManager(const DeviceManager&) = delete;
     DeviceManager& operator=(const DeviceManager&) = delete;
@@ -36,6 +38,10 @@ public:
         const proto::None* request,
         proto::Info* response) override;
 
+    grpc::Status stream_logs(grpc::ServerContext* context,
+        const proto::None* request,
+        grpc::ServerWriter<proto::LogMessage>* writer) override;
+
     grpc::Status add_device(grpc::ServerContext* context,
         const proto::AddDeviceArgs* request,
         proto::None* response) override;
@@ -45,6 +51,7 @@ public:
         proto::None* response) override;
 
 private:
+    std::shared_ptr<LogManager> log_manager_;
     std::shared_ptr<aspl::Plugin> plugin_;
 
     std::mutex device_mutex_;

@@ -25,6 +25,7 @@ namespace proto {
 static const char* DeviceManagerProtocol_method_names[] = {
   "/rcp.proto.DeviceManagerProtocol/ping",
   "/rcp.proto.DeviceManagerProtocol/get_info",
+  "/rcp.proto.DeviceManagerProtocol/stream_logs",
   "/rcp.proto.DeviceManagerProtocol/add_device",
   "/rcp.proto.DeviceManagerProtocol/delete_device",
 };
@@ -38,8 +39,9 @@ std::unique_ptr< DeviceManagerProtocol::Stub> DeviceManagerProtocol::NewStub(con
 DeviceManagerProtocol::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_ping_(DeviceManagerProtocol_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_get_info_(DeviceManagerProtocol_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_add_device_(DeviceManagerProtocol_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_delete_device_(DeviceManagerProtocol_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_stream_logs_(DeviceManagerProtocol_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_add_device_(DeviceManagerProtocol_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_delete_device_(DeviceManagerProtocol_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DeviceManagerProtocol::Stub::ping(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::None* response) {
@@ -86,6 +88,22 @@ void DeviceManagerProtocol::Stub::async::get_info(::grpc::ClientContext* context
     this->PrepareAsyncget_infoRaw(context, request, cq);
   result->StartCall();
   return result;
+}
+
+::grpc::ClientReader< ::rcp::proto::LogMessage>* DeviceManagerProtocol::Stub::stream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request) {
+  return ::grpc::internal::ClientReaderFactory< ::rcp::proto::LogMessage>::Create(channel_.get(), rpcmethod_stream_logs_, context, request);
+}
+
+void DeviceManagerProtocol::Stub::async::stream_logs(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::grpc::ClientReadReactor< ::rcp::proto::LogMessage>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::rcp::proto::LogMessage>::Create(stub_->channel_.get(), stub_->rpcmethod_stream_logs_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>* DeviceManagerProtocol::Stub::Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::rcp::proto::LogMessage>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>* DeviceManagerProtocol::Stub::PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::rcp::proto::LogMessage>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, false, nullptr);
 }
 
 ::grpc::Status DeviceManagerProtocol::Stub::add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::rcp::proto::None* response) {
@@ -157,6 +175,16 @@ DeviceManagerProtocol::Service::Service() {
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DeviceManagerProtocol_method_names[2],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< DeviceManagerProtocol::Service, ::rcp::proto::None, ::rcp::proto::LogMessage>(
+          [](DeviceManagerProtocol::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rcp::proto::None* req,
+             ::grpc::ServerWriter<::rcp::proto::LogMessage>* writer) {
+               return service->stream_logs(ctx, req, writer);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      DeviceManagerProtocol_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::AddDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DeviceManagerProtocol::Service* service,
@@ -166,7 +194,7 @@ DeviceManagerProtocol::Service::Service() {
                return service->add_device(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      DeviceManagerProtocol_method_names[3],
+      DeviceManagerProtocol_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DeviceManagerProtocol::Service* service,
@@ -191,6 +219,13 @@ DeviceManagerProtocol::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status DeviceManagerProtocol::Service::stream_logs(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

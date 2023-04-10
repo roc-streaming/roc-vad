@@ -8,11 +8,15 @@
 
 #include "device.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace rcp {
 
 Device::Device(std::shared_ptr<aspl::Plugin> plugin)
     : plugin_(plugin)
 {
+    spdlog::info("creating device object");
+
     aspl::DeviceParameters deviceParams;
     deviceParams.Name = "Roc Device";
     deviceParams.SampleRate = 44100;
@@ -29,6 +33,8 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin)
 
 Device::~Device()
 {
+    spdlog::info("destroying device object");
+
     plugin_->RemoveDevice(device_);
 }
 

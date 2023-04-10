@@ -8,37 +8,51 @@
 
 #include "driver.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace rcp {
 
 Driver::Driver()
 {
-    auto tracer = std::make_shared<aspl::Tracer>();
-    auto context = std::make_shared<aspl::Context>(tracer);
+    log_manager_ = std::make_shared<LogManager>();
+
+    spdlog::info("received initialization request");
 
     aspl::PluginParameters pluginParams;
     pluginParams.Manufacturer = "roc-streaming.org";
 
-    auto plugin = std::make_shared<aspl::Plugin>(context, pluginParams);
+    auto tracer = std::make_shared<aspl::Tracer>();
+    auto context = std::make_shared<aspl::Context>(tracer);
 
-    driver_ = std::make_shared<aspl::Driver>(context, plugin);
-    deviceManager_ = std::make_unique<DeviceManager>(plugin);
+    plugin_ = std::make_shared<aspl::Plugin>(context, pluginParams);
+    driver_ = std::make_shared<aspl::Driver>(context, plugin_);
 
-    grpc::ServerBuilder builder;
+    device_manager_ = std::make_shared<DeviceManager>(log_manager_, plugin_);
+
+    grpc::ServerBuilder rpc_builder;
 
     // TODO: retrieve bind address from Info.plist (RpcSocketAddress)
-    builder.AddListeningPort("127.0.0.1:9712", grpc::InsecureServerCredentials());
-    builder.RegisterService(deviceManager_.get());
+    const auto address = "127.0.0.1:9712";
 
-    rpcServer_ = builder.BuildAndStart();
+    rpc_builder.AddListeningPort(address, grpc::InsecureServerCredentials());
+    rpc_builder.RegisterService(device_manager_.get());
+
+    spdlog::info("starting rpc server at {}", address);
+
+    rpc_server_ = rpc_builder.BuildAndStart();
 }
 
 Driver::~Driver()
 {
-    rpcServer_->Shutdown();
+    spdlog::info("received deinitialization request");
+
+    rpc_server_->Shutdown();
 }
 
 AudioServerPlugInDriverRef Driver::reference()
 {
+    spdlog::info("received reference request");
+
     return driver_->GetReference();
 }
 

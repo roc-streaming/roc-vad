@@ -15,6 +15,7 @@ service DeviceManagerProtocol
     rpc ping(None) returns (None) {}
 
     rpc get_info(None) returns (Info) {}
+    rpc stream_logs(None) returns (stream LogMessage) {}
 
     rpc add_device(AddDeviceArgs) returns (None) {}
     rpc delete_device(DeleteDeviceArgs) returns (None) {}
@@ -28,6 +29,11 @@ message Info
 {
     string version = 1;
     string commit = 2;
+}
+
+message LogMessage
+{
+    string text = 1;
 }
 
 message AddDeviceArgs

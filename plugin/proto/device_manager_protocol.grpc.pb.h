@@ -58,6 +58,15 @@ class DeviceManagerProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>>(PrepareAsyncget_infoRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::rcp::proto::LogMessage>> stream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::rcp::proto::LogMessage>>(stream_logsRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>> Asyncstream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>>(Asyncstream_logsRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>> PrepareAsyncstream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>>(PrepareAsyncstream_logsRaw(context, request, cq));
+    }
     virtual ::grpc::Status add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::rcp::proto::None* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>> Asyncadd_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>>(Asyncadd_deviceRaw(context, request, cq));
@@ -79,6 +88,7 @@ class DeviceManagerProtocol final {
       virtual void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, std::function<void(::grpc::Status)>) = 0;
       virtual void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void stream_logs(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::grpc::ClientReadReactor< ::rcp::proto::LogMessage>* reactor) = 0;
       virtual void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) = 0;
       virtual void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void delete_device(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) = 0;
@@ -92,6 +102,9 @@ class DeviceManagerProtocol final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::Info>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::rcp::proto::LogMessage>* stream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>* Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::rcp::proto::LogMessage>* PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rcp::proto::None>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::grpc::CompletionQueue* cq) = 0;
@@ -114,6 +127,15 @@ class DeviceManagerProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>>(PrepareAsyncget_infoRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReader< ::rcp::proto::LogMessage>> stream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::rcp::proto::LogMessage>>(stream_logsRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>> Asyncstream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>>(Asyncstream_logsRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>> PrepareAsyncstream_logs(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>>(PrepareAsyncstream_logsRaw(context, request, cq));
+    }
     ::grpc::Status add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::rcp::proto::None* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>> Asyncadd_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>>(Asyncadd_deviceRaw(context, request, cq));
@@ -135,6 +157,7 @@ class DeviceManagerProtocol final {
       void ping(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) override;
       void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, std::function<void(::grpc::Status)>) override;
       void get_info(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void stream_logs(::grpc::ClientContext* context, const ::rcp::proto::None* request, ::grpc::ClientReadReactor< ::rcp::proto::LogMessage>* reactor) override;
       void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) override;
       void add_device(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) override;
       void delete_device(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)>) override;
@@ -154,12 +177,16 @@ class DeviceManagerProtocol final {
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::Info>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::rcp::proto::LogMessage>* stream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request) override;
+    ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>* Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::rcp::proto::LogMessage>* PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::AddDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_ping_;
     const ::grpc::internal::RpcMethod rpcmethod_get_info_;
+    const ::grpc::internal::RpcMethod rpcmethod_stream_logs_;
     const ::grpc::internal::RpcMethod rpcmethod_add_device_;
     const ::grpc::internal::RpcMethod rpcmethod_delete_device_;
   };
@@ -171,6 +198,7 @@ class DeviceManagerProtocol final {
     virtual ~Service();
     virtual ::grpc::Status ping(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::None* response);
     virtual ::grpc::Status get_info(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::rcp::proto::Info* response);
+    virtual ::grpc::Status stream_logs(::grpc::ServerContext* context, const ::rcp::proto::None* request, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* writer);
     virtual ::grpc::Status add_device(::grpc::ServerContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response);
     virtual ::grpc::Status delete_device(::grpc::ServerContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response);
   };
@@ -215,12 +243,32 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_stream_logs() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requeststream_logs(::grpc::ServerContext* context, ::rcp::proto::None* request, ::grpc::ServerAsyncWriter< ::rcp::proto::LogMessage>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_add_device() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -231,7 +279,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestadd_device(::grpc::ServerContext* context, ::rcp::proto::AddDeviceArgs* request, ::grpc::ServerAsyncResponseWriter< ::rcp::proto::None>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -240,7 +288,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_delete_device() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -251,10 +299,10 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestdelete_device(::grpc::ServerContext* context, ::rcp::proto::DeleteDeviceArgs* request, ::grpc::ServerAsyncResponseWriter< ::rcp::proto::None>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_ping<WithAsyncMethod_get_info<WithAsyncMethod_add_device<WithAsyncMethod_delete_device<Service > > > > AsyncService;
+  typedef WithAsyncMethod_ping<WithAsyncMethod_get_info<WithAsyncMethod_stream_logs<WithAsyncMethod_add_device<WithAsyncMethod_delete_device<Service > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_ping : public BaseClass {
    private:
@@ -310,18 +358,40 @@ class DeviceManagerProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::rcp::proto::Info* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_stream_logs() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::rcp::proto::None, ::rcp::proto::LogMessage>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rcp::proto::None* request) { return this->stream_logs(context, request); }));
+    }
+    ~WithCallbackMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::rcp::proto::LogMessage>* stream_logs(
+      ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::None* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::rcp::proto::AddDeviceArgs* request, ::rcp::proto::None* response) { return this->add_device(context, request, response); }));}
     void SetMessageAllocatorFor_add_device(
         ::grpc::MessageAllocator< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -342,13 +412,13 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_delete_device() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response) { return this->delete_device(context, request, response); }));}
     void SetMessageAllocatorFor_delete_device(
         ::grpc::MessageAllocator< ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -363,7 +433,7 @@ class DeviceManagerProtocol final {
     virtual ::grpc::ServerUnaryReactor* delete_device(
       ::grpc::CallbackServerContext* /*context*/, const ::rcp::proto::DeleteDeviceArgs* /*request*/, ::rcp::proto::None* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_ping<WithCallbackMethod_get_info<WithCallbackMethod_add_device<WithCallbackMethod_delete_device<Service > > > > CallbackService;
+  typedef WithCallbackMethod_ping<WithCallbackMethod_get_info<WithCallbackMethod_stream_logs<WithCallbackMethod_add_device<WithCallbackMethod_delete_device<Service > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_ping : public BaseClass {
@@ -400,12 +470,29 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_stream_logs() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_add_device() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -422,7 +509,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_delete_device() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -474,12 +561,32 @@ class DeviceManagerProtocol final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_stream_logs() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requeststream_logs(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_add_device() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -490,7 +597,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestadd_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -499,7 +606,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_delete_device() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
@@ -510,7 +617,7 @@ class DeviceManagerProtocol final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestdelete_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -558,12 +665,34 @@ class DeviceManagerProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_stream_logs() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->stream_logs(context, request); }));
+    }
+    ~WithRawCallbackMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* stream_logs(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->add_device(context, request, response); }));
@@ -585,7 +714,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_delete_device() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->delete_device(context, request, response); }));
@@ -661,7 +790,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_add_device() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::rcp::proto::AddDeviceArgs, ::rcp::proto::None>(
             [this](::grpc::ServerContext* context,
@@ -688,7 +817,7 @@ class DeviceManagerProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_delete_device() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
           ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None>(
             [this](::grpc::ServerContext* context,
@@ -710,8 +839,35 @@ class DeviceManagerProtocol final {
     virtual ::grpc::Status Streameddelete_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rcp::proto::DeleteDeviceArgs,::rcp::proto::None>* server_unary_streamer) = 0;
   };
   typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > StreamedUnaryService;
-  typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > StreamedService;
+  template <class BaseClass>
+  class WithSplitStreamingMethod_stream_logs : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_stream_logs() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::rcp::proto::None, ::rcp::proto::LogMessage>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::rcp::proto::None, ::rcp::proto::LogMessage>* streamer) {
+                       return this->Streamedstream_logs(context,
+                         streamer);
+                  }));
+    }
+    ~WithSplitStreamingMethod_stream_logs() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status stream_logs(::grpc::ServerContext* /*context*/, const ::rcp::proto::None* /*request*/, ::grpc::ServerWriter< ::rcp::proto::LogMessage>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status Streamedstream_logs(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::rcp::proto::None,::rcp::proto::LogMessage>* server_split_streamer) = 0;
+  };
+  typedef WithSplitStreamingMethod_stream_logs<Service > SplitStreamedService;
+  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithSplitStreamingMethod_stream_logs<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > > StreamedService;
 };
 
 }  // namespace proto

@@ -1,5 +1,6 @@
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 find_package(libASPL CONFIG REQUIRED)
 find_library(LIB_CoreFoundation CoreFoundation REQUIRED)
 
@@ -8,6 +9,9 @@ add_library(${PLUGIN_NAME} MODULE
   "device_manager.cpp"
   "driver.cpp"
   "entry_point.cpp"
+  "log_manager.cpp"
+  "log_sender.cpp"
+  "log_syslog.cpp"
 )
 
 target_link_libraries(${PLUGIN_NAME} PRIVATE
@@ -17,6 +21,7 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
 
 target_link_libraries(${PLUGIN_NAME} PRIVATE
   gRPC::grpc++_unsecure
+  spdlog::spdlog
   aspl::libASPL
   ${LIB_CoreFoundation}
 )
