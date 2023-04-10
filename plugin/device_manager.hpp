@@ -8,9 +8,14 @@
 
 #pragma once
 
+#include "device.hpp"
 #include "device_manager_protocol.hpp"
 
 #include <aspl/Plugin.hpp>
+
+#include <memory>
+#include <string>
+#include <unordered_map>
 
 namespace rcp {
 
@@ -18,6 +23,9 @@ class DeviceManager : public proto::DeviceManagerProtocol::Service
 {
 public:
     DeviceManager(const std::shared_ptr<aspl::Plugin>& plugin);
+
+    DeviceManager(const DeviceManager&) = delete;
+    DeviceManager& operator=(const DeviceManager&) = delete;
 
     grpc::Status ping(grpc::ServerContext* context,
         const proto::None* request,
@@ -31,12 +39,14 @@ public:
         const proto::AddDeviceArgs* request,
         proto::None* response) override;
 
-    grpc::Status remove_device(grpc::ServerContext* context,
-        const proto::RemoveDeviceArgs* request,
+    grpc::Status delete_device(grpc::ServerContext* context,
+        const proto::DeleteDeviceArgs* request,
         proto::None* response) override;
 
 private:
     std::shared_ptr<aspl::Plugin> plugin_;
+
+    std::unordered_map<std::string, std::shared_ptr<Device>> devices_;
 };
 
 } // namespace rcp

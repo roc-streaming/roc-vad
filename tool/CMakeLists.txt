@@ -7,6 +7,7 @@ add_executable(${TOOL_NAME}
   "cmd_compound.cpp"
   "cmd_device.cpp"
   "cmd_device_add.cpp"
+  "cmd_device_delete.cpp"
   "cmd_info.cpp"
   "cmd_root.cpp"
   "connector.cpp"

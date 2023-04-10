@@ -8,6 +8,7 @@
 
 #include "cmd_device.hpp"
 #include "cmd_device_add.hpp"
+#include "cmd_device_delete.hpp"
 
 using namespace rcp;
 
@@ -18,4 +19,5 @@ CmdDevice::CmdDevice(CLI::App& parent)
     register_command(command);
 
     register_subcommand(std::make_shared<CmdDeviceAdd>(*command));
+    register_subcommand(std::make_shared<CmdDeviceDelete>(*command));
 }

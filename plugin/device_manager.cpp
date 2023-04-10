@@ -37,13 +37,17 @@ grpc::Status DeviceManager::add_device(grpc::ServerContext* context,
     const proto::AddDeviceArgs* request,
     proto::None* response)
 {
+    devices_["TODO"] = std::make_shared<Device>(plugin_);
+
     return grpc::Status::OK;
 }
 
-grpc::Status DeviceManager::remove_device(grpc::ServerContext* context,
-    const proto::RemoveDeviceArgs* request,
+grpc::Status DeviceManager::delete_device(grpc::ServerContext* context,
+    const proto::DeleteDeviceArgs* request,
     proto::None* response)
 {
+    devices_.erase("TODO");
+
     return grpc::Status::OK;
 }
 

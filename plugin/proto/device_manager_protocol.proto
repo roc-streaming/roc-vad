@@ -17,7 +17,7 @@ service DeviceManagerProtocol
     rpc get_info(None) returns (Info) {}
 
     rpc add_device(AddDeviceArgs) returns (None) {}
-    rpc remove_device(RemoveDeviceArgs) returns (None) {}
+    rpc delete_device(DeleteDeviceArgs) returns (None) {}
 }
 
 message None
@@ -34,6 +34,6 @@ message AddDeviceArgs
 {
 }
 
-message RemoveDeviceArgs
+message DeleteDeviceArgs
 {
 }

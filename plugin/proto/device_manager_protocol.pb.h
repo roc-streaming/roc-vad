@@ -50,22 +50,22 @@ namespace proto {
 class AddDeviceArgs;
 struct AddDeviceArgsDefaultTypeInternal;
 extern AddDeviceArgsDefaultTypeInternal _AddDeviceArgs_default_instance_;
+class DeleteDeviceArgs;
+struct DeleteDeviceArgsDefaultTypeInternal;
+extern DeleteDeviceArgsDefaultTypeInternal _DeleteDeviceArgs_default_instance_;
 class Info;
 struct InfoDefaultTypeInternal;
 extern InfoDefaultTypeInternal _Info_default_instance_;
 class None;
 struct NoneDefaultTypeInternal;
 extern NoneDefaultTypeInternal _None_default_instance_;
-class RemoveDeviceArgs;
-struct RemoveDeviceArgsDefaultTypeInternal;
-extern RemoveDeviceArgsDefaultTypeInternal _RemoveDeviceArgs_default_instance_;
 }  // namespace proto
 }  // namespace rcp
 PROTOBUF_NAMESPACE_OPEN
 template<> ::rcp::proto::AddDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::AddDeviceArgs>(Arena*);
+template<> ::rcp::proto::DeleteDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::DeleteDeviceArgs>(Arena*);
 template<> ::rcp::proto::Info* Arena::CreateMaybeMessage<::rcp::proto::Info>(Arena*);
 template<> ::rcp::proto::None* Arena::CreateMaybeMessage<::rcp::proto::None>(Arena*);
-template<> ::rcp::proto::RemoveDeviceArgs* Arena::CreateMaybeMessage<::rcp::proto::RemoveDeviceArgs>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace rcp {
 namespace proto {
@@ -477,23 +477,23 @@ class AddDeviceArgs final :
 };
 // -------------------------------------------------------------------
 
-class RemoveDeviceArgs final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:rcp.proto.RemoveDeviceArgs) */ {
+class DeleteDeviceArgs final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:rcp.proto.DeleteDeviceArgs) */ {
  public:
-  inline RemoveDeviceArgs() : RemoveDeviceArgs(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR RemoveDeviceArgs(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline DeleteDeviceArgs() : DeleteDeviceArgs(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR DeleteDeviceArgs(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  RemoveDeviceArgs(const RemoveDeviceArgs& from);
-  RemoveDeviceArgs(RemoveDeviceArgs&& from) noexcept
-    : RemoveDeviceArgs() {
+  DeleteDeviceArgs(const DeleteDeviceArgs& from);
+  DeleteDeviceArgs(DeleteDeviceArgs&& from) noexcept
+    : DeleteDeviceArgs() {
     *this = ::std::move(from);
   }
 
-  inline RemoveDeviceArgs& operator=(const RemoveDeviceArgs& from) {
+  inline DeleteDeviceArgs& operator=(const DeleteDeviceArgs& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RemoveDeviceArgs& operator=(RemoveDeviceArgs&& from) noexcept {
+  inline DeleteDeviceArgs& operator=(DeleteDeviceArgs&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -516,20 +516,20 @@ class RemoveDeviceArgs final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RemoveDeviceArgs& default_instance() {
+  static const DeleteDeviceArgs& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RemoveDeviceArgs* internal_default_instance() {
-    return reinterpret_cast<const RemoveDeviceArgs*>(
-               &_RemoveDeviceArgs_default_instance_);
+  static inline const DeleteDeviceArgs* internal_default_instance() {
+    return reinterpret_cast<const DeleteDeviceArgs*>(
+               &_DeleteDeviceArgs_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  friend void swap(RemoveDeviceArgs& a, RemoveDeviceArgs& b) {
+  friend void swap(DeleteDeviceArgs& a, DeleteDeviceArgs& b) {
     a.Swap(&b);
   }
-  inline void Swap(RemoveDeviceArgs* other) {
+  inline void Swap(DeleteDeviceArgs* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -542,7 +542,7 @@ class RemoveDeviceArgs final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RemoveDeviceArgs* other) {
+  void UnsafeArenaSwap(DeleteDeviceArgs* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -550,15 +550,15 @@ class RemoveDeviceArgs final :
 
   // implements Message ----------------------------------------------
 
-  RemoveDeviceArgs* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RemoveDeviceArgs>(arena);
+  DeleteDeviceArgs* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DeleteDeviceArgs>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const RemoveDeviceArgs& from) {
+  inline void CopyFrom(const DeleteDeviceArgs& from) {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
   }
   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const RemoveDeviceArgs& from) {
+  void MergeFrom(const DeleteDeviceArgs& from) {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
   }
   public:
@@ -566,10 +566,10 @@ class RemoveDeviceArgs final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rcp.proto.RemoveDeviceArgs";
+    return "rcp.proto.DeleteDeviceArgs";
   }
   protected:
-  explicit RemoveDeviceArgs(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit DeleteDeviceArgs(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -582,7 +582,7 @@ class RemoveDeviceArgs final :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:rcp.proto.RemoveDeviceArgs)
+  // @@protoc_insertion_point(class_scope:rcp.proto.DeleteDeviceArgs)
  private:
   class _Internal;
 
@@ -714,7 +714,7 @@ inline void Info::set_allocated_commit(std::string* commit) {
 
 // -------------------------------------------------------------------
 
-// RemoveDeviceArgs
+// DeleteDeviceArgs
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop

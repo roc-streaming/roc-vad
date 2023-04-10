@@ -26,7 +26,7 @@ static const char* DeviceManagerProtocol_method_names[] = {
   "/rcp.proto.DeviceManagerProtocol/ping",
   "/rcp.proto.DeviceManagerProtocol/get_info",
   "/rcp.proto.DeviceManagerProtocol/add_device",
-  "/rcp.proto.DeviceManagerProtocol/remove_device",
+  "/rcp.proto.DeviceManagerProtocol/delete_device",
 };
 
 std::unique_ptr< DeviceManagerProtocol::Stub> DeviceManagerProtocol::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -39,7 +39,7 @@ DeviceManagerProtocol::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterfac
   : channel_(channel), rpcmethod_ping_(DeviceManagerProtocol_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_get_info_(DeviceManagerProtocol_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_add_device_(DeviceManagerProtocol_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_remove_device_(DeviceManagerProtocol_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_delete_device_(DeviceManagerProtocol_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status DeviceManagerProtocol::Stub::ping(::grpc::ClientContext* context, const ::rcp::proto::None& request, ::rcp::proto::None* response) {
@@ -111,25 +111,25 @@ void DeviceManagerProtocol::Stub::async::add_device(::grpc::ClientContext* conte
   return result;
 }
 
-::grpc::Status DeviceManagerProtocol::Stub::remove_device(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::rcp::proto::None* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_remove_device_, context, request, response);
+::grpc::Status DeviceManagerProtocol::Stub::delete_device(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::rcp::proto::None* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_delete_device_, context, request, response);
 }
 
-void DeviceManagerProtocol::Stub::async::remove_device(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_remove_device_, context, request, response, std::move(f));
+void DeviceManagerProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_delete_device_, context, request, response, std::move(f));
 }
 
-void DeviceManagerProtocol::Stub::async::remove_device(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_remove_device_, context, request, response, reactor);
+void DeviceManagerProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_delete_device_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* DeviceManagerProtocol::Stub::PrepareAsyncremove_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rcp::proto::None, ::rcp::proto::RemoveDeviceArgs, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_remove_device_, context, request);
+::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* DeviceManagerProtocol::Stub::PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rcp::proto::None, ::rcp::proto::DeleteDeviceArgs, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_delete_device_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* DeviceManagerProtocol::Stub::Asyncremove_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::RemoveDeviceArgs& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rcp::proto::None>* DeviceManagerProtocol::Stub::Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rcp::proto::DeleteDeviceArgs& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncremove_deviceRaw(context, request, cq);
+    this->PrepareAsyncdelete_deviceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -168,12 +168,12 @@ DeviceManagerProtocol::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DeviceManagerProtocol_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::RemoveDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DeviceManagerProtocol::Service, ::rcp::proto::DeleteDeviceArgs, ::rcp::proto::None, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DeviceManagerProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rcp::proto::RemoveDeviceArgs* req,
+             const ::rcp::proto::DeleteDeviceArgs* req,
              ::rcp::proto::None* resp) {
-               return service->remove_device(ctx, req, resp);
+               return service->delete_device(ctx, req, resp);
              }, this)));
 }
 
@@ -201,7 +201,7 @@ DeviceManagerProtocol::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DeviceManagerProtocol::Service::remove_device(::grpc::ServerContext* context, const ::rcp::proto::RemoveDeviceArgs* request, ::rcp::proto::None* response) {
+::grpc::Status DeviceManagerProtocol::Service::delete_device(::grpc::ServerContext* context, const ::rcp::proto::DeleteDeviceArgs* request, ::rcp::proto::None* response) {
   (void) context;
   (void) request;
   (void) response;

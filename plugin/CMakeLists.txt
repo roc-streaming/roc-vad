@@ -4,6 +4,7 @@ find_package(libASPL CONFIG REQUIRED)
 find_library(LIB_CoreFoundation CoreFoundation REQUIRED)
 
 add_library(${PLUGIN_NAME} MODULE
+  "device.cpp"
   "device_manager.cpp"
   "driver.cpp"
   "entry_point.cpp"

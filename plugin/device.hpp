@@ -8,27 +8,25 @@
 
 #pragma once
 
-#include <CLI11.hpp>
+#include <aspl/Device.hpp>
+#include <aspl/Plugin.hpp>
+
+#include <memory>
 
 namespace rcp {
 
-class CmdBase
+class Device
 {
 public:
-    CmdBase() = default;
-    virtual ~CmdBase() = default;
+    Device(std::shared_ptr<aspl::Plugin> plugin);
+    ~Device();
 
-    CmdBase(const CmdBase&) = delete;
-    CmdBase& operator=(const CmdBase&) = delete;
-
-    virtual bool parsed();
-    virtual bool execute() = 0;
-
-protected:
-    void register_command(CLI::App* command);
+    Device(const Device&) = delete;
+    Device& operator=(const Device&) = delete;
 
 private:
-    CLI::App* command_ = nullptr;
+    std::shared_ptr<aspl::Plugin> plugin_;
+    std::shared_ptr<aspl::Device> device_;
 };
 
 } // namespace rcp

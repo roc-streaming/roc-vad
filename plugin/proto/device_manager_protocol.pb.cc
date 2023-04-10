@@ -58,17 +58,17 @@ struct AddDeviceArgsDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddDeviceArgsDefaultTypeInternal _AddDeviceArgs_default_instance_;
-PROTOBUF_CONSTEXPR RemoveDeviceArgs::RemoveDeviceArgs(
+PROTOBUF_CONSTEXPR DeleteDeviceArgs::DeleteDeviceArgs(
     ::_pbi::ConstantInitialized) {}
-struct RemoveDeviceArgsDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RemoveDeviceArgsDefaultTypeInternal()
+struct DeleteDeviceArgsDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DeleteDeviceArgsDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RemoveDeviceArgsDefaultTypeInternal() {}
+  ~DeleteDeviceArgsDefaultTypeInternal() {}
   union {
-    RemoveDeviceArgs _instance;
+    DeleteDeviceArgs _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveDeviceArgsDefaultTypeInternal _RemoveDeviceArgs_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DeleteDeviceArgsDefaultTypeInternal _DeleteDeviceArgs_default_instance_;
 }  // namespace proto
 }  // namespace rcp
 static ::_pb::Metadata file_level_metadata_device_5fmanager_5fprotocol_2eproto[4];
@@ -97,7 +97,7 @@ const uint32_t TableStruct_device_5fmanager_5fprotocol_2eproto::offsets[] PROTOB
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rcp::proto::RemoveDeviceArgs, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rcp::proto::DeleteDeviceArgs, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
@@ -107,26 +107,26 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 0, -1, -1, sizeof(::rcp::proto::None)},
   { 6, -1, -1, sizeof(::rcp::proto::Info)},
   { 14, -1, -1, sizeof(::rcp::proto::AddDeviceArgs)},
-  { 20, -1, -1, sizeof(::rcp::proto::RemoveDeviceArgs)},
+  { 20, -1, -1, sizeof(::rcp::proto::DeleteDeviceArgs)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::rcp::proto::_None_default_instance_._instance,
   &::rcp::proto::_Info_default_instance_._instance,
   &::rcp::proto::_AddDeviceArgs_default_instance_._instance,
-  &::rcp::proto::_RemoveDeviceArgs_default_instance_._instance,
+  &::rcp::proto::_DeleteDeviceArgs_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_device_5fmanager_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\035device_manager_protocol.proto\022\trcp.pro"
   "to\"\006\n\004None\"\'\n\004Info\022\017\n\007version\030\001 \001(\t\022\016\n\006c"
-  "ommit\030\002 \001(\t\"\017\n\rAddDeviceArgs\"\022\n\020RemoveDe"
+  "ommit\030\002 \001(\t\"\017\n\rAddDeviceArgs\"\022\n\020DeleteDe"
   "viceArgs2\357\001\n\025DeviceManagerProtocol\022*\n\004pi"
   "ng\022\017.rcp.proto.None\032\017.rcp.proto.None\"\000\022."
   "\n\010get_info\022\017.rcp.proto.None\032\017.rcp.proto."
   "Info\"\000\0229\n\nadd_device\022\030.rcp.proto.AddDevi"
-  "ceArgs\032\017.rcp.proto.None\"\000\022\?\n\rremove_devi"
-  "ce\022\033.rcp.proto.RemoveDeviceArgs\032\017.rcp.pr"
+  "ceArgs\032\017.rcp.proto.None\"\000\022\?\n\rdelete_devi"
+  "ce\022\033.rcp.proto.DeleteDeviceArgs\032\017.rcp.pr"
   "oto.None\"\000b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_device_5fmanager_5fprotocol_2eproto_once;
@@ -482,31 +482,31 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddDeviceArgs::GetClassData() 
 
 // ===================================================================
 
-class RemoveDeviceArgs::_Internal {
+class DeleteDeviceArgs::_Internal {
  public:
 };
 
-RemoveDeviceArgs::RemoveDeviceArgs(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+DeleteDeviceArgs::DeleteDeviceArgs(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
-  // @@protoc_insertion_point(arena_constructor:rcp.proto.RemoveDeviceArgs)
+  // @@protoc_insertion_point(arena_constructor:rcp.proto.DeleteDeviceArgs)
 }
-RemoveDeviceArgs::RemoveDeviceArgs(const RemoveDeviceArgs& from)
+DeleteDeviceArgs::DeleteDeviceArgs(const DeleteDeviceArgs& from)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  RemoveDeviceArgs* const _this = this; (void)_this;
+  DeleteDeviceArgs* const _this = this; (void)_this;
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:rcp.proto.RemoveDeviceArgs)
+  // @@protoc_insertion_point(copy_constructor:rcp.proto.DeleteDeviceArgs)
 }
 
 
 
 
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RemoveDeviceArgs::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DeleteDeviceArgs::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveDeviceArgs::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DeleteDeviceArgs::GetClassData() const { return &_class_data_; }
 
 
 
@@ -514,7 +514,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveDeviceArgs::GetClassData
 
 
 
-::PROTOBUF_NAMESPACE_ID::Metadata RemoveDeviceArgs::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata DeleteDeviceArgs::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_device_5fmanager_5fprotocol_2eproto_getter, &descriptor_table_device_5fmanager_5fprotocol_2eproto_once,
       file_level_metadata_device_5fmanager_5fprotocol_2eproto[3]);
@@ -536,9 +536,9 @@ template<> PROTOBUF_NOINLINE ::rcp::proto::AddDeviceArgs*
 Arena::CreateMaybeMessage< ::rcp::proto::AddDeviceArgs >(Arena* arena) {
   return Arena::CreateMessageInternal< ::rcp::proto::AddDeviceArgs >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rcp::proto::RemoveDeviceArgs*
-Arena::CreateMaybeMessage< ::rcp::proto::RemoveDeviceArgs >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rcp::proto::RemoveDeviceArgs >(arena);
+template<> PROTOBUF_NOINLINE ::rcp::proto::DeleteDeviceArgs*
+Arena::CreateMaybeMessage< ::rcp::proto::DeleteDeviceArgs >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rcp::proto::DeleteDeviceArgs >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 
