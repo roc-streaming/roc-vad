@@ -30,7 +30,9 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include <google/protobuf/timestamp.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_driver_5fprotocol_2eproto
@@ -71,6 +73,35 @@ template<> ::rocvad::MesgNone* Arena::CreateMaybeMessage<::rocvad::MesgNone>(Are
 PROTOBUF_NAMESPACE_CLOSE
 namespace rocvad {
 
+enum MesgLogEntry_Level : int {
+  MesgLogEntry_Level_CRIT = 0,
+  MesgLogEntry_Level_ERROR = 1,
+  MesgLogEntry_Level_WARN = 2,
+  MesgLogEntry_Level_INFO = 3,
+  MesgLogEntry_Level_DEBUG = 4,
+  MesgLogEntry_Level_TRACE = 5,
+  MesgLogEntry_Level_MesgLogEntry_Level_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  MesgLogEntry_Level_MesgLogEntry_Level_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool MesgLogEntry_Level_IsValid(int value);
+constexpr MesgLogEntry_Level MesgLogEntry_Level_Level_MIN = MesgLogEntry_Level_CRIT;
+constexpr MesgLogEntry_Level MesgLogEntry_Level_Level_MAX = MesgLogEntry_Level_TRACE;
+constexpr int MesgLogEntry_Level_Level_ARRAYSIZE = MesgLogEntry_Level_Level_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MesgLogEntry_Level_descriptor();
+template<typename T>
+inline const std::string& MesgLogEntry_Level_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, MesgLogEntry_Level>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function MesgLogEntry_Level_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    MesgLogEntry_Level_descriptor(), enum_t_value);
+}
+inline bool MesgLogEntry_Level_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, MesgLogEntry_Level* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<MesgLogEntry_Level>(
+    MesgLogEntry_Level_descriptor(), name, value);
+}
 // ===================================================================
 
 class MesgNone final :
@@ -478,12 +509,52 @@ class MesgLogEntry final :
 
   // nested types ----------------------------------------------------
 
+  typedef MesgLogEntry_Level Level;
+  static constexpr Level CRIT =
+    MesgLogEntry_Level_CRIT;
+  static constexpr Level ERROR =
+    MesgLogEntry_Level_ERROR;
+  static constexpr Level WARN =
+    MesgLogEntry_Level_WARN;
+  static constexpr Level INFO =
+    MesgLogEntry_Level_INFO;
+  static constexpr Level DEBUG =
+    MesgLogEntry_Level_DEBUG;
+  static constexpr Level TRACE =
+    MesgLogEntry_Level_TRACE;
+  static inline bool Level_IsValid(int value) {
+    return MesgLogEntry_Level_IsValid(value);
+  }
+  static constexpr Level Level_MIN =
+    MesgLogEntry_Level_Level_MIN;
+  static constexpr Level Level_MAX =
+    MesgLogEntry_Level_Level_MAX;
+  static constexpr int Level_ARRAYSIZE =
+    MesgLogEntry_Level_Level_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Level_descriptor() {
+    return MesgLogEntry_Level_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Level_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Level>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Level_Name.");
+    return MesgLogEntry_Level_Name(enum_t_value);
+  }
+  static inline bool Level_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
+      Level* value) {
+    return MesgLogEntry_Level_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   enum : int {
-    kTextFieldNumber = 1,
+    kTextFieldNumber = 3,
+    kTimeFieldNumber = 1,
+    kLevelFieldNumber = 2,
   };
-  // string text = 1;
+  // string text = 3;
   void clear_text();
   const std::string& text() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -497,6 +568,33 @@ class MesgLogEntry final :
   std::string* _internal_mutable_text();
   public:
 
+  // .google.protobuf.Timestamp time = 1;
+  bool has_time() const;
+  private:
+  bool _internal_has_time() const;
+  public:
+  void clear_time();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& time() const;
+  PROTOBUF_NODISCARD ::PROTOBUF_NAMESPACE_ID::Timestamp* release_time();
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_time();
+  void set_allocated_time(::PROTOBUF_NAMESPACE_ID::Timestamp* time);
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_time() const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_time();
+  public:
+  void unsafe_arena_set_allocated_time(
+      ::PROTOBUF_NAMESPACE_ID::Timestamp* time);
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* unsafe_arena_release_time();
+
+  // .rocvad.MesgLogEntry.Level level = 2;
+  void clear_level();
+  ::rocvad::MesgLogEntry_Level level() const;
+  void set_level(::rocvad::MesgLogEntry_Level value);
+  private:
+  ::rocvad::MesgLogEntry_Level _internal_level() const;
+  void _internal_set_level(::rocvad::MesgLogEntry_Level value);
+  public:
+
   // @@protoc_insertion_point(class_scope:rocvad.MesgLogEntry)
  private:
   class _Internal;
@@ -506,6 +604,8 @@ class MesgLogEntry final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
+    ::PROTOBUF_NAMESPACE_ID::Timestamp* time_;
+    int level_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -866,7 +966,112 @@ inline void MesgInfo::set_allocated_commit(std::string* commit) {
 
 // MesgLogEntry
 
-// string text = 1;
+// .google.protobuf.Timestamp time = 1;
+inline bool MesgLogEntry::_internal_has_time() const {
+  return this != internal_default_instance() && _impl_.time_ != nullptr;
+}
+inline bool MesgLogEntry::has_time() const {
+  return _internal_has_time();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& MesgLogEntry::_internal_time() const {
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.time_;
+  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+      ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& MesgLogEntry::time() const {
+  // @@protoc_insertion_point(field_get:rocvad.MesgLogEntry.time)
+  return _internal_time();
+}
+inline void MesgLogEntry::unsafe_arena_set_allocated_time(
+    ::PROTOBUF_NAMESPACE_ID::Timestamp* time) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.time_);
+  }
+  _impl_.time_ = time;
+  if (time) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.MesgLogEntry.time)
+}
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* MesgLogEntry::release_time() {
+  
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.time_;
+  _impl_.time_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* MesgLogEntry::unsafe_arena_release_time() {
+  // @@protoc_insertion_point(field_release:rocvad.MesgLogEntry.time)
+  
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.time_;
+  _impl_.time_ = nullptr;
+  return temp;
+}
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* MesgLogEntry::_internal_mutable_time() {
+  
+  if (_impl_.time_ == nullptr) {
+    auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
+    _impl_.time_ = p;
+  }
+  return _impl_.time_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* MesgLogEntry::mutable_time() {
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_time();
+  // @@protoc_insertion_point(field_mutable:rocvad.MesgLogEntry.time)
+  return _msg;
+}
+inline void MesgLogEntry::set_allocated_time(::PROTOBUF_NAMESPACE_ID::Timestamp* time) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.time_);
+  }
+  if (time) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(time));
+    if (message_arena != submessage_arena) {
+      time = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, time, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.time_ = time;
+  // @@protoc_insertion_point(field_set_allocated:rocvad.MesgLogEntry.time)
+}
+
+// .rocvad.MesgLogEntry.Level level = 2;
+inline void MesgLogEntry::clear_level() {
+  _impl_.level_ = 0;
+}
+inline ::rocvad::MesgLogEntry_Level MesgLogEntry::_internal_level() const {
+  return static_cast< ::rocvad::MesgLogEntry_Level >(_impl_.level_);
+}
+inline ::rocvad::MesgLogEntry_Level MesgLogEntry::level() const {
+  // @@protoc_insertion_point(field_get:rocvad.MesgLogEntry.level)
+  return _internal_level();
+}
+inline void MesgLogEntry::_internal_set_level(::rocvad::MesgLogEntry_Level value) {
+  
+  _impl_.level_ = value;
+}
+inline void MesgLogEntry::set_level(::rocvad::MesgLogEntry_Level value) {
+  _internal_set_level(value);
+  // @@protoc_insertion_point(field_set:rocvad.MesgLogEntry.level)
+}
+
+// string text = 3;
 inline void MesgLogEntry::clear_text() {
   _impl_.text_.ClearToEmpty();
 }
@@ -939,6 +1144,16 @@ inline void MesgLogEntry::set_allocated_text(std::string* text) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace rocvad
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::rocvad::MesgLogEntry_Level> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::MesgLogEntry_Level>() {
+  return ::rocvad::MesgLogEntry_Level_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

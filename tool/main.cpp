@@ -8,6 +8,7 @@
 
 #include "cmd_root.hpp"
 
+#include <grpc/impl/codegen/log.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 #include <CLI11.hpp>
@@ -54,6 +55,19 @@ void spdlog_init(int verbosity, bool force_color, bool force_no_color)
     }
 }
 
+void grpc_init()
+{
+    gpr_set_log_verbosity(GPR_LOG_SEVERITY_DEBUG);
+    gpr_set_log_function([](gpr_log_func_args* args) {
+        spdlog::log(spdlog::level::trace,
+            "(gpr:{}) {}",
+            args->severity == GPR_LOG_SEVERITY_ERROR  ? "e"
+            : args->severity == GPR_LOG_SEVERITY_INFO ? "i"
+                                                      : "d",
+            std::string(args->message));
+    });
+}
+
 } // namespace
 
 int main(int argc, char** argv)
@@ -92,6 +106,7 @@ int main(int argc, char** argv)
     }
 
     spdlog_init(verbosity, force_color, force_no_color);
+    grpc_init();
 
     const int code = cmd->execute() ? EXIT_SUCCESS : EXIT_FAILURE;
 

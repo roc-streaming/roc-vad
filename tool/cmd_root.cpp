@@ -9,6 +9,7 @@
 #include "cmd_root.hpp"
 #include "cmd_device.hpp"
 #include "cmd_info.hpp"
+#include "cmd_logcat.hpp"
 
 using namespace rocvad;
 
@@ -17,5 +18,6 @@ CmdRoot::CmdRoot(CLI::App& parent)
     register_command(&parent);
 
     register_subcommand(std::make_shared<CmdInfo>(parent));
+    register_subcommand(std::make_shared<CmdLogcat>(parent));
     register_subcommand(std::make_shared<CmdDevice>(parent));
 }

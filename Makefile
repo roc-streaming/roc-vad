@@ -28,6 +28,9 @@ info:
 	nm -gU bin/roc-vad
 	nm -gU bin/roc_vad.driver/Contents/MacOS/roc_vad
 
+syslog:
+	log stream --predicate 'process == "coreaudiod" || sender == "roc_vad"'
+
 fmt:
 	find -type f -name '*.[ch]pp' -not -path './3rdparty/*' -not -name '*.pb.*' \
 		| xargs clang-format --verbose -i

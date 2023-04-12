@@ -8,25 +8,56 @@
 
 #include "log_sender.hpp"
 
+#include <google/protobuf/util/time_util.h>
 #include <spdlog/spdlog.h>
+
+#include <cassert>
+#include <chrono>
 
 namespace rocvad {
 
-LogSender::LogSender(std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink,
-    grpc::ServerWriter<MesgLogEntry>& stream_writer)
-    : dist_sink_(dist_sink)
-    , stream_writer_(stream_writer)
-{
-    spdlog::debug("attaching log sender to sink");
+namespace {
 
-    dist_sink_->add_sink(shared_from_this());
+google::protobuf::Timestamp map_time(std::chrono::system_clock::time_point time_point)
+{
+    const int64_t nanoseconds =
+        int64_t(std::chrono::duration_cast<std::chrono::nanoseconds>(
+            time_point.time_since_epoch())
+                    .count());
+
+    return google::protobuf::util::TimeUtil::NanosecondsToTimestamp(nanoseconds);
 }
 
-LogSender::~LogSender()
+MesgLogEntry::Level map_level(spdlog::level::level_enum level)
 {
-    spdlog::debug("detaching log sender from sink");
+    switch (level) {
+    case spdlog::level::critical:
+        return MesgLogEntry::CRIT;
 
-    dist_sink_->remove_sink(shared_from_this());
+    case spdlog::level::err:
+        return MesgLogEntry::ERROR;
+
+    case spdlog::level::warn:
+        return MesgLogEntry::WARN;
+
+    case spdlog::level::info:
+        return MesgLogEntry::INFO;
+
+    case spdlog::level::debug:
+        return MesgLogEntry::DEBUG;
+
+    default:
+        break;
+    }
+
+    return MesgLogEntry::TRACE;
+}
+
+} // namespace
+
+LogSender::LogSender(grpc::ServerWriter<MesgLogEntry>& stream_writer)
+    : stream_writer_(stream_writer)
+{
 }
 
 void LogSender::wait_client_disconnect()
@@ -44,9 +75,17 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
         return;
     }
 
+    buf_.clear();
     formatter_->format(msg, buf_);
 
+    while (buf_.size() != 0 &&
+           (buf_[buf_.size() - 1] == '\n' || buf_[buf_.size() - 1] == '\r')) {
+        buf_.resize(buf_.size() - 1);
+    }
+
     MesgLogEntry entry;
+    *entry.mutable_time() = map_time(msg.time);
+    entry.set_level(map_level(msg.level));
     entry.set_text(std::string(buf_.begin(), buf_.end()));
 
     const bool result = stream_writer_.Write(entry);

@@ -33,11 +33,13 @@ public:
     std::shared_ptr<LogSender> attach_sender(
         grpc::ServerWriter<MesgLogEntry>& stream_writer);
 
+    void detach_sender(std::shared_ptr<LogSender> sender_sink);
+
 private:
     std::shared_ptr<spdlog::async_logger> logger_;
 
     std::shared_ptr<LogSyslog> syslog_sink_;
-    std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink_;
+    std::shared_ptr<spdlog::sinks::dist_sink_mt> dist_sink_;
 };
 
 } // namespace rocvad

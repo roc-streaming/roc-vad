@@ -104,6 +104,39 @@ client:
 
 ## Troubleshooting
 
+To enable verbose logging of the command line tool, use `-v` flag. Specify it multiple times to increase verbosity:
+
+```
+$ roc-vad -vv info
+info: trying to connect to driver at 127.0.0.1:9712
+debug: creating rpc channel
+debug: sending ping command
+...
+```
+
+To print logs from driver, use `logcat` command. It connects to driver via RPC and streams its logs to stdout:
+
+```
+$ roc-vad logcat
+03:30:33.511 [DD] received stream_logs command
+03:30:33.511 [DD] attaching log sender to dist sink
+...
+```
+
+Alternatively, use `syslog` makefile target. It streams syslog logs for driver and coreaudiod:
+
+```
+$ make syslog
+log stream --predicate 'process == "coreaudiod" || sender == "roc_vad"'
+Filtering the log data using "process == "coreaudiod" OR sender == "roc_vad""
+Timestamp                       Thread     Type        Activity             PID    TTL
+2023-04-13 03:31:54.896185+0400 0xe38a     Default     0x0                  11980  0
+  com.apple.audio.Core-Audio-Driver-Service: (roc_vad) [DD] received ping command
+2023-04-13 03:31:54.897686+0400 0xe38a     Default     0x0                  11980  0
+  com.apple.audio.Core-Audio-Driver-Service: (roc_vad) [DD] received get_info command
+...
+```
+
 *TODO*
 
 ## Programmatic control

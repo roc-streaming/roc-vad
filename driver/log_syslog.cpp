@@ -14,7 +14,7 @@ namespace rocvad {
 
 namespace {
 
-int level_to_prio(spdlog::level::level_enum level)
+int map_level(spdlog::level::level_enum level)
 {
     switch (level) {
     case spdlog::level::critical:
@@ -32,9 +32,15 @@ int level_to_prio(spdlog::level::level_enum level)
 
 void LogSyslog::sink_it_(const spdlog::details::log_msg& msg)
 {
+    buf_.clear();
     formatter_->format(msg, buf_);
 
-    syslog(level_to_prio(msg.level), "%.*s", (int)buf_.size(), buf_.data());
+    while (buf_.size() != 0 &&
+           (buf_[buf_.size() - 1] == '\n' || buf_[buf_.size() - 1] == '\r')) {
+        buf_.resize(buf_.size() - 1);
+    }
+
+    syslog(map_level(msg.level), "%.*s", (int)buf_.size(), buf_.data());
 }
 
 void LogSyslog::flush_()

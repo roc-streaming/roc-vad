@@ -10,6 +10,8 @@ syntax = "proto3";
 
 package rocvad;
 
+import "google/protobuf/timestamp.proto";
+
 service DriverProtocol
 {
     rpc ping(MesgNone) returns (MesgNone) {}
@@ -33,7 +35,19 @@ message MesgInfo
 
 message MesgLogEntry
 {
-    string text = 1;
+    enum Level
+    {
+        CRIT = 0;
+        ERROR = 1;
+        WARN = 2;
+        INFO = 3;
+        DEBUG = 4;
+        TRACE = 5;
+    }
+
+    google.protobuf.Timestamp time = 1;
+    Level level = 2;
+    string text = 3;
 }
 
 message MesgAddDevice

@@ -15,7 +15,7 @@ namespace rocvad {
 class Connector
 {
 public:
-    Connector() = default;
+    Connector(bool quiet = false);
     ~Connector();
 
     Connector(const Connector&) = delete;
@@ -26,6 +26,10 @@ public:
     void disconnect();
 
 private:
+    const bool quiet_;
+
+    std::string driver_address_;
+
     std::unique_ptr<DriverProtocol::Stub> stub_;
     std::shared_ptr<grpc::Channel> channel_;
 };

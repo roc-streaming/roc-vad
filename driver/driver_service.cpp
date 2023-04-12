@@ -53,6 +53,8 @@ grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
 
     log_sender->wait_client_disconnect();
 
+    log_manager_->detach_sender(log_sender);
+
     return grpc::Status::OK;
 }
 

@@ -49,6 +49,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR MesgLogEntry::MesgLogEntry(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.text_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.time_)*/nullptr
+  , /*decltype(_impl_.level_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct MesgLogEntryDefaultTypeInternal {
   PROTOBUF_CONSTEXPR MesgLogEntryDefaultTypeInternal()
@@ -83,7 +85,7 @@ struct MesgDeleteDeviceDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeleteDeviceDefaultTypeInternal _MesgDeleteDevice_default_instance_;
 }  // namespace rocvad
 static ::_pb::Metadata file_level_metadata_driver_5fprotocol_2eproto[5];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_driver_5fprotocol_2eproto = nullptr;
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_driver_5fprotocol_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_driver_5fprotocol_2eproto = nullptr;
 
 const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -107,6 +109,8 @@ const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _impl_.time_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _impl_.level_),
   PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _impl_.text_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rocvad::MesgAddDevice, _internal_metadata_),
@@ -125,8 +129,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 0, -1, -1, sizeof(::rocvad::MesgNone)},
   { 6, -1, -1, sizeof(::rocvad::MesgInfo)},
   { 14, -1, -1, sizeof(::rocvad::MesgLogEntry)},
-  { 21, -1, -1, sizeof(::rocvad::MesgAddDevice)},
-  { 27, -1, -1, sizeof(::rocvad::MesgDeleteDevice)},
+  { 23, -1, -1, sizeof(::rocvad::MesgAddDevice)},
+  { 29, -1, -1, sizeof(::rocvad::MesgDeleteDevice)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -138,24 +142,32 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_driver_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\025driver_protocol.proto\022\006rocvad\"\n\n\010MesgN"
-  "one\"+\n\010MesgInfo\022\017\n\007version\030\001 \001(\t\022\016\n\006comm"
-  "it\030\002 \001(\t\"\034\n\014MesgLogEntry\022\014\n\004text\030\001 \001(\t\"\017"
-  "\n\rMesgAddDevice\"\022\n\020MesgDeleteDevice2\243\002\n\016"
-  "DriverProtocol\022,\n\004ping\022\020.rocvad.MesgNone"
-  "\032\020.rocvad.MesgNone\"\000\0220\n\010get_info\022\020.rocva"
-  "d.MesgNone\032\020.rocvad.MesgInfo\"\000\0229\n\013stream"
-  "_logs\022\020.rocvad.MesgNone\032\024.rocvad.MesgLog"
-  "Entry\"\0000\001\0227\n\nadd_device\022\025.rocvad.MesgAdd"
-  "Device\032\020.rocvad.MesgNone\"\000\022=\n\rdelete_dev"
-  "ice\022\030.rocvad.MesgDeleteDevice\032\020.rocvad.M"
-  "esgNone\"\000b\006proto3"
+  "\n\025driver_protocol.proto\022\006rocvad\032\037google/"
+  "protobuf/timestamp.proto\"\n\n\010MesgNone\"+\n\010"
+  "MesgInfo\022\017\n\007version\030\001 \001(\t\022\016\n\006commit\030\002 \001("
+  "\t\"\271\001\n\014MesgLogEntry\022(\n\004time\030\001 \001(\0132\032.googl"
+  "e.protobuf.Timestamp\022)\n\005level\030\002 \001(\0162\032.ro"
+  "cvad.MesgLogEntry.Level\022\014\n\004text\030\003 \001(\t\"F\n"
+  "\005Level\022\010\n\004CRIT\020\000\022\t\n\005ERROR\020\001\022\010\n\004WARN\020\002\022\010\n"
+  "\004INFO\020\003\022\t\n\005DEBUG\020\004\022\t\n\005TRACE\020\005\"\017\n\rMesgAdd"
+  "Device\"\022\n\020MesgDeleteDevice2\243\002\n\016DriverPro"
+  "tocol\022,\n\004ping\022\020.rocvad.MesgNone\032\020.rocvad"
+  ".MesgNone\"\000\0220\n\010get_info\022\020.rocvad.MesgNon"
+  "e\032\020.rocvad.MesgInfo\"\000\0229\n\013stream_logs\022\020.r"
+  "ocvad.MesgNone\032\024.rocvad.MesgLogEntry\"\0000\001"
+  "\0227\n\nadd_device\022\025.rocvad.MesgAddDevice\032\020."
+  "rocvad.MesgNone\"\000\022=\n\rdelete_device\022\030.roc"
+  "vad.MesgDeleteDevice\032\020.rocvad.MesgNone\"\000"
+  "b\006proto3"
   ;
+static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2eproto_deps[1] = {
+  &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
+};
 static ::_pbi::once_flag descriptor_table_driver_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_driver_5fprotocol_2eproto = {
-    false, false, 457, descriptor_table_protodef_driver_5fprotocol_2eproto,
+    false, false, 648, descriptor_table_protodef_driver_5fprotocol_2eproto,
     "driver_protocol.proto",
-    &descriptor_table_driver_5fprotocol_2eproto_once, nullptr, 0, 5,
+    &descriptor_table_driver_5fprotocol_2eproto_once, descriptor_table_driver_5fprotocol_2eproto_deps, 1, 5,
     schemas, file_default_instances, TableStruct_driver_5fprotocol_2eproto::offsets,
     file_level_metadata_driver_5fprotocol_2eproto, file_level_enum_descriptors_driver_5fprotocol_2eproto,
     file_level_service_descriptors_driver_5fprotocol_2eproto,
@@ -167,6 +179,35 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_driver_5
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_driver_5fprotocol_2eproto(&descriptor_table_driver_5fprotocol_2eproto);
 namespace rocvad {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MesgLogEntry_Level_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_driver_5fprotocol_2eproto);
+  return file_level_enum_descriptors_driver_5fprotocol_2eproto[0];
+}
+bool MesgLogEntry_Level_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+constexpr MesgLogEntry_Level MesgLogEntry::CRIT;
+constexpr MesgLogEntry_Level MesgLogEntry::ERROR;
+constexpr MesgLogEntry_Level MesgLogEntry::WARN;
+constexpr MesgLogEntry_Level MesgLogEntry::INFO;
+constexpr MesgLogEntry_Level MesgLogEntry::DEBUG;
+constexpr MesgLogEntry_Level MesgLogEntry::TRACE;
+constexpr MesgLogEntry_Level MesgLogEntry::Level_MIN;
+constexpr MesgLogEntry_Level MesgLogEntry::Level_MAX;
+constexpr int MesgLogEntry::Level_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 
 // ===================================================================
 
@@ -465,8 +506,19 @@ void MesgInfo::InternalSwap(MesgInfo* other) {
 
 class MesgLogEntry::_Internal {
  public:
+  static const ::PROTOBUF_NAMESPACE_ID::Timestamp& time(const MesgLogEntry* msg);
 };
 
+const ::PROTOBUF_NAMESPACE_ID::Timestamp&
+MesgLogEntry::_Internal::time(const MesgLogEntry* msg) {
+  return *msg->_impl_.time_;
+}
+void MesgLogEntry::clear_time() {
+  if (GetArenaForAllocation() == nullptr && _impl_.time_ != nullptr) {
+    delete _impl_.time_;
+  }
+  _impl_.time_ = nullptr;
+}
 MesgLogEntry::MesgLogEntry(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -478,6 +530,8 @@ MesgLogEntry::MesgLogEntry(const MesgLogEntry& from)
   MesgLogEntry* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.text_){}
+    , decltype(_impl_.time_){nullptr}
+    , decltype(_impl_.level_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -489,6 +543,10 @@ MesgLogEntry::MesgLogEntry(const MesgLogEntry& from)
     _this->_impl_.text_.Set(from._internal_text(), 
       _this->GetArenaForAllocation());
   }
+  if (from._internal_has_time()) {
+    _this->_impl_.time_ = new ::PROTOBUF_NAMESPACE_ID::Timestamp(*from._impl_.time_);
+  }
+  _this->_impl_.level_ = from._impl_.level_;
   // @@protoc_insertion_point(copy_constructor:rocvad.MesgLogEntry)
 }
 
@@ -498,6 +556,8 @@ inline void MesgLogEntry::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.text_){}
+    , decltype(_impl_.time_){nullptr}
+    , decltype(_impl_.level_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.text_.InitDefault();
@@ -518,6 +578,7 @@ MesgLogEntry::~MesgLogEntry() {
 inline void MesgLogEntry::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.text_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.time_;
 }
 
 void MesgLogEntry::SetCachedSize(int size) const {
@@ -531,6 +592,11 @@ void MesgLogEntry::Clear() {
   (void) cached_has_bits;
 
   _impl_.text_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.time_ != nullptr) {
+    delete _impl_.time_;
+  }
+  _impl_.time_ = nullptr;
+  _impl_.level_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -540,9 +606,26 @@ const char* MesgLogEntry::_InternalParse(const char* ptr, ::_pbi::ParseContext* 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string text = 1;
+      // .google.protobuf.Timestamp time = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_time(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .rocvad.MesgLogEntry.Level level = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_level(static_cast<::rocvad::MesgLogEntry_Level>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // string text = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_text();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -579,14 +662,28 @@ uint8_t* MesgLogEntry::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string text = 1;
+  // .google.protobuf.Timestamp time = 1;
+  if (this->_internal_has_time()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::time(this),
+        _Internal::time(this).GetCachedSize(), target, stream);
+  }
+
+  // .rocvad.MesgLogEntry.Level level = 2;
+  if (this->_internal_level() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_level(), target);
+  }
+
+  // string text = 3;
   if (!this->_internal_text().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_text().data(), static_cast<int>(this->_internal_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "rocvad.MesgLogEntry.text");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_text(), target);
+        3, this->_internal_text(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -605,11 +702,24 @@ size_t MesgLogEntry::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string text = 1;
+  // string text = 3;
   if (!this->_internal_text().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_text());
+  }
+
+  // .google.protobuf.Timestamp time = 1;
+  if (this->_internal_has_time()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.time_);
+  }
+
+  // .rocvad.MesgLogEntry.Level level = 2;
+  if (this->_internal_level() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_level());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -632,6 +742,13 @@ void MesgLogEntry::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::P
 
   if (!from._internal_text().empty()) {
     _this->_internal_set_text(from._internal_text());
+  }
+  if (from._internal_has_time()) {
+    _this->_internal_mutable_time()->::PROTOBUF_NAMESPACE_ID::Timestamp::MergeFrom(
+        from._internal_time());
+  }
+  if (from._internal_level() != 0) {
+    _this->_internal_set_level(from._internal_level());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -656,6 +773,12 @@ void MesgLogEntry::InternalSwap(MesgLogEntry* other) {
       &_impl_.text_, lhs_arena,
       &other->_impl_.text_, rhs_arena
   );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(MesgLogEntry, _impl_.level_)
+      + sizeof(MesgLogEntry::_impl_.level_)
+      - PROTOBUF_FIELD_OFFSET(MesgLogEntry, _impl_.time_)>(
+          reinterpret_cast<char*>(&_impl_.time_),
+          reinterpret_cast<char*>(&other->_impl_.time_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata MesgLogEntry::GetMetadata() const {

@@ -13,6 +13,13 @@
 
 using namespace rocvad;
 
+Connector::Connector(bool quiet)
+    : quiet_(quiet)
+{
+    // TODO: get address from Info.plist
+    driver_address_ = "127.0.0.1:9712";
+}
+
 Connector::~Connector()
 {
     disconnect();
@@ -20,21 +27,22 @@ Connector::~Connector()
 
 DriverProtocol::Stub* Connector::connect()
 {
-    // TODO: get address from Info.plist
-    const std::string driver_address = "127.0.0.1:9712";
-
-    spdlog::info("trying to connect to driver at {}", driver_address);
+    spdlog::info("trying to connect to driver at {}", driver_address_);
 
     spdlog::debug("creating rpc channel");
 
     if (!(channel_ = grpc::CreateChannel(
-              driver_address, grpc::InsecureChannelCredentials()))) {
-        spdlog::error("can't connect to driver: failed to create rpc channel");
+              driver_address_, grpc::InsecureChannelCredentials()))) {
+        spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
+            "can't connect to driver: failed to create rpc channel");
+        disconnect();
         return {};
     }
 
     if (!(stub_ = DriverProtocol::NewStub(channel_))) {
-        spdlog::error("can't connect to driver: failed to create rpc stub");
+        spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
+            "can't connect to driver: failed to create rpc stub");
+        disconnect();
         return {};
     }
 
@@ -47,7 +55,8 @@ DriverProtocol::Stub* Connector::connect()
     const grpc::Status status = stub_->ping(&context, request, &response);
 
     if (!status.ok()) {
-        spdlog::error("can't connect to driver: failed to ping rpc server");
+        spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
+            "can't connect to driver: failed to ping rpc server");
         disconnect();
         return {};
     }

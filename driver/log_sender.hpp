@@ -24,10 +24,7 @@ class LogSender : public spdlog::sinks::base_sink<std::mutex>,
                   public std::enable_shared_from_this<LogSender>
 {
 public:
-    LogSender(std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink,
-        grpc::ServerWriter<MesgLogEntry>& stream_writer);
-
-    ~LogSender() override;
+    LogSender(grpc::ServerWriter<MesgLogEntry>& stream_writer);
 
     LogSender(const LogSender&) = delete;
     LogSender& operator=(const LogSender&) = delete;
@@ -39,8 +36,6 @@ protected:
     void flush_() override;
 
 private:
-    std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink_;
-
     grpc::ServerWriter<MesgLogEntry>& stream_writer_;
 
     std::mutex mutex_;
