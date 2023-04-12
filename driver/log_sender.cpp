@@ -29,7 +29,7 @@ LogSender::~LogSender()
     dist_sink_->remove_sink(shared_from_this());
 }
 
-void LogSender::wait_eof()
+void LogSender::wait_client_disconnect()
 {
     std::unique_lock lock(mutex_);
 

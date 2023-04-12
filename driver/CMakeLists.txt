@@ -8,6 +8,7 @@ add_library(${DRIVER_NAME} MODULE
   "device.cpp"
   "device_manager.cpp"
   "driver.cpp"
+  "driver_service.cpp"
   "entry_point.cpp"
   "log_manager.cpp"
   "log_sender.cpp"

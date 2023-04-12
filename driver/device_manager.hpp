@@ -9,8 +9,6 @@
 #pragma once
 
 #include "device.hpp"
-#include "driver_protocol.hpp"
-#include "log_manager.hpp"
 
 #include <aspl/Plugin.hpp>
 
@@ -21,37 +19,18 @@
 
 namespace rocvad {
 
-class DeviceManager : public DriverProtocol::Service
+class DeviceManager
 {
 public:
-    DeviceManager(std::shared_ptr<LogManager> log_manager,
-        std::shared_ptr<aspl::Plugin> plugin);
+    DeviceManager(std::shared_ptr<aspl::Plugin> plugin);
 
     DeviceManager(const DeviceManager&) = delete;
     DeviceManager& operator=(const DeviceManager&) = delete;
 
-    grpc::Status ping(grpc::ServerContext* context,
-        const MesgNone* request,
-        MesgNone* response) override;
-
-    grpc::Status get_info(grpc::ServerContext* context,
-        const MesgNone* request,
-        MesgInfo* response) override;
-
-    grpc::Status stream_logs(grpc::ServerContext* context,
-        const MesgNone* request,
-        grpc::ServerWriter<MesgLogEntry>* writer) override;
-
-    grpc::Status add_device(grpc::ServerContext* context,
-        const MesgAddDevice* request,
-        MesgNone* response) override;
-
-    grpc::Status delete_device(grpc::ServerContext* context,
-        const MesgDeleteDevice* request,
-        MesgNone* response) override;
+    void add_device();
+    void delete_device();
 
 private:
-    std::shared_ptr<LogManager> log_manager_;
     std::shared_ptr<aspl::Plugin> plugin_;
 
     std::mutex device_mutex_;

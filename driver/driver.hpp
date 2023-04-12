@@ -9,6 +9,7 @@
 #pragma once
 
 #include "device_manager.hpp"
+#include "driver_service.hpp"
 #include "log_manager.hpp"
 
 #include <aspl/Driver.hpp>
@@ -38,6 +39,7 @@ private:
 
     std::shared_ptr<LogManager> log_manager_;
     std::shared_ptr<DeviceManager> device_manager_;
+    std::unique_ptr<DriverService> driver_service_;
 
     std::unique_ptr<grpc::Server> rpc_server_;
 };

@@ -27,7 +27,9 @@ Driver::Driver()
     plugin_ = std::make_shared<aspl::Plugin>(context, pluginParams);
     driver_ = std::make_shared<aspl::Driver>(context, plugin_);
 
-    device_manager_ = std::make_shared<DeviceManager>(log_manager_, plugin_);
+    device_manager_ = std::make_shared<DeviceManager>(plugin_);
+
+    driver_service_ = std::make_unique<DriverService>(log_manager_, device_manager_);
 
     grpc::ServerBuilder rpc_builder;
 
@@ -35,7 +37,7 @@ Driver::Driver()
     const auto address = "127.0.0.1:9712";
 
     rpc_builder.AddListeningPort(address, grpc::InsecureServerCredentials());
-    rpc_builder.RegisterService(device_manager_.get());
+    rpc_builder.RegisterService(driver_service_.get());
 
     spdlog::info("starting rpc server at {}", address);
 

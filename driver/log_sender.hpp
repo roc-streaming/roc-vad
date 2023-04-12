@@ -32,7 +32,7 @@ public:
     LogSender(const LogSender&) = delete;
     LogSender& operator=(const LogSender&) = delete;
 
-    void wait_eof();
+    void wait_client_disconnect();
 
 protected:
     void sink_it_(const spdlog::details::log_msg& msg) override;
