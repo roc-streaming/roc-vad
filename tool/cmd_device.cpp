@@ -10,7 +10,7 @@
 #include "cmd_device_add.hpp"
 #include "cmd_device_delete.hpp"
 
-using namespace rcp;
+using namespace rocvad;
 
 CmdDevice::CmdDevice(CLI::App& parent)
 {

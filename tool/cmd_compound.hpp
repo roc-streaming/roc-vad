@@ -13,7 +13,7 @@
 #include <memory>
 #include <vector>
 
-namespace rcp {
+namespace rocvad {
 
 class CmdCompound : public CmdBase
 {
@@ -22,10 +22,10 @@ public:
     bool execute() override;
 
 protected:
-    void register_subcommand(std::shared_ptr<rcp::CmdBase> subcommand);
+    void register_subcommand(std::shared_ptr<CmdBase> subcommand);
 
 private:
-    std::vector<std::shared_ptr<rcp::CmdBase>> subcommands_;
+    std::vector<std::shared_ptr<CmdBase>> subcommands_;
 };
 
-} // namespace rcp
+} // namespace rocvad

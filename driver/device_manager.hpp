@@ -9,7 +9,7 @@
 #pragma once
 
 #include "device.hpp"
-#include "device_manager_protocol.hpp"
+#include "driver_protocol.hpp"
 #include "log_manager.hpp"
 
 #include <aspl/Plugin.hpp>
@@ -19,9 +19,9 @@
 #include <string>
 #include <unordered_map>
 
-namespace rcp {
+namespace rocvad {
 
-class DeviceManager : public proto::DeviceManagerProtocol::Service
+class DeviceManager : public DriverProtocol::Service
 {
 public:
     DeviceManager(std::shared_ptr<LogManager> log_manager,
@@ -31,24 +31,24 @@ public:
     DeviceManager& operator=(const DeviceManager&) = delete;
 
     grpc::Status ping(grpc::ServerContext* context,
-        const proto::None* request,
-        proto::None* response) override;
+        const MesgNone* request,
+        MesgNone* response) override;
 
     grpc::Status get_info(grpc::ServerContext* context,
-        const proto::None* request,
-        proto::Info* response) override;
+        const MesgNone* request,
+        MesgInfo* response) override;
 
     grpc::Status stream_logs(grpc::ServerContext* context,
-        const proto::None* request,
-        grpc::ServerWriter<proto::LogMessage>* writer) override;
+        const MesgNone* request,
+        grpc::ServerWriter<MesgLogEntry>* writer) override;
 
     grpc::Status add_device(grpc::ServerContext* context,
-        const proto::AddDeviceArgs* request,
-        proto::None* response) override;
+        const MesgAddDevice* request,
+        MesgNone* response) override;
 
     grpc::Status delete_device(grpc::ServerContext* context,
-        const proto::DeleteDeviceArgs* request,
-        proto::None* response) override;
+        const MesgDeleteDevice* request,
+        MesgNone* response) override;
 
 private:
     std::shared_ptr<LogManager> log_manager_;
@@ -58,4 +58,4 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Device>> devices_;
 };
 
-} // namespace rcp
+} // namespace rocvad

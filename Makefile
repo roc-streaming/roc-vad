@@ -17,29 +17,29 @@ clean:
 	rm -rf bin build
 
 info:
-	ls -lh bin/rcpadm bin/rcp_plugin.driver/Contents/MacOS/rcp_plugin
+	ls -lh bin/roc-vad bin/roc_vad.driver/Contents/MacOS/roc_vad
 	@echo
-	file bin/rcpadm bin/rcp_plugin.driver/Contents/MacOS/rcp_plugin
+	file bin/roc-vad bin/roc_vad.driver/Contents/MacOS/roc_vad
 	@echo
-	otool -L bin/rcpadm
+	otool -L bin/roc-vad
 	@echo
-	otool -L bin/rcp_plugin.driver/Contents/MacOS/rcp_plugin
+	otool -L bin/roc_vad.driver/Contents/MacOS/roc_vad
 	@echo
-	nm -gU bin/rcpadm
-	nm -gU bin/rcp_plugin.driver/Contents/MacOS/rcp_plugin
+	nm -gU bin/roc-vad
+	nm -gU bin/roc_vad.driver/Contents/MacOS/roc_vad
 
 fmt:
 	find -type f -name '*.[ch]pp' -not -path './3rdparty/*' -not -name '*.pb.*' \
 		| xargs clang-format --verbose -i
 
 install:
-	cp bin/rcpadm /usr/local/bin/
+	cp bin/roc-vad /usr/local/bin/
 	mkdir -p /Library/Audio/Plug-Ins/HAL/
-	cp -a bin/rcp_plugin.driver /Library/Audio/Plug-Ins/HAL/
+	cp -a bin/roc_vad.driver /Library/Audio/Plug-Ins/HAL/
 
 uninstall:
-	rm -f /usr/local/bin/rcpadm
-	rm -rf /Library/Audio/Plug-Ins/HAL/rcp_plugin.driver
+	rm -f /usr/local/bin/roc-vad
+	rm -rf /Library/Audio/Plug-Ins/HAL/roc_vad.driver
 
 kickstart:
 	launchctl kickstart -k system/com.apple.audio.coreaudiod

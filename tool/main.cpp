@@ -15,6 +15,8 @@
 #include <cstdlib>
 #include <memory>
 
+using namespace rocvad;
+
 namespace {
 
 void spdlog_init(int verbosity, bool force_color, bool force_no_color)
@@ -56,7 +58,7 @@ void spdlog_init(int verbosity, bool force_color, bool force_no_color)
 
 int main(int argc, char** argv)
 {
-    CLI::App app{"Roc CoreAudio Plugin control tool"};
+    CLI::App app{"Roc Virtual Audio Device control tool"};
 
     int verbosity = 0;
     bool force_color = false, force_no_color = false;
@@ -68,7 +70,7 @@ int main(int argc, char** argv)
     app.add_flag("-C", force_color, "always use colored output");
     app.add_flag("-n", force_no_color, "never use colored output");
 
-    auto cmd = std::make_shared<rcp::CmdRoot>(app);
+    auto cmd = std::make_shared<CmdRoot>(app);
 
     try {
         app.parse(argc, argv);

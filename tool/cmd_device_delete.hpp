@@ -10,7 +10,7 @@
 
 #include "cmd_base.hpp"
 
-namespace rcp {
+namespace rocvad {
 
 class CmdDeviceDelete : public CmdBase
 {
@@ -20,4 +20,4 @@ public:
     bool execute() override;
 };
 
-} // namespace rcp
+} // namespace rocvad

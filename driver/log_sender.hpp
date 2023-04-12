@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "device_manager_protocol.hpp"
+#include "driver_protocol.hpp"
 
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/sinks/dist_sink.h>
@@ -18,14 +18,14 @@
 #include <memory>
 #include <mutex>
 
-namespace rcp {
+namespace rocvad {
 
 class LogSender : public spdlog::sinks::base_sink<std::mutex>,
                   public std::enable_shared_from_this<LogSender>
 {
 public:
     LogSender(std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink,
-        grpc::ServerWriter<proto::LogMessage>& stream_writer);
+        grpc::ServerWriter<MesgLogEntry>& stream_writer);
 
     ~LogSender() override;
 
@@ -41,7 +41,7 @@ protected:
 private:
     std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink_;
 
-    grpc::ServerWriter<proto::LogMessage>& stream_writer_;
+    grpc::ServerWriter<MesgLogEntry>& stream_writer_;
 
     std::mutex mutex_;
     std::condition_variable cond_;
@@ -50,4 +50,4 @@ private:
     spdlog::memory_buf_t buf_;
 };
 
-} // namespace rcp
+} // namespace rocvad

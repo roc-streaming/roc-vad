@@ -10,7 +10,7 @@
 
 #include <cassert>
 
-using namespace rcp;
+using namespace rocvad;
 
 void CmdBase::register_command(CLI::App* command)
 {

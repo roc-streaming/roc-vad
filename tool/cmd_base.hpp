@@ -10,7 +10,7 @@
 
 #include <CLI11.hpp>
 
-namespace rcp {
+namespace rocvad {
 
 class CmdBase
 {
@@ -31,4 +31,4 @@ private:
     CLI::App* command_ = nullptr;
 };
 
-} // namespace rcp
+} // namespace rocvad

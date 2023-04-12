@@ -1,8 +1,8 @@
-set(PROTO_FILES
-  "device_manager_protocol"
+set(RPC_FILES
+  "driver_protocol"
   )
 
-foreach(FILE IN LISTS PROTO_FILES)
+foreach(FILE IN LISTS RPC_FILES)
   add_custom_command(
     COMMENT "Running protoc on ${FILE}.proto"
     DEPENDS
@@ -38,10 +38,10 @@ foreach(FILE IN LISTS PROTO_FILES)
   )
 endforeach()
 
-add_library(${PROTO_LIB} STATIC
+add_library(${RPC_LIB} STATIC
   ${GENERATED_SOURCES}
 )
 
-set_target_properties(${PROTO_LIB} PROPERTIES
+set_target_properties(${RPC_LIB} PROPERTIES
   COMPILE_FLAGS "-w"
 )

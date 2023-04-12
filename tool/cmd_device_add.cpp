@@ -11,7 +11,7 @@
 
 #include <spdlog/spdlog.h>
 
-using namespace rcp;
+using namespace rocvad;
 
 CmdDeviceAdd::CmdDeviceAdd(CLI::App& parent)
 {
@@ -30,8 +30,8 @@ bool CmdDeviceAdd::execute()
     spdlog::debug("sending add_device command");
 
     grpc::ClientContext context;
-    proto::AddDeviceArgs request;
-    proto::None response;
+    MesgAddDevice request;
+    MesgNone response;
 
     const grpc::Status status = stub->add_device(&context, request, &response);
 

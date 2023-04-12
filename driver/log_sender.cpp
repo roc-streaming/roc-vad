@@ -10,10 +10,10 @@
 
 #include <spdlog/spdlog.h>
 
-namespace rcp {
+namespace rocvad {
 
 LogSender::LogSender(std::shared_ptr<spdlog::sinks::dist_sink<std::mutex>> dist_sink,
-    grpc::ServerWriter<proto::LogMessage>& stream_writer)
+    grpc::ServerWriter<MesgLogEntry>& stream_writer)
     : dist_sink_(dist_sink)
     , stream_writer_(stream_writer)
 {
@@ -46,10 +46,10 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
 
     formatter_->format(msg, buf_);
 
-    proto::LogMessage stream_msg;
-    stream_msg.set_text(std::string(buf_.begin(), buf_.end()));
+    MesgLogEntry entry;
+    entry.set_text(std::string(buf_.begin(), buf_.end()));
 
-    const bool result = stream_writer_.Write(stream_msg);
+    const bool result = stream_writer_.Write(entry);
 
     if (!result) {
         spdlog::debug("client log stream disconnected");
@@ -65,4 +65,4 @@ void LogSender::flush_()
 {
 }
 
-} // namespace rcp
+} // namespace rocvad

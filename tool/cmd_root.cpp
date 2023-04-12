@@ -10,7 +10,7 @@
 #include "cmd_device.hpp"
 #include "cmd_info.hpp"
 
-using namespace rcp;
+using namespace rocvad;
 
 CmdRoot::CmdRoot(CLI::App& parent)
 {

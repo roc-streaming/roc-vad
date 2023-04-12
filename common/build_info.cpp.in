@@ -8,9 +8,9 @@
 
 #include "build_info.hpp"
 
-namespace rcp {
+namespace rocvad {
 
 const char* BuildInfo::version = "${PROJECT_VERSION}";
 const char* BuildInfo::commit = "${PROJECT_COMMIT}";
 
-} // namespace rcp
+} // namespace rocvad

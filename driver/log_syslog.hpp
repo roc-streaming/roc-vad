@@ -12,7 +12,7 @@
 
 #include <mutex>
 
-namespace rcp {
+namespace rocvad {
 
 class LogSyslog : public spdlog::sinks::base_sink<std::mutex>
 {
@@ -30,4 +30,4 @@ private:
     spdlog::memory_buf_t buf_;
 };
 
-} // namespace rcp
+} // namespace rocvad

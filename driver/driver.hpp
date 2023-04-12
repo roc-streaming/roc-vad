@@ -19,7 +19,7 @@
 
 #include <memory>
 
-namespace rcp {
+namespace rocvad {
 
 class Driver
 {
@@ -42,4 +42,4 @@ private:
     std::unique_ptr<grpc::Server> rpc_server_;
 };
 
-} // namespace rcp
+} // namespace rocvad

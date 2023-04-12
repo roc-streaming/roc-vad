@@ -14,11 +14,11 @@
 
 #include <iostream>
 
-using namespace rcp;
+using namespace rocvad;
 
 CmdInfo::CmdInfo(CLI::App& parent)
 {
-    register_command(parent.add_subcommand("info", "print plugin and tool info"));
+    register_command(parent.add_subcommand("info", "print driver and tool info"));
 }
 
 bool CmdInfo::execute()
@@ -33,21 +33,21 @@ bool CmdInfo::execute()
     spdlog::debug("sending get_info command");
 
     grpc::ClientContext context;
-    proto::None request;
-    proto::Info response;
+    MesgNone request;
+    MesgInfo response;
 
     const grpc::Status status = stub->get_info(&context, request, &response);
 
     if (!status.ok()) {
-        spdlog::error("failed to get plugin info");
+        spdlog::error("failed to get driver info");
         return false;
     }
 
-    std::cout << "plugin is loaded\n";
+    std::cout << "driver is loaded\n";
 
     std::cout << "\n";
 
-    std::cout << "plugin:\n";
+    std::cout << "driver:\n";
     std::cout << "  version: " << response.version() << "\n";
     std::cout << "  commit:  " << response.commit().substr(0, 7) << "\n";
 

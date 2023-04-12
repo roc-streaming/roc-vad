@@ -15,17 +15,18 @@ add_executable(${TOOL_NAME}
 )
 
 target_link_libraries(${TOOL_NAME} PRIVATE
+  # internal libs
   ${COMMON_LIB}
-  ${PROTO_LIB}
-)
+  ${RPC_LIB}
 
-target_link_libraries(${TOOL_NAME} PRIVATE
+  # third-party libs
   gRPC::grpc++_unsecure
   spdlog::spdlog
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   target_link_options(${TOOL_NAME} PRIVATE
+    # hide all symbols, this significantly reduces binary size
     "-Wl,-unexported_symbol,*"
   )
   add_custom_command(TARGET ${TOOL_NAME} POST_BUILD

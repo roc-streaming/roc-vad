@@ -1,6 +1,8 @@
 3rdparty/CLI11
-3rdparty/Roc
 3rdparty/gRPC
 3rdparty/libASPL
+3rdparty/roc
+3rdparty/spdlog
 build
 bin
+*.pb.*

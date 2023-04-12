@@ -10,7 +10,7 @@
 
 #include <iterator>
 
-namespace rcp {
+namespace rocvad {
 
 LogManager::LogManager()
 {
@@ -41,9 +41,9 @@ LogManager::~LogManager()
 }
 
 std::shared_ptr<LogSender> LogManager::attach_sender(
-    grpc::ServerWriter<proto::LogMessage>& stream_writer)
+    grpc::ServerWriter<MesgLogEntry>& stream_writer)
 {
     return std::make_shared<LogSender>(dist_sink_, stream_writer);
 }
 
-} // namespace rcp
+} // namespace rocvad

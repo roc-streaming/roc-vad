@@ -10,7 +10,7 @@
 
 #include <spdlog/spdlog.h>
 
-namespace rcp {
+namespace rocvad {
 
 Driver::Driver()
 {
@@ -56,4 +56,4 @@ AudioServerPlugInDriverRef Driver::reference()
     return driver_->GetReference();
 }
 
-} // namespace rcp
+} // namespace rocvad

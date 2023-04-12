@@ -10,7 +10,7 @@
 
 #include <syslog.h>
 
-namespace rcp {
+namespace rocvad {
 
 namespace {
 
@@ -41,4 +41,4 @@ void LogSyslog::flush_()
 {
 }
 
-} // namespace rcp
+} // namespace rocvad

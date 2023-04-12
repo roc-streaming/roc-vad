@@ -8,7 +8,7 @@
 
 #pragma once
 
-namespace rcp {
+namespace rocvad {
 
 struct BuildInfo
 {
@@ -16,4 +16,4 @@ struct BuildInfo
     static const char* commit;
 };
 
-} // namespace rcp
+} // namespace rocvad

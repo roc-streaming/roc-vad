@@ -11,48 +11,48 @@
 #include <grpcpp/create_channel.h>
 #include <spdlog/spdlog.h>
 
-using namespace rcp;
+using namespace rocvad;
 
 Connector::~Connector()
 {
     disconnect();
 }
 
-proto::DeviceManagerProtocol::Stub* Connector::connect()
+DriverProtocol::Stub* Connector::connect()
 {
     // TODO: get address from Info.plist
-    const std::string plugin_address = "127.0.0.1:9712";
+    const std::string driver_address = "127.0.0.1:9712";
 
-    spdlog::info("trying to connect to plugin at {}", plugin_address);
+    spdlog::info("trying to connect to driver at {}", driver_address);
 
     spdlog::debug("creating rpc channel");
 
     if (!(channel_ = grpc::CreateChannel(
-              plugin_address, grpc::InsecureChannelCredentials()))) {
-        spdlog::error("can't connect to plugin: failed to create rpc channel");
+              driver_address, grpc::InsecureChannelCredentials()))) {
+        spdlog::error("can't connect to driver: failed to create rpc channel");
         return {};
     }
 
-    if (!(stub_ = proto::DeviceManagerProtocol::NewStub(channel_))) {
-        spdlog::error("can't connect to plugin: failed to create rpc stub");
+    if (!(stub_ = DriverProtocol::NewStub(channel_))) {
+        spdlog::error("can't connect to driver: failed to create rpc stub");
         return {};
     }
 
     spdlog::debug("sending ping command");
 
     grpc::ClientContext context;
-    proto::None request;
-    proto::None response;
+    MesgNone request;
+    MesgNone response;
 
     const grpc::Status status = stub_->ping(&context, request, &response);
 
     if (!status.ok()) {
-        spdlog::error("can't connect to plugin: failed to ping rpc server");
+        spdlog::error("can't connect to driver: failed to ping rpc server");
         disconnect();
         return {};
     }
 
-    spdlog::info("successfully connected to plugin");
+    spdlog::info("successfully connected to driver");
 
     return stub_.get();
 }
@@ -60,7 +60,7 @@ proto::DeviceManagerProtocol::Stub* Connector::connect()
 void Connector::disconnect()
 {
     if (stub_ || channel_) {
-        spdlog::info("disconnecting from plugin");
+        spdlog::info("disconnecting from driver");
 
         stub_.reset();
         channel_.reset();

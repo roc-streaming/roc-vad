@@ -10,7 +10,7 @@
 
 #include <spdlog/spdlog.h>
 
-namespace rcp {
+namespace rocvad {
 
 Device::Device(std::shared_ptr<aspl::Plugin> plugin)
     : plugin_(plugin)
@@ -38,4 +38,4 @@ Device::~Device()
     plugin_->RemoveDevice(device_);
 }
 
-} // namespace rcp
+} // namespace rocvad

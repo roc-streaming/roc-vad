@@ -10,6 +10,8 @@
 
 #include <CoreAudio/AudioServerPlugIn.h>
 
+using namespace rocvad;
+
 extern "C" __attribute__((visibility("default"))) void* entry_point(
     CFAllocatorRef allocator,
     CFUUIDRef typeUUID)
@@ -20,7 +22,7 @@ extern "C" __attribute__((visibility("default"))) void* entry_point(
         return nullptr;
     }
 
-    static rcp::Driver driver;
+    static Driver driver;
 
     return driver.reference();
 }

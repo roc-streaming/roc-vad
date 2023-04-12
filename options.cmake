@@ -2,17 +2,17 @@
 option(BOOTSTRAP "Bootstrap dependencies and exit" OFF)
 message(STATUS "Bootstrap mode: ${BOOTSTRAP}")
 
-# plugin address
-set(PLUGIN_SOCKET "127.0.0.1:9712"
-  CACHE STRING "Specify plugin RPC socket address"
+# driver address
+set(DRIVER_SOCKET "127.0.0.1:9712"
+  CACHE STRING "Specify driver RPC socket address"
 )
 
-# plugin uuid
-set(PLUGIN_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B"
-  CACHE STRING "Specify plugin UUID"
+# driver uuid
+set(DRIVER_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B"
+  CACHE STRING "Specify driver UUID"
 )
 
-# plugin signature
+# driver signature
 set(CODESIGN_ID "" CACHE STRING "Specify Codesign ID")
 if(NOT CODESIGN_ID)
   execute_process(COMMAND

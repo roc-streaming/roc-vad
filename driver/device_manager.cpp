@@ -11,7 +11,7 @@
 
 #include <spdlog/spdlog.h>
 
-namespace rcp {
+namespace rocvad {
 
 DeviceManager::DeviceManager(std::shared_ptr<LogManager> log_manager,
     std::shared_ptr<aspl::Plugin> plugin)
@@ -21,8 +21,8 @@ DeviceManager::DeviceManager(std::shared_ptr<LogManager> log_manager,
 }
 
 grpc::Status DeviceManager::ping(grpc::ServerContext* context,
-    const proto::None* request,
-    proto::None* response)
+    const MesgNone* request,
+    MesgNone* response)
 {
     // no lock
 
@@ -32,8 +32,8 @@ grpc::Status DeviceManager::ping(grpc::ServerContext* context,
 }
 
 grpc::Status DeviceManager::get_info(grpc::ServerContext* context,
-    const proto::None* request,
-    proto::Info* response)
+    const MesgNone* request,
+    MesgInfo* response)
 {
     // no lock
 
@@ -46,8 +46,8 @@ grpc::Status DeviceManager::get_info(grpc::ServerContext* context,
 }
 
 grpc::Status DeviceManager::stream_logs(grpc::ServerContext* context,
-    const proto::None* request,
-    grpc::ServerWriter<proto::LogMessage>* writer)
+    const MesgNone* request,
+    grpc::ServerWriter<MesgLogEntry>* writer)
 {
     // no lock
 
@@ -61,8 +61,8 @@ grpc::Status DeviceManager::stream_logs(grpc::ServerContext* context,
 }
 
 grpc::Status DeviceManager::add_device(grpc::ServerContext* context,
-    const proto::AddDeviceArgs* request,
-    proto::None* response)
+    const MesgAddDevice* request,
+    MesgNone* response)
 {
     std::unique_lock device_lock(device_mutex_);
 
@@ -74,8 +74,8 @@ grpc::Status DeviceManager::add_device(grpc::ServerContext* context,
 }
 
 grpc::Status DeviceManager::delete_device(grpc::ServerContext* context,
-    const proto::DeleteDeviceArgs* request,
-    proto::None* response)
+    const MesgDeleteDevice* request,
+    MesgNone* response)
 {
     std::unique_lock device_lock(device_mutex_);
 
@@ -86,4 +86,4 @@ grpc::Status DeviceManager::delete_device(grpc::ServerContext* context,
     return grpc::Status::OK;
 }
 
-} // namespace rcp
+} // namespace rocvad

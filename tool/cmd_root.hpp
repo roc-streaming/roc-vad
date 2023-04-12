@@ -10,7 +10,7 @@
 
 #include "cmd_compound.hpp"
 
-namespace rcp {
+namespace rocvad {
 
 class CmdRoot : public CmdCompound
 {
@@ -18,4 +18,4 @@ public:
     CmdRoot(CLI::App& parent);
 };
 
-} // namespace rcp
+} // namespace rocvad

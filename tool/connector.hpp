@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "device_manager_protocol.hpp"
+#include "driver_protocol.hpp"
 
-namespace rcp {
+namespace rocvad {
 
 class Connector
 {
@@ -21,13 +21,13 @@ public:
     Connector(const Connector&) = delete;
     Connector& operator=(const Connector&) = delete;
 
-    proto::DeviceManagerProtocol::Stub* connect();
+    DriverProtocol::Stub* connect();
 
     void disconnect();
 
 private:
-    std::unique_ptr<proto::DeviceManagerProtocol::Stub> stub_;
+    std::unique_ptr<DriverProtocol::Stub> stub_;
     std::shared_ptr<grpc::Channel> channel_;
 };
 
-} // namespace rcp
+} // namespace rocvad

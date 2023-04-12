@@ -13,7 +13,7 @@
 
 #include <memory>
 
-namespace rcp {
+namespace rocvad {
 
 class Device
 {
@@ -29,4 +29,4 @@ private:
     std::shared_ptr<aspl::Device> device_;
 };
 
-} // namespace rcp
+} // namespace rocvad

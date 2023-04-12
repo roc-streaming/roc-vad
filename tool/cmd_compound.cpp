@@ -12,9 +12,9 @@
 #include <iostream>
 #include <optional>
 
-using namespace rcp;
+using namespace rocvad;
 
-void CmdCompound::register_subcommand(std::shared_ptr<rcp::CmdBase> subcommand)
+void CmdCompound::register_subcommand(std::shared_ptr<CmdBase> subcommand)
 {
     assert(subcommand);
 

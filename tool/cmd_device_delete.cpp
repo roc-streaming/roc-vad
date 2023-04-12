@@ -11,7 +11,7 @@
 
 #include <spdlog/spdlog.h>
 
-using namespace rcp;
+using namespace rocvad;
 
 CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
 {
@@ -30,8 +30,8 @@ bool CmdDeviceDelete::execute()
     spdlog::debug("sending delete_device command");
 
     grpc::ClientContext context;
-    proto::DeleteDeviceArgs request;
-    proto::None response;
+    MesgDeleteDevice request;
+    MesgNone response;
 
     const grpc::Status status = stub->delete_device(&context, request, &response);
 
