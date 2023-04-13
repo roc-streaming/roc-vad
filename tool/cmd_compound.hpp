@@ -20,7 +20,7 @@ class CmdCompound : public CmdBase
 {
 public:
     bool parsed() override;
-    bool execute() override;
+    bool execute(const Environment& env) override;
 
 protected:
     void register_subcommand(std::shared_ptr<CmdBase> subcommand);

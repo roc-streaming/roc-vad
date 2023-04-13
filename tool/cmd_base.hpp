@@ -10,6 +10,8 @@
 
 #include <CLI11.hpp>
 
+#include "environment.hpp"
+
 namespace rocvad {
 
 // Base class for all commands.
@@ -23,7 +25,7 @@ public:
     CmdBase& operator=(const CmdBase&) = delete;
 
     virtual bool parsed();
-    virtual bool execute() = 0;
+    virtual bool execute(const Environment& env) = 0;
 
 protected:
     void register_command(CLI::App* command);

@@ -18,7 +18,7 @@ CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
     register_command(parent.add_subcommand("del", "delete virtual device"));
 }
 
-bool CmdDeviceDelete::execute()
+bool CmdDeviceDelete::execute(const Environment& env)
 {
     Connector conn;
 

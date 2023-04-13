@@ -34,7 +34,7 @@ bool CmdCompound::parsed()
     return false;
 }
 
-bool CmdCompound::execute()
+bool CmdCompound::execute(const Environment& env)
 {
     assert(!subcommands_.empty());
 
@@ -42,7 +42,7 @@ bool CmdCompound::execute()
 
     for (auto& cmd : subcommands_) {
         if (cmd->parsed()) {
-            result = cmd->execute();
+            result = cmd->execute(env);
             break;
         }
     }

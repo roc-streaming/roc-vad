@@ -17,7 +17,7 @@ class CmdInfo : public CmdBase
 public:
     CmdInfo(CLI::App& parent);
 
-    bool execute() override;
+    bool execute(const Environment& env) override;
 };
 
 } // namespace rocvad

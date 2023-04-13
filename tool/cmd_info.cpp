@@ -21,7 +21,7 @@ CmdInfo::CmdInfo(CLI::App& parent)
     register_command(parent.add_subcommand("info", "print driver and tool info"));
 }
 
-bool CmdInfo::execute()
+bool CmdInfo::execute(const Environment& env)
 {
     Connector conn;
 

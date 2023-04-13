@@ -18,7 +18,7 @@ CmdDeviceAdd::CmdDeviceAdd(CLI::App& parent)
     register_command(parent.add_subcommand("add", "add new virtual device"));
 }
 
-bool CmdDeviceAdd::execute()
+bool CmdDeviceAdd::execute(const Environment& env)
 {
     Connector conn;
 

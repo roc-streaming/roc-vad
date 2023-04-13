@@ -81,7 +81,7 @@ CmdLogcat::CmdLogcat(CLI::App& parent)
         parent.add_subcommand("logcat", "receive and print logs from driver"));
 }
 
-bool CmdLogcat::execute()
+bool CmdLogcat::execute(const Environment& env)
 {
     bool has_tried = false, has_connected = false;
 

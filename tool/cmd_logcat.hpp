@@ -20,7 +20,7 @@ class CmdLogcat : public CmdBase
 public:
     CmdLogcat(CLI::App& parent);
 
-    bool execute() override;
+    bool execute(const Environment& env) override;
 
 private:
     bool connect_();

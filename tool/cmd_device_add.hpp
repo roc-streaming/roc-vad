@@ -17,7 +17,7 @@ class CmdDeviceAdd : public CmdBase
 public:
     CmdDeviceAdd(CLI::App& parent);
 
-    bool execute() override;
+    bool execute(const Environment& env) override;
 };
 
 } // namespace rocvad

@@ -8,16 +8,16 @@
 
 #pragma once
 
-#include "cmd_base.hpp"
+#include <spdlog/spdlog.h>
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
+// Command execution environment.
+struct Environment
 {
-public:
-    CmdDeviceDelete(CLI::App& parent);
+    spdlog::level::level_enum log_level = spdlog::level::err;
 
-    bool execute(const Environment& env) override;
+    spdlog::color_mode color_mode = spdlog::color_mode::automatic;
 };
 
 } // namespace rocvad

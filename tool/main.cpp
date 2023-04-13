@@ -20,13 +20,9 @@ using namespace rocvad;
 
 namespace {
 
-void spdlog_init(int verbosity, bool force_color, bool force_no_color)
+void spdlog_init(const Environment& env)
 {
-    auto sink = std::make_shared<spdlog::sinks::stderr_color_sink_mt>(
-        force_no_color ? spdlog::color_mode::never
-        : force_color  ? spdlog::color_mode::always
-                       : spdlog::color_mode::automatic);
-
+    auto sink = std::make_shared<spdlog::sinks::stderr_color_sink_mt>(env.color_mode);
     sink->set_color(spdlog::level::critical, sink->red);
     sink->set_color(spdlog::level::err, sink->red);
     sink->set_color(spdlog::level::warn, sink->yellow);
@@ -37,22 +33,8 @@ void spdlog_init(int verbosity, bool force_color, bool force_no_color)
     auto logger = std::make_shared<spdlog::logger>("console", sink);
     spdlog::set_default_logger(logger);
 
+    spdlog::set_level(env.log_level);
     spdlog::set_pattern("%^%l:%$ %v");
-
-    switch (verbosity) {
-    case 0:
-        spdlog::set_level(spdlog::level::warn);
-        break;
-    case 1:
-        spdlog::set_level(spdlog::level::info);
-        break;
-    case 2:
-        spdlog::set_level(spdlog::level::debug);
-        break;
-    default:
-        spdlog::set_level(spdlog::level::trace);
-        break;
-    }
 }
 
 void grpc_init()
@@ -105,10 +87,33 @@ int main(int argc, char** argv)
         }
     }
 
-    spdlog_init(verbosity, force_color, force_no_color);
+    Environment env;
+
+    switch (verbosity) {
+    case 0:
+        env.log_level = spdlog::level::warn;
+        break;
+    case 1:
+        env.log_level = spdlog::level::info;
+        break;
+    case 2:
+        env.log_level = spdlog::level::debug;
+        break;
+    default:
+        env.log_level = spdlog::level::trace;
+        break;
+    }
+
+    env.color_mode = force_no_color ? spdlog::color_mode::never
+                     : force_color  ? spdlog::color_mode::always
+                                    : spdlog::color_mode::automatic;
+
+    spdlog_init(env);
     grpc_init();
 
-    const int code = cmd->execute() ? EXIT_SUCCESS : EXIT_FAILURE;
+    const int code = cmd->execute(env) ? EXIT_SUCCESS : EXIT_FAILURE;
+
+    cmd.reset();
 
     spdlog::shutdown();
 
