@@ -13,6 +13,7 @@ add_library(${DRIVER_NAME} MODULE
   "log_manager.cpp"
   "log_sender.cpp"
   "log_syslog.cpp"
+  "tracer.cpp"
 )
 
 target_link_libraries(${DRIVER_NAME} PRIVATE

@@ -7,6 +7,7 @@
  */
 
 #include "driver.hpp"
+#include "tracer.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -21,8 +22,7 @@ Driver::Driver()
     aspl::PluginParameters pluginParams;
     pluginParams.Manufacturer = "roc-streaming.org";
 
-    auto tracer = std::make_shared<aspl::Tracer>();
-    auto context = std::make_shared<aspl::Context>(tracer);
+    auto context = std::make_shared<aspl::Context>(std::make_shared<Tracer>());
 
     plugin_ = std::make_shared<aspl::Plugin>(context, pluginParams);
     driver_ = std::make_shared<aspl::Driver>(context, plugin_);

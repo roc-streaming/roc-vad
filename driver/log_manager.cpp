@@ -20,11 +20,9 @@ LogManager::LogManager()
     spdlog::init_thread_pool(10000, 1);
 
     syslog_sink_ = std::make_shared<LogSyslog>();
-    syslog_sink_->set_level(spdlog::level::trace);
     syslog_sink_->set_pattern("[%L%L] %v");
 
     dist_sink_ = std::make_shared<spdlog::sinks::dist_sink_mt>();
-    dist_sink_->set_level(spdlog::level::trace);
 
     auto sinks = {
         std::static_pointer_cast<spdlog::sinks::base_sink<std::mutex>>(syslog_sink_),
@@ -53,7 +51,6 @@ std::shared_ptr<LogSender> LogManager::attach_sender(
     spdlog::debug("attaching log sender to dist sink");
 
     auto sender_sink = std::make_shared<LogSender>(stream_writer);
-    sender_sink->set_level(spdlog::level::trace);
     sender_sink->set_pattern("%v");
 
     dist_sink_->add_sink(sender_sink);
