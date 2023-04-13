@@ -23,12 +23,17 @@ public:
     bool execute(const Environment& env) override;
 
 private:
+    void setup_(const Environment& env);
+    bool run_();
+
     bool connect_();
     void disconnect_();
     void session_();
 
     std::unique_ptr<Connector> conn_;
     DriverProtocol::Stub* stub_ = nullptr;
+
+    std::shared_ptr<spdlog::logger> logger_;
 };
 
 } // namespace rocvad

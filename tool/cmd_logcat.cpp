@@ -7,15 +7,16 @@
  */
 
 #include "cmd_logcat.hpp"
+#include "color_sink.hpp"
 #include "connector.hpp"
 
 #include <google/protobuf/util/time_util.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
 #include <cassert>
 #include <chrono>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <thread>
 
@@ -23,54 +24,39 @@ using namespace rocvad;
 
 namespace {
 
-std::string map_time(google::protobuf::Timestamp timestamp)
+std::chrono::system_clock::time_point map_time(google::protobuf::Timestamp timestamp)
 {
     const int64_t nanoseconds =
         google::protobuf::util::TimeUtil::TimestampToNanoseconds(timestamp);
 
-    const auto time_point = std::chrono::system_clock::time_point(
+    return std::chrono::system_clock::time_point(
         std::chrono::duration_cast<std::chrono::system_clock::duration>(
             std::chrono::nanoseconds(nanoseconds)));
-
-    std::time_t c_time = std::chrono::system_clock::to_time_t(time_point);
-
-    const uint64_t c_milliseconds =
-        uint64_t(std::chrono::duration_cast<std::chrono::milliseconds>(
-                     time_point.time_since_epoch())
-                     .count() %
-                 1000);
-
-    std::stringstream ss;
-
-    ss << std::put_time(std::localtime(&c_time), "%H:%M:%S.") << std::setfill('0')
-       << std::setw(3) << c_milliseconds;
-
-    return ss.str();
 }
 
-const char* map_level(MesgLogEntry::Level level)
+spdlog::level::level_enum map_level(MesgLogEntry::Level level)
 {
     switch (level) {
     case MesgLogEntry::CRIT:
-        return "[CC]";
+        return spdlog::level::critical;
 
     case MesgLogEntry::ERROR:
-        return "[EE]";
+        return spdlog::level::err;
 
     case MesgLogEntry::WARN:
-        return "[WW]";
+        return spdlog::level::warn;
 
     case MesgLogEntry::INFO:
-        return "[II]";
+        return spdlog::level::info;
 
     case MesgLogEntry::DEBUG:
-        return "[DD]";
+        return spdlog::level::debug;
 
     default:
         break;
     }
 
-    return "[TT]";
+    return spdlog::level::trace;
 }
 
 } // namespace
@@ -82,6 +68,22 @@ CmdLogcat::CmdLogcat(CLI::App& parent)
 }
 
 bool CmdLogcat::execute(const Environment& env)
+{
+    setup_(env);
+
+    return run_();
+}
+
+void CmdLogcat::setup_(const Environment& env)
+{
+    logger_ = std::make_shared<spdlog::logger>(
+        "logcat", std::make_shared<ColorSink>(stdout, env.color_mode));
+
+    logger_->set_level(spdlog::level::trace);
+    logger_->set_pattern("%^%H:%M:%S.%e [%L%L] %v%$");
+}
+
+bool CmdLogcat::run_()
 {
     bool has_tried = false, has_connected = false;
 
@@ -157,7 +159,7 @@ void CmdLogcat::session_()
             return;
         }
 
-        std::cout << map_time(entry.time()) << " " << map_level(entry.level()) << " "
-                  << entry.text() << "\n";
+        assert(logger_);
+        logger_->log(map_time(entry.time()), {}, map_level(entry.level()), entry.text());
     }
 }

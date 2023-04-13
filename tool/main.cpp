@@ -7,6 +7,7 @@
  */
 
 #include "cmd_root.hpp"
+#include "color_sink.hpp"
 
 #include <grpc/impl/codegen/log.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -22,15 +23,9 @@ namespace {
 
 void spdlog_init(const Environment& env)
 {
-    auto sink = std::make_shared<spdlog::sinks::stderr_color_sink_mt>(env.color_mode);
-    sink->set_color(spdlog::level::critical, sink->red);
-    sink->set_color(spdlog::level::err, sink->red);
-    sink->set_color(spdlog::level::warn, sink->yellow);
-    sink->set_color(spdlog::level::info, sink->green);
-    sink->set_color(spdlog::level::debug, sink->white);
-    sink->set_color(spdlog::level::trace, sink->white);
+    auto logger = std::make_shared<spdlog::logger>(
+        "default", std::make_shared<ColorSink>(stderr, env.color_mode));
 
-    auto logger = std::make_shared<spdlog::logger>("console", sink);
     spdlog::set_default_logger(logger);
 
     spdlog::set_level(env.log_level);
