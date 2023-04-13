@@ -12,12 +12,13 @@
 
 using namespace rocvad;
 
+// Plugin entry point.
+// coreaudiod invokes it after loading plugin to obtain driver reference,
+// and then works with this driver.
 extern "C" __attribute__((visibility("default"))) void* entry_point(
     CFAllocatorRef allocator,
     CFUUIDRef typeUUID)
 {
-    (void)allocator;
-
     if (!CFEqual(typeUUID, kAudioServerPlugInTypeUUID)) {
         return nullptr;
     }

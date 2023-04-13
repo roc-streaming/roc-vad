@@ -14,6 +14,10 @@
 
 namespace rocvad {
 
+// Syslog sink for spdlog.
+// Created once during initialization.
+// Unlike spdlog::sinks::syslog_sink, does not call openlog(), which
+// we are not allowed to do as a plugin inside coreaudiod.
 class LogSyslog : public spdlog::sinks::base_sink<std::mutex>
 {
 public:

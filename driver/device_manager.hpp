@@ -19,6 +19,7 @@
 
 namespace rocvad {
 
+// Contains table of devices.
 class DeviceManager
 {
 public:

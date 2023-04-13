@@ -21,6 +21,10 @@
 
 namespace rocvad {
 
+// Holds default spdlog logger.
+// Configures spdlog to send logs to two destinations:
+//  - syslog
+//  - dynamically attached and detached LogSender objects
 class LogManager
 {
 public:

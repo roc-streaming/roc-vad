@@ -15,6 +15,7 @@
 
 namespace rocvad {
 
+// Base class for commands that have subcommands.
 class CmdCompound : public CmdBase
 {
 public:

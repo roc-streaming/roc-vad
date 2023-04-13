@@ -15,6 +15,7 @@
 
 namespace rocvad {
 
+// Correspond to one virtual device.
 class Device
 {
 public:
@@ -25,6 +26,9 @@ public:
     Device& operator=(const Device&) = delete;
 
 private:
+    // objects registered in coreaudiod
+    // aspl::Plugin is parent object for all devices
+    // aspl::Device correspond to this specific device
     std::shared_ptr<aspl::Plugin> plugin_;
     std::shared_ptr<aspl::Device> device_;
 };

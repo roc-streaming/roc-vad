@@ -19,8 +19,6 @@ LogManager::LogManager()
 {
     spdlog::init_thread_pool(10000, 1);
 
-    // we can't use spdlog::sinks::syslog_sink because it call openlog(), and
-    // it's not correct to do it inside coreaudiod plugin
     syslog_sink_ = std::make_shared<LogSyslog>();
     syslog_sink_->set_level(spdlog::level::trace);
     syslog_sink_->set_pattern("[%L%L] %v");

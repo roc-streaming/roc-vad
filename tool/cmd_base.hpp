@@ -12,6 +12,7 @@
 
 namespace rocvad {
 
+// Base class for all commands.
 class CmdBase
 {
 public:

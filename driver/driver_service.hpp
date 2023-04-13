@@ -16,6 +16,7 @@
 
 namespace rocvad {
 
+// Implements RPC methods defined by .proto file.
 class DriverService : public DriverProtocol::Service
 {
 public:

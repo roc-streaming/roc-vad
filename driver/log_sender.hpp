@@ -20,6 +20,9 @@
 
 namespace rocvad {
 
+// Sender sink for spdlog.
+// Sends all logs to grpc stream.
+// Created dynamically when a client wants to stream logs.
 class LogSender : public spdlog::sinks::base_sink<std::mutex>,
                   public std::enable_shared_from_this<LogSender>
 {
