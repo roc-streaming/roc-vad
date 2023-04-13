@@ -18,7 +18,7 @@ After installing Roc VAD, you can:
 
 When you configure an app (e.g. iTunes) to use virtual device as a speaker, all sound that the app plays to the device is streamed to a remote receiver. Remote receiver could be Roc PipeWire source, or an app using Roc Toolkit library, or even a generic RTP receiver.
 
-And vice versa, when you configure an app (e.g. Zoom) to use virtual device as a micrhophone, the sound is streamed from a remote sender to the virtual device, and the app reads the received stream.
+And vice versa, when you configure an app (e.g. Zoom) to use virtual device as a microphone, the sound is streamed from a remote sender to the virtual device, and the app reads the received stream.
 
 ## Features
 
@@ -29,7 +29,7 @@ Key features of Roc Toolkit:
 * CD-quality audio;
 * multiple profiles for different CPU and latency requirements;
 * relying on open, standard protocols, like RTP and FECFRAME;
-* interopability with both Roc and third-party software.
+* interoperability with both Roc and third-party software.
 
 Compatible Roc Toolkit senders and receivers include:
 
@@ -82,6 +82,12 @@ sudo make kickstart
 ```
 
 This command will restart macOS sound server. Usually it's enough, but some apps may not handle sound server restart well, so reboot is preferred.
+
+To **uninstall** everything, run:
+
+```
+sudo make uninstall
+```
 
 ## Usage
 
@@ -137,6 +143,8 @@ Timestamp                       Thread     Type        Activity             PID 
 ...
 ```
 
+## Common problems
+
 *TODO*
 
 ## Programmatic control
@@ -145,9 +153,9 @@ Timestamp                       Thread     Type        Activity             PID 
 
 ## Hacking
 
-*TODO: bootstrap, codesign, ccache, symbols, libASPL, gRPC*
+Contributions in any form are always welcome!
 
-Contributions are welcome!
+If you would like to dig into the project internals, have a look at [HACKING.md](HACKING.md).
 
 ## Authors
 

@@ -28,6 +28,10 @@ info:
 	nm -gU bin/roc-vad
 	nm -gU bin/roc_vad.driver/Contents/MacOS/roc_vad
 
+spell:
+	mdspell -a *.md
+	sort .spelling -o .spelling
+
 syslog:
 	log stream --predicate 'process == "coreaudiod" || sender == "roc_vad"'
 
