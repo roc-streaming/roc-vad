@@ -3,7 +3,7 @@
 // source: driver_protocol.proto
 // Original file comments:
 //
-// Copyright (c) 2023 Roc Streaming authors
+// Copyright (c) Roc Streaming authors
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
