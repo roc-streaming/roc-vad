@@ -1,18 +1,24 @@
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 add_executable(${TOOL_NAME}
   "cmd_base.cpp"
   "cmd_compound.cpp"
   "cmd_device.cpp"
   "cmd_device_add.cpp"
+  "cmd_device_add_sender.cpp"
   "cmd_device_delete.cpp"
+  "cmd_device_list.cpp"
+  "cmd_device_show.cpp"
   "cmd_info.cpp"
   "cmd_logcat.cpp"
   "cmd_root.cpp"
   "connector.cpp"
   "main.cpp"
+  "parse.cpp"
+  "print.cpp"
 )
 
 target_link_libraries(${TOOL_NAME} PRIVATE
@@ -23,6 +29,7 @@ target_link_libraries(${TOOL_NAME} PRIVATE
   # third-party libs
   gRPC::grpc++_unsecure
   spdlog::spdlog
+  fmt::fmt
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")

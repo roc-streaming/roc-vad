@@ -12,16 +12,15 @@
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
+class CmdDeviceList : public CmdBase
 {
 public:
-    CmdDeviceDelete(CLI::App& parent);
+    CmdDeviceList(CLI::App& parent);
 
     bool execute(const Environment& env) override;
 
 private:
-    bool use_uid_ = false;
-    std::string index_or_uid_;
+    bool show_ = false;
 };
 
 } // namespace rocvad

@@ -7,38 +7,15 @@
  */
 
 #include "cmd_device_add.hpp"
-#include "connector.hpp"
-
-#include <spdlog/spdlog.h>
+#include "cmd_device_add_sender.hpp"
 
 using namespace rocvad;
 
 CmdDeviceAdd::CmdDeviceAdd(CLI::App& parent)
 {
-    register_command(parent.add_subcommand("add", "add new virtual device"));
-}
+    auto command = parent.add_subcommand("add", "add virtual device");
 
-bool CmdDeviceAdd::execute(const Environment& env)
-{
-    Connector conn;
+    register_command(command);
 
-    auto stub = conn.connect();
-    if (!stub) {
-        return false;
-    }
-
-    spdlog::debug("sending add_device command");
-
-    grpc::ClientContext context;
-    MesgAddDevice request;
-    MesgNone response;
-
-    const grpc::Status status = stub->add_device(&context, request, &response);
-
-    if (!status.ok()) {
-        spdlog::error("failed to add device");
-        return false;
-    }
-
-    return true;
+    register_subcommand(std::make_shared<CmdDeviceAddSender>(*command));
 }

@@ -9,10 +9,9 @@
 #include "cmd_info.hpp"
 #include "build_info.hpp"
 #include "connector.hpp"
+#include "print.hpp"
 
 #include <spdlog/spdlog.h>
-
-#include <iostream>
 
 using namespace rocvad;
 
@@ -30,32 +29,20 @@ bool CmdInfo::execute(const Environment& env)
         return false;
     }
 
-    spdlog::debug("sending get_info command");
+    spdlog::debug("sending driver_info command");
 
     grpc::ClientContext context;
     MesgNone request;
-    MesgInfo response;
+    MesgDriverInfo response;
 
-    const grpc::Status status = stub->get_info(&context, request, &response);
+    const grpc::Status status = stub->driver_info(&context, request, &response);
 
     if (!status.ok()) {
-        spdlog::error("failed to get driver info");
+        spdlog::error("failed to get driver info: {}", status.error_message());
         return false;
     }
 
-    std::cout << "driver is loaded\n";
-
-    std::cout << "\n";
-
-    std::cout << "driver:\n";
-    std::cout << "  version: " << response.version() << "\n";
-    std::cout << "  commit:  " << response.commit().substr(0, 7) << "\n";
-
-    std::cout << "\n";
-
-    std::cout << "client:\n";
-    std::cout << "  version: " << BuildInfo::version << "\n";
-    std::cout << "  commit:  " << std::string(BuildInfo::commit).substr(0, 7) << "\n";
+    print_driver_and_client_info(response);
 
     return true;
 }

@@ -41,8 +41,9 @@ The project uses these libraries:
 * [gRPC](https://github.com/grpc/grpc) - control protocol for virtual device
 * [CLI11](https://github.com/CLIUtils/CLI11) - command-line parsing library
 * [spdlog](https://github.com/gabime/spdlog) - logging library
+* [{fmt}](https://github.com/fmtlib/fmt) - formatting library
 
-All dependencies listed above are shipped as submodules. Besides them, project needs some standard frameworks, build tools installed system-wide, and Xcode or Xcode command-line tools.
+All dependencies listed above are shipped as submodules. Besides them, project needs some standard frameworks, build tools installed system-wide, and Xcode or Xcode command-line tools with C++17 support.
 
 ## Build system
 

@@ -32,20 +32,20 @@ struct MesgNoneDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgNoneDefaultTypeInternal _MesgNone_default_instance_;
-PROTOBUF_CONSTEXPR MesgInfo::MesgInfo(
+PROTOBUF_CONSTEXPR MesgDriverInfo::MesgDriverInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.commit_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct MesgInfoDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR MesgInfoDefaultTypeInternal()
+struct MesgDriverInfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MesgDriverInfoDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~MesgInfoDefaultTypeInternal() {}
+  ~MesgDriverInfoDefaultTypeInternal() {}
   union {
-    MesgInfo _instance;
+    MesgDriverInfo _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgInfoDefaultTypeInternal _MesgInfo_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDriverInfoDefaultTypeInternal _MesgDriverInfo_default_instance_;
 PROTOBUF_CONSTEXPR MesgLogEntry::MesgLogEntry(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.text_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -61,31 +61,65 @@ struct MesgLogEntryDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgLogEntryDefaultTypeInternal _MesgLogEntry_default_instance_;
-PROTOBUF_CONSTEXPR MesgAddDevice::MesgAddDevice(
-    ::_pbi::ConstantInitialized) {}
-struct MesgAddDeviceDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR MesgAddDeviceDefaultTypeInternal()
+PROTOBUF_CONSTEXPR MesgDeviceSelector::MesgDeviceSelector(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.Selector_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_._oneof_case_)*/{}} {}
+struct MesgDeviceSelectorDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MesgDeviceSelectorDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~MesgAddDeviceDefaultTypeInternal() {}
+  ~MesgDeviceSelectorDefaultTypeInternal() {}
   union {
-    MesgAddDevice _instance;
+    MesgDeviceSelector _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgAddDeviceDefaultTypeInternal _MesgAddDevice_default_instance_;
-PROTOBUF_CONSTEXPR MesgDeleteDevice::MesgDeleteDevice(
-    ::_pbi::ConstantInitialized) {}
-struct MesgDeleteDeviceDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR MesgDeleteDeviceDefaultTypeInternal()
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeviceSelectorDefaultTypeInternal _MesgDeviceSelector_default_instance_;
+PROTOBUF_CONSTEXPR MesgDeviceConfig::MesgDeviceConfig(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.uid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.type_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct MesgDeviceConfigDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MesgDeviceConfigDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~MesgDeleteDeviceDefaultTypeInternal() {}
+  ~MesgDeviceConfigDefaultTypeInternal() {}
   union {
-    MesgDeleteDevice _instance;
+    MesgDeviceConfig _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeleteDeviceDefaultTypeInternal _MesgDeleteDevice_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeviceConfigDefaultTypeInternal _MesgDeviceConfig_default_instance_;
+PROTOBUF_CONSTEXPR MesgDeviceInfo::MesgDeviceInfo(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.config_)*/nullptr
+  , /*decltype(_impl_.index_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct MesgDeviceInfoDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MesgDeviceInfoDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MesgDeviceInfoDefaultTypeInternal() {}
+  union {
+    MesgDeviceInfo _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeviceInfoDefaultTypeInternal _MesgDeviceInfo_default_instance_;
+PROTOBUF_CONSTEXPR MesgDeviceList::MesgDeviceList(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.devices_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct MesgDeviceListDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MesgDeviceListDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MesgDeviceListDefaultTypeInternal() {}
+  union {
+    MesgDeviceList _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MesgDeviceListDefaultTypeInternal _MesgDeviceList_default_instance_;
 }  // namespace rocvad
-static ::_pb::Metadata file_level_metadata_driver_5fprotocol_2eproto[5];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_driver_5fprotocol_2eproto[1];
+static ::_pb::Metadata file_level_metadata_driver_5fprotocol_2eproto[7];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_driver_5fprotocol_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_driver_5fprotocol_2eproto = nullptr;
 
 const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -96,13 +130,13 @@ const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rocvad::MesgInfo, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDriverInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::rocvad::MesgInfo, _impl_.version_),
-  PROTOBUF_FIELD_OFFSET(::rocvad::MesgInfo, _impl_.commit_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDriverInfo, _impl_.version_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDriverInfo, _impl_.commit_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -113,61 +147,97 @@ const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION
   PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _impl_.level_),
   PROTOBUF_FIELD_OFFSET(::rocvad::MesgLogEntry, _impl_.text_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rocvad::MesgAddDevice, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceSelector, _internal_metadata_),
   ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceSelector, _impl_._oneof_case_[0]),
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  ::_pbi::kInvalidFieldOffsetTag,
+  ::_pbi::kInvalidFieldOffsetTag,
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceSelector, _impl_.Selector_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeleteDevice, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceConfig, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceConfig, _impl_.type_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceConfig, _impl_.uid_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceConfig, _impl_.name_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceInfo, _impl_.index_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceInfo, _impl_.config_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceList, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rocvad::MesgDeviceList, _impl_.devices_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::rocvad::MesgNone)},
-  { 6, -1, -1, sizeof(::rocvad::MesgInfo)},
+  { 6, -1, -1, sizeof(::rocvad::MesgDriverInfo)},
   { 14, -1, -1, sizeof(::rocvad::MesgLogEntry)},
-  { 23, -1, -1, sizeof(::rocvad::MesgAddDevice)},
-  { 29, -1, -1, sizeof(::rocvad::MesgDeleteDevice)},
+  { 23, -1, -1, sizeof(::rocvad::MesgDeviceSelector)},
+  { 32, -1, -1, sizeof(::rocvad::MesgDeviceConfig)},
+  { 41, -1, -1, sizeof(::rocvad::MesgDeviceInfo)},
+  { 49, -1, -1, sizeof(::rocvad::MesgDeviceList)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::rocvad::_MesgNone_default_instance_._instance,
-  &::rocvad::_MesgInfo_default_instance_._instance,
+  &::rocvad::_MesgDriverInfo_default_instance_._instance,
   &::rocvad::_MesgLogEntry_default_instance_._instance,
-  &::rocvad::_MesgAddDevice_default_instance_._instance,
-  &::rocvad::_MesgDeleteDevice_default_instance_._instance,
+  &::rocvad::_MesgDeviceSelector_default_instance_._instance,
+  &::rocvad::_MesgDeviceConfig_default_instance_._instance,
+  &::rocvad::_MesgDeviceInfo_default_instance_._instance,
+  &::rocvad::_MesgDeviceList_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_driver_5fprotocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\025driver_protocol.proto\022\006rocvad\032\037google/"
-  "protobuf/timestamp.proto\"\n\n\010MesgNone\"+\n\010"
-  "MesgInfo\022\017\n\007version\030\001 \001(\t\022\016\n\006commit\030\002 \001("
-  "\t\"\271\001\n\014MesgLogEntry\022(\n\004time\030\001 \001(\0132\032.googl"
-  "e.protobuf.Timestamp\022)\n\005level\030\002 \001(\0162\032.ro"
-  "cvad.MesgLogEntry.Level\022\014\n\004text\030\003 \001(\t\"F\n"
-  "\005Level\022\010\n\004CRIT\020\000\022\t\n\005ERROR\020\001\022\010\n\004WARN\020\002\022\010\n"
-  "\004INFO\020\003\022\t\n\005DEBUG\020\004\022\t\n\005TRACE\020\005\"\017\n\rMesgAdd"
-  "Device\"\022\n\020MesgDeleteDevice2\243\002\n\016DriverPro"
-  "tocol\022,\n\004ping\022\020.rocvad.MesgNone\032\020.rocvad"
-  ".MesgNone\"\000\0220\n\010get_info\022\020.rocvad.MesgNon"
-  "e\032\020.rocvad.MesgInfo\"\000\0229\n\013stream_logs\022\020.r"
-  "ocvad.MesgNone\032\024.rocvad.MesgLogEntry\"\0000\001"
-  "\0227\n\nadd_device\022\025.rocvad.MesgAddDevice\032\020."
-  "rocvad.MesgNone\"\000\022=\n\rdelete_device\022\030.roc"
-  "vad.MesgDeleteDevice\032\020.rocvad.MesgNone\"\000"
-  "b\006proto3"
+  "protobuf/timestamp.proto\"\n\n\010MesgNone\"1\n\016"
+  "MesgDriverInfo\022\017\n\007version\030\001 \001(\t\022\016\n\006commi"
+  "t\030\002 \001(\t\"\271\001\n\014MesgLogEntry\022(\n\004time\030\001 \001(\0132\032"
+  ".google.protobuf.Timestamp\022)\n\005level\030\002 \001("
+  "\0162\032.rocvad.MesgLogEntry.Level\022\014\n\004text\030\003 "
+  "\001(\t\"F\n\005Level\022\010\n\004CRIT\020\000\022\t\n\005ERROR\020\001\022\010\n\004WAR"
+  "N\020\002\022\010\n\004INFO\020\003\022\t\n\005DEBUG\020\004\022\t\n\005TRACE\020\005\"@\n\022M"
+  "esgDeviceSelector\022\017\n\005index\030\001 \001(\rH\000\022\r\n\003ui"
+  "d\030\002 \001(\tH\000B\n\n\010Selector\"|\n\020MesgDeviceConfi"
+  "g\022+\n\004type\030\001 \001(\0162\035.rocvad.MesgDeviceConfi"
+  "g.Type\022\013\n\003uid\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\" \n\004Typ"
+  "e\022\n\n\006SENDER\020\000\022\014\n\010RECEIVER\020\001\"I\n\016MesgDevic"
+  "eInfo\022\r\n\005index\030\001 \001(\r\022(\n\006config\030\002 \001(\0132\030.r"
+  "ocvad.MesgDeviceConfig\"9\n\016MesgDeviceList"
+  "\022\'\n\007devices\030\001 \003(\0132\026.rocvad.MesgDeviceInf"
+  "o2\272\003\n\016DriverProtocol\022,\n\004ping\022\020.rocvad.Me"
+  "sgNone\032\020.rocvad.MesgNone\"\000\0229\n\013driver_inf"
+  "o\022\020.rocvad.MesgNone\032\026.rocvad.MesgDriverI"
+  "nfo\"\000\0229\n\013stream_logs\022\020.rocvad.MesgNone\032\024"
+  ".rocvad.MesgLogEntry\"\0000\001\022=\n\017get_all_devi"
+  "ces\022\020.rocvad.MesgNone\032\026.rocvad.MesgDevic"
+  "eList\"\000\022B\n\nget_device\022\032.rocvad.MesgDevic"
+  "eSelector\032\026.rocvad.MesgDeviceInfo\"\000\022@\n\na"
+  "dd_device\022\030.rocvad.MesgDeviceConfig\032\026.ro"
+  "cvad.MesgDeviceInfo\"\000\022\?\n\rdelete_device\022\032"
+  ".rocvad.MesgDeviceSelector\032\020.rocvad.Mesg"
+  "None\"\000b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_driver_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_driver_5fprotocol_2eproto = {
-    false, false, 648, descriptor_table_protodef_driver_5fprotocol_2eproto,
+    false, false, 1094, descriptor_table_protodef_driver_5fprotocol_2eproto,
     "driver_protocol.proto",
-    &descriptor_table_driver_5fprotocol_2eproto_once, descriptor_table_driver_5fprotocol_2eproto_deps, 1, 5,
+    &descriptor_table_driver_5fprotocol_2eproto_once, descriptor_table_driver_5fprotocol_2eproto_deps, 1, 7,
     schemas, file_default_instances, TableStruct_driver_5fprotocol_2eproto::offsets,
     file_level_metadata_driver_5fprotocol_2eproto, file_level_enum_descriptors_driver_5fprotocol_2eproto,
     file_level_service_descriptors_driver_5fprotocol_2eproto,
@@ -207,6 +277,27 @@ constexpr MesgLogEntry_Level MesgLogEntry::TRACE;
 constexpr MesgLogEntry_Level MesgLogEntry::Level_MIN;
 constexpr MesgLogEntry_Level MesgLogEntry::Level_MAX;
 constexpr int MesgLogEntry::Level_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MesgDeviceConfig_Type_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_driver_5fprotocol_2eproto);
+  return file_level_enum_descriptors_driver_5fprotocol_2eproto[1];
+}
+bool MesgDeviceConfig_Type_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+constexpr MesgDeviceConfig_Type MesgDeviceConfig::SENDER;
+constexpr MesgDeviceConfig_Type MesgDeviceConfig::RECEIVER;
+constexpr MesgDeviceConfig_Type MesgDeviceConfig::Type_MIN;
+constexpr MesgDeviceConfig_Type MesgDeviceConfig::Type_MAX;
+constexpr int MesgDeviceConfig::Type_ARRAYSIZE;
 #endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 
 // ===================================================================
@@ -251,19 +342,19 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgNone::GetClassData() const
 
 // ===================================================================
 
-class MesgInfo::_Internal {
+class MesgDriverInfo::_Internal {
  public:
 };
 
-MesgInfo::MesgInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+MesgDriverInfo::MesgDriverInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:rocvad.MesgInfo)
+  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDriverInfo)
 }
-MesgInfo::MesgInfo(const MesgInfo& from)
+MesgDriverInfo::MesgDriverInfo(const MesgDriverInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  MesgInfo* const _this = this; (void)_this;
+  MesgDriverInfo* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.version_){}
     , decltype(_impl_.commit_){}
@@ -286,10 +377,10 @@ MesgInfo::MesgInfo(const MesgInfo& from)
     _this->_impl_.commit_.Set(from._internal_commit(), 
       _this->GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:rocvad.MesgInfo)
+  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDriverInfo)
 }
 
-inline void MesgInfo::SharedCtor(
+inline void MesgDriverInfo::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
@@ -308,8 +399,8 @@ inline void MesgInfo::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-MesgInfo::~MesgInfo() {
-  // @@protoc_insertion_point(destructor:rocvad.MesgInfo)
+MesgDriverInfo::~MesgDriverInfo() {
+  // @@protoc_insertion_point(destructor:rocvad.MesgDriverInfo)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -317,18 +408,18 @@ MesgInfo::~MesgInfo() {
   SharedDtor();
 }
 
-inline void MesgInfo::SharedDtor() {
+inline void MesgDriverInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.version_.Destroy();
   _impl_.commit_.Destroy();
 }
 
-void MesgInfo::SetCachedSize(int size) const {
+void MesgDriverInfo::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void MesgInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:rocvad.MesgInfo)
+void MesgDriverInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:rocvad.MesgDriverInfo)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -338,7 +429,7 @@ void MesgInfo::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* MesgInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* MesgDriverInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -350,7 +441,7 @@ const char* MesgInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
           auto str = _internal_mutable_version();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgInfo.version"));
+          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgDriverInfo.version"));
         } else
           goto handle_unusual;
         continue;
@@ -360,7 +451,7 @@ const char* MesgInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
           auto str = _internal_mutable_commit();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgInfo.commit"));
+          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgDriverInfo.commit"));
         } else
           goto handle_unusual;
         continue;
@@ -387,9 +478,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* MesgInfo::_InternalSerialize(
+uint8_t* MesgDriverInfo::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgDriverInfo)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -398,7 +489,7 @@ uint8_t* MesgInfo::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rocvad.MesgInfo.version");
+      "rocvad.MesgDriverInfo.version");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_version(), target);
   }
@@ -408,7 +499,7 @@ uint8_t* MesgInfo::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_commit().data(), static_cast<int>(this->_internal_commit().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rocvad.MesgInfo.commit");
+      "rocvad.MesgDriverInfo.commit");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_commit(), target);
   }
@@ -417,12 +508,12 @@ uint8_t* MesgInfo::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgDriverInfo)
   return target;
 }
 
-size_t MesgInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgInfo)
+size_t MesgDriverInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgDriverInfo)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -446,17 +537,17 @@ size_t MesgInfo::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgInfo::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDriverInfo::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    MesgInfo::MergeImpl
+    MesgDriverInfo::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgInfo::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDriverInfo::GetClassData() const { return &_class_data_; }
 
 
-void MesgInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<MesgInfo*>(&to_msg);
-  auto& from = static_cast<const MesgInfo&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgInfo)
+void MesgDriverInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MesgDriverInfo*>(&to_msg);
+  auto& from = static_cast<const MesgDriverInfo&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgDriverInfo)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -470,18 +561,18 @@ void MesgInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void MesgInfo::CopyFrom(const MesgInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgInfo)
+void MesgDriverInfo::CopyFrom(const MesgDriverInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgDriverInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MesgInfo::IsInitialized() const {
+bool MesgDriverInfo::IsInitialized() const {
   return true;
 }
 
-void MesgInfo::InternalSwap(MesgInfo* other) {
+void MesgDriverInfo::InternalSwap(MesgDriverInfo* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -496,7 +587,7 @@ void MesgInfo::InternalSwap(MesgInfo* other) {
   );
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata MesgInfo::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata MesgDriverInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_driver_5fprotocol_2eproto_getter, &descriptor_table_driver_5fprotocol_2eproto_once,
       file_level_metadata_driver_5fprotocol_2eproto[1]);
@@ -789,39 +880,258 @@ void MesgLogEntry::InternalSwap(MesgLogEntry* other) {
 
 // ===================================================================
 
-class MesgAddDevice::_Internal {
+class MesgDeviceSelector::_Internal {
  public:
 };
 
-MesgAddDevice::MesgAddDevice(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+MesgDeviceSelector::MesgDeviceSelector(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
-  // @@protoc_insertion_point(arena_constructor:rocvad.MesgAddDevice)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDeviceSelector)
 }
-MesgAddDevice::MesgAddDevice(const MesgAddDevice& from)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  MesgAddDevice* const _this = this; (void)_this;
+MesgDeviceSelector::MesgDeviceSelector(const MesgDeviceSelector& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MesgDeviceSelector* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.Selector_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , /*decltype(_impl_._oneof_case_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:rocvad.MesgAddDevice)
+  clear_has_Selector();
+  switch (from.Selector_case()) {
+    case kIndex: {
+      _this->_internal_set_index(from._internal_index());
+      break;
+    }
+    case kUid: {
+      _this->_internal_set_uid(from._internal_uid());
+      break;
+    }
+    case SELECTOR_NOT_SET: {
+      break;
+    }
+  }
+  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDeviceSelector)
+}
+
+inline void MesgDeviceSelector::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.Selector_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , /*decltype(_impl_._oneof_case_)*/{}
+  };
+  clear_has_Selector();
+}
+
+MesgDeviceSelector::~MesgDeviceSelector() {
+  // @@protoc_insertion_point(destructor:rocvad.MesgDeviceSelector)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void MesgDeviceSelector::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (has_Selector()) {
+    clear_Selector();
+  }
+}
+
+void MesgDeviceSelector::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void MesgDeviceSelector::clear_Selector() {
+// @@protoc_insertion_point(one_of_clear_start:rocvad.MesgDeviceSelector)
+  switch (Selector_case()) {
+    case kIndex: {
+      // No need to clear
+      break;
+    }
+    case kUid: {
+      _impl_.Selector_.uid_.Destroy();
+      break;
+    }
+    case SELECTOR_NOT_SET: {
+      break;
+    }
+  }
+  _impl_._oneof_case_[0] = SELECTOR_NOT_SET;
 }
 
 
+void MesgDeviceSelector::Clear() {
+// @@protoc_insertion_point(message_clear_start:rocvad.MesgDeviceSelector)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
 
+  clear_Selector();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
 
+const char* MesgDeviceSelector::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 index = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _internal_set_index(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string uid = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_uid();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgDeviceSelector.uid"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgAddDevice::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+uint8_t* MesgDeviceSelector::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgDeviceSelector)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 index = 1;
+  if (_internal_has_index()) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_index(), target);
+  }
+
+  // string uid = 2;
+  if (_internal_has_uid()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_uid().data(), static_cast<int>(this->_internal_uid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rocvad.MesgDeviceSelector.uid");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_uid(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgDeviceSelector)
+  return target;
+}
+
+size_t MesgDeviceSelector::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgDeviceSelector)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  switch (Selector_case()) {
+    // uint32 index = 1;
+    case kIndex: {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_index());
+      break;
+    }
+    // string uid = 2;
+    case kUid: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_uid());
+      break;
+    }
+    case SELECTOR_NOT_SET: {
+      break;
+    }
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDeviceSelector::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MesgDeviceSelector::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgAddDevice::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDeviceSelector::GetClassData() const { return &_class_data_; }
 
 
+void MesgDeviceSelector::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MesgDeviceSelector*>(&to_msg);
+  auto& from = static_cast<const MesgDeviceSelector&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgDeviceSelector)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
 
+  switch (from.Selector_case()) {
+    case kIndex: {
+      _this->_internal_set_index(from._internal_index());
+      break;
+    }
+    case kUid: {
+      _this->_internal_set_uid(from._internal_uid());
+      break;
+    }
+    case SELECTOR_NOT_SET: {
+      break;
+    }
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
 
+void MesgDeviceSelector::CopyFrom(const MesgDeviceSelector& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgDeviceSelector)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
 
+bool MesgDeviceSelector::IsInitialized() const {
+  return true;
+}
 
+void MesgDeviceSelector::InternalSwap(MesgDeviceSelector* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.Selector_, other->_impl_.Selector_);
+  swap(_impl_._oneof_case_[0], other->_impl_._oneof_case_[0]);
+}
 
-::PROTOBUF_NAMESPACE_ID::Metadata MesgAddDevice::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata MesgDeviceSelector::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_driver_5fprotocol_2eproto_getter, &descriptor_table_driver_5fprotocol_2eproto_once,
       file_level_metadata_driver_5fprotocol_2eproto[3]);
@@ -829,42 +1139,694 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgAddDevice::GetClassData() 
 
 // ===================================================================
 
-class MesgDeleteDevice::_Internal {
+class MesgDeviceConfig::_Internal {
  public:
 };
 
-MesgDeleteDevice::MesgDeleteDevice(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+MesgDeviceConfig::MesgDeviceConfig(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
-  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDeleteDevice)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDeviceConfig)
 }
-MesgDeleteDevice::MesgDeleteDevice(const MesgDeleteDevice& from)
-  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  MesgDeleteDevice* const _this = this; (void)_this;
+MesgDeviceConfig::MesgDeviceConfig(const MesgDeviceConfig& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MesgDeviceConfig* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.uid_){}
+    , decltype(_impl_.name_){}
+    , decltype(_impl_.type_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDeleteDevice)
+  _impl_.uid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.uid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_uid().empty()) {
+    _this->_impl_.uid_.Set(from._internal_uid(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    _this->_impl_.name_.Set(from._internal_name(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.type_ = from._impl_.type_;
+  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDeviceConfig)
 }
 
+inline void MesgDeviceConfig::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.uid_){}
+    , decltype(_impl_.name_){}
+    , decltype(_impl_.type_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.uid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.uid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
 
+MesgDeviceConfig::~MesgDeviceConfig() {
+  // @@protoc_insertion_point(destructor:rocvad.MesgDeviceConfig)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
 
+inline void MesgDeviceConfig::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.uid_.Destroy();
+  _impl_.name_.Destroy();
+}
 
+void MesgDeviceConfig::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDeleteDevice::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+void MesgDeviceConfig::Clear() {
+// @@protoc_insertion_point(message_clear_start:rocvad.MesgDeviceConfig)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.uid_.ClearToEmpty();
+  _impl_.name_.ClearToEmpty();
+  _impl_.type_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* MesgDeviceConfig::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .rocvad.MesgDeviceConfig.Type type = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_type(static_cast<::rocvad::MesgDeviceConfig_Type>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // string uid = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_uid();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgDeviceConfig.uid"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string name = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rocvad.MesgDeviceConfig.name"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* MesgDeviceConfig::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgDeviceConfig)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .rocvad.MesgDeviceConfig.Type type = 1;
+  if (this->_internal_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_type(), target);
+  }
+
+  // string uid = 2;
+  if (!this->_internal_uid().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_uid().data(), static_cast<int>(this->_internal_uid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rocvad.MesgDeviceConfig.uid");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_uid(), target);
+  }
+
+  // string name = 3;
+  if (!this->_internal_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rocvad.MesgDeviceConfig.name");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgDeviceConfig)
+  return target;
+}
+
+size_t MesgDeviceConfig::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgDeviceConfig)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string uid = 2;
+  if (!this->_internal_uid().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_uid());
+  }
+
+  // string name = 3;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  // .rocvad.MesgDeviceConfig.Type type = 1;
+  if (this->_internal_type() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDeviceConfig::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MesgDeviceConfig::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDeleteDevice::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDeviceConfig::GetClassData() const { return &_class_data_; }
 
 
+void MesgDeviceConfig::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MesgDeviceConfig*>(&to_msg);
+  auto& from = static_cast<const MesgDeviceConfig&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgDeviceConfig)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
 
+  if (!from._internal_uid().empty()) {
+    _this->_internal_set_uid(from._internal_uid());
+  }
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
+  }
+  if (from._internal_type() != 0) {
+    _this->_internal_set_type(from._internal_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
 
+void MesgDeviceConfig::CopyFrom(const MesgDeviceConfig& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgDeviceConfig)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
 
+bool MesgDeviceConfig::IsInitialized() const {
+  return true;
+}
 
+void MesgDeviceConfig::InternalSwap(MesgDeviceConfig* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.uid_, lhs_arena,
+      &other->_impl_.uid_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.name_, lhs_arena,
+      &other->_impl_.name_, rhs_arena
+  );
+  swap(_impl_.type_, other->_impl_.type_);
+}
 
-::PROTOBUF_NAMESPACE_ID::Metadata MesgDeleteDevice::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata MesgDeviceConfig::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_driver_5fprotocol_2eproto_getter, &descriptor_table_driver_5fprotocol_2eproto_once,
       file_level_metadata_driver_5fprotocol_2eproto[4]);
+}
+
+// ===================================================================
+
+class MesgDeviceInfo::_Internal {
+ public:
+  static const ::rocvad::MesgDeviceConfig& config(const MesgDeviceInfo* msg);
+};
+
+const ::rocvad::MesgDeviceConfig&
+MesgDeviceInfo::_Internal::config(const MesgDeviceInfo* msg) {
+  return *msg->_impl_.config_;
+}
+MesgDeviceInfo::MesgDeviceInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDeviceInfo)
+}
+MesgDeviceInfo::MesgDeviceInfo(const MesgDeviceInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MesgDeviceInfo* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.config_){nullptr}
+    , decltype(_impl_.index_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_config()) {
+    _this->_impl_.config_ = new ::rocvad::MesgDeviceConfig(*from._impl_.config_);
+  }
+  _this->_impl_.index_ = from._impl_.index_;
+  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDeviceInfo)
+}
+
+inline void MesgDeviceInfo::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.config_){nullptr}
+    , decltype(_impl_.index_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+MesgDeviceInfo::~MesgDeviceInfo() {
+  // @@protoc_insertion_point(destructor:rocvad.MesgDeviceInfo)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void MesgDeviceInfo::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.config_;
+}
+
+void MesgDeviceInfo::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void MesgDeviceInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:rocvad.MesgDeviceInfo)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.config_ != nullptr) {
+    delete _impl_.config_;
+  }
+  _impl_.config_ = nullptr;
+  _impl_.index_ = 0u;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* MesgDeviceInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 index = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .rocvad.MesgDeviceConfig config = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_config(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* MesgDeviceInfo::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgDeviceInfo)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 index = 1;
+  if (this->_internal_index() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_index(), target);
+  }
+
+  // .rocvad.MesgDeviceConfig config = 2;
+  if (this->_internal_has_config()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::config(this),
+        _Internal::config(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgDeviceInfo)
+  return target;
+}
+
+size_t MesgDeviceInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgDeviceInfo)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .rocvad.MesgDeviceConfig config = 2;
+  if (this->_internal_has_config()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.config_);
+  }
+
+  // uint32 index = 1;
+  if (this->_internal_index() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_index());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDeviceInfo::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MesgDeviceInfo::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDeviceInfo::GetClassData() const { return &_class_data_; }
+
+
+void MesgDeviceInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MesgDeviceInfo*>(&to_msg);
+  auto& from = static_cast<const MesgDeviceInfo&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgDeviceInfo)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_config()) {
+    _this->_internal_mutable_config()->::rocvad::MesgDeviceConfig::MergeFrom(
+        from._internal_config());
+  }
+  if (from._internal_index() != 0) {
+    _this->_internal_set_index(from._internal_index());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MesgDeviceInfo::CopyFrom(const MesgDeviceInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgDeviceInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MesgDeviceInfo::IsInitialized() const {
+  return true;
+}
+
+void MesgDeviceInfo::InternalSwap(MesgDeviceInfo* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(MesgDeviceInfo, _impl_.index_)
+      + sizeof(MesgDeviceInfo::_impl_.index_)
+      - PROTOBUF_FIELD_OFFSET(MesgDeviceInfo, _impl_.config_)>(
+          reinterpret_cast<char*>(&_impl_.config_),
+          reinterpret_cast<char*>(&other->_impl_.config_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MesgDeviceInfo::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_driver_5fprotocol_2eproto_getter, &descriptor_table_driver_5fprotocol_2eproto_once,
+      file_level_metadata_driver_5fprotocol_2eproto[5]);
+}
+
+// ===================================================================
+
+class MesgDeviceList::_Internal {
+ public:
+};
+
+MesgDeviceList::MesgDeviceList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rocvad.MesgDeviceList)
+}
+MesgDeviceList::MesgDeviceList(const MesgDeviceList& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MesgDeviceList* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.devices_){from._impl_.devices_}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:rocvad.MesgDeviceList)
+}
+
+inline void MesgDeviceList::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.devices_){arena}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+MesgDeviceList::~MesgDeviceList() {
+  // @@protoc_insertion_point(destructor:rocvad.MesgDeviceList)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void MesgDeviceList::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.devices_.~RepeatedPtrField();
+}
+
+void MesgDeviceList::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void MesgDeviceList::Clear() {
+// @@protoc_insertion_point(message_clear_start:rocvad.MesgDeviceList)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.devices_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* MesgDeviceList::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated .rocvad.MesgDeviceInfo devices = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_devices(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* MesgDeviceList::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:rocvad.MesgDeviceList)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .rocvad.MesgDeviceInfo devices = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_devices_size()); i < n; i++) {
+    const auto& repfield = this->_internal_devices(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:rocvad.MesgDeviceList)
+  return target;
+}
+
+size_t MesgDeviceList::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rocvad.MesgDeviceList)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .rocvad.MesgDeviceInfo devices = 1;
+  total_size += 1UL * this->_internal_devices_size();
+  for (const auto& msg : this->_impl_.devices_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MesgDeviceList::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MesgDeviceList::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MesgDeviceList::GetClassData() const { return &_class_data_; }
+
+
+void MesgDeviceList::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MesgDeviceList*>(&to_msg);
+  auto& from = static_cast<const MesgDeviceList&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rocvad.MesgDeviceList)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.devices_.MergeFrom(from._impl_.devices_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MesgDeviceList::CopyFrom(const MesgDeviceList& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rocvad.MesgDeviceList)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MesgDeviceList::IsInitialized() const {
+  return true;
+}
+
+void MesgDeviceList::InternalSwap(MesgDeviceList* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.devices_.InternalSwap(&other->_impl_.devices_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MesgDeviceList::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_driver_5fprotocol_2eproto_getter, &descriptor_table_driver_5fprotocol_2eproto_once,
+      file_level_metadata_driver_5fprotocol_2eproto[6]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -874,21 +1836,29 @@ template<> PROTOBUF_NOINLINE ::rocvad::MesgNone*
 Arena::CreateMaybeMessage< ::rocvad::MesgNone >(Arena* arena) {
   return Arena::CreateMessageInternal< ::rocvad::MesgNone >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rocvad::MesgInfo*
-Arena::CreateMaybeMessage< ::rocvad::MesgInfo >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rocvad::MesgInfo >(arena);
+template<> PROTOBUF_NOINLINE ::rocvad::MesgDriverInfo*
+Arena::CreateMaybeMessage< ::rocvad::MesgDriverInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rocvad::MesgDriverInfo >(arena);
 }
 template<> PROTOBUF_NOINLINE ::rocvad::MesgLogEntry*
 Arena::CreateMaybeMessage< ::rocvad::MesgLogEntry >(Arena* arena) {
   return Arena::CreateMessageInternal< ::rocvad::MesgLogEntry >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rocvad::MesgAddDevice*
-Arena::CreateMaybeMessage< ::rocvad::MesgAddDevice >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rocvad::MesgAddDevice >(arena);
+template<> PROTOBUF_NOINLINE ::rocvad::MesgDeviceSelector*
+Arena::CreateMaybeMessage< ::rocvad::MesgDeviceSelector >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rocvad::MesgDeviceSelector >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rocvad::MesgDeleteDevice*
-Arena::CreateMaybeMessage< ::rocvad::MesgDeleteDevice >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rocvad::MesgDeleteDevice >(arena);
+template<> PROTOBUF_NOINLINE ::rocvad::MesgDeviceConfig*
+Arena::CreateMaybeMessage< ::rocvad::MesgDeviceConfig >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rocvad::MesgDeviceConfig >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rocvad::MesgDeviceInfo*
+Arena::CreateMaybeMessage< ::rocvad::MesgDeviceInfo >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rocvad::MesgDeviceInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::rocvad::MesgDeviceList*
+Arena::CreateMaybeMessage< ::rocvad::MesgDeviceList >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rocvad::MesgDeviceList >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

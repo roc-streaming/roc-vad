@@ -12,6 +12,7 @@
 #include "driver_protocol.hpp"
 #include "log_manager.hpp"
 
+#include <functional>
 #include <memory>
 
 namespace rocvad {
@@ -30,23 +31,33 @@ public:
         const MesgNone* request,
         MesgNone* response) override;
 
-    grpc::Status get_info(grpc::ServerContext* context,
+    grpc::Status driver_info(grpc::ServerContext* context,
         const MesgNone* request,
-        MesgInfo* response) override;
+        MesgDriverInfo* response) override;
 
     grpc::Status stream_logs(grpc::ServerContext* context,
         const MesgNone* request,
         grpc::ServerWriter<MesgLogEntry>* writer) override;
 
+    grpc::Status get_all_devices(grpc::ServerContext* context,
+        const MesgNone* request,
+        MesgDeviceList* response) override;
+
+    grpc::Status get_device(grpc::ServerContext* context,
+        const MesgDeviceSelector* request,
+        MesgDeviceInfo* response) override;
+
     grpc::Status add_device(grpc::ServerContext* context,
-        const MesgAddDevice* request,
-        MesgNone* response) override;
+        const MesgDeviceConfig* request,
+        MesgDeviceInfo* response) override;
 
     grpc::Status delete_device(grpc::ServerContext* context,
-        const MesgDeleteDevice* request,
+        const MesgDeviceSelector* request,
         MesgNone* response) override;
 
 private:
+    grpc::Status execute_command_(const char* name, std::function<void()> func);
+
     std::shared_ptr<LogManager> log_manager_;
     std::shared_ptr<DeviceManager> device_manager_;
 };

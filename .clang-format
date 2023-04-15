@@ -7,7 +7,6 @@ UseTab: Never
 IndentWidth: 4
 AccessModifierOffset: -4
 ColumnLimit: 90
-SpacesBeforeTrailingComments: 1
 
 MaxEmptyLinesToKeep: 1
 EmptyLineBeforeAccessModifier: Always
@@ -24,6 +23,8 @@ BreakConstructorInitializers: BeforeComma
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 IndentCaseLabels: false
 PenaltyBreakComment: 0
+SpaceBeforeCpp11BracedList: true
+SpacesBeforeTrailingComments: 1
 
 BreakBeforeBraces: Custom
 BraceWrapping:

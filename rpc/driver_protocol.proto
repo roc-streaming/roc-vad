@@ -12,27 +12,47 @@ package rocvad;
 
 import "google/protobuf/timestamp.proto";
 
+// RPC interface for Roc Virtual Audio Device driver.
 service DriverProtocol
 {
+    // Check driver presence.
     rpc ping(MesgNone) returns (MesgNone) {}
 
-    rpc get_info(MesgNone) returns (MesgInfo) {}
+    // Get driver info.
+    rpc driver_info(MesgNone) returns (MesgDriverInfo) {}
+
+    // Stream driver logs to client.
     rpc stream_logs(MesgNone) returns (stream MesgLogEntry) {}
 
-    rpc add_device(MesgAddDevice) returns (MesgNone) {}
-    rpc delete_device(MesgDeleteDevice) returns (MesgNone) {}
+    // Get info for all virtual devices.
+    rpc get_all_devices(MesgNone) returns (MesgDeviceList) {}
+
+    // Get info for one virtual device.
+    rpc get_device(MesgDeviceSelector) returns (MesgDeviceInfo) {}
+
+    // Create new virtual device.
+    rpc add_device(MesgDeviceConfig) returns (MesgDeviceInfo) {}
+
+    // Delete virtual device.
+    rpc delete_device(MesgDeviceSelector) returns (MesgNone) {}
 }
 
+// No data.
 message MesgNone
 {
 }
 
-message MesgInfo
+// Info about driver.
+message MesgDriverInfo
 {
+    // Driver version (comes from git tag).
     string version = 1;
+
+    // Driver commit hash (comes from git commit).
     string commit = 2;
 }
 
+// Driver log message.
 message MesgLogEntry
 {
     enum Level
@@ -50,10 +70,62 @@ message MesgLogEntry
     string text = 3;
 }
 
-message MesgAddDevice
+// Virtual device selector.
+message MesgDeviceSelector
 {
+    oneof Selector
+    {
+        // Select device by index.
+        uint32 index = 1;
+
+        // Select device by UID.
+        string uid = 2;
+    }
 }
 
-message MesgDeleteDevice
+// Virtual device configuration.
+// Specified by client when creating device.
+message MesgDeviceConfig
 {
+    enum Type
+    {
+        // Output device that sends sound to remote receiver.
+        SENDER = 0;
+
+        // Input device that receives sound from remote sender.
+        RECEIVER = 1;
+    }
+
+    // Device type.
+    Type type = 1;
+
+    // Device UID identifier.
+    // UID is a long string identifier, unique across all audio devices,
+    // and very unlikely to be ever reused.
+    // Keep empty to generate random UID.
+    string uid = 2;
+
+    // Human-readable device name.
+    // Device name is shown to the user in UI.
+    // Keep empty to use default name.
+    string name = 3;
+}
+
+// Virtual device information.
+// Includes device configuration and state.
+message MesgDeviceInfo
+{
+    // Device index identifier.
+    // Index is a small numeric value that is reused for new devices
+    // after device deletion.
+    uint32 index = 1;
+
+    // Device configuration.
+    MesgDeviceConfig config = 2;
+}
+
+// Virtual device list.
+message MesgDeviceList
+{
+    repeated MesgDeviceInfo devices = 1;
 }

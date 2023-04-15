@@ -12,10 +12,10 @@
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
+class CmdDeviceShow : public CmdBase
 {
 public:
-    CmdDeviceDelete(CLI::App& parent);
+    CmdDeviceShow(CLI::App& parent);
 
     bool execute(const Environment& env) override;
 

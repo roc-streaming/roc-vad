@@ -45,6 +45,7 @@ void LogSyslog::sink_it_(const spdlog::details::log_msg& msg)
 
 void LogSyslog::flush_()
 {
+    // no-op
 }
 
 } // namespace rocvad

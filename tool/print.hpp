@@ -8,20 +8,13 @@
 
 #pragma once
 
-#include "cmd_base.hpp"
+#include "driver_protocol.hpp"
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
-{
-public:
-    CmdDeviceDelete(CLI::App& parent);
+void print_driver_and_client_info(const MesgDriverInfo& driver_info);
 
-    bool execute(const Environment& env) override;
-
-private:
-    bool use_uid_ = false;
-    std::string index_or_uid_;
-};
+void print_device_info(const MesgDeviceInfo& device_info);
+void print_device_list(const MesgDeviceList& device_list, bool show_info);
 
 } // namespace rocvad

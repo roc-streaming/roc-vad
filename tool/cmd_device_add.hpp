@@ -8,16 +8,14 @@
 
 #pragma once
 
-#include "cmd_base.hpp"
+#include "cmd_compound.hpp"
 
 namespace rocvad {
 
-class CmdDeviceAdd : public CmdBase
+class CmdDeviceAdd : public CmdCompound
 {
 public:
     CmdDeviceAdd(CLI::App& parent);
-
-    bool execute(const Environment& env) override;
 };
 
 } // namespace rocvad

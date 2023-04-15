@@ -56,7 +56,8 @@ DriverProtocol::Stub* Connector::connect()
 
     if (!status.ok()) {
         spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
-            "can't connect to driver: failed to ping rpc server");
+            "can't connect to driver: failed to ping rpc server: {}",
+            status.error_message());
         disconnect();
         return {};
     }

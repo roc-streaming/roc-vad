@@ -1,7 +1,8 @@
+find_package(libASPL CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
-find_package(libASPL CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 find_library(LIB_CoreFoundation CoreFoundation REQUIRED)
 
 add_library(${DRIVER_NAME} MODULE
@@ -10,10 +11,12 @@ add_library(${DRIVER_NAME} MODULE
   "driver.cpp"
   "driver_service.cpp"
   "entry_point.cpp"
+  "index_allocator.cpp"
   "log_manager.cpp"
   "log_sender.cpp"
   "log_syslog.cpp"
   "tracer.cpp"
+  "uid_generator.cpp"
 )
 
 target_link_libraries(${DRIVER_NAME} PRIVATE
@@ -22,9 +25,10 @@ target_link_libraries(${DRIVER_NAME} PRIVATE
   ${RPC_LIB}
 
   # third-party libs
+  aspl::libASPL
   gRPC::grpc++_unsecure
   spdlog::spdlog
-  aspl::libASPL
+  fmt::fmt
 
   # system libs
   ${LIB_CoreFoundation}

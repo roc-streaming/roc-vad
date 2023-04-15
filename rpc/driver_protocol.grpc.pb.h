@@ -35,6 +35,7 @@
 
 namespace rocvad {
 
+// RPC interface for Roc Virtual Audio Device driver.
 class DriverProtocol final {
  public:
   static constexpr char const* service_full_name() {
@@ -43,6 +44,7 @@ class DriverProtocol final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
+    // Check driver presence.
     virtual ::grpc::Status ping(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgNone* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> Asyncping(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(AsyncpingRaw(context, request, cq));
@@ -50,13 +52,15 @@ class DriverProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> PrepareAsyncping(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(PrepareAsyncpingRaw(context, request, cq));
     }
-    virtual ::grpc::Status get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgInfo* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>> Asyncget_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>>(Asyncget_infoRaw(context, request, cq));
+    // Get driver info.
+    virtual ::grpc::Status driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDriverInfo* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>> Asyncdriver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>>(Asyncdriver_infoRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>>(PrepareAsyncget_infoRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>> PrepareAsyncdriver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>>(PrepareAsyncdriver_infoRaw(context, request, cq));
     }
+    // Stream driver logs to client.
     std::unique_ptr< ::grpc::ClientReaderInterface< ::rocvad::MesgLogEntry>> stream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::rocvad::MesgLogEntry>>(stream_logsRaw(context, request));
     }
@@ -66,32 +70,61 @@ class DriverProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rocvad::MesgLogEntry>> PrepareAsyncstream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::rocvad::MesgLogEntry>>(PrepareAsyncstream_logsRaw(context, request, cq));
     }
-    virtual ::grpc::Status add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::rocvad::MesgNone* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> Asyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(Asyncadd_deviceRaw(context, request, cq));
+    // Get info for all virtual devices.
+    virtual ::grpc::Status get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDeviceList* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>> Asyncget_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>>(Asyncget_all_devicesRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> PrepareAsyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(PrepareAsyncadd_deviceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>> PrepareAsyncget_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>>(PrepareAsyncget_all_devicesRaw(context, request, cq));
     }
-    virtual ::grpc::Status delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::rocvad::MesgNone* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> Asyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) {
+    // Get info for one virtual device.
+    virtual ::grpc::Status get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgDeviceInfo* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>> Asyncget_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>>(Asyncget_deviceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>> PrepareAsyncget_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>>(PrepareAsyncget_deviceRaw(context, request, cq));
+    }
+    // Create new virtual device.
+    virtual ::grpc::Status add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::rocvad::MesgDeviceInfo* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>> Asyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>>(Asyncadd_deviceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>> PrepareAsyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>>(PrepareAsyncadd_deviceRaw(context, request, cq));
+    }
+    // Delete virtual device.
+    virtual ::grpc::Status delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgNone* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> Asyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(Asyncdelete_deviceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> PrepareAsyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>> PrepareAsyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>>(PrepareAsyncdelete_deviceRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
+      // Check driver presence.
       virtual void ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Get driver info.
+      virtual void driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Stream driver logs to client.
       virtual void stream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::grpc::ClientReadReactor< ::rocvad::MesgLogEntry>* reactor) = 0;
-      virtual void add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Get info for all virtual devices.
+      virtual void get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Get info for one virtual device.
+      virtual void get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Create new virtual device.
+      virtual void add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Delete virtual device.
+      virtual void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -99,15 +132,19 @@ class DriverProtocol final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* AsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgInfo>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>* Asyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDriverInfo>* PrepareAsyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::rocvad::MesgLogEntry>* stream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::rocvad::MesgLogEntry>* Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::rocvad::MesgLogEntry>* PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>* Asyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceList>* PrepareAsyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>* Asyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>* PrepareAsyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgDeviceInfo>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::rocvad::MesgNone>* PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -119,12 +156,12 @@ class DriverProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> PrepareAsyncping(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>>(PrepareAsyncpingRaw(context, request, cq));
     }
-    ::grpc::Status get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgInfo* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>> Asyncget_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>>(Asyncget_infoRaw(context, request, cq));
+    ::grpc::Status driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDriverInfo* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>> Asyncdriver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>>(Asyncdriver_infoRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>> PrepareAsyncget_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>>(PrepareAsyncget_infoRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>> PrepareAsyncdriver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>>(PrepareAsyncdriver_infoRaw(context, request, cq));
     }
     std::unique_ptr< ::grpc::ClientReader< ::rocvad::MesgLogEntry>> stream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::rocvad::MesgLogEntry>>(stream_logsRaw(context, request));
@@ -135,18 +172,32 @@ class DriverProtocol final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>> PrepareAsyncstream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>>(PrepareAsyncstream_logsRaw(context, request, cq));
     }
-    ::grpc::Status add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::rocvad::MesgNone* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> Asyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>>(Asyncadd_deviceRaw(context, request, cq));
+    ::grpc::Status get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDeviceList* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>> Asyncget_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>>(Asyncget_all_devicesRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> PrepareAsyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>>(PrepareAsyncadd_deviceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>> PrepareAsyncget_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>>(PrepareAsyncget_all_devicesRaw(context, request, cq));
     }
-    ::grpc::Status delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::rocvad::MesgNone* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> Asyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) {
+    ::grpc::Status get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgDeviceInfo* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>> Asyncget_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>>(Asyncget_deviceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>> PrepareAsyncget_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>>(PrepareAsyncget_deviceRaw(context, request, cq));
+    }
+    ::grpc::Status add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::rocvad::MesgDeviceInfo* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>> Asyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>>(Asyncadd_deviceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>> PrepareAsyncadd_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>>(PrepareAsyncadd_deviceRaw(context, request, cq));
+    }
+    ::grpc::Status delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgNone* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> Asyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>>(Asyncdelete_deviceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> PrepareAsyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) {
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>> PrepareAsyncdelete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>>(PrepareAsyncdelete_deviceRaw(context, request, cq));
     }
     class async final :
@@ -154,13 +205,17 @@ class DriverProtocol final {
      public:
       void ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) override;
       void ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response, std::function<void(::grpc::Status)>) override;
-      void get_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, std::function<void(::grpc::Status)>) override;
+      void driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, ::grpc::ClientUnaryReactor* reactor) override;
       void stream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::grpc::ClientReadReactor< ::rocvad::MesgLogEntry>* reactor) override;
-      void add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) override;
-      void add_device(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) override;
-      void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, std::function<void(::grpc::Status)>) override;
+      void get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)>) override;
+      void get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)>) override;
+      void add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)>) override;
+      void delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -174,18 +229,24 @@ class DriverProtocol final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* AsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>* Asyncget_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgInfo>* PrepareAsyncget_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>* Asyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>* PrepareAsyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::rocvad::MesgLogEntry>* stream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request) override;
     ::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>* Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>* PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgAddDevice& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeleteDevice& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>* Asyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>* PrepareAsyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* Asyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* PrepareAsyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_ping_;
-    const ::grpc::internal::RpcMethod rpcmethod_get_info_;
+    const ::grpc::internal::RpcMethod rpcmethod_driver_info_;
     const ::grpc::internal::RpcMethod rpcmethod_stream_logs_;
+    const ::grpc::internal::RpcMethod rpcmethod_get_all_devices_;
+    const ::grpc::internal::RpcMethod rpcmethod_get_device_;
     const ::grpc::internal::RpcMethod rpcmethod_add_device_;
     const ::grpc::internal::RpcMethod rpcmethod_delete_device_;
   };
@@ -195,11 +256,20 @@ class DriverProtocol final {
    public:
     Service();
     virtual ~Service();
+    // Check driver presence.
     virtual ::grpc::Status ping(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response);
-    virtual ::grpc::Status get_info(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response);
+    // Get driver info.
+    virtual ::grpc::Status driver_info(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response);
+    // Stream driver logs to client.
     virtual ::grpc::Status stream_logs(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::grpc::ServerWriter< ::rocvad::MesgLogEntry>* writer);
-    virtual ::grpc::Status add_device(::grpc::ServerContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response);
-    virtual ::grpc::Status delete_device(::grpc::ServerContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response);
+    // Get info for all virtual devices.
+    virtual ::grpc::Status get_all_devices(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response);
+    // Get info for one virtual device.
+    virtual ::grpc::Status get_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response);
+    // Create new virtual device.
+    virtual ::grpc::Status add_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response);
+    // Delete virtual device.
+    virtual ::grpc::Status delete_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_ping : public BaseClass {
@@ -222,22 +292,22 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_get_info : public BaseClass {
+  class WithAsyncMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_get_info() {
+    WithAsyncMethod_driver_info() {
       ::grpc::Service::MarkMethodAsync(1);
     }
-    ~WithAsyncMethod_get_info() override {
+    ~WithAsyncMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void Requestget_info(::grpc::ServerContext* context, ::rocvad::MesgNone* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgInfo>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void Requestdriver_info(::grpc::ServerContext* context, ::rocvad::MesgNone* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgDriverInfo>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -262,23 +332,63 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_all_devices(::grpc::ServerContext* context, ::rocvad::MesgNone* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgDeviceList>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_get_device() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_device(::grpc::ServerContext* context, ::rocvad::MesgDeviceSelector* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgDeviceInfo>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_add_device() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void Requestadd_device(::grpc::ServerContext* context, ::rocvad::MesgAddDevice* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgNone>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    void Requestadd_device(::grpc::ServerContext* context, ::rocvad::MesgDeviceConfig* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgDeviceInfo>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -287,21 +397,21 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_delete_device() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(6);
     }
     ~WithAsyncMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void Requestdelete_device(::grpc::ServerContext* context, ::rocvad::MesgDeleteDevice* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgNone>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    void Requestdelete_device(::grpc::ServerContext* context, ::rocvad::MesgDeviceSelector* request, ::grpc::ServerAsyncResponseWriter< ::rocvad::MesgNone>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_ping<WithAsyncMethod_get_info<WithAsyncMethod_stream_logs<WithAsyncMethod_add_device<WithAsyncMethod_delete_device<Service > > > > > AsyncService;
+  typedef WithAsyncMethod_ping<WithAsyncMethod_driver_info<WithAsyncMethod_stream_logs<WithAsyncMethod_get_all_devices<WithAsyncMethod_get_device<WithAsyncMethod_add_device<WithAsyncMethod_delete_device<Service > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_ping : public BaseClass {
    private:
@@ -330,31 +440,31 @@ class DriverProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgNone* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_get_info : public BaseClass {
+  class WithCallbackMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_get_info() {
+    WithCallbackMethod_driver_info() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgInfo>(
+          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgDriverInfo>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgInfo* response) { return this->get_info(context, request, response); }));}
-    void SetMessageAllocatorFor_get_info(
-        ::grpc::MessageAllocator< ::rocvad::MesgNone, ::rocvad::MesgInfo>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response) { return this->driver_info(context, request, response); }));}
+    void SetMessageAllocatorFor_driver_info(
+        ::grpc::MessageAllocator< ::rocvad::MesgNone, ::rocvad::MesgDriverInfo>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgInfo>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgDriverInfo>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_get_info() override {
+    ~WithCallbackMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* get_info(
-      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* driver_info(
+      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_stream_logs : public BaseClass {
@@ -379,31 +489,85 @@ class DriverProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgDeviceList>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response) { return this->get_all_devices(context, request, response); }));}
+    void SetMessageAllocatorFor_get_all_devices(
+        ::grpc::MessageAllocator< ::rocvad::MesgNone, ::rocvad::MesgDeviceList>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgNone, ::rocvad::MesgDeviceList>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_all_devices(
+      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_get_device() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response) { return this->get_device(context, request, response); }));}
+    void SetMessageAllocatorFor_get_device(
+        ::grpc::MessageAllocator< ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_device(
+      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgAddDevice, ::rocvad::MesgNone>(
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgAddDevice* request, ::rocvad::MesgNone* response) { return this->add_device(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response) { return this->add_device(context, request, response); }));}
     void SetMessageAllocatorFor_add_device(
-        ::grpc::MessageAllocator< ::rocvad::MesgAddDevice, ::rocvad::MesgNone>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgAddDevice, ::rocvad::MesgNone>*>(handler)
+        ::grpc::MessageAllocator< ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* add_device(
-      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_delete_device : public BaseClass {
@@ -411,28 +575,28 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_delete_device() {
-      ::grpc::Service::MarkMethodCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeleteDevice, ::rocvad::MesgNone>(
+      ::grpc::Service::MarkMethodCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgDeleteDevice* request, ::rocvad::MesgNone* response) { return this->delete_device(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response) { return this->delete_device(context, request, response); }));}
     void SetMessageAllocatorFor_delete_device(
-        ::grpc::MessageAllocator< ::rocvad::MesgDeleteDevice, ::rocvad::MesgNone>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeleteDevice, ::rocvad::MesgNone>*>(handler)
+        ::grpc::MessageAllocator< ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* delete_device(
-      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_ping<WithCallbackMethod_get_info<WithCallbackMethod_stream_logs<WithCallbackMethod_add_device<WithCallbackMethod_delete_device<Service > > > > > CallbackService;
+  typedef WithCallbackMethod_ping<WithCallbackMethod_driver_info<WithCallbackMethod_stream_logs<WithCallbackMethod_get_all_devices<WithCallbackMethod_get_device<WithCallbackMethod_add_device<WithCallbackMethod_delete_device<Service > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_ping : public BaseClass {
@@ -452,18 +616,18 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_get_info : public BaseClass {
+  class WithGenericMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_get_info() {
+    WithGenericMethod_driver_info() {
       ::grpc::Service::MarkMethodGeneric(1);
     }
-    ~WithGenericMethod_get_info() override {
+    ~WithGenericMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -486,18 +650,52 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_get_device() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_add_device() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -508,13 +706,13 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_delete_device() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(6);
     }
     ~WithGenericMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -540,22 +738,22 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_get_info : public BaseClass {
+  class WithRawMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_get_info() {
+    WithRawMethod_driver_info() {
       ::grpc::Service::MarkMethodRaw(1);
     }
-    ~WithRawMethod_get_info() override {
+    ~WithRawMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void Requestget_info(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void Requestdriver_info(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -580,23 +778,63 @@ class DriverProtocol final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_all_devices(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_get_device() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void Requestget_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_add_device() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_add_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestadd_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -605,18 +843,18 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_delete_device() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(6);
     }
     ~WithRawMethod_delete_device() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void Requestdelete_device(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -642,25 +880,25 @@ class DriverProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_get_info : public BaseClass {
+  class WithRawCallbackMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_get_info() {
+    WithRawCallbackMethod_driver_info() {
       ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->get_info(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->driver_info(context, request, response); }));
     }
-    ~WithRawCallbackMethod_get_info() override {
+    ~WithRawCallbackMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* get_info(
+    virtual ::grpc::ServerUnaryReactor* driver_info(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -686,12 +924,56 @@ class DriverProtocol final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->get_all_devices(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_all_devices(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_get_device() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->get_device(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* get_device(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_add_device : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_add_device() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->add_device(context, request, response); }));
@@ -700,7 +982,7 @@ class DriverProtocol final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -713,7 +995,7 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_delete_device() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->delete_device(context, request, response); }));
@@ -722,7 +1004,7 @@ class DriverProtocol final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -757,31 +1039,85 @@ class DriverProtocol final {
     virtual ::grpc::Status Streamedping(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgNone,::rocvad::MesgNone>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_get_info : public BaseClass {
+  class WithStreamedUnaryMethod_driver_info : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_get_info() {
+    WithStreamedUnaryMethod_driver_info() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::rocvad::MesgNone, ::rocvad::MesgInfo>(
+          ::rocvad::MesgNone, ::rocvad::MesgDriverInfo>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::rocvad::MesgNone, ::rocvad::MesgInfo>* streamer) {
-                       return this->Streamedget_info(context,
+                     ::rocvad::MesgNone, ::rocvad::MesgDriverInfo>* streamer) {
+                       return this->Streameddriver_info(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_get_info() override {
+    ~WithStreamedUnaryMethod_driver_info() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status get_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgInfo* /*response*/) override {
+    ::grpc::Status driver_info(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDriverInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status Streamedget_info(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgNone,::rocvad::MesgInfo>* server_unary_streamer) = 0;
+    virtual ::grpc::Status Streameddriver_info(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgNone,::rocvad::MesgDriverInfo>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_get_all_devices : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_get_all_devices() {
+      ::grpc::Service::MarkMethodStreamed(3,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rocvad::MesgNone, ::rocvad::MesgDeviceList>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rocvad::MesgNone, ::rocvad::MesgDeviceList>* streamer) {
+                       return this->Streamedget_all_devices(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_get_all_devices() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status get_all_devices(::grpc::ServerContext* /*context*/, const ::rocvad::MesgNone* /*request*/, ::rocvad::MesgDeviceList* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status Streamedget_all_devices(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgNone,::rocvad::MesgDeviceList>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_get_device : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_get_device() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo>* streamer) {
+                       return this->Streamedget_device(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_get_device() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status get_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status Streamedget_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgDeviceSelector,::rocvad::MesgDeviceInfo>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_add_device : public BaseClass {
@@ -789,12 +1125,12 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_add_device() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::rocvad::MesgAddDevice, ::rocvad::MesgNone>(
+          ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::rocvad::MesgAddDevice, ::rocvad::MesgNone>* streamer) {
+                     ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo>* streamer) {
                        return this->Streamedadd_device(context,
                          streamer);
                   }));
@@ -803,12 +1139,12 @@ class DriverProtocol final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgAddDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status add_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceConfig* /*request*/, ::rocvad::MesgDeviceInfo* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status Streamedadd_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgAddDevice,::rocvad::MesgNone>* server_unary_streamer) = 0;
+    virtual ::grpc::Status Streamedadd_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgDeviceConfig,::rocvad::MesgDeviceInfo>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_delete_device : public BaseClass {
@@ -816,12 +1152,12 @@ class DriverProtocol final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_delete_device() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::rocvad::MesgDeleteDevice, ::rocvad::MesgNone>(
+          ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::rocvad::MesgDeleteDevice, ::rocvad::MesgNone>* streamer) {
+                     ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone>* streamer) {
                        return this->Streameddelete_device(context,
                          streamer);
                   }));
@@ -830,14 +1166,14 @@ class DriverProtocol final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeleteDevice* /*request*/, ::rocvad::MesgNone* /*response*/) override {
+    ::grpc::Status delete_device(::grpc::ServerContext* /*context*/, const ::rocvad::MesgDeviceSelector* /*request*/, ::rocvad::MesgNone* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status Streameddelete_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgDeleteDevice,::rocvad::MesgNone>* server_unary_streamer) = 0;
+    virtual ::grpc::Status Streameddelete_device(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::rocvad::MesgDeviceSelector,::rocvad::MesgNone>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_driver_info<WithStreamedUnaryMethod_get_all_devices<WithStreamedUnaryMethod_get_device<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_stream_logs : public BaseClass {
    private:
@@ -866,7 +1202,7 @@ class DriverProtocol final {
     virtual ::grpc::Status Streamedstream_logs(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::rocvad::MesgNone,::rocvad::MesgLogEntry>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_stream_logs<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_get_info<WithSplitStreamingMethod_stream_logs<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_ping<WithStreamedUnaryMethod_driver_info<WithSplitStreamingMethod_stream_logs<WithStreamedUnaryMethod_get_all_devices<WithStreamedUnaryMethod_get_device<WithStreamedUnaryMethod_add_device<WithStreamedUnaryMethod_delete_device<Service > > > > > > > StreamedService;
 };
 
 }  // namespace rocvad

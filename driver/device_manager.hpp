@@ -9,13 +9,17 @@
 #pragma once
 
 #include "device.hpp"
+#include "index_allocator.hpp"
+#include "uid_generator.hpp"
 
 #include <aspl/Plugin.hpp>
 
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace rocvad {
 
@@ -23,19 +27,34 @@ namespace rocvad {
 class DeviceManager
 {
 public:
+    using index_t = IndexAllocator::index_t;
+
     DeviceManager(std::shared_ptr<aspl::Plugin> plugin);
 
     DeviceManager(const DeviceManager&) = delete;
     DeviceManager& operator=(const DeviceManager&) = delete;
 
-    void add_device();
-    void delete_device();
+    std::vector<DeviceInfo> get_all_devices();
+
+    DeviceInfo get_device(index_t index);
+    DeviceInfo get_device(const std::string& uid);
+
+    DeviceInfo add_device(const DeviceConfig& config);
+
+    void delete_device(index_t index);
+    void delete_device(const std::string& uid);
 
 private:
-    std::shared_ptr<aspl::Plugin> plugin_;
+    std::shared_ptr<Device> find_device_(index_t index);
+    std::shared_ptr<Device> find_device_(const std::string& uid);
 
-    std::mutex device_mutex_;
-    std::unordered_map<std::string, std::shared_ptr<Device>> devices_;
+    std::mutex mutex_;
+    std::shared_ptr<aspl::Plugin> plugin_;
+    std::map<uint32_t, std::shared_ptr<Device>> device_by_index_;
+    std::unordered_map<std::string, std::shared_ptr<Device>> device_by_uid_;
+
+    IndexAllocator index_allocator_;
+    UidGenerator uid_generator_;
 };
 
 } // namespace rocvad

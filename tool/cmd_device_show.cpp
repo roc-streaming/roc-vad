@@ -6,17 +6,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "cmd_device_delete.hpp"
+#include "cmd_device_show.hpp"
 #include "connector.hpp"
 #include "parse.hpp"
+#include "print.hpp"
 
 #include <spdlog/spdlog.h>
 
 using namespace rocvad;
 
-CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
+CmdDeviceShow::CmdDeviceShow(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("del", "delete virtual device");
+    auto command = parent.add_subcommand("show", "show virtual device info");
 
     command->add_flag("-u,--uid", use_uid_, "Select device by UID instead of index");
     command->add_option("index", index_or_uid_, "Device index (or UID of --uid is used)")
@@ -26,7 +27,7 @@ CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
     register_command(command);
 }
 
-bool CmdDeviceDelete::execute(const Environment& env)
+bool CmdDeviceShow::execute(const Environment& env)
 {
     index_t index = 0;
 
@@ -41,11 +42,11 @@ bool CmdDeviceDelete::execute(const Environment& env)
         return false;
     }
 
-    spdlog::debug("sending delete_device command");
+    spdlog::debug("sending get_device command");
 
     grpc::ClientContext context;
     MesgDeviceSelector request;
-    MesgNone response;
+    MesgDeviceInfo response;
 
     if (use_uid_) {
         request.set_uid(index_or_uid_);
@@ -53,12 +54,14 @@ bool CmdDeviceDelete::execute(const Environment& env)
         request.set_index(index);
     }
 
-    const grpc::Status status = stub->delete_device(&context, request, &response);
+    const grpc::Status status = stub->get_device(&context, request, &response);
 
     if (!status.ok()) {
-        spdlog::error("failed to delete device: {}", status.error_message());
+        spdlog::error("failed to get device info: {}", status.error_message());
         return false;
     }
+
+    print_device_info(response);
 
     return true;
 }

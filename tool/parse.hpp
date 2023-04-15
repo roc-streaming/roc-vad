@@ -8,20 +8,13 @@
 
 #pragma once
 
-#include "cmd_base.hpp"
+#include <cstdint>
+#include <string>
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
-{
-public:
-    CmdDeviceDelete(CLI::App& parent);
+using index_t = uint32_t;
 
-    bool execute(const Environment& env) override;
-
-private:
-    bool use_uid_ = false;
-    std::string index_or_uid_;
-};
+bool parse_index(const std::string& in, index_t& out);
 
 } // namespace rocvad

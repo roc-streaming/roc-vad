@@ -49,7 +49,7 @@ void grpc_init()
 
 int main(int argc, char** argv)
 {
-    CLI::App app{"Roc Virtual Audio Device control tool"};
+    CLI::App app {"Roc Toolkit Virtual Audio Device control tool"};
 
     int verbosity = 0;
     bool force_color = false, force_no_color = false;
@@ -60,6 +60,9 @@ int main(int argc, char** argv)
 
     app.add_flag("-C", force_color, "always use colored output");
     app.add_flag("-n", force_no_color, "never use colored output");
+
+    // exactly one subcommand
+    app.require_subcommand(1, 1);
 
     auto cmd = std::make_shared<CmdRoot>(app);
 

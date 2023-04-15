@@ -102,6 +102,7 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
 
 void LogSender::flush_()
 {
+    // no-op
 }
 
 } // namespace rocvad

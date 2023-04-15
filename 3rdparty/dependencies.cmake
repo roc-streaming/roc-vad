@@ -77,6 +77,29 @@ get_filename_component(GRPC_BIN_DIR
   ABSOLUTE
 )
 
+# fmt
+ExternalProject_Add(fmt
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/fmt
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    -DBUILD_TESTING=OFF
+    -DFMT_DOC=OFF
+    -DFMT_INSTALL=ON
+    -DFMT_TEST=OFF
+  LOG_DOWNLOAD YES
+  LOG_CONFIGURE YES
+  LOG_BUILD YES
+  LOG_INSTALL YES
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/include
+)
+list(PREPEND CMAKE_PREFIX_PATH
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/lib/cmake
+)
+
 # spdlog
 ExternalProject_Add(spdlog
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/spdlog
@@ -84,6 +107,8 @@ ExternalProject_Add(spdlog
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
     -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    -DCMAKE_PREFIX_PATH=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/lib/cmake
+    -DSPDLOG_FMT_EXTERNAL=ON
   LOG_DOWNLOAD YES
   LOG_CONFIGURE YES
   LOG_BUILD YES
@@ -118,6 +143,7 @@ set(ALL_DEPENDENCIES
   roc
   libASPL
   gRPC
+  fmt
   spdlog
   CLI11
   )
