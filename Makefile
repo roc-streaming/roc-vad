@@ -33,7 +33,7 @@ spell:
 	sort .spelling -o .spelling
 
 syslog:
-	log stream --predicate 'process == "coreaudiod" || sender == "roc_vad"'
+	log stream --predicate 'sender == "roc_vad"'
 
 fmt:
 	find -type f -name '*.[ch]pp' -not -path './3rdparty/*' -not -name '*.pb.*' \

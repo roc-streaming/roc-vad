@@ -129,11 +129,11 @@ $ roc-vad logcat
 ...
 ```
 
-Alternatively, use `syslog` makefile target. It streams syslog logs for driver and coreaudiod:
+Alternatively, use `syslog` makefile target. It streams logs that driver sends to system log. Basically they are the same logs as produced by `logcat` command, but in other format:
 
 ```
 $ make syslog
-log stream --predicate 'process == "coreaudiod" || sender == "roc_vad"'
+log stream --predicate 'sender == "roc_vad"'
 Filtering the log data using "process == "coreaudiod" OR sender == "roc_vad""
 Timestamp                       Thread     Type        Activity             PID    TTL
 2023-04-13 03:31:54.896185+0400 0xe38a     Default     0x0                  11980  0
