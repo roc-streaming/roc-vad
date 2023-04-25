@@ -21,13 +21,13 @@ void print_driver_and_client_info(const MesgDriverInfo& driver_info)
 
     fmt::println("driver:");
     fmt::println("  version: {}", driver_info.version());
-    fmt::println("  commit: {}", driver_info.commit().substr(0, 7));
+    fmt::println("  commit:  {}", driver_info.commit().substr(0, 7));
 
     fmt::println("");
 
     fmt::println("client:");
     fmt::println("  version: {}", BuildInfo::git_version);
-    fmt::println("  commit: {}", std::string(BuildInfo::git_commit).substr(0, 7));
+    fmt::println("  commit:  {}", std::string(BuildInfo::git_commit).substr(0, 7));
 }
 
 void print_device_info(const MesgDeviceInfo& device_info)

@@ -84,4 +84,6 @@ There are two important reasons for this:
 
 ## Socket address
 
-*TODO*
+By default, driver starts RPC server at `127.0.0.1:9712`.
+
+If you want to change this address, you can edit `DriverSocket` key in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read socket address from that file.
