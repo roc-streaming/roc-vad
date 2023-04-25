@@ -2,17 +2,17 @@
 option(BOOTSTRAP "Bootstrap dependencies and exit" OFF)
 message(STATUS "Bootstrap mode: ${BOOTSTRAP}")
 
-# driver address
-set(DRIVER_SOCKET "127.0.0.1:9712"
-  CACHE STRING "Specify driver RPC socket address"
-)
+# ccache
+if(NOT CMAKE_CXX_COMPILER_LAUNCHER)
+  find_program(CCACHE_PROGRAM ccache)
+  if(CCACHE_PROGRAM)
+    message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
+    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
+  endif(CCACHE_PROGRAM)
+endif()
 
-# driver uuid
-set(DRIVER_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B"
-  CACHE STRING "Specify driver UUID"
-)
-
-# driver signature
+# code signing
 set(CODESIGN_ID "" CACHE STRING "Specify Codesign ID")
 if(NOT CODESIGN_ID)
   execute_process(COMMAND
@@ -22,16 +22,6 @@ if(NOT CODESIGN_ID)
   if(CODESIGN_ID)
     message(STATUS "Found Codesign ID: ${CODESIGN_ID}")
   endif()
-endif()
-
-# ccache
-if(NOT CMAKE_CXX_COMPILER_LAUNCHER)
-  find_program(CCACHE_PROGRAM ccache)
-  if(CCACHE_PROGRAM)
-    message(STATUS "Found ccache: ${CCACHE_PROGRAM}")
-    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
-  endif(CCACHE_PROGRAM)
 endif()
 
 # git info

@@ -45,7 +45,7 @@
 	<string></string>
 	<key>sandboxSafe</key>
 	<true/>
-	<key>RpcSocketAddress</key>
+	<key>DriverSocket</key>
 	<string>${DRIVER_SOCKET}</string>
   </dict>
 </plist>

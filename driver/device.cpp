@@ -7,6 +7,7 @@
  */
 
 #include "device.hpp"
+#include "build_info.hpp"
 
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
@@ -27,6 +28,9 @@ aspl::DeviceParameters make_device_params(const DeviceConfig& config)
     aspl::DeviceParameters device_params;
 
     device_params.Name = config.name;
+    device_params.Manufacturer = BuildInfo::driver_manufacturer;
+    device_params.DeviceUID = config.uid;
+    device_params.ModelUID = BuildInfo::driver_bundle_id;
     device_params.SampleRate = 44100; // TODO
     device_params.ChannelCount = 2; // TODO
     device_params.EnableMixing = true;

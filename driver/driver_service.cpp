@@ -62,8 +62,8 @@ grpc::Status DriverService::driver_info(grpc::ServerContext* context,
     MesgDriverInfo* response)
 {
     return execute_command_("driver_info", [=]() {
-        response->set_version(BuildInfo::version);
-        response->set_commit(BuildInfo::commit);
+        response->set_version(BuildInfo::git_version);
+        response->set_commit(BuildInfo::git_commit);
     });
 }
 

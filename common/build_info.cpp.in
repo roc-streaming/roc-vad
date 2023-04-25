@@ -10,7 +10,13 @@
 
 namespace rocvad {
 
-const char* BuildInfo::version = "${PROJECT_VERSION}";
-const char* BuildInfo::commit = "${PROJECT_COMMIT}";
+const char* BuildInfo::git_version = "${GIT_VERSION}";
+const char* BuildInfo::git_commit = "${GIT_COMMIT}";
+
+const char* BuildInfo::driver_name = "${DRIVER_NAME}";
+const char* BuildInfo::driver_manufacturer = "${DRIVER_MANUFACTURER}";
+const char* BuildInfo::driver_bundle_id = "${DRIVER_BUNDLE_ID}";
+const char* BuildInfo::driver_uuid = "${DRIVER_UUID}";
+const char* BuildInfo::driver_socket = "${DRIVER_SOCKET}";
 
 } // namespace rocvad
