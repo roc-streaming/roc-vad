@@ -57,14 +57,9 @@ if(NOT BOOTSTRAP)
   add_subdirectory(driver)
   add_subdirectory(tool)
 
-  add_dependencies(${RPC_LIB}
-    ${ALL_DEPENDENCIES}
-  )
-
-  foreach(TARGET IN ITEMS ${DRIVER_NAME} ${TOOL_NAME})
+  foreach(TARGET IN ITEMS ${COMMON_LIB} ${RPC_LIB} ${DRIVER_NAME} ${TOOL_NAME})
     add_dependencies(${TARGET}
       ${ALL_DEPENDENCIES}
-      ${RPC_LIB}
     )
   endforeach()
 endif()

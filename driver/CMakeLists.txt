@@ -58,7 +58,7 @@ set_target_properties(${DRIVER_NAME} PROPERTIES
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   add_custom_command(TARGET ${DRIVER_NAME} POST_BUILD
-    COMMENT "Stripping ${DRIVER_NAME}"
+    COMMENT "Stripping ${DRIVER_NAME}.driver"
     COMMAND
       strip -x $<TARGET_FILE:${DRIVER_NAME}>
   )
