@@ -120,6 +120,10 @@ include_directories(SYSTEM
 list(PREPEND CMAKE_PREFIX_PATH
   ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix/lib/cmake
 )
+add_definitions(
+  -DSPDLOG_COMPILED_LIB
+  -DSPDLOG_FMT_EXTERNAL
+)
 
 # CLI111
 ExternalProject_Add(CLI11

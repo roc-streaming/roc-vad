@@ -4,6 +4,7 @@ find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_library(LIB_CoreFoundation CoreFoundation REQUIRED)
+find_library(LIB_Foundation Foundation REQUIRED)
 
 add_library(${DRIVER_NAME} MODULE
   "device.cpp"
@@ -32,6 +33,7 @@ target_link_libraries(${DRIVER_NAME} PRIVATE
 
   # system libs
   ${LIB_CoreFoundation}
+  ${LIB_Foundation}
 )
 
 target_link_options(${DRIVER_NAME} PRIVATE
@@ -73,7 +75,7 @@ if(NOT CODESIGN_ID STREQUAL "")
 endif()
 
 add_custom_command(TARGET ${DRIVER_NAME} POST_BUILD
-  COMMENT "Copying ${DRIVER_NAME} to bin"
+  COMMENT "Copying ${DRIVER_NAME}.driver to bin"
   COMMAND mkdir -p
     ${PROJECT_ROOT}/bin
   COMMAND rm -rf

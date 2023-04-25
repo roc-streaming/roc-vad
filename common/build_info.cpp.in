@@ -16,6 +16,8 @@ const char* BuildInfo::git_commit = "${GIT_COMMIT}";
 const char* BuildInfo::driver_name = "${DRIVER_NAME}";
 const char* BuildInfo::driver_manufacturer = "${DRIVER_MANUFACTURER}";
 const char* BuildInfo::driver_bundle_id = "${DRIVER_BUNDLE_ID}";
+const char* BuildInfo::driver_bundle_path =
+    "/Library/Audio/Plug-Ins/HAL/${DRIVER_NAME}.driver";
 const char* BuildInfo::driver_uuid = "${DRIVER_UUID}";
 const char* BuildInfo::driver_socket = "${DRIVER_SOCKET}";
 

@@ -2,6 +2,7 @@ find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
+find_library(LIB_Foundation Foundation REQUIRED)
 
 add_executable(${TOOL_NAME}
   "cmd_base.cpp"
@@ -30,6 +31,9 @@ target_link_libraries(${TOOL_NAME} PRIVATE
   gRPC::grpc++_unsecure
   spdlog::spdlog
   fmt::fmt
+
+  # system libs
+  ${LIB_Foundation}
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")

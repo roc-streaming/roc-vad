@@ -18,6 +18,7 @@ struct BuildInfo
     static const char* driver_name;
     static const char* driver_manufacturer;
     static const char* driver_bundle_id;
+    static const char* driver_bundle_path;
     static const char* driver_uuid;
     static const char* driver_socket;
 };

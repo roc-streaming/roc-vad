@@ -27,8 +27,7 @@ public:
 
 private:
     const bool quiet_;
-
-    std::string driver_address_;
+    const std::string driver_socket_;
 
     std::unique_ptr<DriverProtocol::Stub> stub_;
     std::shared_ptr<grpc::Channel> channel_;

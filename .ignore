@@ -3,6 +3,7 @@
 3rdparty/libASPL
 3rdparty/roc
 3rdparty/spdlog
+3rdparty/fmt
 build
 bin
 *.pb.*

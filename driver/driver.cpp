@@ -7,6 +7,7 @@
  */
 
 #include "driver.hpp"
+#include "plist_info.hpp"
 #include "tracer.hpp"
 
 #include <spdlog/spdlog.h>
@@ -28,18 +29,16 @@ Driver::Driver()
     driver_ = std::make_shared<aspl::Driver>(context, plugin_);
 
     device_manager_ = std::make_shared<DeviceManager>(plugin_);
-
     driver_service_ = std::make_unique<DriverService>(log_manager_, device_manager_);
+
+    const std::string driver_socket = PlistInfo::driver_socket();
+
+    spdlog::info("starting rpc server at {}", driver_socket);
 
     grpc::ServerBuilder rpc_builder;
 
-    // TODO: retrieve bind address from Info.plist (RpcSocketAddress)
-    const auto address = "127.0.0.1:9712";
-
-    rpc_builder.AddListeningPort(address, grpc::InsecureServerCredentials());
+    rpc_builder.AddListeningPort(driver_socket, grpc::InsecureServerCredentials());
     rpc_builder.RegisterService(driver_service_.get());
-
-    spdlog::info("starting rpc server at {}", address);
 
     rpc_server_ = rpc_builder.BuildAndStart();
 }

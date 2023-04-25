@@ -7,6 +7,7 @@
  */
 
 #include "connector.hpp"
+#include "plist_info.hpp"
 
 #include <grpcpp/create_channel.h>
 #include <spdlog/spdlog.h>
@@ -15,9 +16,8 @@ using namespace rocvad;
 
 Connector::Connector(bool quiet)
     : quiet_(quiet)
+    , driver_socket_(PlistInfo::driver_socket())
 {
-    // TODO: get address from Info.plist
-    driver_address_ = "127.0.0.1:9712";
 }
 
 Connector::~Connector()
@@ -27,12 +27,12 @@ Connector::~Connector()
 
 DriverProtocol::Stub* Connector::connect()
 {
-    spdlog::info("trying to connect to driver at {}", driver_address_);
+    spdlog::info("trying to connect to driver at {}", driver_socket_);
 
     spdlog::debug("creating rpc channel");
 
     if (!(channel_ = grpc::CreateChannel(
-              driver_address_, grpc::InsecureChannelCredentials()))) {
+              driver_socket_, grpc::InsecureChannelCredentials()))) {
         spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
             "can't connect to driver: failed to create rpc channel");
         disconnect();
