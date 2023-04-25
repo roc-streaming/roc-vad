@@ -23,7 +23,7 @@ DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> plugin)
 
 std::vector<DeviceInfo> DeviceManager::get_all_devices()
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     std::vector<DeviceInfo> info_list;
     info_list.reserve(device_by_index_.size());
@@ -38,7 +38,7 @@ std::vector<DeviceInfo> DeviceManager::get_all_devices()
 
 DeviceInfo DeviceManager::get_device(index_t index)
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     auto device = find_device_(index);
     return device->info();
@@ -46,7 +46,7 @@ DeviceInfo DeviceManager::get_device(index_t index)
 
 DeviceInfo DeviceManager::get_device(const std::string& uid)
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     auto device = find_device_(uid);
     return device->info();
@@ -54,7 +54,7 @@ DeviceInfo DeviceManager::get_device(const std::string& uid)
 
 DeviceInfo DeviceManager::add_device(const DeviceConfig& config)
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     if (!config.uid.empty() && device_by_uid_.count(config.uid)) {
         throw std::invalid_argument(
@@ -77,7 +77,7 @@ DeviceInfo DeviceManager::add_device(const DeviceConfig& config)
 
 void DeviceManager::delete_device(index_t index)
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     auto device = find_device_(index);
     auto info = device->info();
@@ -91,7 +91,7 @@ void DeviceManager::delete_device(index_t index)
 
 void DeviceManager::delete_device(const std::string& uid)
 {
-    std::unique_lock lock(mutex_);
+    std::lock_guard lock(mutex_);
 
     auto device = find_device_(uid);
     auto info = device->info();
