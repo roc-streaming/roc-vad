@@ -28,32 +28,32 @@ public:
     DriverService& operator=(const DriverService&) = delete;
 
     grpc::Status ping(grpc::ServerContext* context,
-        const MesgNone* request,
-        MesgNone* response) override;
+        const PrNone* request,
+        PrNone* response) override;
 
     grpc::Status driver_info(grpc::ServerContext* context,
-        const MesgNone* request,
-        MesgDriverInfo* response) override;
+        const PrNone* request,
+        PrDriverInfo* response) override;
 
     grpc::Status stream_logs(grpc::ServerContext* context,
-        const MesgNone* request,
-        grpc::ServerWriter<MesgLogEntry>* writer) override;
+        const PrNone* request,
+        grpc::ServerWriter<PrLogEntry>* writer) override;
 
     grpc::Status get_all_devices(grpc::ServerContext* context,
-        const MesgNone* request,
-        MesgDeviceList* response) override;
+        const PrNone* request,
+        PrDeviceList* response) override;
 
     grpc::Status get_device(grpc::ServerContext* context,
-        const MesgDeviceSelector* request,
-        MesgDeviceInfo* response) override;
+        const PrDeviceSelector* request,
+        PrDeviceInfo* response) override;
 
     grpc::Status add_device(grpc::ServerContext* context,
-        const MesgDeviceConfig* request,
-        MesgDeviceInfo* response) override;
+        const PrDeviceInfo* request,
+        PrDeviceInfo* response) override;
 
     grpc::Status delete_device(grpc::ServerContext* context,
-        const MesgDeviceSelector* request,
-        MesgNone* response) override;
+        const PrDeviceSelector* request,
+        PrNone* response) override;
 
 private:
     grpc::Status execute_command_(const char* name, std::function<void()> func);

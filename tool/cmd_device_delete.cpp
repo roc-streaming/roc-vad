@@ -44,8 +44,8 @@ bool CmdDeviceDelete::execute(const Environment& env)
     spdlog::debug("sending delete_device command");
 
     grpc::ClientContext context;
-    MesgDeviceSelector request;
-    MesgNone response;
+    PrDeviceSelector request;
+    PrNone response;
 
     if (use_uid_) {
         request.set_uid(index_or_uid_);

@@ -19,22 +19,55 @@ namespace rocvad {
 
 namespace {
 
-void device_config_from_rpc(DeviceConfig& out, const MesgDeviceConfig& in)
+void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 {
-    out.type =
-        in.type() == MesgDeviceConfig::SENDER ? DeviceType::Sender : DeviceType::Receiver;
-    out.uid = in.uid();
-    out.name = in.name();
+    switch (in.type()) {
+    case PR_DEVICE_TYPE_SENDER:
+        out.type = DeviceType::Sender;
+        break;
+
+    case PR_DEVICE_TYPE_RECEIVER:
+        out.type = DeviceType::Receiver;
+        break;
+
+    default:
+        throw std::invalid_argument(
+            fmt::format("device type should be either PR_DEVICE_TYPE_SENDER or "
+                        "PR_DEVICE_TYPE_RECEIVER"));
+    }
+
+    if (in.has_index()) {
+        if (in.index() == 0) {
+            throw std::invalid_argument(
+                fmt::format("device index should be either unset or non-zero"));
+        }
+        out.index = in.index();
+    }
+
+    if (in.has_uid()) {
+        if (in.uid().empty()) {
+            throw std::invalid_argument(
+                fmt::format("device uid should be either unset or non-empty"));
+        }
+        out.uid = in.uid();
+    }
+
+    if (in.has_name()) {
+        if (in.name().empty()) {
+            throw std::invalid_argument(
+                fmt::format("device name should be either unset or non-empty"));
+        }
+        out.name = in.name();
+    }
 }
 
-void device_info_to_rpc(MesgDeviceInfo& out, const DeviceInfo& in)
+void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
 {
+    out.set_type(
+        in.type == DeviceType::Sender ? PR_DEVICE_TYPE_SENDER : PR_DEVICE_TYPE_RECEIVER);
     out.set_index(in.index);
-    out.mutable_config()->set_type(in.config.type == DeviceType::Sender
-                                       ? MesgDeviceConfig::SENDER
-                                       : MesgDeviceConfig::RECEIVER);
-    out.mutable_config()->set_uid(in.config.uid);
-    out.mutable_config()->set_name(in.config.name);
+    out.set_uid(in.uid);
+    out.set_name(in.name);
 }
 
 } // namespace
@@ -49,8 +82,8 @@ DriverService::DriverService(std::shared_ptr<LogManager> log_manager,
 }
 
 grpc::Status DriverService::ping(grpc::ServerContext* context,
-    const MesgNone* request,
-    MesgNone* response)
+    const PrNone* request,
+    PrNone* response)
 {
     return execute_command_("ping", [=]() {
         // no-op
@@ -58,8 +91,8 @@ grpc::Status DriverService::ping(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::driver_info(grpc::ServerContext* context,
-    const MesgNone* request,
-    MesgDriverInfo* response)
+    const PrNone* request,
+    PrDriverInfo* response)
 {
     return execute_command_("driver_info", [=]() {
         response->set_version(BuildInfo::git_version);
@@ -68,8 +101,8 @@ grpc::Status DriverService::driver_info(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
-    const MesgNone* request,
-    grpc::ServerWriter<MesgLogEntry>* writer)
+    const PrNone* request,
+    grpc::ServerWriter<PrLogEntry>* writer)
 {
     return execute_command_("stream_logs", [=]() {
         auto log_sender = log_manager_->attach_sender(*writer);
@@ -83,8 +116,8 @@ grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::get_all_devices(grpc::ServerContext* context,
-    const MesgNone* request,
-    MesgDeviceList* response)
+    const PrNone* request,
+    PrDeviceList* response)
 {
     return execute_command_("get_all_devices", [=]() {
         const auto devices = device_manager_->get_all_devices();
@@ -96,8 +129,8 @@ grpc::Status DriverService::get_all_devices(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::get_device(grpc::ServerContext* context,
-    const MesgDeviceSelector* request,
-    MesgDeviceInfo* response)
+    const PrDeviceSelector* request,
+    PrDeviceInfo* response)
 {
     return execute_command_("get_device", [=]() {
         const auto device_info = request->has_index()
@@ -109,21 +142,21 @@ grpc::Status DriverService::get_device(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::add_device(grpc::ServerContext* context,
-    const MesgDeviceConfig* request,
-    MesgDeviceInfo* response)
+    const PrDeviceInfo* request,
+    PrDeviceInfo* response)
 {
     return execute_command_("add_device", [=]() {
-        DeviceConfig device_config;
-        device_config_from_rpc(device_config, *request);
+        DeviceInfo device_info;
+        device_info_from_rpc(device_info, *request);
 
-        const auto device_info = device_manager_->add_device(device_config);
+        device_info = device_manager_->add_device(device_info);
         device_info_to_rpc(*response, device_info);
     });
 }
 
 grpc::Status DriverService::delete_device(grpc::ServerContext* context,
-    const MesgDeviceSelector* request,
-    MesgNone* response)
+    const PrDeviceSelector* request,
+    PrNone* response)
 {
     return execute_command_("delete_device", [=]() {
         if (request->has_index()) {

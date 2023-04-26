@@ -28,7 +28,8 @@ public:
     IndexAllocator(const IndexAllocator&) = delete;
     IndexAllocator& operator=(const IndexAllocator&) = delete;
 
-    index_t allocate();
+    index_t allocate_and_acquire();
+    void acquire(index_t index);
     void release(index_t index);
 
 private:

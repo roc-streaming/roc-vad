@@ -18,9 +18,9 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
 {
     auto command = parent.add_subcommand("sender", "add sender virtual device");
 
-    command->add_option("-u,--uid", uid_, "Device UID (keep empty to auto-generate)");
+    command->add_option("-u,--uid", uid_, "Device UID (omit to auto-generate)");
     command->add_option(
-        "-n,--name", name_, "Human-readable device name (keep empty to auto-generate)");
+        "-n,--name", name_, "Human-readable device name (omit to auto-generate)");
 
     register_command(command);
 }
@@ -37,10 +37,10 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     spdlog::debug("sending add_device command");
 
     grpc::ClientContext context;
-    MesgDeviceConfig request;
-    MesgDeviceInfo response;
+    PrDeviceInfo request;
+    PrDeviceInfo response;
 
-    request.set_type(MesgDeviceConfig::SENDER);
+    request.set_type(PR_DEVICE_TYPE_SENDER);
     request.set_uid(uid_);
     request.set_name(name_);
 

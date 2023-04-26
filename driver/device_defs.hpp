@@ -24,27 +24,15 @@ enum class DeviceType
     Receiver,
 };
 
-// Device creation parameters.
-struct DeviceConfig
-{
-    DeviceType type = DeviceType::Sender;
-    std::string name;
-    std::string uid;
-};
-
-// Device run-time information
+// Device info.
 struct DeviceInfo
 {
+    DeviceType type = DeviceType::Sender;
+
     IndexAllocator::index_t index = 0;
+    std::string uid;
 
-    DeviceConfig config;
-
-    DeviceInfo() = default;
-
-    DeviceInfo(const DeviceConfig& config)
-        : config(config)
-    {
-    }
+    std::string name;
 };
 
 } // namespace rocvad

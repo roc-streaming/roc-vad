@@ -13,7 +13,7 @@
 
 namespace rocvad {
 
-void print_driver_and_client_info(const MesgDriverInfo& driver_info)
+void print_driver_and_client_info(const PrDriverInfo& driver_info)
 {
     fmt::println("driver is loaded");
 
@@ -30,14 +30,14 @@ void print_driver_and_client_info(const MesgDriverInfo& driver_info)
     fmt::println("  commit:  {}", std::string(BuildInfo::git_commit).substr(0, 7));
 }
 
-void print_device_info(const MesgDeviceInfo& device_info)
+void print_device_info(const PrDeviceInfo& device_info)
 {
     fmt::println("device #{}", device_info.index());
-    fmt::println("  uid:  {}", device_info.config().uid());
-    fmt::println("  name: {}", device_info.config().name());
+    fmt::println("  uid:  {}", device_info.uid());
+    fmt::println("  name: {}", device_info.name());
 }
 
-void print_device_list(const MesgDeviceList& device_list, bool show_info)
+void print_device_list(const PrDeviceList& device_list, bool show_info)
 {
     if (!show_info) {
         fmt::println("{:<8} {:<10} {:<22} {}", //
@@ -58,10 +58,9 @@ void print_device_list(const MesgDeviceList& device_list, bool show_info)
         } else {
             fmt::println("{:<8} {:<10} {:<22} {}",
                 device_info.index(),
-                (device_info.config().type() == MesgDeviceConfig::SENDER ? "sender"
-                                                                         : "receiver"),
-                device_info.config().uid(),
-                device_info.config().name());
+                device_info.type() == PR_DEVICE_TYPE_SENDER ? "sender" : "receiver",
+                device_info.uid(),
+                device_info.name());
         }
         is_first = false;
     }

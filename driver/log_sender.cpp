@@ -28,34 +28,34 @@ google::protobuf::Timestamp map_time(std::chrono::system_clock::time_point time_
     return google::protobuf::util::TimeUtil::NanosecondsToTimestamp(nanoseconds);
 }
 
-MesgLogEntry::Level map_level(spdlog::level::level_enum level)
+PrLogEntry::Level map_level(spdlog::level::level_enum level)
 {
     switch (level) {
     case spdlog::level::critical:
-        return MesgLogEntry::CRIT;
+        return PrLogEntry::CRIT;
 
     case spdlog::level::err:
-        return MesgLogEntry::ERROR;
+        return PrLogEntry::ERROR;
 
     case spdlog::level::warn:
-        return MesgLogEntry::WARN;
+        return PrLogEntry::WARN;
 
     case spdlog::level::info:
-        return MesgLogEntry::INFO;
+        return PrLogEntry::INFO;
 
     case spdlog::level::debug:
-        return MesgLogEntry::DEBUG;
+        return PrLogEntry::DEBUG;
 
     default:
         break;
     }
 
-    return MesgLogEntry::TRACE;
+    return PrLogEntry::TRACE;
 }
 
 } // namespace
 
-LogSender::LogSender(grpc::ServerWriter<MesgLogEntry>& stream_writer)
+LogSender::LogSender(grpc::ServerWriter<PrLogEntry>& stream_writer)
     : stream_writer_(stream_writer)
 {
 }
@@ -83,7 +83,7 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
         buf_.resize(buf_.size() - 1);
     }
 
-    MesgLogEntry entry;
+    PrLogEntry entry;
     *entry.mutable_time() = map_time(msg.time);
     entry.set_level(map_level(msg.level));
     entry.set_text(std::string(buf_.begin(), buf_.end()));

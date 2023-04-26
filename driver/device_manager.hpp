@@ -39,7 +39,7 @@ public:
     DeviceInfo get_device(index_t index);
     DeviceInfo get_device(const std::string& uid);
 
-    DeviceInfo add_device(const DeviceConfig& config);
+    DeviceInfo add_device(DeviceInfo info);
 
     void delete_device(index_t index);
     void delete_device(const std::string& uid);

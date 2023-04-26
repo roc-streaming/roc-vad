@@ -32,8 +32,8 @@ bool CmdInfo::execute(const Environment& env)
     spdlog::debug("sending driver_info command");
 
     grpc::ClientContext context;
-    MesgNone request;
-    MesgDriverInfo response;
+    PrNone request;
+    PrDriverInfo response;
 
     const grpc::Status status = stub->driver_info(&context, request, &response);
 

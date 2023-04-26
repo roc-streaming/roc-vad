@@ -12,24 +12,19 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
+#include <cassert>
+
 namespace rocvad {
 
 namespace {
 
-void populate_default_values(DeviceInfo& info)
-{
-    if (info.config.name.empty()) {
-        info.config.name = fmt::format("Roc Virtual Device #{}", info.index);
-    }
-}
-
-aspl::DeviceParameters make_device_params(const DeviceConfig& config)
+aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 {
     aspl::DeviceParameters device_params;
 
-    device_params.Name = config.name;
+    device_params.Name = info.name;
     device_params.Manufacturer = BuildInfo::driver_manufacturer;
-    device_params.DeviceUID = config.uid;
+    device_params.DeviceUID = info.uid;
     device_params.ModelUID = BuildInfo::driver_bundle_id;
     device_params.SampleRate = 44100; // TODO
     device_params.ChannelCount = 2; // TODO
@@ -44,30 +39,36 @@ aspl::DeviceParameters make_device_params(const DeviceConfig& config)
 Device::Device(std::shared_ptr<aspl::Plugin> plugin,
     IndexAllocator& index_allocator,
     UidGenerator& uid_generator,
-    const DeviceConfig& config)
+    const DeviceInfo& info)
     : index_allocator_(index_allocator)
     , uid_generator_(uid_generator)
     , plugin_(plugin)
-    , info_(config)
+    , info_(info)
 {
-    info_.index = index_allocator_.allocate();
-
-    if (info_.config.uid.empty()) {
-        info_.config.uid = uid_generator_.generate();
+    if (info_.index == 0) {
+        info_.index = index_allocator_.allocate_and_acquire();
+    } else {
+        index_allocator_.acquire(info_.index);
     }
 
-    populate_default_values(info_);
+    if (info_.uid.empty()) {
+        info_.uid = uid_generator_.generate();
+    }
+
+    if (info_.name.empty()) {
+        info_.name = fmt::format("Roc Virtual Device #{}", info_.index);
+    }
 
     spdlog::info("creating device object, index={} uid={} type={} name=\"{}\"",
         info_.index,
-        info_.config.uid,
-        info_.config.type,
-        info_.config.name);
+        info_.uid,
+        info_.type,
+        info_.name);
 
-    device_ = std::make_shared<aspl::Device>(
-        plugin->GetContext(), make_device_params(info_.config));
+    device_ =
+        std::make_shared<aspl::Device>(plugin->GetContext(), make_device_params(info_));
 
-    device_->AddStreamWithControlsAsync(info_.config.type == DeviceType::Sender
+    device_->AddStreamWithControlsAsync(info_.type == DeviceType::Sender
                                             ? aspl::Direction::Output
                                             : aspl::Direction::Input);
 
@@ -78,13 +79,15 @@ Device::~Device()
 {
     spdlog::info("destroying device object, index={} uid={} type={} name=\"{}\"",
         info_.index,
-        info_.config.uid,
-        info_.config.type,
-        info_.config.name);
+        info_.uid,
+        info_.type,
+        info_.name);
 
     plugin_->RemoveDevice(device_);
 
-    index_allocator_.release(info_.index);
+    if (info_.index != 0) {
+        index_allocator_.release(info_.index);
+    }
 }
 
 DeviceInfo Device::info()

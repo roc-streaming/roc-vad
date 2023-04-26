@@ -34,22 +34,22 @@ std::chrono::system_clock::time_point map_time(google::protobuf::Timestamp times
             std::chrono::nanoseconds(nanoseconds)));
 }
 
-spdlog::level::level_enum map_level(MesgLogEntry::Level level)
+spdlog::level::level_enum map_level(PrLogEntry::Level level)
 {
     switch (level) {
-    case MesgLogEntry::CRIT:
+    case PrLogEntry::CRIT:
         return spdlog::level::critical;
 
-    case MesgLogEntry::ERROR:
+    case PrLogEntry::ERROR:
         return spdlog::level::err;
 
-    case MesgLogEntry::WARN:
+    case PrLogEntry::WARN:
         return spdlog::level::warn;
 
-    case MesgLogEntry::INFO:
+    case PrLogEntry::INFO:
         return spdlog::level::info;
 
-    case MesgLogEntry::DEBUG:
+    case PrLogEntry::DEBUG:
         return spdlog::level::debug;
 
     default:
@@ -141,10 +141,10 @@ void CmdLogcat::session_()
     spdlog::debug("sending stream_logs command");
 
     grpc::ClientContext context;
-    MesgNone request;
+    PrNone request;
 
     assert(stub_);
-    std::unique_ptr<grpc::ClientReader<MesgLogEntry>> stream_reader =
+    std::unique_ptr<grpc::ClientReader<PrLogEntry>> stream_reader =
         stub_->stream_logs(&context, request);
 
     if (!stream_reader) {
@@ -152,7 +152,7 @@ void CmdLogcat::session_()
     }
 
     for (;;) {
-        MesgLogEntry entry;
+        PrLogEntry entry;
 
         if (!stream_reader->Read(&entry)) {
             stream_reader->Finish();

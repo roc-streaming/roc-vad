@@ -49,8 +49,8 @@ DriverProtocol::Stub* Connector::connect()
     spdlog::debug("sending ping command");
 
     grpc::ClientContext context;
-    MesgNone request;
-    MesgNone response;
+    PrNone request;
+    PrNone response;
 
     const grpc::Status status = stub_->ping(&context, request, &response);
 

@@ -52,25 +52,33 @@ DeviceInfo DeviceManager::get_device(const std::string& uid)
     return device->info();
 }
 
-DeviceInfo DeviceManager::add_device(const DeviceConfig& config)
+DeviceInfo DeviceManager::add_device(DeviceInfo info)
 {
     std::lock_guard lock(mutex_);
 
-    if (!config.uid.empty() && device_by_uid_.count(config.uid)) {
+    if (info.index != 0 && device_by_index_.count(info.index)) {
         throw std::invalid_argument(
-            fmt::format("device with uid \"{}\" already exists", config.uid));
+            fmt::format("device with index {} already exists", info.index));
+    }
+
+    if (!info.uid.empty() && device_by_uid_.count(info.uid)) {
+        throw std::invalid_argument(
+            fmt::format("device with uid \"{}\" already exists", info.uid));
     }
 
     auto device =
-        std::make_shared<Device>(plugin_, index_allocator_, uid_generator_, config);
+        std::make_shared<Device>(plugin_, index_allocator_, uid_generator_, info);
 
-    auto info = device->info();
+    info = device->info();
+
+    assert(info.index != 0);
+    assert(!info.uid.empty());
 
     assert(!device_by_index_.count(info.index));
-    assert(!device_by_uid_.count(info.config.uid));
+    assert(!device_by_uid_.count(info.uid));
 
     device_by_index_[info.index] = device;
-    device_by_uid_[info.config.uid] = device;
+    device_by_uid_[info.uid] = device;
 
     return info;
 }
@@ -83,10 +91,10 @@ void DeviceManager::delete_device(index_t index)
     auto info = device->info();
 
     assert(device_by_index_.count(info.index));
-    assert(device_by_uid_.count(info.config.uid));
+    assert(device_by_uid_.count(info.uid));
 
     device_by_index_.erase(info.index);
-    device_by_uid_.erase(info.config.uid);
+    device_by_uid_.erase(info.uid);
 }
 
 void DeviceManager::delete_device(const std::string& uid)
@@ -97,10 +105,10 @@ void DeviceManager::delete_device(const std::string& uid)
     auto info = device->info();
 
     assert(device_by_index_.count(info.index));
-    assert(device_by_uid_.count(info.config.uid));
+    assert(device_by_uid_.count(info.uid));
 
     device_by_index_.erase(info.index);
-    device_by_uid_.erase(info.config.uid);
+    device_by_uid_.erase(info.uid);
 }
 
 std::shared_ptr<Device> DeviceManager::find_device_(index_t index)

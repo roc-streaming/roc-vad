@@ -8,10 +8,12 @@
 
 #include "index_allocator.hpp"
 
+#include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
 #include <cassert>
 #include <limits>
+#include <stdexcept>
 
 namespace rocvad {
 
@@ -23,7 +25,7 @@ IndexAllocator::IndexAllocator()
     num_allocated_ = 1;
 }
 
-IndexAllocator::index_t IndexAllocator::allocate()
+IndexAllocator::index_t IndexAllocator::allocate_and_acquire()
 {
     index_t next_index = last_allocated_index_ + 1;
 
@@ -59,12 +61,25 @@ IndexAllocator::index_t IndexAllocator::allocate()
     return next_index;
 }
 
+void IndexAllocator::acquire(index_t index)
+{
+    if (!is_free_(index)) {
+        throw std::invalid_argument(
+            fmt::format("device index {} is already in use", index));
+    }
+
+    set_free_(index, false);
+    num_allocated_++;
+
+    spdlog::trace("acquired index={} num_allocated={}", index, num_allocated_);
+}
+
 void IndexAllocator::release(index_t index)
 {
     set_free_(index, true);
     num_allocated_--;
 
-    spdlog::trace("freed index={} num_allocated={}", index, num_allocated_);
+    spdlog::trace("released index={} num_allocated={}", index, num_allocated_);
 }
 
 IndexAllocator::index_t IndexAllocator::find_free_(index_t start_index) const

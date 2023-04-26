@@ -35,7 +35,7 @@ public:
     LogManager& operator=(const LogManager&) = delete;
 
     std::shared_ptr<LogSender> attach_sender(
-        grpc::ServerWriter<MesgLogEntry>& stream_writer);
+        grpc::ServerWriter<PrLogEntry>& stream_writer);
 
     void detach_sender(std::shared_ptr<LogSender> sender_sink);
 

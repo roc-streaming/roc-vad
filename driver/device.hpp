@@ -26,7 +26,7 @@ public:
     Device(std::shared_ptr<aspl::Plugin> plugin,
         IndexAllocator& index_allocator,
         UidGenerator& uid_generator,
-        const DeviceConfig& config);
+        const DeviceInfo& info);
     ~Device();
 
     Device(const Device&) = delete;

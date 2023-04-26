@@ -47,154 +47,154 @@ DriverProtocol::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& cha
   , rpcmethod_delete_device_(DriverProtocol_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status DriverProtocol::Stub::ping(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgNone* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ping_, context, request, response);
+::grpc::Status DriverProtocol::Stub::ping(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::rocvad::PrNone* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrNone, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ping_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ping_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::ping(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrNone* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrNone, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ping_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::ping(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::ping(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrNone* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ping_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* DriverProtocol::Stub::PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgNone, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ping_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrNone>* DriverProtocol::Stub::PrepareAsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrNone, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ping_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* DriverProtocol::Stub::AsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrNone>* DriverProtocol::Stub::AsyncpingRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncpingRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status DriverProtocol::Stub::driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDriverInfo* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_driver_info_, context, request, response);
+::grpc::Status DriverProtocol::Stub::driver_info(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::rocvad::PrDriverInfo* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrNone, ::rocvad::PrDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_driver_info_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_driver_info_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::driver_info(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDriverInfo* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrNone, ::rocvad::PrDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_driver_info_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::driver_info(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::driver_info(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDriverInfo* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_driver_info_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>* DriverProtocol::Stub::PrepareAsyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgDriverInfo, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_driver_info_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDriverInfo>* DriverProtocol::Stub::PrepareAsyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrDriverInfo, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_driver_info_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDriverInfo>* DriverProtocol::Stub::Asyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDriverInfo>* DriverProtocol::Stub::Asyncdriver_infoRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncdriver_infoRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::ClientReader< ::rocvad::MesgLogEntry>* DriverProtocol::Stub::stream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request) {
-  return ::grpc::internal::ClientReaderFactory< ::rocvad::MesgLogEntry>::Create(channel_.get(), rpcmethod_stream_logs_, context, request);
+::grpc::ClientReader< ::rocvad::PrLogEntry>* DriverProtocol::Stub::stream_logsRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request) {
+  return ::grpc::internal::ClientReaderFactory< ::rocvad::PrLogEntry>::Create(channel_.get(), rpcmethod_stream_logs_, context, request);
 }
 
-void DriverProtocol::Stub::async::stream_logs(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::grpc::ClientReadReactor< ::rocvad::MesgLogEntry>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::rocvad::MesgLogEntry>::Create(stub_->channel_.get(), stub_->rpcmethod_stream_logs_, context, request, reactor);
+void DriverProtocol::Stub::async::stream_logs(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::grpc::ClientReadReactor< ::rocvad::PrLogEntry>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::rocvad::PrLogEntry>::Create(stub_->channel_.get(), stub_->rpcmethod_stream_logs_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>* DriverProtocol::Stub::Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::rocvad::MesgLogEntry>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::rocvad::PrLogEntry>* DriverProtocol::Stub::Asyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::rocvad::PrLogEntry>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::rocvad::MesgLogEntry>* DriverProtocol::Stub::PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::rocvad::MesgLogEntry>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::rocvad::PrLogEntry>* DriverProtocol::Stub::PrepareAsyncstream_logsRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::rocvad::PrLogEntry>::Create(channel_.get(), cq, rpcmethod_stream_logs_, context, request, false, nullptr);
 }
 
-::grpc::Status DriverProtocol::Stub::get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::rocvad::MesgDeviceList* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_get_all_devices_, context, request, response);
+::grpc::Status DriverProtocol::Stub::get_all_devices(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::rocvad::PrDeviceList* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrNone, ::rocvad::PrDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_get_all_devices_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgNone, ::rocvad::MesgDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_all_devices_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::get_all_devices(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDeviceList* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrNone, ::rocvad::PrDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_all_devices_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::get_all_devices(::grpc::ClientContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::get_all_devices(::grpc::ClientContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDeviceList* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_all_devices_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>* DriverProtocol::Stub::PrepareAsyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgDeviceList, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_get_all_devices_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceList>* DriverProtocol::Stub::PrepareAsyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrDeviceList, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_get_all_devices_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceList>* DriverProtocol::Stub::Asyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::MesgNone& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceList>* DriverProtocol::Stub::Asyncget_all_devicesRaw(::grpc::ClientContext* context, const ::rocvad::PrNone& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncget_all_devicesRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status DriverProtocol::Stub::get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgDeviceInfo* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_get_device_, context, request, response);
+::grpc::Status DriverProtocol::Stub::get_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::rocvad::PrDeviceInfo* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrDeviceSelector, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_get_device_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_device_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::get_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrDeviceInfo* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrDeviceSelector, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_device_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::get_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::get_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_get_device_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* DriverProtocol::Stub::PrepareAsyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgDeviceInfo, ::rocvad::MesgDeviceSelector, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_get_device_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceInfo>* DriverProtocol::Stub::PrepareAsyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrDeviceInfo, ::rocvad::PrDeviceSelector, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_get_device_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* DriverProtocol::Stub::Asyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceInfo>* DriverProtocol::Stub::Asyncget_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncget_deviceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status DriverProtocol::Stub::add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::rocvad::MesgDeviceInfo* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_add_device_, context, request, response);
+::grpc::Status DriverProtocol::Stub::add_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceInfo& request, ::rocvad::PrDeviceInfo* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrDeviceInfo, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_add_device_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_add_device_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::add_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceInfo* request, ::rocvad::PrDeviceInfo* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrDeviceInfo, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_add_device_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::add_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::add_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceInfo* request, ::rocvad::PrDeviceInfo* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_add_device_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* DriverProtocol::Stub::PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgDeviceInfo, ::rocvad::MesgDeviceConfig, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_add_device_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceInfo>* DriverProtocol::Stub::PrepareAsyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceInfo& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrDeviceInfo, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_add_device_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgDeviceInfo>* DriverProtocol::Stub::Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceConfig& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrDeviceInfo>* DriverProtocol::Stub::Asyncadd_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceInfo& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncadd_deviceRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status DriverProtocol::Stub::delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::rocvad::MesgNone* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_delete_device_, context, request, response);
+::grpc::Status DriverProtocol::Stub::delete_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::rocvad::PrNone* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rocvad::PrDeviceSelector, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_delete_device_, context, request, response);
 }
 
-void DriverProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_delete_device_, context, request, response, std::move(f));
+void DriverProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrNone* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rocvad::PrDeviceSelector, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_delete_device_, context, request, response, std::move(f));
 }
 
-void DriverProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response, ::grpc::ClientUnaryReactor* reactor) {
+void DriverProtocol::Stub::async::delete_device(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrNone* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_delete_device_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* DriverProtocol::Stub::PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::MesgNone, ::rocvad::MesgDeviceSelector, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_delete_device_, context, request);
+::grpc::ClientAsyncResponseReader< ::rocvad::PrNone>* DriverProtocol::Stub::PrepareAsyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rocvad::PrNone, ::rocvad::PrDeviceSelector, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_delete_device_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::rocvad::MesgNone>* DriverProtocol::Stub::Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::MesgDeviceSelector& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::rocvad::PrNone>* DriverProtocol::Stub::Asyncdelete_deviceRaw(::grpc::ClientContext* context, const ::rocvad::PrDeviceSelector& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncdelete_deviceRaw(context, request, cq);
   result->StartCall();
@@ -205,71 +205,71 @@ DriverProtocol::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgNone, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrNone, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgNone* req,
-             ::rocvad::MesgNone* resp) {
+             const ::rocvad::PrNone* req,
+             ::rocvad::PrNone* resp) {
                return service->ping(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgNone, ::rocvad::MesgDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrNone, ::rocvad::PrDriverInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgNone* req,
-             ::rocvad::MesgDriverInfo* resp) {
+             const ::rocvad::PrNone* req,
+             ::rocvad::PrDriverInfo* resp) {
                return service->driver_info(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[2],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< DriverProtocol::Service, ::rocvad::MesgNone, ::rocvad::MesgLogEntry>(
+      new ::grpc::internal::ServerStreamingHandler< DriverProtocol::Service, ::rocvad::PrNone, ::rocvad::PrLogEntry>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgNone* req,
-             ::grpc::ServerWriter<::rocvad::MesgLogEntry>* writer) {
+             const ::rocvad::PrNone* req,
+             ::grpc::ServerWriter<::rocvad::PrLogEntry>* writer) {
                return service->stream_logs(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgNone, ::rocvad::MesgDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrNone, ::rocvad::PrDeviceList, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgNone* req,
-             ::rocvad::MesgDeviceList* resp) {
+             const ::rocvad::PrNone* req,
+             ::rocvad::PrDeviceList* resp) {
                return service->get_all_devices(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgDeviceSelector, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrDeviceSelector, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgDeviceSelector* req,
-             ::rocvad::MesgDeviceInfo* resp) {
+             const ::rocvad::PrDeviceSelector* req,
+             ::rocvad::PrDeviceInfo* resp) {
                return service->get_device(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgDeviceConfig, ::rocvad::MesgDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrDeviceInfo, ::rocvad::PrDeviceInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgDeviceConfig* req,
-             ::rocvad::MesgDeviceInfo* resp) {
+             const ::rocvad::PrDeviceInfo* req,
+             ::rocvad::PrDeviceInfo* resp) {
                return service->add_device(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       DriverProtocol_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::MesgDeviceSelector, ::rocvad::MesgNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< DriverProtocol::Service, ::rocvad::PrDeviceSelector, ::rocvad::PrNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](DriverProtocol::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::rocvad::MesgDeviceSelector* req,
-             ::rocvad::MesgNone* resp) {
+             const ::rocvad::PrDeviceSelector* req,
+             ::rocvad::PrNone* resp) {
                return service->delete_device(ctx, req, resp);
              }, this)));
 }
@@ -277,49 +277,49 @@ DriverProtocol::Service::Service() {
 DriverProtocol::Service::~Service() {
 }
 
-::grpc::Status DriverProtocol::Service::ping(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgNone* response) {
+::grpc::Status DriverProtocol::Service::ping(::grpc::ServerContext* context, const ::rocvad::PrNone* request, ::rocvad::PrNone* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::driver_info(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDriverInfo* response) {
+::grpc::Status DriverProtocol::Service::driver_info(::grpc::ServerContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDriverInfo* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::stream_logs(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::grpc::ServerWriter< ::rocvad::MesgLogEntry>* writer) {
+::grpc::Status DriverProtocol::Service::stream_logs(::grpc::ServerContext* context, const ::rocvad::PrNone* request, ::grpc::ServerWriter< ::rocvad::PrLogEntry>* writer) {
   (void) context;
   (void) request;
   (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::get_all_devices(::grpc::ServerContext* context, const ::rocvad::MesgNone* request, ::rocvad::MesgDeviceList* response) {
+::grpc::Status DriverProtocol::Service::get_all_devices(::grpc::ServerContext* context, const ::rocvad::PrNone* request, ::rocvad::PrDeviceList* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::get_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgDeviceInfo* response) {
+::grpc::Status DriverProtocol::Service::get_device(::grpc::ServerContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrDeviceInfo* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::add_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceConfig* request, ::rocvad::MesgDeviceInfo* response) {
+::grpc::Status DriverProtocol::Service::add_device(::grpc::ServerContext* context, const ::rocvad::PrDeviceInfo* request, ::rocvad::PrDeviceInfo* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status DriverProtocol::Service::delete_device(::grpc::ServerContext* context, const ::rocvad::MesgDeviceSelector* request, ::rocvad::MesgNone* response) {
+::grpc::Status DriverProtocol::Service::delete_device(::grpc::ServerContext* context, const ::rocvad::PrDeviceSelector* request, ::rocvad::PrNone* response) {
   (void) context;
   (void) request;
   (void) response;
