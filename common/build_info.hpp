@@ -21,6 +21,9 @@ struct BuildInfo
     static const char* driver_bundle_path;
     static const char* driver_uuid;
     static const char* driver_socket;
+
+    static const char* tool_name;
+    static const char* tool_path;
 };
 
 } // namespace rocvad

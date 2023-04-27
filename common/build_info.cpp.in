@@ -21,4 +21,7 @@ const char* BuildInfo::driver_bundle_path =
 const char* BuildInfo::driver_uuid = "${DRIVER_UUID}";
 const char* BuildInfo::driver_socket = "${DRIVER_SOCKET}";
 
+const char* BuildInfo::tool_name = "${TOOL_NAME}";
+const char* BuildInfo::tool_path = "/usr/local/bin/${TOOL_NAME}";
+
 } // namespace rocvad

@@ -16,6 +16,7 @@ add_executable(${TOOL_NAME}
   "cmd_info.cpp"
   "cmd_logcat.cpp"
   "cmd_root.cpp"
+  "cmd_uninstall.cpp"
   "connector.cpp"
   "main.cpp"
   "parse.cpp"

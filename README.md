@@ -38,7 +38,25 @@ Compatible Roc Toolkit senders and receivers include:
 * [C library](https://roc-streaming.org/toolkit/docs/api.html) and [bindings for other languages](https://roc-streaming.org/toolkit/docs/api/bindings.html) (Go, Java)
 * [Android app](https://github.com/roc-streaming/roc-droid)
 
-## Installation
+## Install from binaries
+
+Install driver and command-line tool:
+
+```
+TODO
+```
+
+Then reboot your Mac.
+
+To **uninstall** everything, run:
+
+```
+sudo roc-vad uninstall
+```
+
+Then reboot your Mac.
+
+## Install from sources
 
 Prerequisites:
 
@@ -129,7 +147,7 @@ $ roc-vad logcat
 ...
 ```
 
-Alternatively, use `syslog` makefile target. It streams logs that driver sends to system log. Basically they are the same logs as produced by `logcat` command, but in other format:
+Alternatively, you can use `syslog` makefile target. It streams logs that driver sends to system log. Basically they are the same logs as produced by `logcat` command, but in slightly different format, and possibly truncated and deduplicated:
 
 ```
 $ make syslog
