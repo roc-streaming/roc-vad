@@ -43,7 +43,7 @@ Compatible Roc Toolkit senders and receivers include:
 Install driver and command-line tool:
 
 ```
-/bin/bash -c \
+sudo /bin/bash -c \
   "$(curl -fsSL https://raw.githubusercontent.com/roc-streaming/roc-vad/HEAD/install.sh)"
 ```
 
@@ -133,6 +133,8 @@ To enable verbose logging of the command line tool, use `-v` flag. Specify it mu
 
 ```
 $ roc-vad -vv info
+debug: opened driver bundle at "/Library/Audio/Plug-Ins/HAL/roc_vad.driver"
+debug: obtained value "127.0.0.1:9712" for key "DriverSocket" from driver bundle
 info: trying to connect to driver at 127.0.0.1:9712
 debug: creating rpc channel
 debug: sending ping command
