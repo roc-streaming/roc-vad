@@ -10,13 +10,13 @@
 #include "color_sink.hpp"
 #include "connector.hpp"
 
+#include <fmt/core.h>
 #include <google/protobuf/util/time_util.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
 #include <cassert>
 #include <chrono>
-#include <iostream>
 #include <string>
 #include <thread>
 
@@ -96,7 +96,7 @@ bool CmdLogcat::run_()
         const bool success = connect_();
 
         if (!success && !has_tried) {
-            std::cout << "...waiting for connection to driver\n";
+            fmt::println("...waiting for connection to driver");
         }
 
         has_tried = true;
@@ -106,14 +106,14 @@ bool CmdLogcat::run_()
         }
 
         if (has_connected) {
-            std::cout << "...restored connection to driver\n";
+            fmt::println("...restored connection to driver");
         }
 
         has_connected = true;
 
         session_();
 
-        std::cout << "...lost connection to driver\n";
+        fmt::println("...lost connection to driver");
     }
 
     return true;

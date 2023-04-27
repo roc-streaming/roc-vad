@@ -8,8 +8,10 @@
 
 #include "cmd_compound.hpp"
 
+#include <fmt/core.h>
+
 #include <cassert>
-#include <iostream>
+#include <cstdio>
 #include <optional>
 
 using namespace rocvad;
@@ -48,8 +50,8 @@ bool CmdCompound::execute(const Environment& env)
     }
 
     if (!result) {
-        std::cerr << "Missing sub-command\n";
-        std::cerr << "Run with --help for more information.\n";
+        fmt::println(stderr, "Missing sub-command");
+        fmt::println(stderr, "Run with --help for more information.");
 
         result = false;
     }

@@ -20,24 +20,26 @@ namespace {
 std::string read_plist(const char* bundle_id,
     const char* bundle_path,
     const char* key,
-    const char* default_value)
+    const char* default_value,
+    bool quiet)
 {
     NSBundle* bundle = nullptr;
 
     if ((bundle = [NSBundle
              bundleWithIdentifier:[NSString stringWithUTF8String:bundle_id]])) {
-        spdlog::debug("opened driver bundle \"{}\"", bundle_id);
+        spdlog::info("found driver bundle \"{}\"", bundle_id);
     }
 
     if (!bundle) {
         if ((bundle = [NSBundle
                  bundleWithPath:[NSString stringWithUTF8String:bundle_path]])) {
-            spdlog::debug("opened driver bundle at \"{}\"", bundle_path);
+            spdlog::info("found driver bundle at \"{}\"", bundle_path);
         }
     }
 
     if (!bundle) {
-        spdlog::error("can't find driver bundle by id \"{}\" or path \"{}\"",
+        spdlog::log(quiet ? spdlog::level::info : spdlog::level::warn,
+            "can't find driver bundle by id \"{}\" or path \"{}\"",
             bundle_id,
             bundle_path);
         return default_value;
@@ -47,7 +49,9 @@ std::string read_plist(const char* bundle_id,
         [bundle objectForInfoDictionaryKey:[NSString stringWithUTF8String:key]];
 
     if (!value) {
-        spdlog::error("can't find value with key \"{}\" in driver bundle", key);
+        spdlog::log(quiet ? spdlog::level::info : spdlog::level::warn,
+            "can't find value with key \"{}\" in driver bundle",
+            key);
         return default_value;
     }
 
@@ -61,12 +65,13 @@ std::string read_plist(const char* bundle_id,
 
 } // namespace
 
-std::string PlistInfo::driver_socket()
+std::string PlistInfo::driver_socket(bool quiet)
 {
     return read_plist(BuildInfo::driver_bundle_id,
         BuildInfo::driver_bundle_path,
         "DriverSocket",
-        BuildInfo::driver_socket);
+        BuildInfo::driver_socket,
+        quiet);
 }
 
 } // namespace rocvad

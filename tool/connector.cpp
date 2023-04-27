@@ -16,7 +16,7 @@ using namespace rocvad;
 
 Connector::Connector(bool quiet)
     : quiet_(quiet)
-    , driver_socket_(PlistInfo::driver_socket())
+    , driver_socket_(PlistInfo::driver_socket(quiet_))
 {
 }
 

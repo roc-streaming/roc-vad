@@ -15,7 +15,7 @@ namespace rocvad {
 // Reads configuration from Info.plist in driver bundle.
 struct PlistInfo
 {
-    static std::string driver_socket();
+    static std::string driver_socket(bool quiet = false);
 };
 
 } // namespace rocvad
