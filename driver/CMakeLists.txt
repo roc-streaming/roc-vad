@@ -16,6 +16,7 @@ add_library(${DRIVER_NAME} MODULE
   "log_manager.cpp"
   "log_sender.cpp"
   "log_syslog.cpp"
+  "rpc_serdes.cpp"
   "tracer.cpp"
   "uid_generator.cpp"
 )

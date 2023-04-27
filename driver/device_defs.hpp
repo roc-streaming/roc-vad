@@ -10,9 +10,11 @@
 
 #include <fmt/core.h>
 
+#include <optional>
 #include <string>
 #include <string_view>
 
+#include "config.hpp"
 #include "index_allocator.hpp"
 
 namespace rocvad {
@@ -31,8 +33,12 @@ struct DeviceInfo
 
     IndexAllocator::index_t index = 0;
     std::string uid;
-
     std::string name;
+
+    LocalConfig local_config;
+
+    std::optional<SenderConfig> sender_config;
+    std::optional<ReceiverConfig> receiver_config;
 };
 
 } // namespace rocvad

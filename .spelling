@@ -5,9 +5,11 @@ cli11
 cmake
 coreaudio
 coreaudiod
+deduplicated
 externalproject
 fecframe
 findpackage
+fmt
 grpc
 hacking.md
 homebrew
@@ -16,6 +18,7 @@ localhost
 macos
 mpl-2
 pipewire
+plist
 plugin
 plugins
 pulseaudio

@@ -8,6 +8,7 @@
 
 #include "driver_service.hpp"
 #include "build_info.hpp"
+#include "rpc_serdes.hpp"
 
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
@@ -16,61 +17,6 @@
 #include <stdexcept>
 
 namespace rocvad {
-
-namespace {
-
-void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
-{
-    switch (in.type()) {
-    case PR_DEVICE_TYPE_SENDER:
-        out.type = DeviceType::Sender;
-        break;
-
-    case PR_DEVICE_TYPE_RECEIVER:
-        out.type = DeviceType::Receiver;
-        break;
-
-    default:
-        throw std::invalid_argument(
-            fmt::format("device type should be either PR_DEVICE_TYPE_SENDER or "
-                        "PR_DEVICE_TYPE_RECEIVER"));
-    }
-
-    if (in.has_index()) {
-        if (in.index() == 0) {
-            throw std::invalid_argument(
-                fmt::format("device index should be either unset or non-zero"));
-        }
-        out.index = in.index();
-    }
-
-    if (in.has_uid()) {
-        if (in.uid().empty()) {
-            throw std::invalid_argument(
-                fmt::format("device uid should be either unset or non-empty"));
-        }
-        out.uid = in.uid();
-    }
-
-    if (in.has_name()) {
-        if (in.name().empty()) {
-            throw std::invalid_argument(
-                fmt::format("device name should be either unset or non-empty"));
-        }
-        out.name = in.name();
-    }
-}
-
-void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
-{
-    out.set_type(
-        in.type == DeviceType::Sender ? PR_DEVICE_TYPE_SENDER : PR_DEVICE_TYPE_RECEIVER);
-    out.set_index(in.index);
-    out.set_uid(in.uid);
-    out.set_name(in.name);
-}
-
-} // namespace
 
 DriverService::DriverService(std::shared_ptr<LogManager> log_manager,
     std::shared_ptr<DeviceManager> device_manager)
@@ -180,6 +126,10 @@ grpc::Status DriverService::execute_command_(const char* name, std::function<voi
         spdlog::error(
             "command {} failed with INVALID_ARGUMENT error: {}", name, e.what());
         return grpc::Status(grpc::INVALID_ARGUMENT, e.what());
+    }
+    catch (std::runtime_error& e) {
+        spdlog::error("command {} failed with INTERNAL error: {}", name, e.what());
+        return grpc::Status(grpc::INTERNAL, e.what());
     }
     catch (std::exception& e) {
         spdlog::error("command {} failed with UNKNOWN error: {}", name, e.what());
