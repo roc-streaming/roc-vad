@@ -13,6 +13,7 @@
 #include <spdlog/spdlog.h>
 
 #include <cassert>
+#include <stdexcept>
 
 namespace rocvad {
 
@@ -26,8 +27,18 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
     device_params.Manufacturer = BuildInfo::driver_manufacturer;
     device_params.DeviceUID = info.uid;
     device_params.ModelUID = BuildInfo::driver_bundle_id;
-    device_params.SampleRate = 44100; // TODO
-    device_params.ChannelCount = 2; // TODO
+
+    device_params.SampleRate = info.local_config.sample_rate;
+
+    switch (info.local_config.channel_set) {
+    case ROC_CHANNEL_SET_STEREO:
+        device_params.ChannelCount = 2;
+        break;
+
+    default:
+        throw std::runtime_error("selected channel_set not supported by device");
+    }
+
     device_params.EnableMixing = true;
     device_params.EnableRealtimeTracing = false;
 
@@ -39,12 +50,14 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 Device::Device(std::shared_ptr<aspl::Plugin> plugin,
     IndexAllocator& index_allocator,
     UidGenerator& uid_generator,
-    const DeviceInfo& info)
+    const DeviceInfo& device_info)
     : index_allocator_(index_allocator)
     , uid_generator_(uid_generator)
     , plugin_(plugin)
-    , info_(info)
+    , info_(device_info)
 {
+    assert(plugin_);
+
     if (info_.index == 0) {
         info_.index = index_allocator_.allocate_and_acquire();
     } else {
@@ -66,7 +79,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
         info_.name);
 
     device_ =
-        std::make_shared<aspl::Device>(plugin->GetContext(), make_device_params(info_));
+        std::make_shared<aspl::Device>(plugin_->GetContext(), make_device_params(info_));
 
     device_->AddStreamWithControlsAsync(info_.type == DeviceType::Sender
                                             ? aspl::Direction::Output
@@ -83,7 +96,9 @@ Device::~Device()
         info_.type,
         info_.name);
 
-    plugin_->RemoveDevice(device_);
+    if (device_) {
+        plugin_->RemoveDevice(device_);
+    }
 
     if (info_.index != 0) {
         index_allocator_.release(info_.index);
