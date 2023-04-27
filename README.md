@@ -1,6 +1,6 @@
 # Roc Virtual Audio Device for macOS
 
-[![Build](https://github.com/roc-streaming/roc-vad/workflows/build/badge.svg)](https://github.com/roc-streaming/roc-vad/actions) [![Matrix chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#roc-streaming:matrix.org)
+[![Build](https://github.com/roc-streaming/roc-vad/workflows/build/badge.svg)](https://github.com/roc-streaming/roc-vad/actions) [![GitHub release](https://img.shields.io/github/release/roc-streaming/roc-vad.svg)](https://github.com/roc-streaming/roc-vad/releases) [![Matrix chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#roc-streaming:matrix.org)
 
 > <h2>PROJECT IS WORK IN PROGRESS!</h2>
 
@@ -43,7 +43,8 @@ Compatible Roc Toolkit senders and receivers include:
 Install driver and command-line tool:
 
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/roc-streaming/roc-vad/HEAD/install.sh)"
+/bin/bash -c \
+  "$(curl -fsSL https://raw.githubusercontent.com/roc-streaming/roc-vad/HEAD/install.sh)"
 ```
 
 ⚠️ After installation, reboot your Mac.
