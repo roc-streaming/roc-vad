@@ -43,10 +43,10 @@ Compatible Roc Toolkit senders and receivers include:
 Install driver and command-line tool:
 
 ```
-TODO
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/roc-streaming/roc-vad/HEAD/install.sh)"
 ```
 
-Then reboot your Mac.
+⚠️ After installation, reboot your Mac.
 
 To **uninstall** everything, run:
 
