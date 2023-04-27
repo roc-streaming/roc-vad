@@ -10,7 +10,7 @@
 
 namespace rocvad {
 
-const char* BuildInfo::git_version = "${GIT_VERSION}";
+const char* BuildInfo::git_version = "${GIT_RELEASE}";
 const char* BuildInfo::git_commit = "${GIT_COMMIT}";
 
 const char* BuildInfo::driver_name = "${DRIVER_NAME}";

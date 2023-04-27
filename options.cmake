@@ -25,8 +25,9 @@ if(NOT CODESIGN_ID)
 endif()
 
 # git info
-set(GIT_TAG "" CACHE STRING "Override git tag")
-if(NOT GIT_TAG)
+set(GIT_RELEASE "" CACHE STRING "Override git release version")
+set(GIT_COMMIT "" CACHE STRING "Override git commit hash")
+if(NOT GIT_RELEASE OR NOT GIT_COMMIT)
   if(NOT Git_FOUND)
     find_package(Git QUIET)
     if(Git_FOUND)
@@ -34,33 +35,37 @@ if(NOT GIT_TAG)
     endif()
   endif()
   if(Git_FOUND)
-    execute_process(
-      RESULTS_VARIABLE GIT_RESULT
-      OUTPUT_VARIABLE GIT_COMMIT
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-      ERROR_QUIET
-      COMMAND sh -c "cd \"${PROJECT_SOURCE_DIR}\" && git rev-parse HEAD"
-    )
-    execute_process(
-      RESULTS_VARIABLE GIT_RESULT
-      OUTPUT_VARIABLE GIT_TAG
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-      ERROR_QUIET
-      COMMAND sh -c "cd \"${PROJECT_SOURCE_DIR}\" && git describe --tags --abbrev=0"
-    )
-    if(GIT_RESULT EQUAL 0)
-      string(REGEX MATCH "v?([0-9.]+)" RESULT ${GIT_TAG})
-      set(GIT_TAG "${CMAKE_MATCH_1}")
+    if(NOT GIT_RELEASE)
+      execute_process(
+        RESULTS_VARIABLE GIT_RESULT
+        OUTPUT_VARIABLE GIT_RELEASE
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+        COMMAND sh -c "cd \"${PROJECT_SOURCE_DIR}\" && git describe --tags --abbrev=0"
+      )
+      if(GIT_RESULT EQUAL 0)
+        string(REGEX MATCH "v?([0-9.]+)" RESULT ${GIT_RELEASE})
+        set(GIT_RELEASE "${CMAKE_MATCH_1}")
+      endif()
+    endif()
+    if(NOT GIT_COMMIT)
+      execute_process(
+        RESULTS_VARIABLE GIT_RESULT
+        OUTPUT_VARIABLE GIT_COMMIT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+        COMMAND sh -c "cd \"${PROJECT_SOURCE_DIR}\" && git rev-parse HEAD"
+      )
     endif()
   endif()
 endif()
+if(GIT_RELEASE)
+  message(STATUS "Found git release: ${GIT_RELEASE}")
+else()
+  set(GIT_RELEASE "0.0.0")
+endif()
 if(GIT_COMMIT)
   message(STATUS "Found git commit: ${GIT_COMMIT}")
-endif()
-if(GIT_TAG)
-  message(STATUS "Found git tag: ${GIT_TAG}")
-else()
-  set(GIT_TAG "0.0.0")
 endif()
 
 # git submodules
