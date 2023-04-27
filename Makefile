@@ -1,4 +1,5 @@
 NUM_CPU ?= $(shell sysctl -n hw.logicalcpu 2>/dev/null || echo 1)
+DESTDIR ?=
 
 all: build
 
@@ -40,13 +41,22 @@ fmt:
 		| xargs clang-format --verbose -i
 
 install:
-	cp bin/roc-vad /usr/local/bin/
-	mkdir -p /Library/Audio/Plug-Ins/HAL/
-	cp -a bin/roc_vad.driver /Library/Audio/Plug-Ins/HAL/
+	mkdir -p $(DESTDIR)/usr/local/bin/
+	cp bin/roc-vad $(DESTDIR)/usr/local/bin/
+	mkdir -p $(DESTDIR)/Library/Audio/Plug-Ins/HAL/
+	cp -a bin/roc_vad.driver $(DESTDIR)/Library/Audio/Plug-Ins/HAL/
 
 uninstall:
-	rm -f /usr/local/bin/roc-vad
-	rm -rf /Library/Audio/Plug-Ins/HAL/roc_vad.driver
+	rm -f $(DESTDIR)/usr/local/bin/roc-vad
+	rm -rf $(DESTDIR)/Library/Audio/Plug-Ins/HAL/roc_vad.driver
 
 kickstart:
 	launchctl kickstart -k system/com.apple.audio.coreaudiod
+
+dist:
+	rm -rf build/dist
+	mkdir build/dist
+	$(MAKE) install DESTDIR=build/dist
+	tar --xattrs --uname=root --uid=0 --gname=wheel --gid=0 -s /.// \
+		-C build/dist -caPvf roc-vad.tar.bz2 .
+	ls -lh roc-vad.tar.bz2

@@ -1,5 +1,6 @@
 /build
 /bin
+*.tar.bz2
 GNUmakefile
 .unisonignore
 *.org
