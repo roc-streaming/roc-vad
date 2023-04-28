@@ -15,10 +15,10 @@
 
 namespace rocvad {
 
-class CmdDeviceAddSender : public CmdBase
+class CmdDeviceAddReceiver : public CmdBase
 {
 public:
-    CmdDeviceAddSender(CLI::App& parent);
+    CmdDeviceAddReceiver(CLI::App& parent);
 
     bool execute(const Environment& env) override;
 
@@ -29,12 +29,10 @@ private:
     std::optional<uint32_t> rate_;
     std::optional<std::string> chans_;
 
-    std::optional<std::string> packet_encoding_;
-    std::optional<std::string> packet_length_;
+    std::optional<std::string> target_latency_;
 
-    std::optional<std::string> fec_encoding_;
-    std::optional<uint32_t> fec_block_source_packets_;
-    std::optional<uint32_t> fec_block_repair_packets_;
+    std::optional<std::string> resampler_backend_;
+    std::optional<std::string> resampler_profile_;
 };
 
 } // namespace rocvad

@@ -17,7 +17,7 @@ using namespace rocvad;
 
 CmdInfo::CmdInfo(CLI::App& parent)
 {
-    register_command(parent.add_subcommand("info", "print driver and tool info"));
+    register_command(parent.add_subcommand("info", "Print driver and tool info"));
 }
 
 bool CmdInfo::execute(const Environment& env)

@@ -9,6 +9,7 @@ add_executable(${TOOL_NAME}
   "cmd_compound.cpp"
   "cmd_device.cpp"
   "cmd_device_add.cpp"
+  "cmd_device_add_receiver.cpp"
   "cmd_device_add_sender.cpp"
   "cmd_device_delete.cpp"
   "cmd_device_list.cpp"

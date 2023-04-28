@@ -16,7 +16,7 @@ using namespace rocvad;
 
 CmdDevice::CmdDevice(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("device", "device manipulation commands");
+    auto command = parent.add_subcommand("device", "Manipulate virtual devices");
 
     register_command(command);
 

@@ -7,61 +7,23 @@
  */
 
 #include "rpc_serdes.hpp"
+#include "enum_map.hpp"
 
 #include <fmt/core.h>
 #include <google/protobuf/util/time_util.h>
 
-#include <array>
-#include <optional>
 #include <stdexcept>
-#include <utility>
 
 namespace rocvad {
 
 namespace {
 
-std::array<std::optional<std::pair<PrChannelSet, roc_channel_set>>,
-    PrChannelSet_ARRAYSIZE>
-    channel_set_map {{
-        {{PR_CHANNEL_SET_STEREO, ROC_CHANNEL_SET_STEREO}},
-    }};
-
-std::array<std::optional<std::pair<PrPacketEncoding, roc_packet_encoding>>,
-    PrPacketEncoding_ARRAYSIZE>
-    packet_encoding_map {{
-        {{PR_PACKET_ENCODING_AVP_L16, ROC_PACKET_ENCODING_AVP_L16}},
-    }};
-
-std::array<std::optional<std::pair<PrFecEncoding, roc_fec_encoding>>,
-    PrFecEncoding_ARRAYSIZE>
-    fec_encoding_map {{
-        {{PR_FEC_ENCODING_DISABLE, ROC_FEC_ENCODING_DISABLE}},
-        {{PR_FEC_ENCODING_RS8M, ROC_FEC_ENCODING_RS8M}},
-        {{PR_FEC_ENCODING_LDPC_STAIRCASE, ROC_FEC_ENCODING_LDPC_STAIRCASE}},
-    }};
-
-std::array<std::optional<std::pair<PrResamplerBackend, roc_resampler_backend>>,
-    PrResamplerBackend_ARRAYSIZE>
-    resampler_backend_map {{
-        {{PR_RESAMPLER_BACKEND_BUILTIN, ROC_RESAMPLER_BACKEND_BUILTIN}},
-        {{PR_RESAMPLER_BACKEND_SPEEX, ROC_RESAMPLER_BACKEND_SPEEX}},
-    }};
-
-std::array<std::optional<std::pair<PrResamplerProfile, roc_resampler_profile>>,
-    PrResamplerProfile_ARRAYSIZE>
-    resampler_profile_map {{
-        {{PR_RESAMPLER_PROFILE_DISABLE, ROC_RESAMPLER_PROFILE_DISABLE}},
-        {{PR_RESAMPLER_PROFILE_HIGH, ROC_RESAMPLER_PROFILE_HIGH}},
-        {{PR_RESAMPLER_PROFILE_MEDIUM, ROC_RESAMPLER_PROFILE_MEDIUM}},
-        {{PR_RESAMPLER_PROFILE_LOW, ROC_RESAMPLER_PROFILE_LOW}},
-    }};
-
 template <class Map, class Enum>
 auto enum_from_rpc(const char* name, const Map& map, Enum in)
 {
     for (auto entry : map) {
-        if (entry && entry->first == in) {
-            return entry->second;
+        if (std::get<0>(entry) == in) {
+            return std::get<1>(entry);
         }
     }
     throw std::invalid_argument(fmt::format("invalid {} value {}", name, (int)in));
@@ -71,8 +33,8 @@ template <class Map, class Enum>
 auto enum_to_rpc(const char* name, const Map& map, Enum in)
 {
     for (auto entry : map) {
-        if (entry && entry->second == in) {
-            return entry->first;
+        if (std::get<1>(entry) == in) {
+            return std::get<0>(entry);
         }
     }
     throw std::runtime_error(fmt::format("invalid {} value {}", name, (int)in));
@@ -105,11 +67,8 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
     switch (in.type()) {
     case PR_DEVICE_TYPE_SENDER:
         out.type = DeviceType::Sender;
+        out.sender_config = SenderConfig {};
 
-        if (!in.has_sender_config()) {
-            throw std::invalid_argument(
-                "sender config should be present for sender device");
-        }
         if (in.has_receiver_config()) {
             throw std::invalid_argument(
                 "receiver config should not be present for sender device");
@@ -119,14 +78,11 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 
     case PR_DEVICE_TYPE_RECEIVER:
         out.type = DeviceType::Receiver;
+        out.receiver_config = ReceiverConfig {};
 
         if (in.has_sender_config()) {
             throw std::invalid_argument(
                 "sender config should not be present for sender device");
-        }
-        if (!in.has_receiver_config()) {
-            throw std::invalid_argument(
-                "receiver config should be present for sender device");
         }
 
         break;
@@ -164,6 +120,10 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
     // local config
     if (in.local_config().has_sample_rate()) {
         out.local_config.sample_rate = in.local_config().sample_rate();
+
+        if (out.local_config.sample_rate == 0) {
+            throw std::invalid_argument("sample_rate should not be zero");
+        }
     }
 
     if (in.local_config().has_channel_set()) {
@@ -173,8 +133,6 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 
     // sender config
     if (in.has_sender_config()) {
-        out.sender_config = SenderConfig {};
-
         if (in.sender_config().has_packet_encoding()) {
             out.sender_config->packet_encoding = enum_from_rpc("packet_encoding",
                 packet_encoding_map,
@@ -184,6 +142,10 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
         if (in.sender_config().has_packet_length()) {
             out.sender_config->packet_length_ns =
                 nanoseconds_from_rpc("packet_length", in.sender_config().packet_length());
+
+            if (out.sender_config->packet_length_ns == 0) {
+                throw std::invalid_argument("packet_length should not be zero");
+            }
         }
 
         if (in.sender_config().has_fec_encoding()) {
@@ -194,21 +156,37 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
         if (in.sender_config().has_fec_block_source_packets()) {
             out.sender_config->fec_block_source_packets =
                 in.sender_config().fec_block_source_packets();
+
+            if (out.sender_config->fec_block_source_packets == 0 &&
+                out.sender_config->fec_encoding != ROC_FEC_ENCODING_DISABLE) {
+                throw std::invalid_argument(
+                    "fec_block_source_packets should not be zero if "
+                    "fec_encoding is not set to PR_FEC_ENCODING_DISABLE");
+            }
         }
 
         if (in.sender_config().has_fec_block_repair_packets()) {
             out.sender_config->fec_block_repair_packets =
                 in.sender_config().fec_block_repair_packets();
+
+            if (out.sender_config->fec_block_repair_packets == 0 &&
+                out.sender_config->fec_encoding != ROC_FEC_ENCODING_DISABLE) {
+                throw std::invalid_argument(
+                    "fec_block_repair_packets should not be zero if "
+                    "fec_encoding is not set to PR_FEC_ENCODING_DISABLE");
+            }
         }
     }
 
     // receiver config
     if (in.has_receiver_config()) {
-        out.receiver_config = ReceiverConfig {};
-
         if (in.receiver_config().has_target_latency()) {
             out.receiver_config->target_latency_ns = nanoseconds_from_rpc(
                 "target_latency", in.receiver_config().target_latency());
+
+            if (out.receiver_config->target_latency_ns == 0) {
+                throw std::invalid_argument("target_latency should not be zero");
+            }
         }
 
         if (in.receiver_config().has_resampler_backend()) {

@@ -64,7 +64,7 @@ spdlog::level::level_enum map_level(PrLogEntry::Level level)
 CmdLogcat::CmdLogcat(CLI::App& parent)
 {
     register_command(
-        parent.add_subcommand("logcat", "receive and print logs from driver"));
+        parent.add_subcommand("logcat", "Receive and print logs from driver"));
 }
 
 bool CmdLogcat::execute(const Environment& env)

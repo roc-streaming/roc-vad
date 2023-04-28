@@ -16,9 +16,9 @@ using namespace rocvad;
 
 CmdDeviceList::CmdDeviceList(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("list", "list virtual devices");
+    auto command = parent.add_subcommand("list", "List virtual devices");
 
-    command->add_flag("-s,--show", show_, "Show full device info");
+    command->add_flag("-i,--info", show_info_, "Show full device info");
 
     register_command(command);
 }
@@ -45,7 +45,7 @@ bool CmdDeviceList::execute(const Environment& env)
         return false;
     }
 
-    print_device_list(response, show_);
+    print_device_list(response, show_info_);
 
     return true;
 }

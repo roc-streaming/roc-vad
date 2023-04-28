@@ -20,7 +20,7 @@ public:
     bool execute(const Environment& env) override;
 
 private:
-    bool show_ = false;
+    bool show_info_ = false;
 };
 
 } // namespace rocvad

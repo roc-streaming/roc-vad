@@ -20,7 +20,8 @@ using namespace rocvad;
 
 CmdUninstall::CmdUninstall(CLI::App& parent)
 {
-    register_command(parent.add_subcommand("uninstall", "uninstall driver and tool"));
+    register_command(
+        parent.add_subcommand("uninstall", "Uninstall driver and tool from system"));
 }
 
 bool CmdUninstall::execute(const Environment& env)

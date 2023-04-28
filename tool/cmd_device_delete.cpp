@@ -16,7 +16,7 @@ using namespace rocvad;
 
 CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("del", "delete virtual device");
+    auto command = parent.add_subcommand("del", "Delete virtual device");
 
     command->add_flag("-u,--uid", use_uid_, "Select device by UID instead of index");
     command->add_option("index", index_or_uid_, "Device index (or UID of --uid is used)")
@@ -58,6 +58,12 @@ bool CmdDeviceDelete::execute(const Environment& env)
     if (!status.ok()) {
         spdlog::error("failed to delete device: {}", status.error_message());
         return false;
+    }
+
+    if (use_uid_) {
+        fmt::println("deleted device with uid \"{}\"", index_or_uid_);
+    } else {
+        fmt::println("deleted device with index {}", index);
     }
 
     return true;

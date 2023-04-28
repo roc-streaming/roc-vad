@@ -17,7 +17,7 @@ using namespace rocvad;
 
 CmdDeviceShow::CmdDeviceShow(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("show", "show virtual device info");
+    auto command = parent.add_subcommand("show", "Show virtual device info");
 
     command->add_flag("-u,--uid", use_uid_, "Select device by UID instead of index");
     command->add_option("index", index_or_uid_, "Device index (or UID of --uid is used)")

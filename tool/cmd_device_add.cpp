@@ -7,15 +7,17 @@
  */
 
 #include "cmd_device_add.hpp"
+#include "cmd_device_add_receiver.hpp"
 #include "cmd_device_add_sender.hpp"
 
 using namespace rocvad;
 
 CmdDeviceAdd::CmdDeviceAdd(CLI::App& parent)
 {
-    auto command = parent.add_subcommand("add", "add virtual device");
+    auto command = parent.add_subcommand("add", "Add virtual device");
 
     register_command(command);
 
     register_subcommand(std::make_shared<CmdDeviceAddSender>(*command));
+    register_subcommand(std::make_shared<CmdDeviceAddReceiver>(*command));
 }
