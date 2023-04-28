@@ -12,18 +12,6 @@ if(NOT CMAKE_CXX_COMPILER_LAUNCHER)
   endif(CCACHE_PROGRAM)
 endif()
 
-# code signing
-set(CODESIGN_ID "" CACHE STRING "Specify Codesign ID")
-if(NOT CODESIGN_ID)
-  execute_process(COMMAND
-    sh -c "security find-identity -v 2>/dev/null | grep 'Apple Development' | head -1 | awk '{print $2}'"
-    OUTPUT_VARIABLE CODESIGN_ID
-  )
-  if(CODESIGN_ID)
-    message(STATUS "Found Codesign ID: ${CODESIGN_ID}")
-  endif()
-endif()
-
 # git info
 set(GIT_RELEASE "" CACHE STRING "Override git release version")
 set(GIT_COMMIT "" CACHE STRING "Override git commit hash")

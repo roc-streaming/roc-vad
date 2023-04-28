@@ -65,16 +65,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
   )
 endif()
 
-if(NOT CODESIGN_ID STREQUAL "")
-  add_custom_command(TARGET ${DRIVER_NAME} POST_BUILD
-    COMMENT "Signing ${DRIVER_NAME}.driver with ID ${CODESIGN_ID}"
-    VERBATIM
-    COMMAND
-      codesign --force -s ${CODESIGN_ID}
-        ${CMAKE_CURRENT_BINARY_DIR}/${DRIVER_NAME}.driver
-      )
-endif()
-
 add_custom_command(TARGET ${DRIVER_NAME} POST_BUILD
   COMMENT "Copying ${DRIVER_NAME}.driver to bin"
   COMMAND mkdir -p
