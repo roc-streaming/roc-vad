@@ -1,4 +1,4 @@
-# Roc Virtual Audio Device for macOS
+# Roc Virtual Audio Device for macOS [WIP]
 
 [![Build](https://github.com/roc-streaming/roc-vad/workflows/build/badge.svg)](https://github.com/roc-streaming/roc-vad/actions) [![GitHub release](https://img.shields.io/github/release/roc-streaming/roc-vad.svg)](https://github.com/roc-streaming/roc-vad/releases) [![Matrix chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#roc-streaming:matrix.org)
 
@@ -125,8 +125,6 @@ client:
   commit:  76ca125
 ```
 
-*TODO*
-
 ## Troubleshooting
 
 To enable verbose logging of the command line tool, use `-v` flag. Specify it multiple times to increase verbosity:
@@ -164,19 +162,56 @@ Timestamp                       Thread     Type        Activity             PID 
 ...
 ```
 
-## Common problems
+## Common issues
 
-*TODO*
+* **Can't connect to driver**
+
+   Make sure you did not forget to reboot computer (preferably) or restart `coreaudiod` after installing Roc VAD.
+
+* **Network connectivity**
+
+   Ensure that sent packets reach receiver.
+
+   When you start streaming from sender to receiver, you should see information about connected sender in receiver's logs. If you don't, it indicates problems with network connection, e.g. you use incorrect address or port, or a firewall is blocking traffic.
+
+* **Playback shuttering**
+
+   If you hear shuttering, try increasing target latency on the receiving side. For example, for Roc VAD receiver, try using `--target-latency=200ms` to increase latency to 200 milliseconds.
+
+* **Decreasing latency**
+
+   If your network allows lower latency, use `--target-latency` (receiver buffer size) option on receiving side and `--packet-length` (packet size), `--nbsrc`, and `--nbrpr` (FEC block size) on sending side.
+
+   Each FEC block consists of `--nbsrc` packets of `--packet-length` length; `--nbrpr` should be about 2/3 of `--nbsrc`; `--target-latency` should be greater than FEC block size to allow packet repair to work.
 
 ## Programmatic control
 
-*TODO*
+You can control Roc VAD driver from any programming language via [gRPC](https://grpc.io/) interface.
+
+You can to do everything you can do via command-line tool, which itself is just a wrapper for the same RPC calls. Unlike the command-line tool, gRPC interface will maintain backward compatibility on updates.
+
+More details are available here:
+
+* [driver_protocol.proto](rpc/driver_protocol.proto) - protocol definition
+* [RPC.md](RPC.md) - generated protocol documentation
+
+## Socket address
+
+By default, driver starts (unauthenticated) gRPC server at `127.0.0.1:9712`.
+
+If you want to change the address, you can edit `DriverSocket` entry in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read address from there.
 
 ## Hacking
 
-Contributions in any form are always welcome!
+Contributions in any form are always welcome! You can find issues needing help using [help wanted](https://github.com/roc-streaming/roc-vad/labels/help%20wanted) and [good first issue](https://github.com/roc-streaming/roc-vad/labels/good%20first%20issue) labels.
 
 If you would like to dig into the project internals, have a look at [HACKING.md](HACKING.md).
+
+## Donating
+
+If you would like to support the project financially, see details on [this page](https://roc-streaming.org/toolkit/docs/about_project/sponsors.html).
+
+Thank you!
 
 ## Authors
 

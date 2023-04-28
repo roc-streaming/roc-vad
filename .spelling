@@ -1,4 +1,6 @@
 0
+2
+3
 a.k.a.
 ccache
 cli11
@@ -6,6 +8,7 @@ cmake
 coreaudio
 coreaudiod
 deduplicated
+driver_protocol.proto
 externalproject
 fecframe
 findpackage
@@ -21,9 +24,11 @@ pipewire
 plist
 plugin
 plugins
+protoc-gen-doc
 pulseaudio
 roc
 rpc
+rpc.md
 rtp
 spdlog
 stdout

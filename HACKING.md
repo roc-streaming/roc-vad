@@ -26,6 +26,28 @@ Format code:
 make fmt
 ```
 
+## RPC documentation
+
+After modifying `.proto` file(s), you need to re-generate documentation for RPC.
+
+Install Go:
+
+```
+brew install go
+```
+
+Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
+
+```
+go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+```
+
+Re-generate [RPC.md](RPC.md) from `.proto` files:
+
+```
+make docs
+```
+
 ## General overview
 
 Virtual device is implemented as a plugin, a.k.a. driver, for CoreAudio sound daemon. The most part of the driver job is provided by [libASPL](https://github.com/gavv/libASPL) (developed by the author of these lines).
@@ -77,19 +99,3 @@ There are two important reasons for this:
 * We can not use shared libraries for common stuff like gRPC or spdlog, because if other CoreAudio plugins will also use them, they may need different versions, and there will be a conflict.
 
 * After statically linking these libraries, we can not allow exporting their symbols from our plugin, because, again, if other plugins will use the same libraries, symbols from our plugin may overlap with the same symbols from other plugins, and there will be a mess.
-
-## Code signing
-
-*TODO*
-
-## Socket address
-
-By default, driver starts RPC server at `127.0.0.1:9712`.
-
-If you want to change this address, you can edit `DriverSocket` key in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read socket address from that file.
-
-You may need to regenerate driver signature after changing that file:
-
-```
-sudo codesign --force -s <CODESIGN_ID> /Library/Audio/Plug-Ins/HAL/roc_vad.driver
-```
