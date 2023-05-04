@@ -30,19 +30,19 @@ make fmt
 
 After modifying `.proto` file(s), you need to re-generate documentation for RPC.
 
-Install Go:
+First, install Go, for example using brew:
 
 ```
 brew install go
 ```
 
-Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
+Then install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
 
 ```
 go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
 ```
 
-Re-generate [RPC.md](RPC.md) from `.proto` files:
+Now you can re-generate [RPC.md](RPC.md) from `.proto` files:
 
 ```
 make docs
@@ -61,6 +61,7 @@ The project uses these libraries:
 * [Roc Toolkit](https://github.com/roc-streaming/roc-toolkit) - network streaming
 * [libASPL](https://github.com/gavv/libASPL) - virtual device support
 * [gRPC](https://github.com/grpc/grpc) - control protocol for virtual device
+* [BoringSSL](https://github.com/google/boringssl) - encryption (gRPC dependency)
 * [CLI11](https://github.com/CLIUtils/CLI11) - command-line parsing library
 * [spdlog](https://github.com/gabime/spdlog) - logging library
 * [{fmt}](https://github.com/fmtlib/fmt) - formatting library

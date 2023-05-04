@@ -18,13 +18,16 @@ set(DRIVER_SOCKET "127.0.0.1:9712")
 set(DRIVER_MANUFACTURER "Roc Streaming")
 set(DRIVER_COPYRIGHT "Copyright (c) Roc Streaming authors")
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release")
-endif()
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
+set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
 
 add_compile_options(
   # enable warnings

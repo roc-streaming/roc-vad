@@ -16,3 +16,6 @@
 [submodule "3rdparty/fmt"]
 	path = 3rdparty/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "3rdparty/BoringSSL"]
+	path = 3rdparty/BoringSSL
+	url = https://github.com/google/boringssl.git
