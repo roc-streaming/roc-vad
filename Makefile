@@ -16,6 +16,7 @@ build:
 
 clean:
 	rm -rf bin build
+	rm -f compile_commands.json
 
 info:
 	ls -lh bin/roc-vad bin/roc_vad.driver/Contents/MacOS/roc_vad

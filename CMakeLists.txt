@@ -18,12 +18,13 @@ set(DRIVER_SOCKET "127.0.0.1:9712")
 set(DRIVER_MANUFACTURER "Roc Streaming")
 set(DRIVER_COPYRIGHT "Copyright (c) Roc Streaming authors")
 
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15") # Catalina
 set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
@@ -65,4 +66,18 @@ if(NOT BOOTSTRAP)
       ${ALL_DEPENDENCIES}
     )
   endforeach()
+
+  add_custom_command(
+    COMMENT "Copying compile_commands.json to project root"
+    DEPENDS
+      ${COMMON_LIB} ${RPC_LIB} ${DRIVER_NAME} ${TOOL_NAME}
+    OUTPUT
+      ${PROJECT_SOURCE_DIR}/compile_commands.json
+    COMMAND ${CMAKE_COMMAND} -E copy
+      ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
+      ${PROJECT_SOURCE_DIR}/compile_commands.json
+    )
+  add_custom_target(compile_commands ALL
+    DEPENDS ${PROJECT_SOURCE_DIR}/compile_commands.json
+  )
 endif()
