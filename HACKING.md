@@ -28,21 +28,15 @@ make fmt
 
 ## RPC documentation
 
-After modifying `.proto` file(s), you need to re-generate documentation for RPC.
+After modifying `.proto` file(s), you need to re-generate [RPC.md](RPC.md) document.
 
-First, install Go, for example using brew:
-
-```
-brew install go
-```
-
-Then install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
+Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
 
 ```
 go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
 ```
 
-Now you can re-generate [RPC.md](RPC.md) from `.proto` files:
+Regenerate documentation:
 
 ```
 make docs

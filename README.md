@@ -67,7 +67,7 @@ Prerequisites:
 Install build dependencies:
 
 ```
-brew install cmake scons autoconf automake pkg-config libtool
+brew install cmake scons autoconf automake pkg-config libtool go
 ```
 
 Clone repo:
