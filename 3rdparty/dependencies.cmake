@@ -240,7 +240,8 @@ add_custom_command(
   COMMENT "Commit bootstrap"
   DEPENDS ${ALL_DEPENDENCIES}
   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
-  COMMAND touch ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
+  COMMAND ${CMAKE_COMMAND} -E touch
+    ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit
 )
 add_custom_target(commit_bootstrap ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/bootstrap.commit

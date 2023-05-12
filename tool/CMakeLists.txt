@@ -5,23 +5,23 @@ find_package(fmt CONFIG REQUIRED)
 find_library(LIB_Foundation Foundation REQUIRED)
 
 add_executable(${TOOL_NAME}
-  "cmd_base.cpp"
-  "cmd_compound.cpp"
-  "cmd_device.cpp"
-  "cmd_device_add.cpp"
-  "cmd_device_add_receiver.cpp"
-  "cmd_device_add_sender.cpp"
-  "cmd_device_delete.cpp"
-  "cmd_device_list.cpp"
-  "cmd_device_show.cpp"
-  "cmd_info.cpp"
-  "cmd_logcat.cpp"
-  "cmd_root.cpp"
-  "cmd_uninstall.cpp"
-  "connector.cpp"
-  "main.cpp"
-  "parse.cpp"
-  "print.cpp"
+  cmd_base.cpp
+  cmd_compound.cpp
+  cmd_device.cpp
+  cmd_device_add.cpp
+  cmd_device_add_receiver.cpp
+  cmd_device_add_sender.cpp
+  cmd_device_delete.cpp
+  cmd_device_list.cpp
+  cmd_device_show.cpp
+  cmd_info.cpp
+  cmd_logcat.cpp
+  cmd_root.cpp
+  cmd_uninstall.cpp
+  connector.cpp
+  main.cpp
+  parse.cpp
+  print.cpp
 )
 
 target_link_libraries(${TOOL_NAME} PRIVATE
@@ -51,9 +51,9 @@ endif()
 
 add_custom_command(TARGET ${TOOL_NAME} POST_BUILD
   COMMENT "Copying ${TOOL_NAME} to bin"
-  COMMAND mkdir -p
+  COMMAND ${CMAKE_COMMAND} -E make_directory
     ${PROJECT_ROOT}/bin
-  COMMAND cp
+  COMMAND ${CMAKE_COMMAND} -E copy
     $<TARGET_FILE:${TOOL_NAME}>
     ${PROJECT_ROOT}/bin
 )

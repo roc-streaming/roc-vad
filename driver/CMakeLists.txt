@@ -7,18 +7,18 @@ find_library(LIB_CoreFoundation CoreFoundation REQUIRED)
 find_library(LIB_Foundation Foundation REQUIRED)
 
 add_library(${DRIVER_NAME} MODULE
-  "device.cpp"
-  "device_manager.cpp"
-  "driver.cpp"
-  "driver_service.cpp"
-  "entry_point.cpp"
-  "index_allocator.cpp"
-  "log_manager.cpp"
-  "log_sender.cpp"
-  "log_syslog.cpp"
-  "rpc_serdes.cpp"
-  "tracer.cpp"
-  "uid_generator.cpp"
+  device.cpp
+  device_manager.cpp
+  driver.cpp
+  driver_service.cpp
+  entry_point.cpp
+  index_allocator.cpp
+  log_manager.cpp
+  log_sender.cpp
+  log_syslog.cpp
+  rpc_serdes.cpp
+  tracer.cpp
+  uid_generator.cpp
 )
 
 target_link_libraries(${DRIVER_NAME} PRIVATE
@@ -43,18 +43,18 @@ target_link_options(${DRIVER_NAME} PRIVATE
 )
 
 set_target_properties(${DRIVER_NAME} PROPERTIES
-  OUTPUT_NAME "${DRIVER_NAME}"
+  OUTPUT_NAME ${DRIVER_NAME}
   BUNDLE true
   BUNDLE_EXTENSION "driver"
   PREFIX ""
   SUFFIX ""
   MACOSX_BUNDLE ON
-  MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in"
-  MACOSX_BUNDLE_BUNDLE_NAME "${DRIVER_NAME}"
-  MACOSX_BUNDLE_BUNDLE_VERSION "${GIT_VERSION}"
-  MACOSX_BUNDLE_SHORT_VERSION_STRING "${GIT_VERSION}"
-  MACOSX_BUNDLE_COPYRIGHT "${DRIVER_COPYRIGHT}"
-  MACOSX_BUNDLE_GUI_IDENTIFIER "${DRIVER_BUNDLE_ID}"
+  MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
+  MACOSX_BUNDLE_BUNDLE_NAME ${DRIVER_NAME}
+  MACOSX_BUNDLE_BUNDLE_VERSION ${GIT_VERSION}
+  MACOSX_BUNDLE_SHORT_VERSION_STRING ${GIT_VERSION}
+  MACOSX_BUNDLE_COPYRIGHT ${DRIVER_COPYRIGHT}
+  MACOSX_BUNDLE_GUI_IDENTIFIER ${DRIVER_BUNDLE_ID}
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")

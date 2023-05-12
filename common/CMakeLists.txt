@@ -1,10 +1,10 @@
 configure_file(
-  "build_info.cpp.in"
-  "build_info.cpp"
+  build_info.cpp.in
+  build_info.cpp
 )
 
 add_library(${COMMON_LIB} STATIC
-  "${CMAKE_CURRENT_BINARY_DIR}/build_info.cpp"
-  "enum_map.cpp"
-  "plist_info.mm"
+  ${CMAKE_CURRENT_BINARY_DIR}/build_info.cpp
+  enum_map.cpp
+  plist_info.mm
 )

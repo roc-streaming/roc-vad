@@ -49,8 +49,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 include_directories(SYSTEM
-  "common"
-  "rpc"
+  common
+  rpc
 )
 
 include(3rdparty/dependencies.cmake)
