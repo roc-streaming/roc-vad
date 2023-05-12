@@ -38,6 +38,12 @@ Compatible Roc Toolkit senders and receivers include:
 * [C library](https://roc-streaming.org/toolkit/docs/api.html) and [bindings for other languages](https://roc-streaming.org/toolkit/docs/api/bindings.html) (Go, Java)
 * [Android app](https://github.com/roc-streaming/roc-droid)
 
+## Platforms
+
+macOS 10.15 (Catalina) or later is required.
+
+Both x86_64 (Intel) and arm64 (ARM) architectures are supported.
+
 ## Install from binaries
 
 Install driver and command-line tool:

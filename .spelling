@@ -1,7 +1,9 @@
 0
+10.15
 2
 3
 a.k.a.
+arm64
 boringssl
 ccache
 cli11
@@ -37,4 +39,5 @@ submodules
 syslog
 todo
 vad
+x86_64
 xcode
