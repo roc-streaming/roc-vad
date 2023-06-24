@@ -12,6 +12,7 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
+#include <algorithm>
 #include <cassert>
 #include <stdexcept>
 
@@ -86,6 +87,18 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
                                             : aspl::Direction::Input);
 
     plugin_->AddDevice(device_);
+
+    // TODO: roc_open
+
+    sort_endpoints_();
+
+    for (auto& endpoint : info_.local_endpoints) {
+        bind_endpoint_(endpoint);
+    }
+
+    for (auto& endpoint : info_.remote_endpoints) {
+        connect_endpoint_(endpoint);
+    }
 }
 
 Device::~Device()
@@ -95,6 +108,8 @@ Device::~Device()
         info_.uid,
         info_.type,
         info_.name);
+
+    // TODO: roc_close
 
     if (device_) {
         plugin_->RemoveDevice(device_);
@@ -108,6 +123,59 @@ Device::~Device()
 DeviceInfo Device::info()
 {
     return info_;
+}
+
+DeviceEndpointInfo Device::bind(DeviceEndpointInfo endpoint_info)
+{
+    bind_endpoint_(endpoint_info);
+
+    info_.local_endpoints.push_back(endpoint_info);
+    sort_endpoints_();
+
+    return endpoint_info;
+}
+
+DeviceEndpointInfo Device::connect(DeviceEndpointInfo endpoint_info)
+{
+    connect_endpoint_(endpoint_info);
+
+    info_.remote_endpoints.push_back(endpoint_info);
+    sort_endpoints_();
+
+    return endpoint_info;
+}
+
+void Device::bind_endpoint_(DeviceEndpointInfo& endpoint_info)
+{
+    spdlog::info("binding device {} slot {} to endpoint {}",
+        info_.uid,
+        endpoint_info.slot,
+        endpoint_info.uri);
+
+    // TODO: roc_bind
+}
+
+void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
+{
+    spdlog::info("connecting device {} slot {} to endpoint {}",
+        info_.uid,
+        endpoint_info.slot,
+        endpoint_info.uri);
+
+    // TODO: roc_connect
+}
+
+void Device::sort_endpoints_()
+{
+    std::sort(info_.local_endpoints.begin(),
+        info_.local_endpoints.end(),
+        [](const DeviceEndpointInfo& a, const DeviceEndpointInfo& b) {
+            if (a.slot != b.slot) {
+                return a.slot < b.slot;
+            } else {
+                return (int)a.interface < (int)b.interface;
+            }
+        });
 }
 
 } // namespace rocvad

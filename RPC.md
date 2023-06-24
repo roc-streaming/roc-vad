@@ -8,6 +8,8 @@
     - [PrDeviceList](#rocvad-PrDeviceList)
     - [PrDeviceSelector](#rocvad-PrDeviceSelector)
     - [PrDriverInfo](#rocvad-PrDriverInfo)
+    - [PrEndpointInfo](#rocvad-PrEndpointInfo)
+    - [PrEndpointRequest](#rocvad-PrEndpointRequest)
     - [PrLocalConfig](#rocvad-PrLocalConfig)
     - [PrLogEntry](#rocvad-PrLogEntry)
     - [PrNone](#rocvad-PrNone)
@@ -17,6 +19,7 @@
     - [PrChannelSet](#rocvad-PrChannelSet)
     - [PrDeviceType](#rocvad-PrDeviceType)
     - [PrFecEncoding](#rocvad-PrFecEncoding)
+    - [PrInterface](#rocvad-PrInterface)
     - [PrLogEntry.Level](#rocvad-PrLogEntry-Level)
     - [PrPacketEncoding](#rocvad-PrPacketEncoding)
     - [PrResamplerBackend](#rocvad-PrResamplerBackend)
@@ -50,6 +53,8 @@ Virtual device info.
 | local_config | [PrLocalConfig](#rocvad-PrLocalConfig) |  | Local configuration of device. Parameters of virtual device, as it&#39;s shown to the local apps. |
 | sender_config | [PrSenderConfig](#rocvad-PrSenderConfig) |  | Configuration for sender device. Should be used if device type is PR_DEVICE_TYPE_SENDER. |
 | receiver_config | [PrReceiverConfig](#rocvad-PrReceiverConfig) |  | Configuration for receiver device. Should be used if device type is PR_DEVICE_TYPE_RECEIVER. |
+| local_endpoints | [PrEndpointInfo](#rocvad-PrEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added intially via add_device() or on fly via bind(). |
+| remote_endpoints | [PrEndpointInfo](#rocvad-PrEndpointInfo) | repeated | List of remote endpoints to which device is sending traffic or control requests. Remote endpoints can be added intially via add_device() or on fly via connect(). |
 
 
 
@@ -97,6 +102,39 @@ Info about driver.
 | ----- | ---- | ----- | ----------- |
 | version | [string](#string) |  | Driver version (comes from git tag). |
 | commit | [string](#string) |  | Driver commit hash (comes from git commit). |
+
+
+
+
+
+
+<a name="rocvad-PrEndpointInfo"></a>
+
+### PrEndpointInfo
+Endpoint description.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| slot | [uint32](#uint32) | optional | Slot to which this endpoint belongs. Slot is a group of related endpoints, like complementary transport and control stream pair connecting two peers. Multiple slots can be used to connect a sender to a few remote addresses, or to bind a receiver to a few different local addresses. When an endpoint is bound or connected, specified slot is created automatically if it does not exist yet. When retrieving endpoint info, always present. When sending endpoint info, keep unset to use default slot (0). |
+| interface | [PrInterface](#rocvad-PrInterface) |  | Interface to which this endpoint attached. Interface defines type of data transfered via endpoint, and list of allowed endpoint protocols (URI schemas). Each slot can have up to one endpoint of every interface type, e.g. one source endpoint and one control endpoint. |
+| uri | [string](#string) |  | URI is address associated with endpoint. For local endpoint, URI defines address to which endpoint is bound. For remote endpoint, URI defines address to which endpoint is connected. Allowed URI schemas are defined by endpoint interface. |
+
+
+
+
+
+
+<a name="rocvad-PrEndpointRequest"></a>
+
+### PrEndpointRequest
+Endpoint bind or connect request.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| device | [PrDeviceSelector](#rocvad-PrDeviceSelector) |  | Virtual device to which request is send. |
+| endpoint | [PrEndpointInfo](#rocvad-PrEndpointInfo) |  | New local or remote endpoint to be bound or connected. |
 
 
 
@@ -224,6 +262,20 @@ unreliable networks.
 
 
 
+<a name="rocvad-PrInterface"></a>
+
+### PrInterface
+Endpoint interface type.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| PR_INTERFACE_CONSOLIDATED | 0 | Interface that consolidates all types of streams. |
+| PR_INTERFACE_AUDIO_SOURCE | 1 | Interface for audio stream source data. |
+| PR_INTERFACE_AUDIO_REPAIR | 2 | Interface for audio stream repair data. |
+| PR_INTERFACE_AUDIO_CONTROL | 3 | Interface for audio control messages. |
+
+
+
 <a name="rocvad-PrLogEntry-Level"></a>
 
 ### PrLogEntry.Level
@@ -299,6 +351,8 @@ RPC interface for Roc Virtual Audio Device driver.
 | get_device | [PrDeviceSelector](#rocvad-PrDeviceSelector) | [PrDeviceInfo](#rocvad-PrDeviceInfo) | Get info for one virtual device. Device can be selected by index or UID. |
 | add_device | [PrDeviceInfo](#rocvad-PrDeviceInfo) | [PrDeviceInfo](#rocvad-PrDeviceInfo) | Create new virtual device. Returns updated device info with all fields set. |
 | delete_device | [PrDeviceSelector](#rocvad-PrDeviceSelector) | [PrNone](#rocvad-PrNone) | Delete virtual device. Device can be selected by index or UID. |
+| bind | [PrEndpointRequest](#rocvad-PrEndpointRequest) | [PrEndpointInfo](#rocvad-PrEndpointInfo) | Bind device to local endpoint. |
+| connect | [PrEndpointRequest](#rocvad-PrEndpointRequest) | [PrEndpointInfo](#rocvad-PrEndpointInfo) | Connect device to remote endpoint. |
 
  
 

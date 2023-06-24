@@ -9,23 +9,36 @@
 #pragma once
 
 #include "cmd_base.hpp"
+#include "driver_protocol.hpp"
 
 #include <cstdint>
+#include <optional>
 #include <string>
 
 namespace rocvad {
 
-class CmdDeviceDelete : public CmdBase
+class CmdDeviceConnect : public CmdBase
 {
 public:
-    CmdDeviceDelete(CLI::App& parent);
+    CmdDeviceConnect(CLI::App& parent);
 
     bool execute(const Environment& env) override;
 
 private:
+    bool send_command_(DriverProtocol::Stub* stub,
+        const char* name,
+        PrInterface interface,
+        const std::string& uri);
+
     bool use_uid_ = false;
     std::string index_or_uid_;
     uint32_t index_ = 0;
+
+    std::optional<uint32_t> slot_;
+
+    std::optional<std::string> source_endpoint_;
+    std::optional<std::string> repair_endpoint_;
+    std::optional<std::string> control_endpoint_;
 };
 
 } // namespace rocvad

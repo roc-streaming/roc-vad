@@ -111,6 +111,45 @@ void DeviceManager::delete_device(const std::string& uid)
     device_by_uid_.erase(info.uid);
 }
 
+DeviceEndpointInfo DeviceManager::bind_device(index_t index, DeviceEndpointInfo endpoint)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(index);
+
+    return device->bind(endpoint);
+}
+
+DeviceEndpointInfo DeviceManager::bind_device(const std::string& uid,
+    DeviceEndpointInfo endpoint)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(uid);
+
+    return device->bind(endpoint);
+}
+
+DeviceEndpointInfo DeviceManager::connect_device(index_t index,
+    DeviceEndpointInfo endpoint)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(index);
+
+    return device->connect(endpoint);
+}
+
+DeviceEndpointInfo DeviceManager::connect_device(const std::string& uid,
+    DeviceEndpointInfo endpoint)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(uid);
+
+    return device->connect(endpoint);
+}
+
 std::shared_ptr<Device> DeviceManager::find_device_(index_t index)
 {
     if (!device_by_index_.count(index)) {

@@ -10,61 +10,16 @@
 #include "build_info.hpp"
 #include "driver_protocol.hpp"
 #include "enum_map.hpp"
+#include "format.hpp"
 
-#include <fmt/core.h>
-#include <google/protobuf/util/time_util.h>
-
+#include <algorithm>
 #include <array>
 #include <cstdint>
+#include <map>
 #include <tuple>
+#include <vector>
 
 namespace rocvad {
-
-namespace {
-
-std::string format_duration(uint64_t nanoseconds)
-{
-    uint64_t multiplier = 0;
-    const char* suffix = nullptr;
-
-    for (auto [m, s] : std::array<std::tuple<uint64_t, const char*>, 6> {{
-             {1, "ns"},
-             {1'000, "us"},
-             {1'000'000, "ms"},
-             {1'000'000'000, "s"},
-             {60'000'000'000, "m"},
-             {3660'000'000'000, "h"},
-         }}) {
-        if (nanoseconds >= m) {
-            multiplier = m;
-            suffix = s;
-        }
-    }
-
-    return fmt::format("{}{}", (double)nanoseconds / multiplier, suffix);
-}
-
-std::string format_duration(google::protobuf::Duration duration)
-{
-    const int64_t nanoseconds =
-        google::protobuf::util::TimeUtil::DurationToNanoseconds(duration);
-
-    return format_duration((uint64_t)nanoseconds);
-}
-
-template <class Map, class Enum>
-std::string format_enum(const Map& map, Enum in)
-{
-    for (auto entry : map) {
-        if (std::get<0>(entry) == in) {
-            return std::get<2>(entry);
-        }
-    }
-
-    return fmt::format("unknown ({})", (int)in);
-}
-
-} // namespace
 
 void print_driver_and_client_info(const PrDriverInfo& driver_info)
 {
@@ -89,52 +44,71 @@ void print_device_info(const PrDeviceInfo& device_info)
 
     fmt::println("");
 
-    fmt::println("  type: {}",
-        device_info.type() == PR_DEVICE_TYPE_SENDER ? "sender" : "receiver");
+    fmt::println("  type: {}", format_device_type(device_info.type()));
     fmt::println("  uid:  {}", device_info.uid());
     fmt::println("  name: {}", device_info.name());
+
+    fmt::println("");
+
+    fmt::println("  config:");
 
     if (device_info.has_local_config()) {
         fmt::println("");
 
-        fmt::println("  sample_rate: {}", device_info.local_config().sample_rate());
-        fmt::println("  channel_set: {}",
+        fmt::println("    sample_rate: {}", device_info.local_config().sample_rate());
+        fmt::println("    channel_set: {}",
             format_enum(channel_set_map, device_info.local_config().channel_set()));
     }
 
     if (device_info.has_sender_config()) {
         fmt::println("");
 
-        fmt::println("  packet_encoding: {}",
+        fmt::println("    packet_encoding: {}",
             format_enum(
                 packet_encoding_map, device_info.sender_config().packet_encoding()));
-        fmt::println("  packet_length:   {}",
+        fmt::println("    packet_length:   {}",
             format_duration(device_info.sender_config().packet_length()));
 
         fmt::println("");
 
-        fmt::println("  fec_encoding: {}",
+        fmt::println("    fec_encoding: {}",
             format_enum(fec_encoding_map, device_info.sender_config().fec_encoding()));
-        fmt::println(
-            "  fec_nbsrc:    {}", device_info.sender_config().fec_block_source_packets());
-        fmt::println(
-            "  fec_nbrpr:    {}", device_info.sender_config().fec_block_repair_packets());
+        fmt::println("    fec_nbsrc:    {}",
+            device_info.sender_config().fec_block_source_packets());
+        fmt::println("    fec_nbrpr:    {}",
+            device_info.sender_config().fec_block_repair_packets());
     }
 
     if (device_info.has_receiver_config()) {
         fmt::println("");
 
-        fmt::println("  target_latency: {}",
+        fmt::println("    target_latency: {}",
             format_duration(device_info.receiver_config().target_latency()));
 
         fmt::println("");
 
-        fmt::println("  resampler_backend: {}",
+        fmt::println("    resampler_backend: {}",
             format_enum(resampler_backend_map,
                 device_info.receiver_config().resampler_backend()));
-        fmt::println("  resampler_profile: {}",
+        fmt::println("    resampler_profile: {}",
             format_enum(resampler_profile_map,
                 device_info.receiver_config().resampler_profile()));
+    }
+
+    if (device_info.local_endpoints_size() != 0) {
+        fmt::println("");
+
+        fmt::println("  local endpoints:");
+
+        print_endpoint_list(device_info.local_endpoints());
+    }
+
+    if (device_info.remote_endpoints_size() != 0) {
+        fmt::println("");
+
+        fmt::println("  remote endpoints:");
+
+        print_endpoint_list(device_info.remote_endpoints());
     }
 }
 
@@ -159,11 +133,50 @@ void print_device_list(const PrDeviceList& device_list, bool show_info)
         } else {
             fmt::println("{:<8} {:<10} {:<22} {}",
                 device_info.index(),
-                device_info.type() == PR_DEVICE_TYPE_SENDER ? "sender" : "receiver",
+                format_device_type(device_info.type()),
                 device_info.uid(),
                 device_info.name());
         }
         is_first = false;
+    }
+}
+
+void print_endpoint_info(const PrEndpointInfo& endpoint_info)
+{
+    fmt::println("endpoint:");
+
+    fmt::println("  slot:      {}", endpoint_info.slot());
+    fmt::println("  interface: {}", //
+        format_enum(interface_map, endpoint_info.interface()));
+    fmt::println("  uri:       {}", endpoint_info.uri());
+}
+
+void print_endpoint_list(
+    const google::protobuf::RepeatedPtrField<PrEndpointInfo>& endpoint_list)
+{
+    std::map<unsigned int, std::vector<std::tuple<PrInterface, std::string>>>
+        endpoint_table;
+
+    for (const auto& endpoint_info : endpoint_list) {
+        endpoint_table[endpoint_info.slot()].push_back(
+            std::make_tuple(endpoint_info.interface(), endpoint_info.uri()));
+    }
+
+    for (auto& [_, slot_endpoints] : endpoint_table) {
+        std::sort(slot_endpoints.begin(), slot_endpoints.end(), [](auto a, auto b) {
+            // Sort endpoints in slot by interface.
+            return (int)std::get<0>(a) < (int)std::get<0>(b);
+        });
+    }
+
+    for (const auto& [slot, slot_endpoints] : endpoint_table) {
+        fmt::println("");
+        fmt::println("    slot {}:", slot);
+
+        for (const auto& [interface, uri] : slot_endpoints) {
+            fmt::println(
+                "      {:<14} {}", format_enum(interface_map, interface) + ":", uri);
+        }
     }
 }
 

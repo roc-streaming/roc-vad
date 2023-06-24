@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <CLI11.hpp>
-
 #include "environment.hpp"
+
+#include <CLI11.hpp>
 
 namespace rocvad {
 

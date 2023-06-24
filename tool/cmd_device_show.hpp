@@ -10,6 +10,9 @@
 
 #include "cmd_base.hpp"
 
+#include <cstdint>
+#include <string>
+
 namespace rocvad {
 
 class CmdDeviceShow : public CmdBase
@@ -22,6 +25,7 @@ public:
 private:
     bool use_uid_ = false;
     std::string index_or_uid_;
+    uint32_t index_ = 0;
 };
 
 } // namespace rocvad

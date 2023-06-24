@@ -44,6 +44,13 @@ public:
     void delete_device(index_t index);
     void delete_device(const std::string& uid);
 
+    DeviceEndpointInfo bind_device(index_t index, DeviceEndpointInfo endpoint);
+    DeviceEndpointInfo bind_device(const std::string& uid, DeviceEndpointInfo endpoint);
+
+    DeviceEndpointInfo connect_device(index_t index, DeviceEndpointInfo endpoint);
+    DeviceEndpointInfo connect_device(const std::string& uid,
+        DeviceEndpointInfo endpoint);
+
 private:
     std::shared_ptr<Device> find_device_(index_t index);
     std::shared_ptr<Device> find_device_(const std::string& uid);

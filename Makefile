@@ -49,7 +49,8 @@ dist:
 	ls -lh roc-vad.tar.bz2
 
 fmt:
-	find -type f -name '*.[ch]pp' -not -path './3rdparty/*' -not -name '*.pb.*' \
+	find -type f -name '*.[ch]pp' -not -name '*.pb.*' \
+		-not -path './3rdparty/*' -not -path './build/*' \
 		| xargs clang-format --verbose -i
 
 docs:

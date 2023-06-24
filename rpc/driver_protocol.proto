@@ -42,6 +42,12 @@ service DriverProtocol
     // Delete virtual device.
     // Device can be selected by index or UID.
     rpc delete_device(PrDeviceSelector) returns (PrNone) {}
+
+    // Bind device to local endpoint.
+    rpc bind(PrEndpointRequest) returns (PrEndpointInfo) {}
+
+    // Connect device to remote endpoint.
+    rpc connect(PrEndpointRequest) returns (PrEndpointInfo) {}
 }
 
 // No data.
@@ -143,12 +149,56 @@ message PrDeviceInfo
         // Should be used if device type is PR_DEVICE_TYPE_RECEIVER.
         PrReceiverConfig receiver_config = 7;
     }
+
+    // List of local endpoints on which device is receiving traffic or control requests.
+    // Local endpoints can be added intially via add_device() or on fly via bind().
+    repeated PrEndpointInfo local_endpoints = 8;
+
+    // List of remote endpoints to which device is sending traffic or control requests.
+    // Remote endpoints can be added intially via add_device() or on fly via connect().
+    repeated PrEndpointInfo remote_endpoints = 9;
 }
 
 // Virtual device list.
 message PrDeviceList
 {
     repeated PrDeviceInfo devices = 1;
+}
+
+// Endpoint bind or connect request.
+message PrEndpointRequest
+{
+    // Virtual device to which request is send.
+    PrDeviceSelector device = 1;
+
+    // New local or remote endpoint to be bound or connected.
+    PrEndpointInfo endpoint = 2;
+}
+
+// Endpoint description.
+message PrEndpointInfo
+{
+    // Slot to which this endpoint belongs.
+    // Slot is a group of related endpoints, like complementary transport and control
+    // stream pair connecting two peers. Multiple slots can be used to connect a
+    // sender to a few remote addresses, or to bind a receiver to a few different
+    // local addresses. When an endpoint is bound or connected, specified slot is
+    // created automatically if it does not exist yet.
+    // When retrieving endpoint info, always present.
+    // When sending endpoint info, keep unset to use default slot (0).
+    optional uint32 slot = 1;
+
+    // Interface to which this endpoint attached.
+    // Interface defines type of data transfered via endpoint, and list of allowed
+    // endpoint protocols (URI schemas). Each slot can have up to one endpoint of
+    // every interface type, e.g. one source endpoint and one control endpoint.
+    PrInterface interface = 2;
+
+    // URI is address associated with endpoint.
+    // For local endpoint, URI defines address to which endpoint is bound.
+    // For remote endpoint, URI defines address to which endpoint is connected.
+    // Allowed URI schemas are defined by endpoint interface.
+    string uri = 3;
 }
 
 // Local parameters of virtual device.
@@ -226,6 +276,22 @@ enum PrDeviceType
 
     // Input device that receives sound from remote sender.
     PR_DEVICE_TYPE_RECEIVER = 1;
+}
+
+// Endpoint interface type.
+enum PrInterface
+{
+    // Interface that consolidates all types of streams.
+    PR_INTERFACE_CONSOLIDATED = 0;
+
+    // Interface for audio stream source data.
+    PR_INTERFACE_AUDIO_SOURCE = 1;
+
+    // Interface for audio stream repair data.
+    PR_INTERFACE_AUDIO_REPAIR = 2;
+
+    // Interface for audio control messages.
+    PR_INTERFACE_AUDIO_CONTROL = 3;
 }
 
 // Device channel set.

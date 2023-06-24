@@ -36,17 +36,17 @@ const char* find_suffix(const char* str, const char* suffix)
 
 } // namespace
 
-bool parse_index(const std::string& in, index_t& out)
+bool parse_index(const std::string& in, uint32_t& out)
 {
     try {
         const long value = std::stol(in);
 
-        if (value <= 0 || value > std::numeric_limits<index_t>::max()) {
+        if (value <= 0 || value > std::numeric_limits<uint32_t>::max()) {
             spdlog::error("invalid device index \"{}\": out of range", in);
             return false;
         }
 
-        out = (index_t)value;
+        out = (uint32_t)value;
         return true;
     }
     catch (std::exception& e) {

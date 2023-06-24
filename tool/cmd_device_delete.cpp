@@ -28,9 +28,7 @@ CmdDeviceDelete::CmdDeviceDelete(CLI::App& parent)
 
 bool CmdDeviceDelete::execute(const Environment& env)
 {
-    index_t index = 0;
-
-    if (!use_uid_ && !parse_index(index_or_uid_, index)) {
+    if (!use_uid_ && !parse_index(index_or_uid_, index_)) {
         return false;
     }
 
@@ -50,7 +48,7 @@ bool CmdDeviceDelete::execute(const Environment& env)
     if (use_uid_) {
         request.set_uid(index_or_uid_);
     } else {
-        request.set_index(index);
+        request.set_index(index_);
     }
 
     const grpc::Status status = stub->delete_device(&context, request, &response);
@@ -63,7 +61,7 @@ bool CmdDeviceDelete::execute(const Environment& env)
     if (use_uid_) {
         fmt::println("deleted device with uid \"{}\"", index_or_uid_);
     } else {
-        fmt::println("deleted device with index {}", index);
+        fmt::println("deleted device with index {}", index_);
     }
 
     return true;

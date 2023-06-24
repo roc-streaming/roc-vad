@@ -29,9 +29,7 @@ CmdDeviceShow::CmdDeviceShow(CLI::App& parent)
 
 bool CmdDeviceShow::execute(const Environment& env)
 {
-    index_t index = 0;
-
-    if (!use_uid_ && !parse_index(index_or_uid_, index)) {
+    if (!use_uid_ && !parse_index(index_or_uid_, index_)) {
         return false;
     }
 
@@ -51,7 +49,7 @@ bool CmdDeviceShow::execute(const Environment& env)
     if (use_uid_) {
         request.set_uid(index_or_uid_);
     } else {
-        request.set_index(index);
+        request.set_index(index_);
     }
 
     const grpc::Status status = stub->get_device(&context, request, &response);

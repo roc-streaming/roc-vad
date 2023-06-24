@@ -8,14 +8,14 @@
 
 #pragma once
 
+#include "device_defs.hpp"
+#include "index_allocator.hpp"
+#include "uid_generator.hpp"
+
 #include <aspl/Device.hpp>
 #include <aspl/Plugin.hpp>
 
 #include <memory>
-
-#include "device_defs.hpp"
-#include "index_allocator.hpp"
-#include "uid_generator.hpp"
 
 namespace rocvad {
 
@@ -34,7 +34,14 @@ public:
 
     DeviceInfo info();
 
+    DeviceEndpointInfo bind(DeviceEndpointInfo endpoint_info);
+    DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
+
 private:
+    void bind_endpoint_(DeviceEndpointInfo& endpoint_info);
+    void connect_endpoint_(DeviceEndpointInfo& endpoint_info);
+    void sort_endpoints_();
+
     // to generate new device index and uid
     IndexAllocator& index_allocator_;
     UidGenerator& uid_generator_;

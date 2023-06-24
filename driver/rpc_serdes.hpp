@@ -16,4 +16,7 @@ namespace rocvad {
 void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in);
 void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in);
 
+void endpoint_info_from_rpc(DeviceEndpointInfo& out, const PrEndpointInfo& in);
+void endpoint_info_to_rpc(PrEndpointInfo& out, const DeviceEndpointInfo& in);
+
 } // namespace rocvad

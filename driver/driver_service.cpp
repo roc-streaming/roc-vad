@@ -79,9 +79,13 @@ grpc::Status DriverService::get_device(grpc::ServerContext* context,
     PrDeviceInfo* response)
 {
     return execute_command_("get_device", [=]() {
-        const auto device_info = request->has_index()
-                                     ? device_manager_->get_device(request->index())
-                                     : device_manager_->get_device(request->uid());
+        DeviceInfo device_info;
+
+        if (request->has_index()) {
+            device_info = device_manager_->get_device(request->index());
+        } else {
+            device_info = device_manager_->get_device(request->uid());
+        }
 
         device_info_to_rpc(*response, device_info);
     });
@@ -96,6 +100,7 @@ grpc::Status DriverService::add_device(grpc::ServerContext* context,
         device_info_from_rpc(device_info, *request);
 
         device_info = device_manager_->add_device(device_info);
+
         device_info_to_rpc(*response, device_info);
     });
 }
@@ -110,6 +115,46 @@ grpc::Status DriverService::delete_device(grpc::ServerContext* context,
         } else {
             device_manager_->delete_device(request->uid());
         }
+    });
+}
+
+grpc::Status DriverService::bind(grpc::ServerContext* context,
+    const PrEndpointRequest* request,
+    PrEndpointInfo* response)
+{
+    return execute_command_("bind", [=]() {
+        DeviceEndpointInfo endpoint_info;
+        endpoint_info_from_rpc(endpoint_info, request->endpoint());
+
+        if (request->device().has_index()) {
+            endpoint_info =
+                device_manager_->bind_device(request->device().index(), endpoint_info);
+        } else {
+            endpoint_info =
+                device_manager_->bind_device(request->device().uid(), endpoint_info);
+        }
+
+        endpoint_info_to_rpc(*response, endpoint_info);
+    });
+}
+
+grpc::Status DriverService::connect(grpc::ServerContext* context,
+    const PrEndpointRequest* request,
+    PrEndpointInfo* response)
+{
+    return execute_command_("connect", [=]() {
+        DeviceEndpointInfo endpoint_info;
+        endpoint_info_from_rpc(endpoint_info, request->endpoint());
+
+        if (request->device().has_index()) {
+            endpoint_info =
+                device_manager_->connect_device(request->device().index(), endpoint_info);
+        } else {
+            endpoint_info =
+                device_manager_->connect_device(request->device().uid(), endpoint_info);
+        }
+
+        endpoint_info_to_rpc(*response, endpoint_info);
     });
 }
 

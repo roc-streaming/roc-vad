@@ -10,6 +10,13 @@
 
 namespace rocvad {
 
+enum_map<PrInterface, roc_interface> interface_map {
+    {PR_INTERFACE_CONSOLIDATED, ROC_INTERFACE_CONSOLIDATED, "consolidated"},
+    {PR_INTERFACE_AUDIO_SOURCE, ROC_INTERFACE_AUDIO_SOURCE, "audiosrc"},
+    {PR_INTERFACE_AUDIO_REPAIR, ROC_INTERFACE_AUDIO_REPAIR, "audiorpr"},
+    {PR_INTERFACE_AUDIO_CONTROL, ROC_INTERFACE_AUDIO_CONTROL, "audioctl"},
+};
+
 enum_map<PrChannelSet, roc_channel_set> channel_set_map {
     {PR_CHANNEL_SET_STEREO, ROC_CHANNEL_SET_STEREO, "stereo"},
 };

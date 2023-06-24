@@ -8,14 +8,17 @@
 
 #pragma once
 
+#include "index_allocator.hpp"
+
+#include <roc/config.h>
+
 #include <fmt/core.h>
 
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <string_view>
-
-#include "config.hpp"
-#include "index_allocator.hpp"
+#include <vector>
 
 namespace rocvad {
 
@@ -24,6 +27,42 @@ enum class DeviceType
 {
     Sender,
     Receiver,
+};
+
+// Local parameters of device.
+struct DeviceLocalConfig
+{
+    uint32_t sample_rate = 44100;
+    roc_channel_set channel_set = ROC_CHANNEL_SET_STEREO;
+};
+
+// Network parameters of sender device.
+struct DeviceSenderConfig
+{
+    roc_packet_encoding packet_encoding = ROC_PACKET_ENCODING_AVP_L16;
+    uint64_t packet_length_ns = 7'000'000; // 7ms
+
+    roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_RS8M;
+    uint32_t fec_block_source_packets = 20;
+    uint32_t fec_block_repair_packets = 10;
+};
+
+// Network parameters of sender device.
+struct DeviceReceiverConfig
+{
+    uint64_t target_latency_ns = 100'000'000; // 100ms
+
+    roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_SPEEX;
+    roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_MEDIUM;
+};
+
+// Device endpoint info.
+struct DeviceEndpointInfo
+{
+    uint32_t slot = ROC_SLOT_DEFAULT;
+
+    roc_interface interface = (roc_interface)-1;
+    std::string uri = {};
 };
 
 // Device info.
@@ -35,10 +74,13 @@ struct DeviceInfo
     std::string uid;
     std::string name;
 
-    LocalConfig local_config;
+    DeviceLocalConfig local_config;
 
-    std::optional<SenderConfig> sender_config;
-    std::optional<ReceiverConfig> receiver_config;
+    std::optional<DeviceSenderConfig> sender_config;
+    std::optional<DeviceReceiverConfig> receiver_config;
+
+    std::vector<DeviceEndpointInfo> local_endpoints;
+    std::vector<DeviceEndpointInfo> remote_endpoints;
 };
 
 } // namespace rocvad

@@ -67,7 +67,7 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
     switch (in.type()) {
     case PR_DEVICE_TYPE_SENDER:
         out.type = DeviceType::Sender;
-        out.sender_config = SenderConfig {};
+        out.sender_config = DeviceSenderConfig {};
 
         if (in.has_receiver_config()) {
             throw std::invalid_argument(
@@ -78,7 +78,7 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 
     case PR_DEVICE_TYPE_RECEIVER:
         out.type = DeviceType::Receiver;
-        out.receiver_config = ReceiverConfig {};
+        out.receiver_config = DeviceReceiverConfig {};
 
         if (in.has_sender_config()) {
             throw std::invalid_argument(
@@ -201,6 +201,21 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
                 in.receiver_config().resampler_profile());
         }
     }
+
+    // endpoints
+    for (const auto& in_info : in.local_endpoints()) {
+        DeviceEndpointInfo out_info;
+        endpoint_info_from_rpc(out_info, in_info);
+
+        out.local_endpoints.push_back(out_info);
+    }
+
+    for (const auto& in_info : in.remote_endpoints()) {
+        DeviceEndpointInfo out_info;
+        endpoint_info_from_rpc(out_info, in_info);
+
+        out.remote_endpoints.push_back(out_info);
+    }
 }
 
 void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
@@ -252,6 +267,42 @@ void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
                 resampler_profile_map,
                 in.receiver_config->resampler_profile));
     }
+
+    // endpoints
+    for (const auto& in_info : in.local_endpoints) {
+        PrEndpointInfo out_info;
+        endpoint_info_to_rpc(out_info, in_info);
+
+        *out.add_local_endpoints() = out_info;
+    }
+
+    for (const auto& in_info : in.remote_endpoints) {
+        PrEndpointInfo out_info;
+        endpoint_info_to_rpc(out_info, in_info);
+
+        *out.add_remote_endpoints() = out_info;
+    }
+}
+
+void endpoint_info_from_rpc(DeviceEndpointInfo& out, const PrEndpointInfo& in)
+{
+    if (in.has_slot()) {
+        out.slot = in.slot();
+    }
+
+    out.interface = enum_from_rpc("endpoint interface", interface_map, in.interface());
+    out.uri = in.uri();
+
+    if (out.uri.empty()) {
+        throw std::invalid_argument("endpoint uri should not be empty");
+    }
+}
+
+void endpoint_info_to_rpc(PrEndpointInfo& out, const DeviceEndpointInfo& in)
+{
+    out.set_slot(in.slot);
+    out.set_interface(enum_to_rpc("endpoint interface", interface_map, in.interface));
+    out.set_uri(in.uri);
 }
 
 } // namespace rocvad

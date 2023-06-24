@@ -55,6 +55,14 @@ public:
         const PrDeviceSelector* request,
         PrNone* response) override;
 
+    grpc::Status bind(grpc::ServerContext* context,
+        const PrEndpointRequest* request,
+        PrEndpointInfo* response) override;
+
+    grpc::Status connect(grpc::ServerContext* context,
+        const PrEndpointRequest* request,
+        PrEndpointInfo* response) override;
+
 private:
     grpc::Status execute_command_(const char* name, std::function<void()> func);
 

@@ -61,6 +61,12 @@ extern PrDeviceSelectorDefaultTypeInternal _PrDeviceSelector_default_instance_;
 class PrDriverInfo;
 struct PrDriverInfoDefaultTypeInternal;
 extern PrDriverInfoDefaultTypeInternal _PrDriverInfo_default_instance_;
+class PrEndpointInfo;
+struct PrEndpointInfoDefaultTypeInternal;
+extern PrEndpointInfoDefaultTypeInternal _PrEndpointInfo_default_instance_;
+class PrEndpointRequest;
+struct PrEndpointRequestDefaultTypeInternal;
+extern PrEndpointRequestDefaultTypeInternal _PrEndpointRequest_default_instance_;
 class PrLocalConfig;
 struct PrLocalConfigDefaultTypeInternal;
 extern PrLocalConfigDefaultTypeInternal _PrLocalConfig_default_instance_;
@@ -82,6 +88,8 @@ template<> ::rocvad::PrDeviceInfo* Arena::CreateMaybeMessage<::rocvad::PrDeviceI
 template<> ::rocvad::PrDeviceList* Arena::CreateMaybeMessage<::rocvad::PrDeviceList>(Arena*);
 template<> ::rocvad::PrDeviceSelector* Arena::CreateMaybeMessage<::rocvad::PrDeviceSelector>(Arena*);
 template<> ::rocvad::PrDriverInfo* Arena::CreateMaybeMessage<::rocvad::PrDriverInfo>(Arena*);
+template<> ::rocvad::PrEndpointInfo* Arena::CreateMaybeMessage<::rocvad::PrEndpointInfo>(Arena*);
+template<> ::rocvad::PrEndpointRequest* Arena::CreateMaybeMessage<::rocvad::PrEndpointRequest>(Arena*);
 template<> ::rocvad::PrLocalConfig* Arena::CreateMaybeMessage<::rocvad::PrLocalConfig>(Arena*);
 template<> ::rocvad::PrLogEntry* Arena::CreateMaybeMessage<::rocvad::PrLogEntry>(Arena*);
 template<> ::rocvad::PrNone* Arena::CreateMaybeMessage<::rocvad::PrNone>(Arena*);
@@ -143,6 +151,33 @@ inline bool PrDeviceType_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PrDeviceType* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrDeviceType>(
     PrDeviceType_descriptor(), name, value);
+}
+enum PrInterface : int {
+  PR_INTERFACE_CONSOLIDATED = 0,
+  PR_INTERFACE_AUDIO_SOURCE = 1,
+  PR_INTERFACE_AUDIO_REPAIR = 2,
+  PR_INTERFACE_AUDIO_CONTROL = 3,
+  PrInterface_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  PrInterface_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool PrInterface_IsValid(int value);
+constexpr PrInterface PrInterface_MIN = PR_INTERFACE_CONSOLIDATED;
+constexpr PrInterface PrInterface_MAX = PR_INTERFACE_AUDIO_CONTROL;
+constexpr int PrInterface_ARRAYSIZE = PrInterface_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrInterface_descriptor();
+template<typename T>
+inline const std::string& PrInterface_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, PrInterface>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function PrInterface_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    PrInterface_descriptor(), enum_t_value);
+}
+inline bool PrInterface_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PrInterface* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrInterface>(
+    PrInterface_descriptor(), name, value);
 }
 enum PrChannelSet : int {
   PR_CHANNEL_SET_STEREO = 0,
@@ -1099,6 +1134,8 @@ class PrDeviceInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kLocalEndpointsFieldNumber = 8,
+    kRemoteEndpointsFieldNumber = 9,
     kUidFieldNumber = 3,
     kNameFieldNumber = 4,
     kLocalConfigFieldNumber = 5,
@@ -1107,6 +1144,42 @@ class PrDeviceInfo final :
     kSenderConfigFieldNumber = 6,
     kReceiverConfigFieldNumber = 7,
   };
+  // repeated .rocvad.PrEndpointInfo local_endpoints = 8;
+  int local_endpoints_size() const;
+  private:
+  int _internal_local_endpoints_size() const;
+  public:
+  void clear_local_endpoints();
+  ::rocvad::PrEndpointInfo* mutable_local_endpoints(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >*
+      mutable_local_endpoints();
+  private:
+  const ::rocvad::PrEndpointInfo& _internal_local_endpoints(int index) const;
+  ::rocvad::PrEndpointInfo* _internal_add_local_endpoints();
+  public:
+  const ::rocvad::PrEndpointInfo& local_endpoints(int index) const;
+  ::rocvad::PrEndpointInfo* add_local_endpoints();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >&
+      local_endpoints() const;
+
+  // repeated .rocvad.PrEndpointInfo remote_endpoints = 9;
+  int remote_endpoints_size() const;
+  private:
+  int _internal_remote_endpoints_size() const;
+  public:
+  void clear_remote_endpoints();
+  ::rocvad::PrEndpointInfo* mutable_remote_endpoints(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >*
+      mutable_remote_endpoints();
+  private:
+  const ::rocvad::PrEndpointInfo& _internal_remote_endpoints(int index) const;
+  ::rocvad::PrEndpointInfo* _internal_add_remote_endpoints();
+  public:
+  const ::rocvad::PrEndpointInfo& remote_endpoints(int index) const;
+  ::rocvad::PrEndpointInfo* add_remote_endpoints();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >&
+      remote_endpoints() const;
+
   // optional string uid = 3;
   bool has_uid() const;
   private:
@@ -1236,6 +1309,8 @@ class PrDeviceInfo final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo > local_endpoints_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo > remote_endpoints_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::rocvad::PrLocalConfig* local_config_;
@@ -1412,6 +1487,363 @@ class PrDeviceList final :
 };
 // -------------------------------------------------------------------
 
+class PrEndpointRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rocvad.PrEndpointRequest) */ {
+ public:
+  inline PrEndpointRequest() : PrEndpointRequest(nullptr) {}
+  ~PrEndpointRequest() override;
+  explicit PROTOBUF_CONSTEXPR PrEndpointRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PrEndpointRequest(const PrEndpointRequest& from);
+  PrEndpointRequest(PrEndpointRequest&& from) noexcept
+    : PrEndpointRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline PrEndpointRequest& operator=(const PrEndpointRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PrEndpointRequest& operator=(PrEndpointRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PrEndpointRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PrEndpointRequest* internal_default_instance() {
+    return reinterpret_cast<const PrEndpointRequest*>(
+               &_PrEndpointRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(PrEndpointRequest& a, PrEndpointRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PrEndpointRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PrEndpointRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PrEndpointRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PrEndpointRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PrEndpointRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PrEndpointRequest& from) {
+    PrEndpointRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PrEndpointRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rocvad.PrEndpointRequest";
+  }
+  protected:
+  explicit PrEndpointRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDeviceFieldNumber = 1,
+    kEndpointFieldNumber = 2,
+  };
+  // .rocvad.PrDeviceSelector device = 1;
+  bool has_device() const;
+  private:
+  bool _internal_has_device() const;
+  public:
+  void clear_device();
+  const ::rocvad::PrDeviceSelector& device() const;
+  PROTOBUF_NODISCARD ::rocvad::PrDeviceSelector* release_device();
+  ::rocvad::PrDeviceSelector* mutable_device();
+  void set_allocated_device(::rocvad::PrDeviceSelector* device);
+  private:
+  const ::rocvad::PrDeviceSelector& _internal_device() const;
+  ::rocvad::PrDeviceSelector* _internal_mutable_device();
+  public:
+  void unsafe_arena_set_allocated_device(
+      ::rocvad::PrDeviceSelector* device);
+  ::rocvad::PrDeviceSelector* unsafe_arena_release_device();
+
+  // .rocvad.PrEndpointInfo endpoint = 2;
+  bool has_endpoint() const;
+  private:
+  bool _internal_has_endpoint() const;
+  public:
+  void clear_endpoint();
+  const ::rocvad::PrEndpointInfo& endpoint() const;
+  PROTOBUF_NODISCARD ::rocvad::PrEndpointInfo* release_endpoint();
+  ::rocvad::PrEndpointInfo* mutable_endpoint();
+  void set_allocated_endpoint(::rocvad::PrEndpointInfo* endpoint);
+  private:
+  const ::rocvad::PrEndpointInfo& _internal_endpoint() const;
+  ::rocvad::PrEndpointInfo* _internal_mutable_endpoint();
+  public:
+  void unsafe_arena_set_allocated_endpoint(
+      ::rocvad::PrEndpointInfo* endpoint);
+  ::rocvad::PrEndpointInfo* unsafe_arena_release_endpoint();
+
+  // @@protoc_insertion_point(class_scope:rocvad.PrEndpointRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::rocvad::PrDeviceSelector* device_;
+    ::rocvad::PrEndpointInfo* endpoint_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_driver_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PrEndpointInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rocvad.PrEndpointInfo) */ {
+ public:
+  inline PrEndpointInfo() : PrEndpointInfo(nullptr) {}
+  ~PrEndpointInfo() override;
+  explicit PROTOBUF_CONSTEXPR PrEndpointInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PrEndpointInfo(const PrEndpointInfo& from);
+  PrEndpointInfo(PrEndpointInfo&& from) noexcept
+    : PrEndpointInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline PrEndpointInfo& operator=(const PrEndpointInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PrEndpointInfo& operator=(PrEndpointInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PrEndpointInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PrEndpointInfo* internal_default_instance() {
+    return reinterpret_cast<const PrEndpointInfo*>(
+               &_PrEndpointInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  friend void swap(PrEndpointInfo& a, PrEndpointInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PrEndpointInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PrEndpointInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PrEndpointInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PrEndpointInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PrEndpointInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PrEndpointInfo& from) {
+    PrEndpointInfo::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PrEndpointInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "rocvad.PrEndpointInfo";
+  }
+  protected:
+  explicit PrEndpointInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUriFieldNumber = 3,
+    kSlotFieldNumber = 1,
+    kInterfaceFieldNumber = 2,
+  };
+  // string uri = 3;
+  void clear_uri();
+  const std::string& uri() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_uri(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_uri();
+  PROTOBUF_NODISCARD std::string* release_uri();
+  void set_allocated_uri(std::string* uri);
+  private:
+  const std::string& _internal_uri() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_uri(const std::string& value);
+  std::string* _internal_mutable_uri();
+  public:
+
+  // optional uint32 slot = 1;
+  bool has_slot() const;
+  private:
+  bool _internal_has_slot() const;
+  public:
+  void clear_slot();
+  uint32_t slot() const;
+  void set_slot(uint32_t value);
+  private:
+  uint32_t _internal_slot() const;
+  void _internal_set_slot(uint32_t value);
+  public:
+
+  // .rocvad.PrInterface interface = 2;
+  void clear_interface();
+  ::rocvad::PrInterface interface() const;
+  void set_interface(::rocvad::PrInterface value);
+  private:
+  ::rocvad::PrInterface _internal_interface() const;
+  void _internal_set_interface(::rocvad::PrInterface value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:rocvad.PrEndpointInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uri_;
+    uint32_t slot_;
+    int interface_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_driver_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class PrLocalConfig final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rocvad.PrLocalConfig) */ {
  public:
@@ -1460,7 +1892,7 @@ class PrLocalConfig final :
                &_PrLocalConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    8;
 
   friend void swap(PrLocalConfig& a, PrLocalConfig& b) {
     a.Swap(&b);
@@ -1628,7 +2060,7 @@ class PrSenderConfig final :
                &_PrSenderConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    9;
 
   friend void swap(PrSenderConfig& a, PrSenderConfig& b) {
     a.Swap(&b);
@@ -1846,7 +2278,7 @@ class PrReceiverConfig final :
                &_PrReceiverConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    10;
 
   friend void swap(PrReceiverConfig& a, PrReceiverConfig& b) {
     a.Swap(&b);
@@ -2812,6 +3244,86 @@ inline ::rocvad::PrReceiverConfig* PrDeviceInfo::mutable_receiver_config() {
   return _msg;
 }
 
+// repeated .rocvad.PrEndpointInfo local_endpoints = 8;
+inline int PrDeviceInfo::_internal_local_endpoints_size() const {
+  return _impl_.local_endpoints_.size();
+}
+inline int PrDeviceInfo::local_endpoints_size() const {
+  return _internal_local_endpoints_size();
+}
+inline void PrDeviceInfo::clear_local_endpoints() {
+  _impl_.local_endpoints_.Clear();
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::mutable_local_endpoints(int index) {
+  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.local_endpoints)
+  return _impl_.local_endpoints_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >*
+PrDeviceInfo::mutable_local_endpoints() {
+  // @@protoc_insertion_point(field_mutable_list:rocvad.PrDeviceInfo.local_endpoints)
+  return &_impl_.local_endpoints_;
+}
+inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::_internal_local_endpoints(int index) const {
+  return _impl_.local_endpoints_.Get(index);
+}
+inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::local_endpoints(int index) const {
+  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.local_endpoints)
+  return _internal_local_endpoints(index);
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::_internal_add_local_endpoints() {
+  return _impl_.local_endpoints_.Add();
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::add_local_endpoints() {
+  ::rocvad::PrEndpointInfo* _add = _internal_add_local_endpoints();
+  // @@protoc_insertion_point(field_add:rocvad.PrDeviceInfo.local_endpoints)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >&
+PrDeviceInfo::local_endpoints() const {
+  // @@protoc_insertion_point(field_list:rocvad.PrDeviceInfo.local_endpoints)
+  return _impl_.local_endpoints_;
+}
+
+// repeated .rocvad.PrEndpointInfo remote_endpoints = 9;
+inline int PrDeviceInfo::_internal_remote_endpoints_size() const {
+  return _impl_.remote_endpoints_.size();
+}
+inline int PrDeviceInfo::remote_endpoints_size() const {
+  return _internal_remote_endpoints_size();
+}
+inline void PrDeviceInfo::clear_remote_endpoints() {
+  _impl_.remote_endpoints_.Clear();
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::mutable_remote_endpoints(int index) {
+  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.remote_endpoints)
+  return _impl_.remote_endpoints_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >*
+PrDeviceInfo::mutable_remote_endpoints() {
+  // @@protoc_insertion_point(field_mutable_list:rocvad.PrDeviceInfo.remote_endpoints)
+  return &_impl_.remote_endpoints_;
+}
+inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::_internal_remote_endpoints(int index) const {
+  return _impl_.remote_endpoints_.Get(index);
+}
+inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::remote_endpoints(int index) const {
+  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.remote_endpoints)
+  return _internal_remote_endpoints(index);
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::_internal_add_remote_endpoints() {
+  return _impl_.remote_endpoints_.Add();
+}
+inline ::rocvad::PrEndpointInfo* PrDeviceInfo::add_remote_endpoints() {
+  ::rocvad::PrEndpointInfo* _add = _internal_add_remote_endpoints();
+  // @@protoc_insertion_point(field_add:rocvad.PrDeviceInfo.remote_endpoints)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrEndpointInfo >&
+PrDeviceInfo::remote_endpoints() const {
+  // @@protoc_insertion_point(field_list:rocvad.PrDeviceInfo.remote_endpoints)
+  return _impl_.remote_endpoints_;
+}
+
 inline bool PrDeviceInfo::has_NetworkConfig() const {
   return NetworkConfig_case() != NETWORKCONFIG_NOT_SET;
 }
@@ -2863,6 +3375,292 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::rocvad::PrDeviceInfo >
 PrDeviceList::devices() const {
   // @@protoc_insertion_point(field_list:rocvad.PrDeviceList.devices)
   return _impl_.devices_;
+}
+
+// -------------------------------------------------------------------
+
+// PrEndpointRequest
+
+// .rocvad.PrDeviceSelector device = 1;
+inline bool PrEndpointRequest::_internal_has_device() const {
+  return this != internal_default_instance() && _impl_.device_ != nullptr;
+}
+inline bool PrEndpointRequest::has_device() const {
+  return _internal_has_device();
+}
+inline void PrEndpointRequest::clear_device() {
+  if (GetArenaForAllocation() == nullptr && _impl_.device_ != nullptr) {
+    delete _impl_.device_;
+  }
+  _impl_.device_ = nullptr;
+}
+inline const ::rocvad::PrDeviceSelector& PrEndpointRequest::_internal_device() const {
+  const ::rocvad::PrDeviceSelector* p = _impl_.device_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rocvad::PrDeviceSelector&>(
+      ::rocvad::_PrDeviceSelector_default_instance_);
+}
+inline const ::rocvad::PrDeviceSelector& PrEndpointRequest::device() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrEndpointRequest.device)
+  return _internal_device();
+}
+inline void PrEndpointRequest::unsafe_arena_set_allocated_device(
+    ::rocvad::PrDeviceSelector* device) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.device_);
+  }
+  _impl_.device_ = device;
+  if (device) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrEndpointRequest.device)
+}
+inline ::rocvad::PrDeviceSelector* PrEndpointRequest::release_device() {
+  
+  ::rocvad::PrDeviceSelector* temp = _impl_.device_;
+  _impl_.device_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::rocvad::PrDeviceSelector* PrEndpointRequest::unsafe_arena_release_device() {
+  // @@protoc_insertion_point(field_release:rocvad.PrEndpointRequest.device)
+  
+  ::rocvad::PrDeviceSelector* temp = _impl_.device_;
+  _impl_.device_ = nullptr;
+  return temp;
+}
+inline ::rocvad::PrDeviceSelector* PrEndpointRequest::_internal_mutable_device() {
+  
+  if (_impl_.device_ == nullptr) {
+    auto* p = CreateMaybeMessage<::rocvad::PrDeviceSelector>(GetArenaForAllocation());
+    _impl_.device_ = p;
+  }
+  return _impl_.device_;
+}
+inline ::rocvad::PrDeviceSelector* PrEndpointRequest::mutable_device() {
+  ::rocvad::PrDeviceSelector* _msg = _internal_mutable_device();
+  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointRequest.device)
+  return _msg;
+}
+inline void PrEndpointRequest::set_allocated_device(::rocvad::PrDeviceSelector* device) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.device_;
+  }
+  if (device) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(device);
+    if (message_arena != submessage_arena) {
+      device = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, device, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.device_ = device;
+  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointRequest.device)
+}
+
+// .rocvad.PrEndpointInfo endpoint = 2;
+inline bool PrEndpointRequest::_internal_has_endpoint() const {
+  return this != internal_default_instance() && _impl_.endpoint_ != nullptr;
+}
+inline bool PrEndpointRequest::has_endpoint() const {
+  return _internal_has_endpoint();
+}
+inline void PrEndpointRequest::clear_endpoint() {
+  if (GetArenaForAllocation() == nullptr && _impl_.endpoint_ != nullptr) {
+    delete _impl_.endpoint_;
+  }
+  _impl_.endpoint_ = nullptr;
+}
+inline const ::rocvad::PrEndpointInfo& PrEndpointRequest::_internal_endpoint() const {
+  const ::rocvad::PrEndpointInfo* p = _impl_.endpoint_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rocvad::PrEndpointInfo&>(
+      ::rocvad::_PrEndpointInfo_default_instance_);
+}
+inline const ::rocvad::PrEndpointInfo& PrEndpointRequest::endpoint() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrEndpointRequest.endpoint)
+  return _internal_endpoint();
+}
+inline void PrEndpointRequest::unsafe_arena_set_allocated_endpoint(
+    ::rocvad::PrEndpointInfo* endpoint) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.endpoint_);
+  }
+  _impl_.endpoint_ = endpoint;
+  if (endpoint) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrEndpointRequest.endpoint)
+}
+inline ::rocvad::PrEndpointInfo* PrEndpointRequest::release_endpoint() {
+  
+  ::rocvad::PrEndpointInfo* temp = _impl_.endpoint_;
+  _impl_.endpoint_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::rocvad::PrEndpointInfo* PrEndpointRequest::unsafe_arena_release_endpoint() {
+  // @@protoc_insertion_point(field_release:rocvad.PrEndpointRequest.endpoint)
+  
+  ::rocvad::PrEndpointInfo* temp = _impl_.endpoint_;
+  _impl_.endpoint_ = nullptr;
+  return temp;
+}
+inline ::rocvad::PrEndpointInfo* PrEndpointRequest::_internal_mutable_endpoint() {
+  
+  if (_impl_.endpoint_ == nullptr) {
+    auto* p = CreateMaybeMessage<::rocvad::PrEndpointInfo>(GetArenaForAllocation());
+    _impl_.endpoint_ = p;
+  }
+  return _impl_.endpoint_;
+}
+inline ::rocvad::PrEndpointInfo* PrEndpointRequest::mutable_endpoint() {
+  ::rocvad::PrEndpointInfo* _msg = _internal_mutable_endpoint();
+  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointRequest.endpoint)
+  return _msg;
+}
+inline void PrEndpointRequest::set_allocated_endpoint(::rocvad::PrEndpointInfo* endpoint) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.endpoint_;
+  }
+  if (endpoint) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(endpoint);
+    if (message_arena != submessage_arena) {
+      endpoint = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, endpoint, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.endpoint_ = endpoint;
+  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointRequest.endpoint)
+}
+
+// -------------------------------------------------------------------
+
+// PrEndpointInfo
+
+// optional uint32 slot = 1;
+inline bool PrEndpointInfo::_internal_has_slot() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool PrEndpointInfo::has_slot() const {
+  return _internal_has_slot();
+}
+inline void PrEndpointInfo::clear_slot() {
+  _impl_.slot_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline uint32_t PrEndpointInfo::_internal_slot() const {
+  return _impl_.slot_;
+}
+inline uint32_t PrEndpointInfo::slot() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.slot)
+  return _internal_slot();
+}
+inline void PrEndpointInfo::_internal_set_slot(uint32_t value) {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.slot_ = value;
+}
+inline void PrEndpointInfo::set_slot(uint32_t value) {
+  _internal_set_slot(value);
+  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.slot)
+}
+
+// .rocvad.PrInterface interface = 2;
+inline void PrEndpointInfo::clear_interface() {
+  _impl_.interface_ = 0;
+}
+inline ::rocvad::PrInterface PrEndpointInfo::_internal_interface() const {
+  return static_cast< ::rocvad::PrInterface >(_impl_.interface_);
+}
+inline ::rocvad::PrInterface PrEndpointInfo::interface() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.interface)
+  return _internal_interface();
+}
+inline void PrEndpointInfo::_internal_set_interface(::rocvad::PrInterface value) {
+  
+  _impl_.interface_ = value;
+}
+inline void PrEndpointInfo::set_interface(::rocvad::PrInterface value) {
+  _internal_set_interface(value);
+  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.interface)
+}
+
+// string uri = 3;
+inline void PrEndpointInfo::clear_uri() {
+  _impl_.uri_.ClearToEmpty();
+}
+inline const std::string& PrEndpointInfo::uri() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.uri)
+  return _internal_uri();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void PrEndpointInfo::set_uri(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.uri_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.uri)
+}
+inline std::string* PrEndpointInfo::mutable_uri() {
+  std::string* _s = _internal_mutable_uri();
+  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointInfo.uri)
+  return _s;
+}
+inline const std::string& PrEndpointInfo::_internal_uri() const {
+  return _impl_.uri_.Get();
+}
+inline void PrEndpointInfo::_internal_set_uri(const std::string& value) {
+  
+  _impl_.uri_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PrEndpointInfo::_internal_mutable_uri() {
+  
+  return _impl_.uri_.Mutable(GetArenaForAllocation());
+}
+inline std::string* PrEndpointInfo::release_uri() {
+  // @@protoc_insertion_point(field_release:rocvad.PrEndpointInfo.uri)
+  return _impl_.uri_.Release();
+}
+inline void PrEndpointInfo::set_allocated_uri(std::string* uri) {
+  if (uri != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.uri_.SetAllocated(uri, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.uri_.IsDefault()) {
+    _impl_.uri_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointInfo.uri)
 }
 
 // -------------------------------------------------------------------
@@ -3294,6 +4092,10 @@ inline void PrReceiverConfig::set_resampler_profile(::rocvad::PrResamplerProfile
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -3310,6 +4112,11 @@ template <> struct is_proto_enum< ::rocvad::PrDeviceType> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::PrDeviceType>() {
   return ::rocvad::PrDeviceType_descriptor();
+}
+template <> struct is_proto_enum< ::rocvad::PrInterface> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::PrInterface>() {
+  return ::rocvad::PrInterface_descriptor();
 }
 template <> struct is_proto_enum< ::rocvad::PrChannelSet> : ::std::true_type {};
 template <>

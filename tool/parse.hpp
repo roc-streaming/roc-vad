@@ -19,9 +19,7 @@
 
 namespace rocvad {
 
-using index_t = uint32_t;
-
-bool parse_index(const std::string& in, index_t& out);
+bool parse_index(const std::string& in, uint32_t& out);
 
 std::string supported_duration_suffixes();
 

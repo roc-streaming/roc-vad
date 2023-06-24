@@ -21,6 +21,7 @@ namespace rocvad {
 template <class E1, class E2>
 using enum_map = std::vector<std::tuple<E1, E2, std::string>>;
 
+extern enum_map<PrInterface, roc_interface> interface_map;
 extern enum_map<PrChannelSet, roc_channel_set> channel_set_map;
 extern enum_map<PrPacketEncoding, roc_packet_encoding> packet_encoding_map;
 extern enum_map<PrFecEncoding, roc_fec_encoding> fec_encoding_map;

@@ -8,6 +8,8 @@
 
 #include "cmd_device.hpp"
 #include "cmd_device_add.hpp"
+#include "cmd_device_bind.hpp"
+#include "cmd_device_connect.hpp"
 #include "cmd_device_delete.hpp"
 #include "cmd_device_list.hpp"
 #include "cmd_device_show.hpp"
@@ -24,4 +26,6 @@ CmdDevice::CmdDevice(CLI::App& parent)
     register_subcommand(std::make_shared<CmdDeviceShow>(*command));
     register_subcommand(std::make_shared<CmdDeviceAdd>(*command));
     register_subcommand(std::make_shared<CmdDeviceDelete>(*command));
+    register_subcommand(std::make_shared<CmdDeviceBind>(*command));
+    register_subcommand(std::make_shared<CmdDeviceConnect>(*command));
 }

@@ -11,6 +11,8 @@ add_executable(${TOOL_NAME}
   cmd_device_add.cpp
   cmd_device_add_receiver.cpp
   cmd_device_add_sender.cpp
+  cmd_device_bind.cpp
+  cmd_device_connect.cpp
   cmd_device_delete.cpp
   cmd_device_list.cpp
   cmd_device_show.cpp
@@ -19,6 +21,7 @@ add_executable(${TOOL_NAME}
   cmd_root.cpp
   cmd_uninstall.cpp
   connector.cpp
+  format.cpp
   main.cpp
   parse.cpp
   print.cpp
