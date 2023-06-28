@@ -11,7 +11,12 @@
 #include "device_defs.hpp"
 #include "driver_protocol.hpp"
 
+#include <vector>
+
 namespace rocvad {
+
+void device_list_from_rpc(std::vector<DeviceInfo>& out, const PrDeviceList& in);
+void device_list_to_rpc(PrDeviceList& out, const std::vector<DeviceInfo>& in);
 
 void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in);
 void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in);

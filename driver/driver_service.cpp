@@ -68,9 +68,7 @@ grpc::Status DriverService::get_all_devices(grpc::ServerContext* context,
     return execute_command_("get_all_devices", [=]() {
         const auto devices = device_manager_->get_all_devices();
 
-        for (const auto& device_info : devices) {
-            device_info_to_rpc(*response->add_devices(), device_info);
-        }
+        device_list_to_rpc(*response, devices);
     });
 }
 

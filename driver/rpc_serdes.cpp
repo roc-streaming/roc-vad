@@ -61,6 +61,25 @@ google::protobuf::Duration nanoseconds_to_rpc(const char* name, uint64_t nanosec
 
 } // namespace
 
+void device_list_from_rpc(std::vector<DeviceInfo>& out, const PrDeviceList& in)
+{
+    out.clear();
+
+    for (const auto& in_info : in.devices()) {
+        DeviceInfo out_info;
+        device_info_from_rpc(out_info, in_info);
+
+        out.push_back(out_info);
+    }
+}
+
+void device_list_to_rpc(PrDeviceList& out, const std::vector<DeviceInfo>& in)
+{
+    for (const auto& in_info : in) {
+        device_info_to_rpc(*out.add_devices(), in_info);
+    }
+}
+
 void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 {
     // type

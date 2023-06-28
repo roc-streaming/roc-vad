@@ -9,10 +9,12 @@
 #pragma once
 
 #include "device.hpp"
+#include "device_storage.hpp"
 #include "index_allocator.hpp"
 #include "uid_generator.hpp"
 
 #include <aspl/Plugin.hpp>
+#include <aspl/Storage.hpp>
 
 #include <map>
 #include <memory>
@@ -29,7 +31,8 @@ class DeviceManager
 public:
     using index_t = IndexAllocator::index_t;
 
-    DeviceManager(std::shared_ptr<aspl::Plugin> plugin);
+    DeviceManager(std::shared_ptr<aspl::Plugin> plugin,
+        std::shared_ptr<aspl::Storage> storage);
 
     DeviceManager(const DeviceManager&) = delete;
     DeviceManager& operator=(const DeviceManager&) = delete;
@@ -55,13 +58,20 @@ private:
     std::shared_ptr<Device> find_device_(index_t index);
     std::shared_ptr<Device> find_device_(const std::string& uid);
 
-    std::mutex mutex_;
+    void load_devices_();
+    void save_devices_();
+
+    std::recursive_mutex mutex_;
+
     std::shared_ptr<aspl::Plugin> plugin_;
+
     std::map<uint32_t, std::shared_ptr<Device>> device_by_index_;
     std::unordered_map<std::string, std::shared_ptr<Device>> device_by_uid_;
 
     IndexAllocator index_allocator_;
     UidGenerator uid_generator_;
+
+    DeviceStorage device_storage_;
 };
 
 } // namespace rocvad

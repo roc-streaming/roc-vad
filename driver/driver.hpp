@@ -14,6 +14,7 @@
 
 #include <aspl/Driver.hpp>
 #include <aspl/Plugin.hpp>
+#include <aspl/Storage.hpp>
 
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
@@ -23,7 +24,7 @@
 namespace rocvad {
 
 // Top-level class, owns all other stuff.
-class Driver
+class Driver : private aspl::DriverRequestHandler
 {
 public:
     Driver();
@@ -36,11 +37,17 @@ public:
     AudioServerPlugInDriverRef reference();
 
 private:
+    // invoked during asynchrnous driver initialization
+    // persistent storage becomes available here
+    OSStatus OnInitialize() override;
+
     // objects registerd in coreaudiod
     // aspl::Driver is object tree root and contains aspl::Plugin
     // aspl::Plugin contains all created devices
+    // aspl::Storage provides interface to persistent storage
     std::shared_ptr<aspl::Driver> driver_;
     std::shared_ptr<aspl::Plugin> plugin_;
+    std::shared_ptr<aspl::Storage> storage_;
 
     // business logic
     std::shared_ptr<LogManager> log_manager_;

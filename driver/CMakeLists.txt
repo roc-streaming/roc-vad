@@ -9,6 +9,7 @@ find_library(LIB_Foundation Foundation REQUIRED)
 add_library(${DRIVER_NAME} MODULE
   device.cpp
   device_manager.cpp
+  device_storage.cpp
   driver.cpp
   driver_service.cpp
   entry_point.cpp

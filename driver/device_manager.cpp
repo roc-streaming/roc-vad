@@ -9,16 +9,21 @@
 #include "device_manager.hpp"
 
 #include <fmt/core.h>
+#include <spdlog/spdlog.h>
 
 #include <cassert>
 #include <stdexcept>
 
 namespace rocvad {
 
-DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> plugin)
+DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> plugin,
+    std::shared_ptr<aspl::Storage> storage)
     : plugin_(plugin)
+    , device_storage_(storage)
 {
     assert(plugin_);
+
+    load_devices_();
 }
 
 std::vector<DeviceInfo> DeviceManager::get_all_devices()
@@ -80,6 +85,8 @@ DeviceInfo DeviceManager::add_device(DeviceInfo info)
     device_by_index_[info.index] = device;
     device_by_uid_[info.uid] = device;
 
+    save_devices_();
+
     return info;
 }
 
@@ -95,6 +102,8 @@ void DeviceManager::delete_device(index_t index)
 
     device_by_index_.erase(info.index);
     device_by_uid_.erase(info.uid);
+
+    save_devices_();
 }
 
 void DeviceManager::delete_device(const std::string& uid)
@@ -109,6 +118,8 @@ void DeviceManager::delete_device(const std::string& uid)
 
     device_by_index_.erase(info.index);
     device_by_uid_.erase(info.uid);
+
+    save_devices_();
 }
 
 DeviceEndpointInfo DeviceManager::bind_device(index_t index, DeviceEndpointInfo endpoint)
@@ -116,8 +127,11 @@ DeviceEndpointInfo DeviceManager::bind_device(index_t index, DeviceEndpointInfo 
     std::lock_guard lock(mutex_);
 
     auto device = find_device_(index);
+    auto info = device->bind(endpoint);
 
-    return device->bind(endpoint);
+    save_devices_();
+
+    return info;
 }
 
 DeviceEndpointInfo DeviceManager::bind_device(const std::string& uid,
@@ -126,8 +140,11 @@ DeviceEndpointInfo DeviceManager::bind_device(const std::string& uid,
     std::lock_guard lock(mutex_);
 
     auto device = find_device_(uid);
+    auto info = device->bind(endpoint);
 
-    return device->bind(endpoint);
+    save_devices_();
+
+    return info;
 }
 
 DeviceEndpointInfo DeviceManager::connect_device(index_t index,
@@ -136,8 +153,11 @@ DeviceEndpointInfo DeviceManager::connect_device(index_t index,
     std::lock_guard lock(mutex_);
 
     auto device = find_device_(index);
+    auto info = device->connect(endpoint);
 
-    return device->connect(endpoint);
+    save_devices_();
+
+    return info;
 }
 
 DeviceEndpointInfo DeviceManager::connect_device(const std::string& uid,
@@ -146,8 +166,11 @@ DeviceEndpointInfo DeviceManager::connect_device(const std::string& uid,
     std::lock_guard lock(mutex_);
 
     auto device = find_device_(uid);
+    auto info = device->connect(endpoint);
 
-    return device->connect(endpoint);
+    save_devices_();
+
+    return info;
 }
 
 std::shared_ptr<Device> DeviceManager::find_device_(index_t index)
@@ -172,6 +195,35 @@ std::shared_ptr<Device> DeviceManager::find_device_(const std::string& uid)
     assert(device);
 
     return device;
+}
+
+void DeviceManager::load_devices_()
+{
+    auto device_list = device_storage_.load_devices();
+    if (device_list.empty()) {
+        return;
+    }
+
+    spdlog::info("adding {} device(s) from persistent storage", device_list.size());
+
+    for (const auto& device_info : device_list) {
+        try {
+            add_device(device_info);
+        }
+        catch (std::exception& e) {
+            spdlog::warn("ignoring invalid device: index={}, uid=\"{}\": {}",
+                device_info.index,
+                device_info.uid,
+                e.what());
+        }
+    }
+}
+
+void DeviceManager::save_devices_()
+{
+    auto device_list = get_all_devices();
+
+    device_storage_.save_devices(device_list);
 }
 
 } // namespace rocvad
