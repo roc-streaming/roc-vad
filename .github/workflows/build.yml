@@ -22,21 +22,21 @@ jobs:
   build:
     strategy:
       matrix:
-        macos: [latest, 13, 12, 11]
+        macos: [latest, 14, 13, 12]
 
     runs-on: macos-${{ matrix.macos }}
     name: macos-${{ matrix.macos }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
 
       - name: Install dependencies
         run: |
-          brew install scons autoconf automake pkg-config libtool go
+          brew install -f --overwrite scons autoconf automake pkg-config libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -53,10 +53,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [build]
 
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
