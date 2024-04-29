@@ -14,8 +14,8 @@
 
 namespace rocvad {
 
-// Allocates device indicies.
-// Keeps indicies small and unique.
+// Allocates device indices.
+// Keeps indices small and unique.
 // Postpones reusing old index for a while.
 // Ported from libASPL dispatcher.
 class IndexAllocator
@@ -45,10 +45,10 @@ private:
     size_t num_allocated_ = 0;
     index_t last_allocated_index_ = 0;
 
-    // The maximum value below which we're currently trying to keep indicies.
+    // The maximum value below which we're currently trying to keep indices.
     // If the next index exceeds this value, and there are quite a lot of
-    // free indicies below the maximum, we'll reuse one of them. Otherwise,
-    // if there are too little free indicies below the maximum, we'll increase
+    // free indices below the maximum, we'll reuse one of them. Otherwise,
+    // if there are too little free indices below the maximum, we'll increase
     // the maximum instead.
     index_t desired_maximum_index_ = 99;
 };

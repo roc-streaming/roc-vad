@@ -37,7 +37,7 @@ bool CmdUninstall::execute(const Environment& env)
     for (const std::string path : {BuildInfo::driver_bundle_path, BuildInfo::tool_path}) {
         if (path == BuildInfo::tool_path && n_err != 0) {
             spdlog::warn(
-                "can't remove \"{}\": Skipping because of previois errors", path);
+                "can't remove \"{}\": Skipping because of previous errors", path);
             n_warn++;
             continue;
         }

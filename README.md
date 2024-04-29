@@ -180,9 +180,9 @@ Timestamp                       Thread     Type        Activity             PID 
 
    When you start streaming from sender to receiver, you should see information about connected sender in receiver's logs. If you don't, it indicates problems with network connection, e.g. you use incorrect address or port, or a firewall is blocking traffic.
 
-* **Playback shuttering**
+* **Playback stuttering**
 
-   If you hear shuttering, try increasing target latency on the receiving side. For example, for Roc VAD receiver, try using `--target-latency=200ms` to increase latency to 200 milliseconds.
+   If you hear stuttering, try increasing target latency on the receiving side. For example, for Roc VAD receiver, try using `--target-latency=200ms` to increase latency to 200 milliseconds.
 
 * **Decreasing latency**
 
