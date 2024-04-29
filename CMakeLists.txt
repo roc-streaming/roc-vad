@@ -34,6 +34,9 @@ add_compile_options(
   # enable warnings
   "-Wall"
   "-Wextra"
+
+  # disable warnings
+  "-Wno-unused-but-set-variable"
   "-Wno-unused-parameter"
 
   # enable assertions (even in release build)
