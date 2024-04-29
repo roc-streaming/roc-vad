@@ -60,10 +60,6 @@ docs:
 		--doc_opt=markdown,RPC.md \
 		rpc/*.proto
 
-spell:
-	mdspell -a README.md HACKING.md
-	sort .spelling -o .spelling
-
 kickstart:
 	launchctl kickstart -k system/com.apple.audio.coreaudiod
 

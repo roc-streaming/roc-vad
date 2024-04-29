@@ -1,8 +1,12 @@
-/build
-/bin
 /.cache
-compile_commands.json
+/bin
+/build
+
 *.tar.bz2
-GNUmakefile
+compile_commands.json
+
+.dir-locals.el
+.ignore
+.justfile
 .unisonignore
-*.org
+TODO.org
