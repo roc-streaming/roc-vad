@@ -145,7 +145,7 @@ PROTOBUF_CONSTEXPR PrLocalConfig::PrLocalConfig(
     /*decltype(_impl_._has_bits_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
   , /*decltype(_impl_.sample_rate_)*/0u
-  , /*decltype(_impl_.channel_set_)*/0} {}
+  , /*decltype(_impl_.channel_layout_)*/0} {}
 struct PrLocalConfigDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PrLocalConfigDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -286,7 +286,7 @@ const uint32_t TableStruct_driver_5fprotocol_2eproto::offsets[] PROTOBUF_SECTION
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rocvad::PrLocalConfig, _impl_.sample_rate_),
-  PROTOBUF_FIELD_OFFSET(::rocvad::PrLocalConfig, _impl_.channel_set_),
+  PROTOBUF_FIELD_OFFSET(::rocvad::PrLocalConfig, _impl_.channel_layout_),
   0,
   1,
   PROTOBUF_FIELD_OFFSET(::rocvad::PrSenderConfig, _impl_._has_bits_),
@@ -373,56 +373,60 @@ const char descriptor_table_protodef_driver_5fprotocol_2eproto[] PROTOBUF_SECTIO
   "r\022(\n\010endpoint\030\002 \001(\0132\026.rocvad.PrEndpointI"
   "nfo\"a\n\016PrEndpointInfo\022\021\n\004slot\030\001 \001(\rH\000\210\001\001"
   "\022&\n\tinterface\030\002 \001(\0162\023.rocvad.PrInterface"
-  "\022\013\n\003uri\030\003 \001(\tB\007\n\005_slot\"y\n\rPrLocalConfig\022"
-  "\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\022.\n\013channel_set"
-  "\030\002 \001(\0162\024.rocvad.PrChannelSetH\001\210\001\001B\016\n\014_sa"
-  "mple_rateB\016\n\014_channel_set\"\360\002\n\016PrSenderCo"
-  "nfig\0226\n\017packet_encoding\030\001 \001(\0162\030.rocvad.P"
-  "rPacketEncodingH\000\210\001\001\0225\n\rpacket_length\030\002 "
-  "\001(\0132\031.google.protobuf.DurationH\001\210\001\001\0220\n\014f"
-  "ec_encoding\030\003 \001(\0162\025.rocvad.PrFecEncoding"
-  "H\002\210\001\001\022%\n\030fec_block_source_packets\030\004 \001(\rH"
-  "\003\210\001\001\022%\n\030fec_block_repair_packets\030\005 \001(\rH\004"
-  "\210\001\001B\022\n\020_packet_encodingB\020\n\016_packet_lengt"
-  "hB\017\n\r_fec_encodingB\033\n\031_fec_block_source_"
-  "packetsB\033\n\031_fec_block_repair_packets\"\201\002\n"
-  "\020PrReceiverConfig\0226\n\016target_latency\030\001 \001("
-  "\0132\031.google.protobuf.DurationH\000\210\001\001\022:\n\021res"
-  "ampler_backend\030\002 \001(\0162\032.rocvad.PrResample"
-  "rBackendH\001\210\001\001\022:\n\021resampler_profile\030\003 \001(\016"
-  "2\032.rocvad.PrResamplerProfileH\002\210\001\001B\021\n\017_ta"
-  "rget_latencyB\024\n\022_resampler_backendB\024\n\022_r"
-  "esampler_profile*F\n\014PrDeviceType\022\031\n\025PR_D"
-  "EVICE_TYPE_SENDER\020\000\022\033\n\027PR_DEVICE_TYPE_RE"
-  "CEIVER\020\001*\212\001\n\013PrInterface\022\035\n\031PR_INTERFACE"
-  "_CONSOLIDATED\020\000\022\035\n\031PR_INTERFACE_AUDIO_SO"
-  "URCE\020\001\022\035\n\031PR_INTERFACE_AUDIO_REPAIR\020\002\022\036\n"
-  "\032PR_INTERFACE_AUDIO_CONTROL\020\003*)\n\014PrChann"
-  "elSet\022\031\n\025PR_CHANNEL_SET_STEREO\020\000*2\n\020PrPa"
-  "cketEncoding\022\036\n\032PR_PACKET_ENCODING_AVP_L"
-  "16\020\000*j\n\rPrFecEncoding\022\033\n\027PR_FEC_ENCODING"
-  "_DISABLE\020\000\022\030\n\024PR_FEC_ENCODING_RS8M\020\001\022\"\n\036"
-  "PR_FEC_ENCODING_LDPC_STAIRCASE\020\002*V\n\022PrRe"
-  "samplerBackend\022 \n\034PR_RESAMPLER_BACKEND_B"
-  "UILTIN\020\000\022\036\n\032PR_RESAMPLER_BACKEND_SPEEX\020\001"
-  "*\224\001\n\022PrResamplerProfile\022 \n\034PR_RESAMPLER_"
-  "PROFILE_DISABLE\020\000\022\035\n\031PR_RESAMPLER_PROFIL"
-  "E_HIGH\020\001\022\037\n\033PR_RESAMPLER_PROFILE_MEDIUM\020"
-  "\002\022\034\n\030PR_RESAMPLER_PROFILE_LOW\020\0032\231\004\n\016Driv"
-  "erProtocol\022(\n\004ping\022\016.rocvad.PrNone\032\016.roc"
-  "vad.PrNone\"\000\0225\n\013driver_info\022\016.rocvad.PrN"
-  "one\032\024.rocvad.PrDriverInfo\"\000\0225\n\013stream_lo"
-  "gs\022\016.rocvad.PrNone\032\022.rocvad.PrLogEntry\"\000"
-  "0\001\0229\n\017get_all_devices\022\016.rocvad.PrNone\032\024."
-  "rocvad.PrDeviceList\"\000\022>\n\nget_device\022\030.ro"
-  "cvad.PrDeviceSelector\032\024.rocvad.PrDeviceI"
-  "nfo\"\000\022:\n\nadd_device\022\024.rocvad.PrDeviceInf"
-  "o\032\024.rocvad.PrDeviceInfo\"\000\022;\n\rdelete_devi"
-  "ce\022\030.rocvad.PrDeviceSelector\032\016.rocvad.Pr"
-  "None\"\000\022;\n\004bind\022\031.rocvad.PrEndpointReques"
-  "t\032\026.rocvad.PrEndpointInfo\"\000\022>\n\007connect\022\031"
-  ".rocvad.PrEndpointRequest\032\026.rocvad.PrEnd"
-  "pointInfo\"\000b\006proto3"
+  "\022\013\n\003uri\030\003 \001(\tB\007\n\005_slot\"\202\001\n\rPrLocalConfig"
+  "\022\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\0224\n\016channel_la"
+  "yout\030\002 \001(\0162\027.rocvad.PrChannelLayoutH\001\210\001\001"
+  "B\016\n\014_sample_rateB\021\n\017_channel_layout\"\360\002\n\016"
+  "PrSenderConfig\0226\n\017packet_encoding\030\001 \001(\0162"
+  "\030.rocvad.PrPacketEncodingH\000\210\001\001\0225\n\rpacket"
+  "_length\030\002 \001(\0132\031.google.protobuf.Duration"
+  "H\001\210\001\001\0220\n\014fec_encoding\030\003 \001(\0162\025.rocvad.PrF"
+  "ecEncodingH\002\210\001\001\022%\n\030fec_block_source_pack"
+  "ets\030\004 \001(\rH\003\210\001\001\022%\n\030fec_block_repair_packe"
+  "ts\030\005 \001(\rH\004\210\001\001B\022\n\020_packet_encodingB\020\n\016_pa"
+  "cket_lengthB\017\n\r_fec_encodingB\033\n\031_fec_blo"
+  "ck_source_packetsB\033\n\031_fec_block_repair_p"
+  "ackets\"\201\002\n\020PrReceiverConfig\0226\n\016target_la"
+  "tency\030\001 \001(\0132\031.google.protobuf.DurationH\000"
+  "\210\001\001\022:\n\021resampler_backend\030\002 \001(\0162\032.rocvad."
+  "PrResamplerBackendH\001\210\001\001\022:\n\021resampler_pro"
+  "file\030\003 \001(\0162\032.rocvad.PrResamplerProfileH\002"
+  "\210\001\001B\021\n\017_target_latencyB\024\n\022_resampler_bac"
+  "kendB\024\n\022_resampler_profile*F\n\014PrDeviceTy"
+  "pe\022\031\n\025PR_DEVICE_TYPE_SENDER\020\000\022\033\n\027PR_DEVI"
+  "CE_TYPE_RECEIVER\020\001*\212\001\n\013PrInterface\022\035\n\031PR"
+  "_INTERFACE_CONSOLIDATED\020\000\022\035\n\031PR_INTERFAC"
+  "E_AUDIO_SOURCE\020\001\022\035\n\031PR_INTERFACE_AUDIO_R"
+  "EPAIR\020\002\022\036\n\032PR_INTERFACE_AUDIO_CONTROL\020\003*"
+  "K\n\017PrChannelLayout\022\032\n\026PR_CHANNEL_LAYOUT_"
+  "MONO\020\000\022\034\n\030PR_CHANNEL_LAYOUT_STEREO\020\001*^\n\020"
+  "PrPacketEncoding\022#\n\037PR_PACKET_ENCODING_A"
+  "VP_L16_MONO\020\000\022%\n!PR_PACKET_ENCODING_AVP_"
+  "L16_STEREO\020\001*j\n\rPrFecEncoding\022\033\n\027PR_FEC_"
+  "ENCODING_DISABLE\020\000\022\030\n\024PR_FEC_ENCODING_RS"
+  "8M\020\001\022\"\n\036PR_FEC_ENCODING_LDPC_STAIRCASE\020\002"
+  "*\233\001\n\022PrResamplerBackend\022 \n\034PR_RESAMPLER_"
+  "BACKEND_DEFAULT\020\000\022 \n\034PR_RESAMPLER_BACKEN"
+  "D_BUILTIN\020\001\022\036\n\032PR_RESAMPLER_BACKEND_SPEE"
+  "X\020\002\022!\n\035PR_RESAMPLER_BACKEND_SPEEXDEC\020\003*\224"
+  "\001\n\022PrResamplerProfile\022 \n\034PR_RESAMPLER_PR"
+  "OFILE_DEFAULT\020\000\022\035\n\031PR_RESAMPLER_PROFILE_"
+  "HIGH\020\001\022\037\n\033PR_RESAMPLER_PROFILE_MEDIUM\020\002\022"
+  "\034\n\030PR_RESAMPLER_PROFILE_LOW\020\0032\231\004\n\016Driver"
+  "Protocol\022(\n\004ping\022\016.rocvad.PrNone\032\016.rocva"
+  "d.PrNone\"\000\0225\n\013driver_info\022\016.rocvad.PrNon"
+  "e\032\024.rocvad.PrDriverInfo\"\000\0225\n\013stream_logs"
+  "\022\016.rocvad.PrNone\032\022.rocvad.PrLogEntry\"\0000\001"
+  "\0229\n\017get_all_devices\022\016.rocvad.PrNone\032\024.ro"
+  "cvad.PrDeviceList\"\000\022>\n\nget_device\022\030.rocv"
+  "ad.PrDeviceSelector\032\024.rocvad.PrDeviceInf"
+  "o\"\000\022:\n\nadd_device\022\024.rocvad.PrDeviceInfo\032"
+  "\024.rocvad.PrDeviceInfo\"\000\022;\n\rdelete_device"
+  "\022\030.rocvad.PrDeviceSelector\032\016.rocvad.PrNo"
+  "ne\"\000\022;\n\004bind\022\031.rocvad.PrEndpointRequest\032"
+  "\026.rocvad.PrEndpointInfo\"\000\022>\n\007connect\022\031.r"
+  "ocvad.PrEndpointRequest\032\026.rocvad.PrEndpo"
+  "intInfo\"\000b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2eproto_deps[2] = {
   &::descriptor_table_google_2fprotobuf_2fduration_2eproto,
@@ -430,7 +434,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2
 };
 static ::_pbi::once_flag descriptor_table_driver_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_driver_5fprotocol_2eproto = {
-    false, false, 3019, descriptor_table_protodef_driver_5fprotocol_2eproto,
+    false, false, 3177, descriptor_table_protodef_driver_5fprotocol_2eproto,
     "driver_protocol.proto",
     &descriptor_table_driver_5fprotocol_2eproto_once, descriptor_table_driver_5fprotocol_2eproto_deps, 2, 11,
     schemas, file_default_instances, TableStruct_driver_5fprotocol_2eproto::offsets,
@@ -503,13 +507,14 @@ bool PrInterface_IsValid(int value) {
   }
 }
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrChannelSet_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrChannelLayout_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_driver_5fprotocol_2eproto);
   return file_level_enum_descriptors_driver_5fprotocol_2eproto[3];
 }
-bool PrChannelSet_IsValid(int value) {
+bool PrChannelLayout_IsValid(int value) {
   switch (value) {
     case 0:
+    case 1:
       return true;
     default:
       return false;
@@ -523,6 +528,7 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrPacketEncoding_descriptor() {
 bool PrPacketEncoding_IsValid(int value) {
   switch (value) {
     case 0:
+    case 1:
       return true;
     default:
       return false;
@@ -552,6 +558,8 @@ bool PrResamplerBackend_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -2729,7 +2737,7 @@ class PrLocalConfig::_Internal {
   static void set_has_sample_rate(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_channel_set(HasBits* has_bits) {
+  static void set_has_channel_layout(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
 };
@@ -2747,12 +2755,12 @@ PrLocalConfig::PrLocalConfig(const PrLocalConfig& from)
       decltype(_impl_._has_bits_){from._impl_._has_bits_}
     , /*decltype(_impl_._cached_size_)*/{}
     , decltype(_impl_.sample_rate_){}
-    , decltype(_impl_.channel_set_){}};
+    , decltype(_impl_.channel_layout_){}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&_impl_.sample_rate_, &from._impl_.sample_rate_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.channel_set_) -
-    reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.channel_set_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.channel_layout_) -
+    reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.channel_layout_));
   // @@protoc_insertion_point(copy_constructor:rocvad.PrLocalConfig)
 }
 
@@ -2764,7 +2772,7 @@ inline void PrLocalConfig::SharedCtor(
       decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , decltype(_impl_.sample_rate_){0u}
-    , decltype(_impl_.channel_set_){0}
+    , decltype(_impl_.channel_layout_){0}
   };
 }
 
@@ -2794,8 +2802,8 @@ void PrLocalConfig::Clear() {
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x00000003u) {
     ::memset(&_impl_.sample_rate_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&_impl_.channel_set_) -
-        reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.channel_set_));
+        reinterpret_cast<char*>(&_impl_.channel_layout_) -
+        reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.channel_layout_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -2817,12 +2825,12 @@ const char* PrLocalConfig::_InternalParse(const char* ptr, ::_pbi::ParseContext*
         } else
           goto handle_unusual;
         continue;
-      // optional .rocvad.PrChannelSet channel_set = 2;
+      // optional .rocvad.PrChannelLayout channel_layout = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_channel_set(static_cast<::rocvad::PrChannelSet>(val));
+          _internal_set_channel_layout(static_cast<::rocvad::PrChannelLayout>(val));
         } else
           goto handle_unusual;
         continue;
@@ -2862,11 +2870,11 @@ uint8_t* PrLocalConfig::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_sample_rate(), target);
   }
 
-  // optional .rocvad.PrChannelSet channel_set = 2;
-  if (_internal_has_channel_set()) {
+  // optional .rocvad.PrChannelLayout channel_layout = 2;
+  if (_internal_has_channel_layout()) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      2, this->_internal_channel_set(), target);
+      2, this->_internal_channel_layout(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2892,10 +2900,10 @@ size_t PrLocalConfig::ByteSizeLong() const {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_sample_rate());
     }
 
-    // optional .rocvad.PrChannelSet channel_set = 2;
+    // optional .rocvad.PrChannelLayout channel_layout = 2;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
-        ::_pbi::WireFormatLite::EnumSize(this->_internal_channel_set());
+        ::_pbi::WireFormatLite::EnumSize(this->_internal_channel_layout());
     }
 
   }
@@ -2923,7 +2931,7 @@ void PrLocalConfig::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
       _this->_impl_.sample_rate_ = from._impl_.sample_rate_;
     }
     if (cached_has_bits & 0x00000002u) {
-      _this->_impl_.channel_set_ = from._impl_.channel_set_;
+      _this->_impl_.channel_layout_ = from._impl_.channel_layout_;
     }
     _this->_impl_._has_bits_[0] |= cached_has_bits;
   }
@@ -2946,8 +2954,8 @@ void PrLocalConfig::InternalSwap(PrLocalConfig* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PrLocalConfig, _impl_.channel_set_)
-      + sizeof(PrLocalConfig::_impl_.channel_set_)
+      PROTOBUF_FIELD_OFFSET(PrLocalConfig, _impl_.channel_layout_)
+      + sizeof(PrLocalConfig::_impl_.channel_layout_)
       - PROTOBUF_FIELD_OFFSET(PrLocalConfig, _impl_.sample_rate_)>(
           reinterpret_cast<char*>(&_impl_.sample_rate_),
           reinterpret_cast<char*>(&other->_impl_.sample_rate_));

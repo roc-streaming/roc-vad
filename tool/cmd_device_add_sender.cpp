@@ -29,7 +29,7 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
     command->add_option("-c,--chans",
         chans_,
         fmt::format("Channel set for virtual device (supported values: {})",
-            supported_enum_values(channel_set_map)));
+            supported_enum_values(channel_layout_map)));
 
     command->add_option("--packet-encoding",
         packet_encoding_,
@@ -84,11 +84,11 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     }
 
     if (chans_) {
-        PrChannelSet channel_set;
-        if (!parse_enum("--chans", channel_set_map, *chans_, channel_set)) {
+        PrChannelLayout channel_layout;
+        if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
             return false;
         }
-        request.mutable_local_config()->set_channel_set(channel_set);
+        request.mutable_local_config()->set_channel_layout(channel_layout);
     }
 
     if (packet_encoding_) {

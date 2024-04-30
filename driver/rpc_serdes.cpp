@@ -145,9 +145,9 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
         }
     }
 
-    if (in.local_config().has_channel_set()) {
-        out.local_config.channel_set = enum_from_rpc(
-            "channel_set", channel_set_map, in.local_config().channel_set());
+    if (in.local_config().has_channel_layout()) {
+        out.local_config.channel_layout = enum_from_rpc(
+            "channel_layout", channel_layout_map, in.local_config().channel_layout());
     }
 
     // sender config
@@ -250,8 +250,8 @@ void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
 
     // local config
     out.mutable_local_config()->set_sample_rate(in.local_config.sample_rate);
-    out.mutable_local_config()->set_channel_set(
-        enum_to_rpc("channel_set", channel_set_map, in.local_config.channel_set));
+    out.mutable_local_config()->set_channel_layout(enum_to_rpc(
+        "channel_layout", channel_layout_map, in.local_config.channel_layout));
 
     // sender config
     if (in.sender_config) {

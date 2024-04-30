@@ -179,38 +179,40 @@ inline bool PrInterface_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrInterface>(
     PrInterface_descriptor(), name, value);
 }
-enum PrChannelSet : int {
-  PR_CHANNEL_SET_STEREO = 0,
-  PrChannelSet_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
-  PrChannelSet_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+enum PrChannelLayout : int {
+  PR_CHANNEL_LAYOUT_MONO = 0,
+  PR_CHANNEL_LAYOUT_STEREO = 1,
+  PrChannelLayout_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  PrChannelLayout_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
-bool PrChannelSet_IsValid(int value);
-constexpr PrChannelSet PrChannelSet_MIN = PR_CHANNEL_SET_STEREO;
-constexpr PrChannelSet PrChannelSet_MAX = PR_CHANNEL_SET_STEREO;
-constexpr int PrChannelSet_ARRAYSIZE = PrChannelSet_MAX + 1;
+bool PrChannelLayout_IsValid(int value);
+constexpr PrChannelLayout PrChannelLayout_MIN = PR_CHANNEL_LAYOUT_MONO;
+constexpr PrChannelLayout PrChannelLayout_MAX = PR_CHANNEL_LAYOUT_STEREO;
+constexpr int PrChannelLayout_ARRAYSIZE = PrChannelLayout_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrChannelSet_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrChannelLayout_descriptor();
 template<typename T>
-inline const std::string& PrChannelSet_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, PrChannelSet>::value ||
+inline const std::string& PrChannelLayout_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, PrChannelLayout>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function PrChannelSet_Name.");
+    "Incorrect type passed to function PrChannelLayout_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    PrChannelSet_descriptor(), enum_t_value);
+    PrChannelLayout_descriptor(), enum_t_value);
 }
-inline bool PrChannelSet_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PrChannelSet* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrChannelSet>(
-    PrChannelSet_descriptor(), name, value);
+inline bool PrChannelLayout_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PrChannelLayout* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrChannelLayout>(
+    PrChannelLayout_descriptor(), name, value);
 }
 enum PrPacketEncoding : int {
-  PR_PACKET_ENCODING_AVP_L16 = 0,
+  PR_PACKET_ENCODING_AVP_L16_MONO = 0,
+  PR_PACKET_ENCODING_AVP_L16_STEREO = 1,
   PrPacketEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   PrPacketEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool PrPacketEncoding_IsValid(int value);
-constexpr PrPacketEncoding PrPacketEncoding_MIN = PR_PACKET_ENCODING_AVP_L16;
-constexpr PrPacketEncoding PrPacketEncoding_MAX = PR_PACKET_ENCODING_AVP_L16;
+constexpr PrPacketEncoding PrPacketEncoding_MIN = PR_PACKET_ENCODING_AVP_L16_MONO;
+constexpr PrPacketEncoding PrPacketEncoding_MAX = PR_PACKET_ENCODING_AVP_L16_STEREO;
 constexpr int PrPacketEncoding_ARRAYSIZE = PrPacketEncoding_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrPacketEncoding_descriptor();
@@ -254,14 +256,16 @@ inline bool PrFecEncoding_Parse(
     PrFecEncoding_descriptor(), name, value);
 }
 enum PrResamplerBackend : int {
-  PR_RESAMPLER_BACKEND_BUILTIN = 0,
-  PR_RESAMPLER_BACKEND_SPEEX = 1,
+  PR_RESAMPLER_BACKEND_DEFAULT = 0,
+  PR_RESAMPLER_BACKEND_BUILTIN = 1,
+  PR_RESAMPLER_BACKEND_SPEEX = 2,
+  PR_RESAMPLER_BACKEND_SPEEXDEC = 3,
   PrResamplerBackend_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   PrResamplerBackend_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool PrResamplerBackend_IsValid(int value);
-constexpr PrResamplerBackend PrResamplerBackend_MIN = PR_RESAMPLER_BACKEND_BUILTIN;
-constexpr PrResamplerBackend PrResamplerBackend_MAX = PR_RESAMPLER_BACKEND_SPEEX;
+constexpr PrResamplerBackend PrResamplerBackend_MIN = PR_RESAMPLER_BACKEND_DEFAULT;
+constexpr PrResamplerBackend PrResamplerBackend_MAX = PR_RESAMPLER_BACKEND_SPEEXDEC;
 constexpr int PrResamplerBackend_ARRAYSIZE = PrResamplerBackend_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrResamplerBackend_descriptor();
@@ -279,7 +283,7 @@ inline bool PrResamplerBackend_Parse(
     PrResamplerBackend_descriptor(), name, value);
 }
 enum PrResamplerProfile : int {
-  PR_RESAMPLER_PROFILE_DISABLE = 0,
+  PR_RESAMPLER_PROFILE_DEFAULT = 0,
   PR_RESAMPLER_PROFILE_HIGH = 1,
   PR_RESAMPLER_PROFILE_MEDIUM = 2,
   PR_RESAMPLER_PROFILE_LOW = 3,
@@ -287,7 +291,7 @@ enum PrResamplerProfile : int {
   PrResamplerProfile_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool PrResamplerProfile_IsValid(int value);
-constexpr PrResamplerProfile PrResamplerProfile_MIN = PR_RESAMPLER_PROFILE_DISABLE;
+constexpr PrResamplerProfile PrResamplerProfile_MIN = PR_RESAMPLER_PROFILE_DEFAULT;
 constexpr PrResamplerProfile PrResamplerProfile_MAX = PR_RESAMPLER_PROFILE_LOW;
 constexpr int PrResamplerProfile_ARRAYSIZE = PrResamplerProfile_MAX + 1;
 
@@ -1966,7 +1970,7 @@ class PrLocalConfig final :
 
   enum : int {
     kSampleRateFieldNumber = 1,
-    kChannelSetFieldNumber = 2,
+    kChannelLayoutFieldNumber = 2,
   };
   // optional uint32 sample_rate = 1;
   bool has_sample_rate() const;
@@ -1981,17 +1985,17 @@ class PrLocalConfig final :
   void _internal_set_sample_rate(uint32_t value);
   public:
 
-  // optional .rocvad.PrChannelSet channel_set = 2;
-  bool has_channel_set() const;
+  // optional .rocvad.PrChannelLayout channel_layout = 2;
+  bool has_channel_layout() const;
   private:
-  bool _internal_has_channel_set() const;
+  bool _internal_has_channel_layout() const;
   public:
-  void clear_channel_set();
-  ::rocvad::PrChannelSet channel_set() const;
-  void set_channel_set(::rocvad::PrChannelSet value);
+  void clear_channel_layout();
+  ::rocvad::PrChannelLayout channel_layout() const;
+  void set_channel_layout(::rocvad::PrChannelLayout value);
   private:
-  ::rocvad::PrChannelSet _internal_channel_set() const;
-  void _internal_set_channel_set(::rocvad::PrChannelSet value);
+  ::rocvad::PrChannelLayout _internal_channel_layout() const;
+  void _internal_set_channel_layout(::rocvad::PrChannelLayout value);
   public:
 
   // @@protoc_insertion_point(class_scope:rocvad.PrLocalConfig)
@@ -2005,7 +2009,7 @@ class PrLocalConfig final :
     ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     uint32_t sample_rate_;
-    int channel_set_;
+    int channel_layout_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_driver_5fprotocol_2eproto;
@@ -3695,32 +3699,32 @@ inline void PrLocalConfig::set_sample_rate(uint32_t value) {
   // @@protoc_insertion_point(field_set:rocvad.PrLocalConfig.sample_rate)
 }
 
-// optional .rocvad.PrChannelSet channel_set = 2;
-inline bool PrLocalConfig::_internal_has_channel_set() const {
+// optional .rocvad.PrChannelLayout channel_layout = 2;
+inline bool PrLocalConfig::_internal_has_channel_layout() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline bool PrLocalConfig::has_channel_set() const {
-  return _internal_has_channel_set();
+inline bool PrLocalConfig::has_channel_layout() const {
+  return _internal_has_channel_layout();
 }
-inline void PrLocalConfig::clear_channel_set() {
-  _impl_.channel_set_ = 0;
+inline void PrLocalConfig::clear_channel_layout() {
+  _impl_.channel_layout_ = 0;
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline ::rocvad::PrChannelSet PrLocalConfig::_internal_channel_set() const {
-  return static_cast< ::rocvad::PrChannelSet >(_impl_.channel_set_);
+inline ::rocvad::PrChannelLayout PrLocalConfig::_internal_channel_layout() const {
+  return static_cast< ::rocvad::PrChannelLayout >(_impl_.channel_layout_);
 }
-inline ::rocvad::PrChannelSet PrLocalConfig::channel_set() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrLocalConfig.channel_set)
-  return _internal_channel_set();
+inline ::rocvad::PrChannelLayout PrLocalConfig::channel_layout() const {
+  // @@protoc_insertion_point(field_get:rocvad.PrLocalConfig.channel_layout)
+  return _internal_channel_layout();
 }
-inline void PrLocalConfig::_internal_set_channel_set(::rocvad::PrChannelSet value) {
+inline void PrLocalConfig::_internal_set_channel_layout(::rocvad::PrChannelLayout value) {
   _impl_._has_bits_[0] |= 0x00000002u;
-  _impl_.channel_set_ = value;
+  _impl_.channel_layout_ = value;
 }
-inline void PrLocalConfig::set_channel_set(::rocvad::PrChannelSet value) {
-  _internal_set_channel_set(value);
-  // @@protoc_insertion_point(field_set:rocvad.PrLocalConfig.channel_set)
+inline void PrLocalConfig::set_channel_layout(::rocvad::PrChannelLayout value) {
+  _internal_set_channel_layout(value);
+  // @@protoc_insertion_point(field_set:rocvad.PrLocalConfig.channel_layout)
 }
 
 // -------------------------------------------------------------------
@@ -4118,10 +4122,10 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::PrInterface>() {
   return ::rocvad::PrInterface_descriptor();
 }
-template <> struct is_proto_enum< ::rocvad::PrChannelSet> : ::std::true_type {};
+template <> struct is_proto_enum< ::rocvad::PrChannelLayout> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::PrChannelSet>() {
-  return ::rocvad::PrChannelSet_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::rocvad::PrChannelLayout>() {
+  return ::rocvad::PrChannelLayout_descriptor();
 }
 template <> struct is_proto_enum< ::rocvad::PrPacketEncoding> : ::std::true_type {};
 template <>

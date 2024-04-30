@@ -33,27 +33,27 @@ enum class DeviceType
 struct DeviceLocalConfig
 {
     uint32_t sample_rate = 44100;
-    roc_channel_set channel_set = ROC_CHANNEL_SET_STEREO;
+    roc_channel_layout channel_layout = ROC_CHANNEL_LAYOUT_STEREO;
 };
 
 // Network parameters of sender device.
 struct DeviceSenderConfig
 {
-    roc_packet_encoding packet_encoding = ROC_PACKET_ENCODING_AVP_L16;
-    uint64_t packet_length_ns = 7'000'000; // 7ms
+    roc_packet_encoding packet_encoding = ROC_PACKET_ENCODING_AVP_L16_STEREO;
+    uint64_t packet_length_ns = 5'000'000; // 5ms
 
     roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_RS8M;
-    uint32_t fec_block_source_packets = 20;
+    uint32_t fec_block_source_packets = 18;
     uint32_t fec_block_repair_packets = 10;
 };
 
 // Network parameters of sender device.
 struct DeviceReceiverConfig
 {
-    uint64_t target_latency_ns = 100'000'000; // 100ms
+    uint64_t target_latency_ns = 200'000'000; // 200ms
 
-    roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_SPEEX;
-    roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_MEDIUM;
+    roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_DEFAULT;
+    roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_DEFAULT;
 };
 
 // Device endpoint info.

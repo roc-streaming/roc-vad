@@ -55,9 +55,9 @@ void print_device_info(const PrDeviceInfo& device_info)
     if (device_info.has_local_config()) {
         fmt::println("");
 
-        fmt::println("    sample_rate: {}", device_info.local_config().sample_rate());
-        fmt::println("    channel_set: {}",
-            format_enum(channel_set_map, device_info.local_config().channel_set()));
+        fmt::println("    sample_rate:    {}", device_info.local_config().sample_rate());
+        fmt::println("    channel_layout: {}",
+            format_enum(channel_layout_map, device_info.local_config().channel_layout()));
     }
 
     if (device_info.has_sender_config()) {

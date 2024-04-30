@@ -31,13 +31,17 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 
     device_params.SampleRate = info.local_config.sample_rate;
 
-    switch (info.local_config.channel_set) {
-    case ROC_CHANNEL_SET_STEREO:
+    switch (info.local_config.channel_layout) {
+    case ROC_CHANNEL_LAYOUT_MONO:
+        device_params.ChannelCount = 1;
+        break;
+
+    case ROC_CHANNEL_LAYOUT_STEREO:
         device_params.ChannelCount = 2;
         break;
 
     default:
-        throw std::runtime_error("selected channel_set not supported by device");
+        throw std::runtime_error("selected channel_layout not supported by device");
     }
 
     device_params.EnableMixing = true;

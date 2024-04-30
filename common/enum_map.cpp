@@ -17,12 +17,22 @@ enum_map<PrInterface, roc_interface> interface_map {
     {PR_INTERFACE_AUDIO_CONTROL, ROC_INTERFACE_AUDIO_CONTROL, "audioctl"},
 };
 
-enum_map<PrChannelSet, roc_channel_set> channel_set_map {
-    {PR_CHANNEL_SET_STEREO, ROC_CHANNEL_SET_STEREO, "stereo"},
+enum_map<PrChannelLayout, roc_channel_layout> channel_layout_map {
+    {PR_CHANNEL_LAYOUT_MONO, ROC_CHANNEL_LAYOUT_MONO, "mono"},
+    {PR_CHANNEL_LAYOUT_STEREO, ROC_CHANNEL_LAYOUT_STEREO, "stereo"},
 };
 
 enum_map<PrPacketEncoding, roc_packet_encoding> packet_encoding_map {
-    {PR_PACKET_ENCODING_AVP_L16, ROC_PACKET_ENCODING_AVP_L16, "avp/l16"},
+    {
+        PR_PACKET_ENCODING_AVP_L16_MONO,
+        ROC_PACKET_ENCODING_AVP_L16_MONO,
+        "avp/l16/mono",
+    },
+    {
+        PR_PACKET_ENCODING_AVP_L16_STEREO,
+        ROC_PACKET_ENCODING_AVP_L16_STEREO,
+        "avp/l16/stereo",
+    },
 };
 
 enum_map<PrFecEncoding, roc_fec_encoding> fec_encoding_map {
@@ -32,12 +42,14 @@ enum_map<PrFecEncoding, roc_fec_encoding> fec_encoding_map {
 };
 
 enum_map<PrResamplerBackend, roc_resampler_backend> resampler_backend_map {
+    {PR_RESAMPLER_BACKEND_DEFAULT, ROC_RESAMPLER_BACKEND_DEFAULT, "default"},
     {PR_RESAMPLER_BACKEND_BUILTIN, ROC_RESAMPLER_BACKEND_BUILTIN, "builtin"},
     {PR_RESAMPLER_BACKEND_SPEEX, ROC_RESAMPLER_BACKEND_SPEEX, "speex"},
+    {PR_RESAMPLER_BACKEND_SPEEXDEC, ROC_RESAMPLER_BACKEND_SPEEXDEC, "speexdec"},
 };
 
 enum_map<PrResamplerProfile, roc_resampler_profile> resampler_profile_map {
-    {PR_RESAMPLER_PROFILE_DISABLE, ROC_RESAMPLER_PROFILE_DISABLE, "disable"},
+    {PR_RESAMPLER_PROFILE_DEFAULT, ROC_RESAMPLER_PROFILE_DEFAULT, "default"},
     {PR_RESAMPLER_PROFILE_HIGH, ROC_RESAMPLER_PROFILE_HIGH, "high"},
     {PR_RESAMPLER_PROFILE_MEDIUM, ROC_RESAMPLER_PROFILE_MEDIUM, "medium"},
     {PR_RESAMPLER_PROFILE_LOW, ROC_RESAMPLER_PROFILE_LOW, "low"},

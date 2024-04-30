@@ -206,13 +206,13 @@ message PrLocalConfig
 {
     // Virtual device sample rate, in Hertz (e.g. 44100).
     // When retrieving device info, always present and non-zero.
-    // When creating device, keep unset to use default (44100).
+    // When creating device, keep unset to use default.
     optional uint32 sample_rate = 1;
 
-    // Virtual device channel set (e.g. stereo).
+    // Virtual device channel layout (e.g. stereo).
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (PR_CHANNEL_SET_STEREO).
-    optional PrChannelSet channel_set = 2;
+    // When creating device, keep unset to use default.
+    optional PrChannelLayout channel_layout = 2;
 }
 
 // Parameters of sender device.
@@ -220,29 +220,29 @@ message PrSenderConfig
 {
     // Encoding for network packets.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (PR_PACKET_ENCODING_AVP_L16).
+    // When creating device, keep unset to use default.
     optional PrPacketEncoding packet_encoding = 1;
 
     // Duration of a single packet.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (7ms).
+    // When creating device, keep unset to use default.
     // When set, should not be zero.
     optional google.protobuf.Duration packet_length = 2;
 
     // Forward Error Correction encoding.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (PR_FEC_ENCODING_RS8M).
+    // When creating device, keep unset to use default.
     optional PrFecEncoding fec_encoding = 3;
 
     // Number of source packets per FEC block.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (20).
+    // When creating device, keep unset to use default.
     // When set, should not be zero.
     optional uint32 fec_block_source_packets = 4;
 
     // Number of repair packets per FEC block.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (10).
+    // When creating device, keep unset to use default.
     // When set, should not be zero.
     optional uint32 fec_block_repair_packets = 5;
 }
@@ -258,12 +258,12 @@ message PrReceiverConfig
 
     // Resampling engine.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (PR_RESAMPLER_BACKEND_SPEEX).
+    // When creating device, keep unset to use default.
     optional PrResamplerBackend resampler_backend = 2;
 
     // Resampling quality.
     // When retrieving device info, always present.
-    // When creating device, keep unset to use default (PR_RESAMPLER_PROFILE_MEDIUM).
+    // When creating device, keep unset to use default.
     optional PrResamplerProfile resampler_profile = 3;
 }
 
@@ -294,23 +294,32 @@ enum PrInterface
     PR_INTERFACE_AUDIO_CONTROL = 3;
 }
 
-// Device channel set.
+// Device channel layout.
 // Defines what channels will be shown to apps that use the device.
-enum PrChannelSet
+enum PrChannelLayout
 {
+    // One monochromatic channel.
+    PR_CHANNEL_LAYOUT_MONO = 0;
+
     // Two channels: left and right.
-    PR_CHANNEL_SET_STEREO = 0;
+    PR_CHANNEL_LAYOUT_STEREO = 1;
 }
 
 // Network packet encoding.
 // Defines how samples are encoded when sent over network.
 enum PrPacketEncoding
 {
-    // PCM signed 16-bit.
+    // PCM signed 16-bit (mono).
     // "L16" encoding from RTP A/V Profile (RFC 3551).
     // Uncompressed samples coded as interleaved 16-bit signed big-endian
     // integers in two's complement notation.
-    PR_PACKET_ENCODING_AVP_L16 = 0;
+    PR_PACKET_ENCODING_AVP_L16_MONO = 0;
+
+    // PCM signed 16-bit (stereo).
+    // "L16" encoding from RTP A/V Profile (RFC 3551).
+    // Uncompressed samples coded as interleaved 16-bit signed big-endian
+    // integers in two's complement notation.
+    PR_PACKET_ENCODING_AVP_L16_STEREO = 1;
 }
 
 // Forward Error Correction encoding.
@@ -334,11 +343,20 @@ enum PrFecEncoding
 // Affects speed and quality.
 enum PrResamplerBackend
 {
-    // Slow built-in resampler.
-    PR_RESAMPLER_BACKEND_BUILTIN = 0;
+    // Select best backend based on latency.
+    PR_RESAMPLER_BACKEND_DEFAULT = 0;
+
+    // CPU-demanding good-quality built-in resampler.
+    // Works fine with any latency.
+    PR_RESAMPLER_BACKEND_BUILTIN = 1;
 
     // Fast good-quality resampler from SpeexDSP.
-    PR_RESAMPLER_BACKEND_SPEEX = 1;
+    // Works fine with higher latency.
+    PR_RESAMPLER_BACKEND_SPEEX = 2;
+
+    // Lower quiality fast resampler combining SpeexDSP and decimation.
+    // Works fine with any latency.
+    PR_RESAMPLER_BACKEND_SPEEXDEC = 3;
 }
 
 // Resampler profile.
@@ -346,10 +364,8 @@ enum PrResamplerBackend
 // Each resampler backend treats profile in its own way.
 enum PrResamplerProfile
 {
-    // Do not perform resampling.
-    // Clock drift compensation will be disabled in this case.
-    // If in doubt, do not disable resampling.
-    PR_RESAMPLER_PROFILE_DISABLE = 0;
+    // Select default profile.
+    PR_RESAMPLER_PROFILE_DEFAULT = 0;
 
     // High quality, low speed.
     PR_RESAMPLER_PROFILE_HIGH = 1;
