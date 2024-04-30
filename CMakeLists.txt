@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-include(options.cmake)
+include(cmake/options.cmake)
 
 project(roc_vad CXX)
 
@@ -56,7 +56,7 @@ include_directories(SYSTEM
   rpc
 )
 
-include(3rdparty/dependencies.cmake)
+include(cmake/dependencies.cmake)
 
 if(NOT BOOTSTRAP)
   add_subdirectory(common)

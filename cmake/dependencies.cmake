@@ -14,46 +14,48 @@ endif()
 
 # Roc
 set(SCONS_CMD
-  scons -Q
-    --prefix=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix
-    --disable-tools --disable-shared --enable-static
+  scons
+    -C ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc/src/roc_lib
+    --prefix=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc
+    --enable-static
+    --disable-shared
+    --disable-tools
+    --disable-sox
     --build-3rdparty=all
+    --compiler-launcher=${CMAKE_CXX_COMPILER_LAUNCHER}
     --macos-platform=${CMAKE_OSX_DEPLOYMENT_TARGET}
     --macos-arch=${OSX_ARCHITECTURES_COMMA}
 )
-ExternalProject_Add(roc
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/roc
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix
-  CONFIGURE_COMMAND
-    ${CMAKE_COMMAND} -E remove_directory
-      ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-src
-  COMMAND
-    ${CMAKE_COMMAND} -E make_directory
-      ${CMAKE_CURRENT_BINARY_DIR}/3rdparty
-  COMMAND
-    ${CMAKE_COMMAND} -E copy_directory
-      ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/roc
-      ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-src
-  BUILD_COMMAND
-    ${SCONS_CMD} -C ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-src
-  INSTALL_COMMAND
-    ${SCONS_CMD} -C ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-src install
+ExternalProject_Add(roc_lib
+  GIT_REPOSITORY "https://github.com/roc-streaming/roc-toolkit.git"
+  GIT_TAG "v0.3.0"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ${SCONS_CMD}
+  INSTALL_COMMAND ${SCONS_CMD} install
   LOG_DOWNLOAD ${ENABLE_LOGS}
   LOG_CONFIGURE ${ENABLE_LOGS}
   LOG_BUILD ${ENABLE_LOGS}
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc/include
 )
 link_directories(
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc-prefix/lib
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/roc/lib
 )
 
 # libASPL
-ExternalProject_Add(libASPL
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/libASPL
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix
+ExternalProject_Add(aspl_lib
+  GIT_REPOSITORY "https://github.com/gavv/libASPL.git"
+  GIT_TAG "v3.0.0"
+  GIT_SHALLOW OFF
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/aspl
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
@@ -66,16 +68,20 @@ ExternalProject_Add(libASPL
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/aspl/include
 )
 list(PREPEND CMAKE_PREFIX_PATH
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/libASPL-prefix/lib/cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/aspl/lib/cmake
 )
 
 # BoringSSL
-ExternalProject_Add(BoringSSL
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/BoringSSL
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/BoringSSL-prefix
+ExternalProject_Add(boringssl_lib
+  GIT_REPOSITORY "https://github.com/google/boringssl.git"
+  GIT_TAG "2db0eb3f96a5756298dcd7f9319e56a98585bd10"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/boringssl
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
@@ -89,16 +95,20 @@ ExternalProject_Add(BoringSSL
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/BoringSSL-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/boringssl/include
 )
 list(PREPEND CMAKE_PREFIX_PATH
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/BoringSSL-prefix/lib/cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/boringssl/lib/cmake
 )
 
 # gRPC
-ExternalProject_Add(gRPC
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/gRPC
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix
+ExternalProject_Add(grpc_lib
+  GIT_REPOSITORY "https://github.com/grpc/grpc.git"
+  GIT_TAG "v1.63.0"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/grpc
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
@@ -117,7 +127,7 @@ ExternalProject_Add(gRPC
     -DgRPC_BUILD_GRPC_PYTHON_PLUGIN=OFF
     -DgRPC_BUILD_GRPC_RUBY_PLUGIN=OFF
     -DgRPC_SSL_PROVIDER=package
-    -DOPENSSL_ROOT_DIR=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/BoringSSL-prefix
+    -DOPENSSL_ROOT_DIR=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/boringssl
     -DOPENSSL_USE_STATIC_LIBS=ON
   LOG_DOWNLOAD ${ENABLE_LOGS}
   LOG_CONFIGURE ${ENABLE_LOGS}
@@ -125,20 +135,24 @@ ExternalProject_Add(gRPC
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/grpc/include
 )
 list(PREPEND CMAKE_PREFIX_PATH
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/lib/cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/grpc/lib/cmake
 )
 get_filename_component(GRPC_BIN_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/gRPC-prefix/bin
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/grpc/bin
   ABSOLUTE
 )
 
 # fmt
-ExternalProject_Add(fmt
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/fmt
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix
+ExternalProject_Add(fmt_lib
+  GIT_REPOSITORY "https://github.com/fmtlib/fmt.git"
+  GIT_TAG "10.2.1"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
@@ -155,23 +169,27 @@ ExternalProject_Add(fmt
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt/include
 )
 list(PREPEND CMAKE_PREFIX_PATH
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/lib/cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt/lib/cmake
 )
 
 # spdlog
-ExternalProject_Add(spdlog
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/spdlog
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix
+ExternalProject_Add(spdlog_lib
+  GIT_REPOSITORY "https://github.com/gabime/spdlog.git"
+  GIT_TAG "v1.14.1"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
     -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
     -DCMAKE_OSX_ARCHITECTURES=${OSX_ARCHITECTURES_LISTSEP}
     -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-    -DCMAKE_PREFIX_PATH=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt-prefix/lib/cmake
+    -DCMAKE_PREFIX_PATH=${CMAKE_CURRENT_BINARY_DIR}/3rdparty/fmt/lib/cmake
     -DSPDLOG_FMT_EXTERNAL=ON
   LOG_DOWNLOAD ${ENABLE_LOGS}
   LOG_CONFIGURE ${ENABLE_LOGS}
@@ -179,10 +197,10 @@ ExternalProject_Add(spdlog
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog/include
 )
 list(PREPEND CMAKE_PREFIX_PATH
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog-prefix/lib/cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/spdlog/lib/cmake
 )
 add_definitions(
   -DSPDLOG_COMPILED_LIB
@@ -190,9 +208,13 @@ add_definitions(
 )
 
 # CLI111
-ExternalProject_Add(CLI11
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/CLI11
-  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/CLI11-prefix
+ExternalProject_Add(cli11_lib
+  GIT_REPOSITORY "https://github.com/CLIUtils/CLI11.git"
+  GIT_TAG "v2.4.1"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/cli11
   LIST_SEPARATOR ${LIST_SEPARATOR}
   CMAKE_ARGS
     -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
@@ -209,29 +231,29 @@ ExternalProject_Add(CLI11
   LOG_INSTALL ${ENABLE_LOGS}
 )
 include_directories(SYSTEM
-  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/CLI11-prefix/include
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/cli11/include
 )
 
 # List
 set(ALL_DEPENDENCIES
-  roc
-  libASPL
-  BoringSSL
-  gRPC
-  fmt
-  spdlog
-  CLI11
-  )
-
+  roc_lib
+  aspl_lib
+  boringssl_lib
+  grpc_lib
+  fmt_lib
+  spdlog_lib
+  cli11_lib
+)
 list(REVERSE ALL_DEPENDENCIES)
 
+# Serialize
 set(OTHER_DEPENDENCIES ${ALL_DEPENDENCIES})
 foreach(DEPENDENCY IN LISTS ALL_DEPENDENCIES)
   list(REMOVE_ITEM OTHER_DEPENDENCIES ${DEPENDENCY})
   if(OTHER_DEPENDENCIES)
     add_dependencies(${DEPENDENCY}
       ${OTHER_DEPENDENCIES}
-      )
+    )
   endif()
 endforeach()
 

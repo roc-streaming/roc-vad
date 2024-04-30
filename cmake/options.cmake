@@ -55,25 +55,3 @@ endif()
 if(GIT_COMMIT)
   message(STATUS "Detected git commit: ${GIT_COMMIT}")
 endif()
-
-# git submodules
-option(GIT_UPDATE "Update git submodules" ON)
-if(GIT_UPDATE AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git")
-  if(NOT Git_FOUND)
-    find_package(Git QUIET)
-    if(Git_FOUND)
-      message(STATUS "Found git: ${GIT_EXECUTABLE}")
-    endif()
-  endif()
-  if(Git_FOUND)
-    message(STATUS "Updating git submodules")
-    execute_process(
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      RESULT_VARIABLE GIT_SUBMOD_RESULT
-      COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-    )
-    if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-      message(FATAL_ERROR "Failed to update git submodules")
-    endif()
-  endif()
-endif()
