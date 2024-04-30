@@ -35,7 +35,7 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
         packet_encoding_,
         fmt::format("Sender packet encoding (supported values: {})",
             supported_enum_values(packet_encoding_map)));
-    command->add_option("--packet-length",
+    command->add_option("--packet-len",
         packet_length_,
         fmt::format("Sender packet length (number with one of the suffixes: {})",
             supported_duration_suffixes()));

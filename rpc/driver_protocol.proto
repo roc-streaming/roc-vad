@@ -205,13 +205,11 @@ message PrEndpointInfo
 message PrLocalConfig
 {
     // Virtual device sample rate, in Hertz (e.g. 44100).
-    // When retrieving device info, always present and non-zero.
-    // When creating device, keep unset to use default.
+    // Keep unset to use default.
     optional uint32 sample_rate = 1;
 
     // Virtual device channel layout (e.g. stereo).
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
+    // Keep unset to use default.
     optional PrChannelLayout channel_layout = 2;
 }
 
@@ -219,52 +217,101 @@ message PrLocalConfig
 message PrSenderConfig
 {
     // Encoding for network packets.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
+    // Keep unset to use default.
     optional PrPacketEncoding packet_encoding = 1;
 
     // Duration of a single packet.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    // When set, should not be zero.
+    // Keep unset to use default.
     optional google.protobuf.Duration packet_length = 2;
 
+    // Enable packet interleaving.
+    // Keep unset to use default.
+    optional bool packet_interleaving = 3;
+
     // Forward Error Correction encoding.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    optional PrFecEncoding fec_encoding = 3;
+    // Keep unset to use default.
+    optional PrFecEncoding fec_encoding = 4;
 
     // Number of source packets per FEC block.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    // When set, should not be zero.
-    optional uint32 fec_block_source_packets = 4;
+    // Keep unset to use default.
+    optional uint32 fec_block_source_packets = 5;
 
     // Number of repair packets per FEC block.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    // When set, should not be zero.
-    optional uint32 fec_block_repair_packets = 5;
+    // Keep unset to use default.
+    optional uint32 fec_block_repair_packets = 6;
+
+    // Target latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration target_latency = 7;
+
+    // Minimum latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration min_latency = 8;
+
+    // Maximum latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration max_latency = 9;
+
+    // Latency tuning algorithm.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional PrLatencyTunerBackend latency_tuner_backend = 10;
+
+    // Latency tuning profile.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional PrLatencyTunerProfile latency_tuner_profile = 11;
+
+    // Resampling algorithm.
+    // Keep unset to use default.
+    optional PrResamplerBackend resampler_backend = 12;
+
+    // Resampling quality.
+    // Keep unset to use default.
+    optional PrResamplerProfile resampler_profile = 13;
 }
 
 // Parameters of receiver device.
 message PrReceiverConfig
 {
-    // Target session latency.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default (100ms).
-    // When set, should not be zero.
+    // Target latency.
+    // Keep unset to use default.
     optional google.protobuf.Duration target_latency = 1;
 
-    // Resampling engine.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    optional PrResamplerBackend resampler_backend = 2;
+    // Minimum latency.
+    // Keep unset to use default.
+    optional google.protobuf.Duration min_latency = 2;
+
+    // Maximum latency.
+    // Keep unset to use default.
+    optional google.protobuf.Duration max_latency = 3;
+
+    // Latency tuning algorithm.
+    // Keep unset to use default.
+    optional PrLatencyTunerBackend latency_tuner_backend = 4;
+
+    // Latency tuning profile.
+    // Keep unset to use default.
+    optional PrLatencyTunerProfile latency_tuner_profile = 5;
+
+    // Resampling algorithm.
+    // Keep unset to use default.
+    optional PrResamplerBackend resampler_backend = 6;
 
     // Resampling quality.
-    // When retrieving device info, always present.
-    // When creating device, keep unset to use default.
-    optional PrResamplerProfile resampler_profile = 3;
+    // Keep unset to use default.
+    optional PrResamplerProfile resampler_profile = 7;
+
+    // Timeout for the lack of playback.
+    // Keep unset to use default.
+    optional google.protobuf.Duration no_playback_timeout = 8;
+
+    // Timeout for choppy playback.
+    // Keep unset to use default.
+    optional google.protobuf.Duration choppy_playback_timeout = 9;
 }
 
 // Device type.
@@ -339,11 +386,40 @@ enum PrFecEncoding
     PR_FEC_ENCODING_LDPC_STAIRCASE = 2;
 }
 
+// Defines which latency is monitored and adjusted.
+enum PrLatencyTunerBackend
+{
+    // Select best backend automatically.
+    PR_LATENCY_TUNER_BACKEND_DEFAULT = 0;
+
+    // Latency tuning based on network incoming queue length.
+    PR_LATENCY_TUNER_BACKEND_NIQ = 2;
+}
+
+// Defines whether latency tuning is enabled and which algorithm is used.
+enum PrLatencyTunerProfile
+{
+    // Select best profile automatically.
+    PR_LATENCY_TUNER_PROFILE_DEFAULT = 0;
+
+    // No latency tuning.
+    // Expect regular underruns or overruns.
+    PR_LATENCY_TUNER_PROFILE_INTACT = 1;
+
+    // Responsive latency tuning.
+    // Clock speed is adjusted quickly and accurately.
+    PR_LATENCY_TUNER_PROFILE_RESPONSIVE = 2;
+
+    // Gradual latency tuning.
+    // Clock speed is adjusted slowly and smoothly.
+    PR_LATENCY_TUNER_PROFILE_GRADUAL = 3;
+}
+
 // Resampler backend.
 // Affects speed and quality.
 enum PrResamplerBackend
 {
-    // Select best backend based on latency.
+    // Select best backend automatically.
     PR_RESAMPLER_BACKEND_DEFAULT = 0;
 
     // CPU-demanding good-quality built-in resampler.
