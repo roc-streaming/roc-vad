@@ -52,11 +52,22 @@ struct DevicePacketEncoding
 struct DeviceSenderConfig
 {
     std::optional<DevicePacketEncoding> packet_encoding;
-    uint64_t packet_length_ns = 5'000'000; // 5ms
+    uint64_t packet_length_ns = 0;
+    bool packet_interleaving = false;
 
     roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_RS8M;
-    uint32_t fec_block_source_packets = 18;
-    uint32_t fec_block_repair_packets = 10;
+    uint32_t fec_block_source_packets = 0;
+    uint32_t fec_block_repair_packets = 0;
+
+    roc_latency_tuner_backend latency_tuner_backend = ROC_LATENCY_TUNER_BACKEND_DEFAULT;
+    roc_latency_tuner_profile latency_tuner_profile = ROC_LATENCY_TUNER_PROFILE_DEFAULT;
+
+    roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_DEFAULT;
+    roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_DEFAULT;
+
+    int64_t target_latency_ns = 0;
+    int64_t min_latency_ns = 0;
+    int64_t max_latency_ns = 0;
 };
 
 // Network parameters of sender device.
@@ -64,10 +75,18 @@ struct DeviceReceiverConfig
 {
     std::vector<DevicePacketEncoding> packet_encodings;
 
-    uint64_t target_latency_ns = 200'000'000; // 200ms
+    roc_latency_tuner_backend latency_tuner_backend = ROC_LATENCY_TUNER_BACKEND_DEFAULT;
+    roc_latency_tuner_profile latency_tuner_profile = ROC_LATENCY_TUNER_PROFILE_DEFAULT;
 
     roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_DEFAULT;
     roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_DEFAULT;
+
+    int64_t target_latency_ns = 0;
+    int64_t min_latency_ns = 0;
+    int64_t max_latency_ns = 0;
+
+    int64_t no_playback_timeout_ns = 0;
+    int64_t choppy_playback_timeout_ns = 0;
 };
 
 // Device endpoint info.

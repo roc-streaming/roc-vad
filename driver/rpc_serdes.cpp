@@ -40,23 +40,14 @@ auto enum_to_rpc(const char* name, const Map& map, Enum in)
     throw std::runtime_error(fmt::format("invalid {} value {}", name, (int)in));
 }
 
-uint64_t nanoseconds_from_rpc(const char* name, google::protobuf::Duration duration)
+int64_t nanoseconds_from_rpc(const char* name, google::protobuf::Duration duration)
 {
-    const int64_t nanosecond =
-        google::protobuf::util::TimeUtil::DurationToNanoseconds(duration);
-
-    if (nanosecond < 0) {
-        throw std::invalid_argument(fmt::format("invalid negative {} value {}",
-            name,
-            google::protobuf::util::TimeUtil::ToString(duration)));
-    }
-
-    return (uint64_t)nanosecond;
+    return google::protobuf::util::TimeUtil::DurationToNanoseconds(duration);
 }
 
-google::protobuf::Duration nanoseconds_to_rpc(const char* name, uint64_t nanoseconds)
+google::protobuf::Duration nanoseconds_to_rpc(const char* name, int64_t nanoseconds)
 {
-    return google::protobuf::util::TimeUtil::NanosecondsToDuration((int64_t)nanoseconds);
+    return google::protobuf::util::TimeUtil::NanosecondsToDuration(nanoseconds);
 }
 
 } // namespace
@@ -136,7 +127,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
         out.name = in.name();
     }
 
-    // device encoding
+    // device_encoding
     if (in.device_encoding().has_sample_rate()) {
         out.device_encoding.sample_rate = in.device_encoding().sample_rate();
 
@@ -153,8 +144,9 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 in.device_encoding().channel_layout());
     }
 
-    // sender config
+    // sender_config
     if (in.has_sender_config()) {
+        // packet_encoding
         if (in.sender_config().has_packet_encoding()) {
             DevicePacketEncoding out_encoding;
             packet_encoding_from_rpc(out_encoding, in.sender_config().packet_encoding());
@@ -162,6 +154,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             out.sender_config->packet_encoding = out_encoding;
         }
 
+        // packet_length
         if (in.sender_config().has_packet_length()) {
             out.sender_config->packet_length_ns = nanoseconds_from_rpc(
                 "RvSenderConfig.packet_length", in.sender_config().packet_length());
@@ -172,12 +165,20 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             }
         }
 
+        // packet_interleaving
+        if (in.sender_config().has_packet_interleaving()) {
+            out.sender_config->packet_interleaving =
+                in.sender_config().packet_interleaving();
+        }
+
+        // fec_encoding
         if (in.sender_config().has_fec_encoding()) {
             out.sender_config->fec_encoding = enum_from_rpc("RvSenderConfig.fec_encoding",
                 fec_encoding_map,
                 in.sender_config().fec_encoding());
         }
 
+        // fec_block_source_packets
         if (in.sender_config().has_fec_block_source_packets()) {
             out.sender_config->fec_block_source_packets =
                 in.sender_config().fec_block_source_packets();
@@ -190,6 +191,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             }
         }
 
+        // fec_block_repair_packets
         if (in.sender_config().has_fec_block_repair_packets()) {
             out.sender_config->fec_block_repair_packets =
                 in.sender_config().fec_block_repair_packets();
@@ -201,10 +203,61 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                     "RvSenderConfig.fec_encoding is not set to RV_FEC_ENCODING_DISABLE");
             }
         }
+
+        // latency_tuner_backend
+        if (in.sender_config().has_latency_tuner_backend()) {
+            out.sender_config->latency_tuner_backend =
+                enum_from_rpc("RvSenderConfig.latency_tuner_backend",
+                    latency_tuner_backend_map,
+                    in.sender_config().latency_tuner_backend());
+        }
+
+        // latency_tuner_profile
+        if (in.sender_config().has_latency_tuner_profile()) {
+            out.sender_config->latency_tuner_profile =
+                enum_from_rpc("RvSenderConfig.latency_tuner_profile",
+                    latency_tuner_profile_map,
+                    in.sender_config().latency_tuner_profile());
+        }
+
+        // resampler_backend
+        if (in.sender_config().has_resampler_backend()) {
+            out.sender_config->resampler_backend =
+                enum_from_rpc("RvSenderConfig.resampler_backend",
+                    resampler_backend_map,
+                    in.sender_config().resampler_backend());
+        }
+
+        // resampler_profile
+        if (in.sender_config().has_resampler_profile()) {
+            out.sender_config->resampler_profile =
+                enum_from_rpc("RvSenderConfig.resampler_profile",
+                    resampler_profile_map,
+                    in.sender_config().resampler_profile());
+        }
+
+        // target_latency
+        if (in.sender_config().has_target_latency()) {
+            out.sender_config->target_latency_ns = nanoseconds_from_rpc(
+                "RvSenderConfig.target_latency", in.sender_config().target_latency());
+        }
+
+        // min_latency
+        if (in.sender_config().has_min_latency()) {
+            out.sender_config->min_latency_ns = nanoseconds_from_rpc(
+                "RvSenderConfig.min_latency", in.sender_config().min_latency());
+        }
+
+        // max_latency
+        if (in.sender_config().has_max_latency()) {
+            out.sender_config->max_latency_ns = nanoseconds_from_rpc(
+                "RvSenderConfig.max_latency", in.sender_config().max_latency());
+        }
     }
 
-    // receiver config
+    // receiver_config
     if (in.has_receiver_config()) {
+        // packet_encodings
         for (const auto& in_encoding : in.receiver_config().packet_encodings()) {
             DevicePacketEncoding out_encoding;
             packet_encoding_from_rpc(out_encoding, in_encoding);
@@ -212,16 +265,23 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             out.receiver_config->packet_encodings.push_back(out_encoding);
         }
 
-        if (in.receiver_config().has_target_latency()) {
-            out.receiver_config->target_latency_ns = nanoseconds_from_rpc(
-                "RvReceiverConfig.target_latency", in.receiver_config().target_latency());
-
-            if (out.receiver_config->target_latency_ns == 0) {
-                throw std::invalid_argument(
-                    "RvReceiverConfig.target_latency should not be zero");
-            }
+        // latency_tuner_backend
+        if (in.receiver_config().has_latency_tuner_backend()) {
+            out.receiver_config->latency_tuner_backend =
+                enum_from_rpc("RvReceiverConfig.latency_tuner_backend",
+                    latency_tuner_backend_map,
+                    in.receiver_config().latency_tuner_backend());
         }
 
+        // latency_tuner_profile
+        if (in.receiver_config().has_latency_tuner_profile()) {
+            out.receiver_config->latency_tuner_profile =
+                enum_from_rpc("RvReceiverConfig.latency_tuner_profile",
+                    latency_tuner_profile_map,
+                    in.receiver_config().latency_tuner_profile());
+        }
+
+        // resampler_backend
         if (in.receiver_config().has_resampler_backend()) {
             out.receiver_config->resampler_backend =
                 enum_from_rpc("RvReceiverConfig.resampler_backend",
@@ -229,15 +289,48 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                     in.receiver_config().resampler_backend());
         }
 
+        // resampler_profile
         if (in.receiver_config().has_resampler_profile()) {
             out.receiver_config->resampler_profile =
                 enum_from_rpc("RvReceiverConfig.resampler_profile",
                     resampler_profile_map,
                     in.receiver_config().resampler_profile());
         }
+
+        // target_latency
+        if (in.receiver_config().has_target_latency()) {
+            out.receiver_config->target_latency_ns = nanoseconds_from_rpc(
+                "RvReceiverConfig.target_latency", in.receiver_config().target_latency());
+        }
+
+        // min_latency
+        if (in.receiver_config().has_min_latency()) {
+            out.receiver_config->min_latency_ns = nanoseconds_from_rpc(
+                "RvReceiverConfig.min_latency", in.receiver_config().min_latency());
+        }
+
+        // max_latency
+        if (in.receiver_config().has_max_latency()) {
+            out.receiver_config->max_latency_ns = nanoseconds_from_rpc(
+                "RvReceiverConfig.max_latency", in.receiver_config().max_latency());
+        }
+
+        // no_playback_timeout
+        if (in.receiver_config().has_no_playback_timeout()) {
+            out.receiver_config->no_playback_timeout_ns =
+                nanoseconds_from_rpc("RvReceiverConfig.no_playback_timeout",
+                    in.receiver_config().no_playback_timeout());
+        }
+
+        // choppy_playback_timeout
+        if (in.receiver_config().has_choppy_playback_timeout()) {
+            out.receiver_config->choppy_playback_timeout_ns =
+                nanoseconds_from_rpc("RvReceiverConfig.choppy_playback_timeout",
+                    in.receiver_config().choppy_playback_timeout());
+        }
     }
 
-    // endpoints
+    // local_endpoints
     for (const auto& in_info : in.local_endpoints()) {
         DeviceEndpointInfo out_info;
         endpoint_info_from_rpc(out_info, in_info);
@@ -245,6 +338,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
         out.local_endpoints.push_back(out_info);
     }
 
+    // remote_endpoints
     for (const auto& in_info : in.remote_endpoints()) {
         DeviceEndpointInfo out_info;
         endpoint_info_from_rpc(out_info, in_info);
@@ -264,38 +358,84 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
     out.set_uid(in.uid);
     out.set_name(in.name);
 
-    // device encoding
+    // device_encoding
     out.mutable_device_encoding()->set_sample_rate(in.device_encoding.sample_rate);
     out.mutable_device_encoding()->set_channel_layout(
         enum_to_rpc("RvDeviceInfo.channel_layout",
             channel_layout_map,
             in.device_encoding.channel_layout));
 
-    // sender config
+    // sender_config
     if (in.sender_config) {
+        // packet_encoding
         if (in.sender_config->packet_encoding) {
             packet_encoding_to_rpc(
                 *out.mutable_sender_config()->mutable_packet_encoding(),
                 *in.sender_config->packet_encoding);
         }
 
+        // packet_length
         *out.mutable_sender_config()->mutable_packet_length() = nanoseconds_to_rpc(
             "RvSenderConfig.packet_length", in.sender_config->packet_length_ns);
 
+        // packet_interleaving
+        out.mutable_sender_config()->set_packet_interleaving(
+            in.sender_config->packet_interleaving);
+
+        // fec_encoding
         out.mutable_sender_config()->set_fec_encoding(
             enum_to_rpc("RvSenderConfig.fec_encoding",
                 fec_encoding_map,
                 in.sender_config->fec_encoding));
 
+        // fec_block_source_packets
         out.mutable_sender_config()->set_fec_block_source_packets(
             in.sender_config->fec_block_source_packets);
 
+        // fec_block_repair_packets
         out.mutable_sender_config()->set_fec_block_repair_packets(
             in.sender_config->fec_block_repair_packets);
+
+        // latency_tuner_backend
+        out.mutable_sender_config()->set_latency_tuner_backend(
+            enum_to_rpc("RvSenderConfig.latency_tuner_backend",
+                latency_tuner_backend_map,
+                in.sender_config->latency_tuner_backend));
+
+        // latency_tuner_profile
+        out.mutable_sender_config()->set_latency_tuner_profile(
+            enum_to_rpc("RvSenderConfig.latency_tuner_profile",
+                latency_tuner_profile_map,
+                in.sender_config->latency_tuner_profile));
+
+        // resampler_backend
+        out.mutable_sender_config()->set_resampler_backend(
+            enum_to_rpc("RvSenderConfig.resampler_backend",
+                resampler_backend_map,
+                in.sender_config->resampler_backend));
+
+        // resampler_profile
+        out.mutable_sender_config()->set_resampler_profile(
+            enum_to_rpc("RvSenderConfig.resampler_profile",
+                resampler_profile_map,
+                in.sender_config->resampler_profile));
+
+        // target_latency
+        *out.mutable_sender_config()->mutable_target_latency() = nanoseconds_to_rpc(
+            "RvSenderConfig.target_latency", in.sender_config->target_latency_ns);
+
+        // min_latency
+        *out.mutable_sender_config()->mutable_min_latency() = nanoseconds_to_rpc(
+            "RvSenderConfig.min_latency", in.sender_config->min_latency_ns);
+
+        // max_latency
+        *out.mutable_sender_config()->mutable_max_latency() = nanoseconds_to_rpc(
+            "RvSenderConfig.max_latency", in.sender_config->max_latency_ns);
     }
 
-    // receiver config
+    // receiver_config
     if (in.receiver_config) {
+        // packet_encodings
         for (const auto& in_encoding : in.receiver_config->packet_encodings) {
             rvpb::RvPacketEncoding out_encoding;
             packet_encoding_to_rpc(out_encoding, in_encoding);
@@ -303,21 +443,54 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
             *out.mutable_receiver_config()->add_packet_encodings() = out_encoding;
         }
 
-        *out.mutable_receiver_config()->mutable_target_latency() = nanoseconds_to_rpc(
-            "RvReceiverConfig.target_latency", in.receiver_config->target_latency_ns);
+        // latency_tuner_backend
+        out.mutable_receiver_config()->set_latency_tuner_backend(
+            enum_to_rpc("RvReceiverConfig.latency_tuner_backend",
+                latency_tuner_backend_map,
+                in.receiver_config->latency_tuner_backend));
 
+        // latency_tuner_profile
+        out.mutable_receiver_config()->set_latency_tuner_profile(
+            enum_to_rpc("RvReceiverConfig.latency_tuner_profile",
+                latency_tuner_profile_map,
+                in.receiver_config->latency_tuner_profile));
+
+        // resampler_backend
         out.mutable_receiver_config()->set_resampler_backend(
             enum_to_rpc("RvReceiverConfig.resampler_backend",
                 resampler_backend_map,
                 in.receiver_config->resampler_backend));
 
+        // resampler_profile
         out.mutable_receiver_config()->set_resampler_profile(
             enum_to_rpc("RvReceiverConfig.resampler_profile",
                 resampler_profile_map,
                 in.receiver_config->resampler_profile));
+
+        // target_latency
+        *out.mutable_receiver_config()->mutable_target_latency() = nanoseconds_to_rpc(
+            "RvReceiverConfig.target_latency", in.receiver_config->target_latency_ns);
+
+        // min_latency
+        *out.mutable_receiver_config()->mutable_min_latency() = nanoseconds_to_rpc(
+            "RvReceiverConfig.min_latency", in.receiver_config->min_latency_ns);
+
+        // max_latency
+        *out.mutable_receiver_config()->mutable_max_latency() = nanoseconds_to_rpc(
+            "RvReceiverConfig.max_latency", in.receiver_config->max_latency_ns);
+
+        // no_playback_timeout
+        *out.mutable_receiver_config()->mutable_no_playback_timeout() =
+            nanoseconds_to_rpc("RvReceiverConfig.no_playback_timeout",
+                in.receiver_config->no_playback_timeout_ns);
+
+        // choppy_playback_timeout
+        *out.mutable_receiver_config()->mutable_choppy_playback_timeout() =
+            nanoseconds_to_rpc("RvReceiverConfig.choppy_playback_timeout",
+                in.receiver_config->choppy_playback_timeout_ns);
     }
 
-    // endpoints
+    // local_endpoints
     for (const auto& in_info : in.local_endpoints) {
         rvpb::RvEndpointInfo out_info;
         endpoint_info_to_rpc(out_info, in_info);
@@ -325,6 +498,7 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
         *out.add_local_endpoints() = out_info;
     }
 
+    // remote_endpoints
     for (const auto& in_info : in.remote_endpoints) {
         rvpb::RvEndpointInfo out_info;
         endpoint_info_to_rpc(out_info, in_info);
