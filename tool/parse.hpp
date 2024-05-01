@@ -23,7 +23,7 @@ bool parse_index(const std::string& in, uint32_t& out);
 
 std::string supported_duration_suffixes();
 
-bool parse_duration(const char* name, const std::string& in, uint64_t& out);
+bool parse_duration(const char* name, const std::string& in, int64_t& out);
 
 bool parse_duration(const char* name,
     const std::string& in,

@@ -60,7 +60,7 @@ std::string supported_duration_suffixes()
     return "\"ns\", \"us\", \"ms\", \"s\", \"m\", \"h\"";
 }
 
-bool parse_duration(const char* name, const std::string& in, uint64_t& result)
+bool parse_duration(const char* name, const std::string& in, int64_t& result)
 {
     uint64_t multiplier = 0;
 
@@ -105,7 +105,7 @@ bool parse_duration(const char* name, const std::string& in, uint64_t& result)
         return false;
     }
 
-    result = (uint64_t)number * multiplier;
+    result = (int64_t)number * multiplier;
     return true;
 }
 
@@ -113,12 +113,12 @@ bool parse_duration(const char* name,
     const std::string& in,
     google::protobuf::Duration& out)
 {
-    uint64_t nanoseconds = 0;
+    int64_t nanoseconds = 0;
     if (!parse_duration(name, in, nanoseconds)) {
         return false;
     }
 
-    out = google::protobuf::util::TimeUtil::NanosecondsToDuration((int64_t)nanoseconds);
+    out = google::protobuf::util::TimeUtil::NanosecondsToDuration(nanoseconds);
     return true;
 }
 
