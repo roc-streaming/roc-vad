@@ -4,28 +4,30 @@
 ## Table of Contents
 
 - [rpc/driver_protocol.proto](#rpc_driver_protocol-proto)
-    - [PrDeviceInfo](#rocvad-PrDeviceInfo)
-    - [PrDeviceList](#rocvad-PrDeviceList)
-    - [PrDeviceSelector](#rocvad-PrDeviceSelector)
-    - [PrDriverInfo](#rocvad-PrDriverInfo)
-    - [PrEndpointInfo](#rocvad-PrEndpointInfo)
-    - [PrEndpointRequest](#rocvad-PrEndpointRequest)
-    - [PrLocalConfig](#rocvad-PrLocalConfig)
-    - [PrLogEntry](#rocvad-PrLogEntry)
-    - [PrNone](#rocvad-PrNone)
-    - [PrReceiverConfig](#rocvad-PrReceiverConfig)
-    - [PrSenderConfig](#rocvad-PrSenderConfig)
+    - [RvDeviceInfo](#rvpb-RvDeviceInfo)
+    - [RvDeviceList](#rvpb-RvDeviceList)
+    - [RvDeviceSelector](#rvpb-RvDeviceSelector)
+    - [RvDriverInfo](#rvpb-RvDriverInfo)
+    - [RvEndpointInfo](#rvpb-RvEndpointInfo)
+    - [RvEndpointRequest](#rvpb-RvEndpointRequest)
+    - [RvLocalConfig](#rvpb-RvLocalConfig)
+    - [RvLogEntry](#rvpb-RvLogEntry)
+    - [RvNone](#rvpb-RvNone)
+    - [RvReceiverConfig](#rvpb-RvReceiverConfig)
+    - [RvSenderConfig](#rvpb-RvSenderConfig)
   
-    - [PrChannelSet](#rocvad-PrChannelSet)
-    - [PrDeviceType](#rocvad-PrDeviceType)
-    - [PrFecEncoding](#rocvad-PrFecEncoding)
-    - [PrInterface](#rocvad-PrInterface)
-    - [PrLogEntry.Level](#rocvad-PrLogEntry-Level)
-    - [PrPacketEncoding](#rocvad-PrPacketEncoding)
-    - [PrResamplerBackend](#rocvad-PrResamplerBackend)
-    - [PrResamplerProfile](#rocvad-PrResamplerProfile)
+    - [RvChannelLayout](#rvpb-RvChannelLayout)
+    - [RvDeviceType](#rvpb-RvDeviceType)
+    - [RvFecEncoding](#rvpb-RvFecEncoding)
+    - [RvInterface](#rvpb-RvInterface)
+    - [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend)
+    - [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile)
+    - [RvLogEntry.Level](#rvpb-RvLogEntry-Level)
+    - [RvPacketEncoding](#rvpb-RvPacketEncoding)
+    - [RvResamplerBackend](#rvpb-RvResamplerBackend)
+    - [RvResamplerProfile](#rvpb-RvResamplerProfile)
   
-    - [DriverProtocol](#rocvad-DriverProtocol)
+    - [RvDriver](#rvpb-RvDriver)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -38,47 +40,47 @@
 
 
 
-<a name="rocvad-PrDeviceInfo"></a>
+<a name="rvpb-RvDeviceInfo"></a>
 
-### PrDeviceInfo
+### RvDeviceInfo
 Virtual device info.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| type | [PrDeviceType](#rocvad-PrDeviceType) |  | Device type. Each virtual device can be either sender (output device) or receiver (input device). Required field. |
+| type | [RvDeviceType](#rvpb-RvDeviceType) |  | Device type. Each virtual device can be either sender (output device) or receiver (input device). Required field. |
 | index | [uint32](#uint32) | optional | Device index identifier. Index is a small numeric value that is reused for new devices after device deletion. When retrieving device info, always present and non-zero. When creating device, keep unset to automaitcally select free index. When set, should not be zero. |
 | uid | [string](#string) | optional | Device UID identifier. UID is a long string identifier, unique across all audio devices, and very unlikely to be ever reused. When retrieving device info, always present and non-empty. When creating device, keep unset to generate random UID. When set, should not be empty. |
 | name | [string](#string) | optional | Human-readable device name. Device name is shown to the user in UI. When retrieving device info, always present and non-empty. When creating device, keep unset to generate name automatically. When set, should not be empty. |
-| local_config | [PrLocalConfig](#rocvad-PrLocalConfig) |  | Local configuration of device. Parameters of virtual device, as it&#39;s shown to the local apps. |
-| sender_config | [PrSenderConfig](#rocvad-PrSenderConfig) |  | Configuration for sender device. Should be used if device type is PR_DEVICE_TYPE_SENDER. |
-| receiver_config | [PrReceiverConfig](#rocvad-PrReceiverConfig) |  | Configuration for receiver device. Should be used if device type is PR_DEVICE_TYPE_RECEIVER. |
-| local_endpoints | [PrEndpointInfo](#rocvad-PrEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added intially via add_device() or on fly via bind(). |
-| remote_endpoints | [PrEndpointInfo](#rocvad-PrEndpointInfo) | repeated | List of remote endpoints to which device is sending traffic or control requests. Remote endpoints can be added intially via add_device() or on fly via connect(). |
+| local_config | [RvLocalConfig](#rvpb-RvLocalConfig) |  | Local configuration of device. Parameters of virtual device, as it&#39;s shown to the local apps. |
+| sender_config | [RvSenderConfig](#rvpb-RvSenderConfig) |  | Configuration for sender device. Should be used if device type is RV_DEVICE_TYPE_SENDER. |
+| receiver_config | [RvReceiverConfig](#rvpb-RvReceiverConfig) |  | Configuration for receiver device. Should be used if device type is RV_DEVICE_TYPE_RECEIVER. |
+| local_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added intially via add_device() or on fly via bind(). |
+| remote_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of remote endpoints to which device is sending traffic or control requests. Remote endpoints can be added intially via add_device() or on fly via connect(). |
 
 
 
 
 
 
-<a name="rocvad-PrDeviceList"></a>
+<a name="rvpb-RvDeviceList"></a>
 
-### PrDeviceList
+### RvDeviceList
 Virtual device list.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| devices | [PrDeviceInfo](#rocvad-PrDeviceInfo) | repeated |  |
+| devices | [RvDeviceInfo](#rvpb-RvDeviceInfo) | repeated |  |
 
 
 
 
 
 
-<a name="rocvad-PrDeviceSelector"></a>
+<a name="rvpb-RvDeviceSelector"></a>
 
-### PrDeviceSelector
+### RvDeviceSelector
 Virtual device selector.
 
 
@@ -92,9 +94,9 @@ Virtual device selector.
 
 
 
-<a name="rocvad-PrDriverInfo"></a>
+<a name="rvpb-RvDriverInfo"></a>
 
-### PrDriverInfo
+### RvDriverInfo
 Info about driver.
 
 
@@ -108,16 +110,16 @@ Info about driver.
 
 
 
-<a name="rocvad-PrEndpointInfo"></a>
+<a name="rvpb-RvEndpointInfo"></a>
 
-### PrEndpointInfo
+### RvEndpointInfo
 Endpoint description.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | slot | [uint32](#uint32) | optional | Slot to which this endpoint belongs. Slot is a group of related endpoints, like complementary transport and control stream pair connecting two peers. Multiple slots can be used to connect a sender to a few remote addresses, or to bind a receiver to a few different local addresses. When an endpoint is bound or connected, specified slot is created automatically if it does not exist yet. When retrieving endpoint info, always present. When sending endpoint info, keep unset to use default slot (0). |
-| interface | [PrInterface](#rocvad-PrInterface) |  | Interface to which this endpoint attached. Interface defines type of data transfered via endpoint, and list of allowed endpoint protocols (URI schemas). Each slot can have up to one endpoint of every interface type, e.g. one source endpoint and one control endpoint. |
+| interface | [RvInterface](#rvpb-RvInterface) |  | Interface to which this endpoint attached. Interface defines type of data transfered via endpoint, and list of allowed endpoint protocols (URI schemas). Each slot can have up to one endpoint of every interface type, e.g. one source endpoint and one control endpoint. |
 | uri | [string](#string) |  | URI is address associated with endpoint. For local endpoint, URI defines address to which endpoint is bound. For remote endpoint, URI defines address to which endpoint is connected. Allowed URI schemas are defined by endpoint interface. |
 
 
@@ -125,48 +127,48 @@ Endpoint description.
 
 
 
-<a name="rocvad-PrEndpointRequest"></a>
+<a name="rvpb-RvEndpointRequest"></a>
 
-### PrEndpointRequest
+### RvEndpointRequest
 Endpoint bind or connect request.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| device | [PrDeviceSelector](#rocvad-PrDeviceSelector) |  | Virtual device to which request is send. |
-| endpoint | [PrEndpointInfo](#rocvad-PrEndpointInfo) |  | New local or remote endpoint to be bound or connected. |
+| device | [RvDeviceSelector](#rvpb-RvDeviceSelector) |  | Virtual device to which request is send. |
+| endpoint | [RvEndpointInfo](#rvpb-RvEndpointInfo) |  | New local or remote endpoint to be bound or connected. |
 
 
 
 
 
 
-<a name="rocvad-PrLocalConfig"></a>
+<a name="rvpb-RvLocalConfig"></a>
 
-### PrLocalConfig
+### RvLocalConfig
 Local parameters of virtual device.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). When retrieving device info, always present and non-zero. When creating device, keep unset to use default (44100). |
-| channel_set | [PrChannelSet](#rocvad-PrChannelSet) | optional | Virtual device channel set (e.g. stereo). When retrieving device info, always present. When creating device, keep unset to use default (PR_CHANNEL_SET_STEREO). |
+| sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
+| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
 
 
 
 
 
 
-<a name="rocvad-PrLogEntry"></a>
+<a name="rvpb-RvLogEntry"></a>
 
-### PrLogEntry
+### RvLogEntry
 Driver log message.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | time | [google.protobuf.Timestamp](#google-protobuf-Timestamp) |  | Absolute time when message was generated. |
-| level | [PrLogEntry.Level](#rocvad-PrLogEntry-Level) |  | Message level. |
+| level | [RvLogEntry.Level](#rvpb-RvLogEntry-Level) |  | Message level. |
 | text | [string](#string) |  | Formatted message text (without time and level). |
 
 
@@ -174,9 +176,9 @@ Driver log message.
 
 
 
-<a name="rocvad-PrNone"></a>
+<a name="rvpb-RvNone"></a>
 
-### PrNone
+### RvNone
 No data.
 
 
@@ -184,36 +186,50 @@ No data.
 
 
 
-<a name="rocvad-PrReceiverConfig"></a>
+<a name="rvpb-RvReceiverConfig"></a>
 
-### PrReceiverConfig
+### RvReceiverConfig
 Parameters of receiver device.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target session latency. When retrieving device info, always present. When creating device, keep unset to use default (100ms). When set, should not be zero. |
-| resampler_backend | [PrResamplerBackend](#rocvad-PrResamplerBackend) | optional | Resampling engine. When retrieving device info, always present. When creating device, keep unset to use default (PR_RESAMPLER_BACKEND_SPEEX). |
-| resampler_profile | [PrResamplerProfile](#rocvad-PrResamplerProfile) | optional | Resampling quality. When retrieving device info, always present. When creating device, keep unset to use default (PR_RESAMPLER_PROFILE_MEDIUM). |
+| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Keep unset to use default. |
+| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Keep unset to use default. |
+| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Keep unset to use default. |
+| latency_tuner_backend | [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend) | optional | Latency tuning algorithm. Keep unset to use default. |
+| latency_tuner_profile | [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile) | optional | Latency tuning profile. Keep unset to use default. |
+| resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
+| resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
+| no_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for the lack of playback. Keep unset to use default. |
+| choppy_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for choppy playback. Keep unset to use default. |
 
 
 
 
 
 
-<a name="rocvad-PrSenderConfig"></a>
+<a name="rvpb-RvSenderConfig"></a>
 
-### PrSenderConfig
+### RvSenderConfig
 Parameters of sender device.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| packet_encoding | [PrPacketEncoding](#rocvad-PrPacketEncoding) | optional | Encoding for network packets. When retrieving device info, always present. When creating device, keep unset to use default (PR_PACKET_ENCODING_AVP_L16). |
-| packet_length | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Duration of a single packet. When retrieving device info, always present. When creating device, keep unset to use default (7ms). When set, should not be zero. |
-| fec_encoding | [PrFecEncoding](#rocvad-PrFecEncoding) | optional | Forward Error Correction encoding. When retrieving device info, always present. When creating device, keep unset to use default (PR_FEC_ENCODING_RS8M). |
-| fec_block_source_packets | [uint32](#uint32) | optional | Number of source packets per FEC block. When retrieving device info, always present. When creating device, keep unset to use default (20). When set, should not be zero. |
-| fec_block_repair_packets | [uint32](#uint32) | optional | Number of repair packets per FEC block. When retrieving device info, always present. When creating device, keep unset to use default (10). When set, should not be zero. |
+| packet_encoding | [RvPacketEncoding](#rvpb-RvPacketEncoding) | optional | Encoding for network packets. Keep unset to use default. |
+| packet_length | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Duration of a single packet. Keep unset to use default. |
+| packet_interleaving | [bool](#bool) | optional | Enable packet interleaving. Keep unset to use default. |
+| fec_encoding | [RvFecEncoding](#rvpb-RvFecEncoding) | optional | Forward Error Correction encoding. Keep unset to use default. |
+| fec_block_source_packets | [uint32](#uint32) | optional | Number of source packets per FEC block. Keep unset to use default. |
+| fec_block_repair_packets | [uint32](#uint32) | optional | Number of repair packets per FEC block. Keep unset to use default. |
+| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| latency_tuner_backend | [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend) | optional | Latency tuning algorithm. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| latency_tuner_profile | [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile) | optional | Latency tuning profile. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
+| resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
 
 
 
@@ -222,63 +238,90 @@ Parameters of sender device.
  
 
 
-<a name="rocvad-PrChannelSet"></a>
+<a name="rvpb-RvChannelLayout"></a>
 
-### PrChannelSet
-Device channel set.
+### RvChannelLayout
+Device channel layout.
 Defines what channels will be shown to apps that use the device.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_CHANNEL_SET_STEREO | 0 | Two channels: left and right. |
+| RV_CHANNEL_LAYOUT_MONO | 0 | One monochromatic channel. |
+| RV_CHANNEL_LAYOUT_STEREO | 1 | Two channels: left and right. |
 
 
 
-<a name="rocvad-PrDeviceType"></a>
+<a name="rvpb-RvDeviceType"></a>
 
-### PrDeviceType
+### RvDeviceType
 Device type.
 Defines whether device will be input or output.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_DEVICE_TYPE_SENDER | 0 | Output device that sends sound to remote receiver. |
-| PR_DEVICE_TYPE_RECEIVER | 1 | Input device that receives sound from remote sender. |
+| RV_DEVICE_TYPE_SENDER | 0 | Output device that sends sound to remote receiver. |
+| RV_DEVICE_TYPE_RECEIVER | 1 | Input device that receives sound from remote sender. |
 
 
 
-<a name="rocvad-PrFecEncoding"></a>
+<a name="rvpb-RvFecEncoding"></a>
 
-### PrFecEncoding
+### RvFecEncoding
 Forward Error Correction encoding.
 Defines method for repairing lost packets to improve quality on
 unreliable networks.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_FEC_ENCODING_DISABLE | 0 | No FEC encoding. |
-| PR_FEC_ENCODING_RS8M | 1 | Reed-Solomon FEC encoding (RFC 6865) with m=8. Good for small block sizes (below 256 packets). |
-| PR_FEC_ENCODING_LDPC_STAIRCASE | 2 | LDPC-Staircase FEC encoding (RFC 6816). Good for large block sizes (above 1024 packets). |
+| RV_FEC_ENCODING_DISABLE | 0 | No FEC encoding. |
+| RV_FEC_ENCODING_RS8M | 1 | Reed-Solomon FEC encoding (RFC 6865) with m=8. Good for small block sizes (below 256 packets). |
+| RV_FEC_ENCODING_LDPC_STAIRCASE | 2 | LDPC-Staircase FEC encoding (RFC 6816). Good for large block sizes (above 1024 packets). |
 
 
 
-<a name="rocvad-PrInterface"></a>
+<a name="rvpb-RvInterface"></a>
 
-### PrInterface
+### RvInterface
 Endpoint interface type.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_INTERFACE_CONSOLIDATED | 0 | Interface that consolidates all types of streams. |
-| PR_INTERFACE_AUDIO_SOURCE | 1 | Interface for audio stream source data. |
-| PR_INTERFACE_AUDIO_REPAIR | 2 | Interface for audio stream repair data. |
-| PR_INTERFACE_AUDIO_CONTROL | 3 | Interface for audio control messages. |
+| RV_INTERFACE_CONSOLIDATED | 0 | Interface that consolidates all types of streams. |
+| RV_INTERFACE_AUDIO_SOURCE | 1 | Interface for audio stream source data. |
+| RV_INTERFACE_AUDIO_REPAIR | 2 | Interface for audio stream repair data. |
+| RV_INTERFACE_AUDIO_CONTROL | 3 | Interface for audio control messages. |
 
 
 
-<a name="rocvad-PrLogEntry-Level"></a>
+<a name="rvpb-RvLatencyTunerBackend"></a>
 
-### PrLogEntry.Level
+### RvLatencyTunerBackend
+Defines which latency is monitored and adjusted.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| RV_LATENCY_TUNER_BACKEND_DEFAULT | 0 | Select best backend automatically. |
+| RV_LATENCY_TUNER_BACKEND_NIQ | 2 | Latency tuning based on network incoming queue length. |
+
+
+
+<a name="rvpb-RvLatencyTunerProfile"></a>
+
+### RvLatencyTunerProfile
+Defines whether latency tuning is enabled and which algorithm is used.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| RV_LATENCY_TUNER_PROFILE_DEFAULT | 0 | Select best profile automatically. |
+| RV_LATENCY_TUNER_PROFILE_INTACT | 1 | No latency tuning. Expect regular underruns or overruns. |
+| RV_LATENCY_TUNER_PROFILE_RESPONSIVE | 2 | Responsive latency tuning. Clock speed is adjusted quickly and accurately. |
+| RV_LATENCY_TUNER_PROFILE_GRADUAL | 3 | Gradual latency tuning. Clock speed is adjusted slowly and smoothly. |
+
+
+
+<a name="rvpb-RvLogEntry-Level"></a>
+
+### RvLogEntry.Level
 
 
 | Name | Number | Description |
@@ -292,44 +335,47 @@ Endpoint interface type.
 
 
 
-<a name="rocvad-PrPacketEncoding"></a>
+<a name="rvpb-RvPacketEncoding"></a>
 
-### PrPacketEncoding
+### RvPacketEncoding
 Network packet encoding.
 Defines how samples are encoded when sent over network.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_PACKET_ENCODING_AVP_L16 | 0 | PCM signed 16-bit. &#34;L16&#34; encoding from RTP A/V Profile (RFC 3551). Uncompressed samples coded as interleaved 16-bit signed big-endian integers in two&#39;s complement notation. |
+| RV_PACKET_ENCODING_AVP_L16_MONO | 0 | PCM signed 16-bit (mono). &#34;L16&#34; encoding from RTP A/V Profile (RFC 3551). Uncompressed samples coded as interleaved 16-bit signed big-endian integers in two&#39;s complement notation. |
+| RV_PACKET_ENCODING_AVP_L16_STEREO | 1 | PCM signed 16-bit (stereo). &#34;L16&#34; encoding from RTP A/V Profile (RFC 3551). Uncompressed samples coded as interleaved 16-bit signed big-endian integers in two&#39;s complement notation. |
 
 
 
-<a name="rocvad-PrResamplerBackend"></a>
+<a name="rvpb-RvResamplerBackend"></a>
 
-### PrResamplerBackend
+### RvResamplerBackend
 Resampler backend.
 Affects speed and quality.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_RESAMPLER_BACKEND_BUILTIN | 0 | Slow built-in resampler. |
-| PR_RESAMPLER_BACKEND_SPEEX | 1 | Fast good-quality resampler from SpeexDSP. |
+| RV_RESAMPLER_BACKEND_DEFAULT | 0 | Select best backend automatically. |
+| RV_RESAMPLER_BACKEND_BUILTIN | 1 | CPU-demanding good-quality built-in resampler. Works fine with any latency. |
+| RV_RESAMPLER_BACKEND_SPEEX | 2 | Fast good-quality resampler from SpeexDSP. Works fine with higher latency. |
+| RV_RESAMPLER_BACKEND_SPEEXDEC | 3 | Lower quiality fast resampler combining SpeexDSP and decimation. Works fine with any latency. |
 
 
 
-<a name="rocvad-PrResamplerProfile"></a>
+<a name="rvpb-RvResamplerProfile"></a>
 
-### PrResamplerProfile
+### RvResamplerProfile
 Resampler profile.
 Affects speed and quality.
 Each resampler backend treats profile in its own way.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| PR_RESAMPLER_PROFILE_DISABLE | 0 | Do not perform resampling. Clock drift compensation will be disabled in this case. If in doubt, do not disable resampling. |
-| PR_RESAMPLER_PROFILE_HIGH | 1 | High quality, low speed. |
-| PR_RESAMPLER_PROFILE_MEDIUM | 2 | Medium quality, medium speed. |
-| PR_RESAMPLER_PROFILE_LOW | 3 | Low quality, high speed. |
+| RV_RESAMPLER_PROFILE_DEFAULT | 0 | Select default profile. |
+| RV_RESAMPLER_PROFILE_HIGH | 1 | High quality, low speed. |
+| RV_RESAMPLER_PROFILE_MEDIUM | 2 | Medium quality, medium speed. |
+| RV_RESAMPLER_PROFILE_LOW | 3 | Low quality, high speed. |
 
 
  
@@ -337,22 +383,22 @@ Each resampler backend treats profile in its own way.
  
 
 
-<a name="rocvad-DriverProtocol"></a>
+<a name="rvpb-RvDriver"></a>
 
-### DriverProtocol
+### RvDriver
 RPC interface for Roc Virtual Audio Device driver.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| ping | [PrNone](#rocvad-PrNone) | [PrNone](#rocvad-PrNone) | Check driver presence. This command does nothing and just returns success. |
-| driver_info | [PrNone](#rocvad-PrNone) | [PrDriverInfo](#rocvad-PrDriverInfo) | Get driver info. |
-| stream_logs | [PrNone](#rocvad-PrNone) | [PrLogEntry](#rocvad-PrLogEntry) stream | Stream driver logs to client. Logs are duplicated to all clients that want to stream them. Logs are also duplicated to syslog. |
-| get_all_devices | [PrNone](#rocvad-PrNone) | [PrDeviceList](#rocvad-PrDeviceList) | Get info for all virtual devices. |
-| get_device | [PrDeviceSelector](#rocvad-PrDeviceSelector) | [PrDeviceInfo](#rocvad-PrDeviceInfo) | Get info for one virtual device. Device can be selected by index or UID. |
-| add_device | [PrDeviceInfo](#rocvad-PrDeviceInfo) | [PrDeviceInfo](#rocvad-PrDeviceInfo) | Create new virtual device. Returns updated device info with all fields set. |
-| delete_device | [PrDeviceSelector](#rocvad-PrDeviceSelector) | [PrNone](#rocvad-PrNone) | Delete virtual device. Device can be selected by index or UID. |
-| bind | [PrEndpointRequest](#rocvad-PrEndpointRequest) | [PrEndpointInfo](#rocvad-PrEndpointInfo) | Bind device to local endpoint. |
-| connect | [PrEndpointRequest](#rocvad-PrEndpointRequest) | [PrEndpointInfo](#rocvad-PrEndpointInfo) | Connect device to remote endpoint. |
+| ping | [RvNone](#rvpb-RvNone) | [RvNone](#rvpb-RvNone) | Check driver presence. This command does nothing and just returns success. |
+| driver_info | [RvNone](#rvpb-RvNone) | [RvDriverInfo](#rvpb-RvDriverInfo) | Get driver info. |
+| stream_logs | [RvNone](#rvpb-RvNone) | [RvLogEntry](#rvpb-RvLogEntry) stream | Stream driver logs to client. Logs are duplicated to all clients that want to stream them. Logs are also duplicated to syslog. |
+| get_all_devices | [RvNone](#rvpb-RvNone) | [RvDeviceList](#rvpb-RvDeviceList) | Get info for all virtual devices. |
+| get_device | [RvDeviceSelector](#rvpb-RvDeviceSelector) | [RvDeviceInfo](#rvpb-RvDeviceInfo) | Get info for one virtual device. Device can be selected by index or UID. |
+| add_device | [RvDeviceInfo](#rvpb-RvDeviceInfo) | [RvDeviceInfo](#rvpb-RvDeviceInfo) | Create new virtual device. Returns updated device info with all fields set. |
+| delete_device | [RvDeviceSelector](#rvpb-RvDeviceSelector) | [RvNone](#rvpb-RvNone) | Delete virtual device. Device can be selected by index or UID. |
+| bind | [RvEndpointRequest](#rvpb-RvEndpointRequest) | [RvEndpointInfo](#rvpb-RvEndpointInfo) | Bind device to local endpoint. |
+| connect | [RvEndpointRequest](#rvpb-RvEndpointRequest) | [RvEndpointInfo](#rvpb-RvEndpointInfo) | Connect device to remote endpoint. |
 
  
 
