@@ -12,13 +12,13 @@
 
 namespace rocvad {
 
-void print_driver_and_client_info(const PrDriverInfo& driver_info);
+void print_driver_and_client_info(const rvpb::RvDriverInfo& driver_info);
 
-void print_device_info(const PrDeviceInfo& device_info);
-void print_device_list(const PrDeviceList& device_list, bool show_info);
+void print_device_info(const rvpb::RvDeviceInfo& device_info);
+void print_device_list(const rvpb::RvDeviceList& device_list, bool show_info);
 
-void print_endpoint_info(const PrEndpointInfo& endpoint_info);
+void print_endpoint_info(const rvpb::RvEndpointInfo& endpoint_info);
 void print_endpoint_list(
-    const google::protobuf::RepeatedPtrField<PrEndpointInfo>& endpoint_list);
+    const google::protobuf::RepeatedPtrField<rvpb::RvEndpointInfo>& endpoint_list);
 
 } // namespace rocvad

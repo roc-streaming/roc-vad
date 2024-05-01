@@ -25,7 +25,7 @@ Connector::~Connector()
     disconnect();
 }
 
-DriverProtocol::Stub* Connector::connect()
+rvpb::RvDriver::Stub* Connector::connect()
 {
     spdlog::info("trying to connect to driver at {}", driver_socket_);
 
@@ -39,7 +39,7 @@ DriverProtocol::Stub* Connector::connect()
         return {};
     }
 
-    if (!(stub_ = DriverProtocol::NewStub(channel_))) {
+    if (!(stub_ = rvpb::RvDriver::NewStub(channel_))) {
         spdlog::log(quiet_ ? spdlog::level::info : spdlog::level::err,
             "can't connect to driver: failed to create rpc stub");
         disconnect();
@@ -49,8 +49,8 @@ DriverProtocol::Stub* Connector::connect()
     spdlog::debug("sending ping command");
 
     grpc::ClientContext context;
-    PrNone request;
-    PrNone response;
+    rvpb::RvNone request;
+    rvpb::RvNone response;
 
     const grpc::Status status = stub_->ping(&context, request, &response);
 

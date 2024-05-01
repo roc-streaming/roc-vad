@@ -75,21 +75,23 @@ bool CmdDeviceConnect::execute(const Environment& env)
 
     if (source_endpoint_) {
         if (!send_command_(
-                stub, "--source", PR_INTERFACE_AUDIO_SOURCE, *source_endpoint_)) {
+                stub, "--source", rvpb::RV_INTERFACE_AUDIO_SOURCE, *source_endpoint_)) {
             return false;
         }
     }
 
     if (repair_endpoint_) {
         if (!send_command_(
-                stub, "--repair", PR_INTERFACE_AUDIO_REPAIR, *repair_endpoint_)) {
+                stub, "--repair", rvpb::RV_INTERFACE_AUDIO_REPAIR, *repair_endpoint_)) {
             return false;
         }
     }
 
     if (control_endpoint_) {
-        if (!send_command_(
-                stub, "--control", PR_INTERFACE_AUDIO_CONTROL, *control_endpoint_)) {
+        if (!send_command_(stub,
+                "--control",
+                rvpb::RV_INTERFACE_AUDIO_CONTROL,
+                *control_endpoint_)) {
             return false;
         }
     }
@@ -97,16 +99,16 @@ bool CmdDeviceConnect::execute(const Environment& env)
     return true;
 }
 
-bool CmdDeviceConnect::send_command_(DriverProtocol::Stub* stub,
+bool CmdDeviceConnect::send_command_(rvpb::RvDriver::Stub* stub,
     const char* name,
-    PrInterface interface,
+    rvpb::RvInterface interface,
     const std::string& uri)
 {
     spdlog::debug("sending connect command for {} endpoint", name);
 
     grpc::ClientContext context;
-    PrEndpointRequest request;
-    PrEndpointInfo response;
+    rvpb::RvEndpointRequest request;
+    rvpb::RvEndpointInfo response;
 
     if (use_uid_) {
         request.mutable_device()->set_uid(index_or_uid_);

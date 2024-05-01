@@ -53,389 +53,389 @@ struct TableStruct_driver_5fprotocol_2eproto {
 };
 extern const ::google::protobuf::internal::DescriptorTable
     descriptor_table_driver_5fprotocol_2eproto;
-namespace rocvad {
-class PrDeviceInfo;
-struct PrDeviceInfoDefaultTypeInternal;
-extern PrDeviceInfoDefaultTypeInternal _PrDeviceInfo_default_instance_;
-class PrDeviceList;
-struct PrDeviceListDefaultTypeInternal;
-extern PrDeviceListDefaultTypeInternal _PrDeviceList_default_instance_;
-class PrDeviceSelector;
-struct PrDeviceSelectorDefaultTypeInternal;
-extern PrDeviceSelectorDefaultTypeInternal _PrDeviceSelector_default_instance_;
-class PrDriverInfo;
-struct PrDriverInfoDefaultTypeInternal;
-extern PrDriverInfoDefaultTypeInternal _PrDriverInfo_default_instance_;
-class PrEndpointInfo;
-struct PrEndpointInfoDefaultTypeInternal;
-extern PrEndpointInfoDefaultTypeInternal _PrEndpointInfo_default_instance_;
-class PrEndpointRequest;
-struct PrEndpointRequestDefaultTypeInternal;
-extern PrEndpointRequestDefaultTypeInternal _PrEndpointRequest_default_instance_;
-class PrLocalConfig;
-struct PrLocalConfigDefaultTypeInternal;
-extern PrLocalConfigDefaultTypeInternal _PrLocalConfig_default_instance_;
-class PrLogEntry;
-struct PrLogEntryDefaultTypeInternal;
-extern PrLogEntryDefaultTypeInternal _PrLogEntry_default_instance_;
-class PrNone;
-struct PrNoneDefaultTypeInternal;
-extern PrNoneDefaultTypeInternal _PrNone_default_instance_;
-class PrReceiverConfig;
-struct PrReceiverConfigDefaultTypeInternal;
-extern PrReceiverConfigDefaultTypeInternal _PrReceiverConfig_default_instance_;
-class PrSenderConfig;
-struct PrSenderConfigDefaultTypeInternal;
-extern PrSenderConfigDefaultTypeInternal _PrSenderConfig_default_instance_;
-}  // namespace rocvad
+namespace rvpb {
+class RvDeviceInfo;
+struct RvDeviceInfoDefaultTypeInternal;
+extern RvDeviceInfoDefaultTypeInternal _RvDeviceInfo_default_instance_;
+class RvDeviceList;
+struct RvDeviceListDefaultTypeInternal;
+extern RvDeviceListDefaultTypeInternal _RvDeviceList_default_instance_;
+class RvDeviceSelector;
+struct RvDeviceSelectorDefaultTypeInternal;
+extern RvDeviceSelectorDefaultTypeInternal _RvDeviceSelector_default_instance_;
+class RvDriverInfo;
+struct RvDriverInfoDefaultTypeInternal;
+extern RvDriverInfoDefaultTypeInternal _RvDriverInfo_default_instance_;
+class RvEndpointInfo;
+struct RvEndpointInfoDefaultTypeInternal;
+extern RvEndpointInfoDefaultTypeInternal _RvEndpointInfo_default_instance_;
+class RvEndpointRequest;
+struct RvEndpointRequestDefaultTypeInternal;
+extern RvEndpointRequestDefaultTypeInternal _RvEndpointRequest_default_instance_;
+class RvLocalConfig;
+struct RvLocalConfigDefaultTypeInternal;
+extern RvLocalConfigDefaultTypeInternal _RvLocalConfig_default_instance_;
+class RvLogEntry;
+struct RvLogEntryDefaultTypeInternal;
+extern RvLogEntryDefaultTypeInternal _RvLogEntry_default_instance_;
+class RvNone;
+struct RvNoneDefaultTypeInternal;
+extern RvNoneDefaultTypeInternal _RvNone_default_instance_;
+class RvReceiverConfig;
+struct RvReceiverConfigDefaultTypeInternal;
+extern RvReceiverConfigDefaultTypeInternal _RvReceiverConfig_default_instance_;
+class RvSenderConfig;
+struct RvSenderConfigDefaultTypeInternal;
+extern RvSenderConfigDefaultTypeInternal _RvSenderConfig_default_instance_;
+}  // namespace rvpb
 namespace google {
 namespace protobuf {
 }  // namespace protobuf
 }  // namespace google
 
-namespace rocvad {
-enum PrLogEntry_Level : int {
-  PrLogEntry_Level_CRIT = 0,
-  PrLogEntry_Level_ERROR = 1,
-  PrLogEntry_Level_WARN = 2,
-  PrLogEntry_Level_INFO = 3,
-  PrLogEntry_Level_DEBUG = 4,
-  PrLogEntry_Level_TRACE = 5,
-  PrLogEntry_Level_PrLogEntry_Level_INT_MIN_SENTINEL_DO_NOT_USE_ =
+namespace rvpb {
+enum RvLogEntry_Level : int {
+  RvLogEntry_Level_CRIT = 0,
+  RvLogEntry_Level_ERROR = 1,
+  RvLogEntry_Level_WARN = 2,
+  RvLogEntry_Level_INFO = 3,
+  RvLogEntry_Level_DEBUG = 4,
+  RvLogEntry_Level_TRACE = 5,
+  RvLogEntry_Level_RvLogEntry_Level_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrLogEntry_Level_PrLogEntry_Level_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvLogEntry_Level_RvLogEntry_Level_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrLogEntry_Level_IsValid(int value);
-extern const uint32_t PrLogEntry_Level_internal_data_[];
-constexpr PrLogEntry_Level PrLogEntry_Level_Level_MIN = static_cast<PrLogEntry_Level>(0);
-constexpr PrLogEntry_Level PrLogEntry_Level_Level_MAX = static_cast<PrLogEntry_Level>(5);
-constexpr int PrLogEntry_Level_Level_ARRAYSIZE = 5 + 1;
+bool RvLogEntry_Level_IsValid(int value);
+extern const uint32_t RvLogEntry_Level_internal_data_[];
+constexpr RvLogEntry_Level RvLogEntry_Level_Level_MIN = static_cast<RvLogEntry_Level>(0);
+constexpr RvLogEntry_Level RvLogEntry_Level_Level_MAX = static_cast<RvLogEntry_Level>(5);
+constexpr int RvLogEntry_Level_Level_ARRAYSIZE = 5 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrLogEntry_Level_descriptor();
+RvLogEntry_Level_descriptor();
 template <typename T>
-const std::string& PrLogEntry_Level_Name(T value) {
-  static_assert(std::is_same<T, PrLogEntry_Level>::value ||
+const std::string& RvLogEntry_Level_Name(T value) {
+  static_assert(std::is_same<T, RvLogEntry_Level>::value ||
                     std::is_integral<T>::value,
                 "Incorrect type passed to Level_Name().");
-  return PrLogEntry_Level_Name(static_cast<PrLogEntry_Level>(value));
+  return RvLogEntry_Level_Name(static_cast<RvLogEntry_Level>(value));
 }
 template <>
-inline const std::string& PrLogEntry_Level_Name(PrLogEntry_Level value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrLogEntry_Level_descriptor,
+inline const std::string& RvLogEntry_Level_Name(RvLogEntry_Level value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvLogEntry_Level_descriptor,
                                                  0, 5>(
       static_cast<int>(value));
 }
-inline bool PrLogEntry_Level_Parse(absl::string_view name, PrLogEntry_Level* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrLogEntry_Level>(
-      PrLogEntry_Level_descriptor(), name, value);
+inline bool RvLogEntry_Level_Parse(absl::string_view name, RvLogEntry_Level* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvLogEntry_Level>(
+      RvLogEntry_Level_descriptor(), name, value);
 }
-enum PrDeviceType : int {
-  PR_DEVICE_TYPE_SENDER = 0,
-  PR_DEVICE_TYPE_RECEIVER = 1,
-  PrDeviceType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvDeviceType : int {
+  RV_DEVICE_TYPE_SENDER = 0,
+  RV_DEVICE_TYPE_RECEIVER = 1,
+  RvDeviceType_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrDeviceType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvDeviceType_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrDeviceType_IsValid(int value);
-extern const uint32_t PrDeviceType_internal_data_[];
-constexpr PrDeviceType PrDeviceType_MIN = static_cast<PrDeviceType>(0);
-constexpr PrDeviceType PrDeviceType_MAX = static_cast<PrDeviceType>(1);
-constexpr int PrDeviceType_ARRAYSIZE = 1 + 1;
+bool RvDeviceType_IsValid(int value);
+extern const uint32_t RvDeviceType_internal_data_[];
+constexpr RvDeviceType RvDeviceType_MIN = static_cast<RvDeviceType>(0);
+constexpr RvDeviceType RvDeviceType_MAX = static_cast<RvDeviceType>(1);
+constexpr int RvDeviceType_ARRAYSIZE = 1 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrDeviceType_descriptor();
+RvDeviceType_descriptor();
 template <typename T>
-const std::string& PrDeviceType_Name(T value) {
-  static_assert(std::is_same<T, PrDeviceType>::value ||
+const std::string& RvDeviceType_Name(T value) {
+  static_assert(std::is_same<T, RvDeviceType>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrDeviceType_Name().");
-  return PrDeviceType_Name(static_cast<PrDeviceType>(value));
+                "Incorrect type passed to RvDeviceType_Name().");
+  return RvDeviceType_Name(static_cast<RvDeviceType>(value));
 }
 template <>
-inline const std::string& PrDeviceType_Name(PrDeviceType value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrDeviceType_descriptor,
+inline const std::string& RvDeviceType_Name(RvDeviceType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvDeviceType_descriptor,
                                                  0, 1>(
       static_cast<int>(value));
 }
-inline bool PrDeviceType_Parse(absl::string_view name, PrDeviceType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrDeviceType>(
-      PrDeviceType_descriptor(), name, value);
+inline bool RvDeviceType_Parse(absl::string_view name, RvDeviceType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvDeviceType>(
+      RvDeviceType_descriptor(), name, value);
 }
-enum PrInterface : int {
-  PR_INTERFACE_CONSOLIDATED = 0,
-  PR_INTERFACE_AUDIO_SOURCE = 1,
-  PR_INTERFACE_AUDIO_REPAIR = 2,
-  PR_INTERFACE_AUDIO_CONTROL = 3,
-  PrInterface_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvInterface : int {
+  RV_INTERFACE_CONSOLIDATED = 0,
+  RV_INTERFACE_AUDIO_SOURCE = 1,
+  RV_INTERFACE_AUDIO_REPAIR = 2,
+  RV_INTERFACE_AUDIO_CONTROL = 3,
+  RvInterface_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrInterface_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvInterface_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrInterface_IsValid(int value);
-extern const uint32_t PrInterface_internal_data_[];
-constexpr PrInterface PrInterface_MIN = static_cast<PrInterface>(0);
-constexpr PrInterface PrInterface_MAX = static_cast<PrInterface>(3);
-constexpr int PrInterface_ARRAYSIZE = 3 + 1;
+bool RvInterface_IsValid(int value);
+extern const uint32_t RvInterface_internal_data_[];
+constexpr RvInterface RvInterface_MIN = static_cast<RvInterface>(0);
+constexpr RvInterface RvInterface_MAX = static_cast<RvInterface>(3);
+constexpr int RvInterface_ARRAYSIZE = 3 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrInterface_descriptor();
+RvInterface_descriptor();
 template <typename T>
-const std::string& PrInterface_Name(T value) {
-  static_assert(std::is_same<T, PrInterface>::value ||
+const std::string& RvInterface_Name(T value) {
+  static_assert(std::is_same<T, RvInterface>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrInterface_Name().");
-  return PrInterface_Name(static_cast<PrInterface>(value));
+                "Incorrect type passed to RvInterface_Name().");
+  return RvInterface_Name(static_cast<RvInterface>(value));
 }
 template <>
-inline const std::string& PrInterface_Name(PrInterface value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrInterface_descriptor,
+inline const std::string& RvInterface_Name(RvInterface value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvInterface_descriptor,
                                                  0, 3>(
       static_cast<int>(value));
 }
-inline bool PrInterface_Parse(absl::string_view name, PrInterface* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrInterface>(
-      PrInterface_descriptor(), name, value);
+inline bool RvInterface_Parse(absl::string_view name, RvInterface* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvInterface>(
+      RvInterface_descriptor(), name, value);
 }
-enum PrChannelLayout : int {
-  PR_CHANNEL_LAYOUT_MONO = 0,
-  PR_CHANNEL_LAYOUT_STEREO = 1,
-  PrChannelLayout_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvChannelLayout : int {
+  RV_CHANNEL_LAYOUT_MONO = 0,
+  RV_CHANNEL_LAYOUT_STEREO = 1,
+  RvChannelLayout_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrChannelLayout_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvChannelLayout_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrChannelLayout_IsValid(int value);
-extern const uint32_t PrChannelLayout_internal_data_[];
-constexpr PrChannelLayout PrChannelLayout_MIN = static_cast<PrChannelLayout>(0);
-constexpr PrChannelLayout PrChannelLayout_MAX = static_cast<PrChannelLayout>(1);
-constexpr int PrChannelLayout_ARRAYSIZE = 1 + 1;
+bool RvChannelLayout_IsValid(int value);
+extern const uint32_t RvChannelLayout_internal_data_[];
+constexpr RvChannelLayout RvChannelLayout_MIN = static_cast<RvChannelLayout>(0);
+constexpr RvChannelLayout RvChannelLayout_MAX = static_cast<RvChannelLayout>(1);
+constexpr int RvChannelLayout_ARRAYSIZE = 1 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrChannelLayout_descriptor();
+RvChannelLayout_descriptor();
 template <typename T>
-const std::string& PrChannelLayout_Name(T value) {
-  static_assert(std::is_same<T, PrChannelLayout>::value ||
+const std::string& RvChannelLayout_Name(T value) {
+  static_assert(std::is_same<T, RvChannelLayout>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrChannelLayout_Name().");
-  return PrChannelLayout_Name(static_cast<PrChannelLayout>(value));
+                "Incorrect type passed to RvChannelLayout_Name().");
+  return RvChannelLayout_Name(static_cast<RvChannelLayout>(value));
 }
 template <>
-inline const std::string& PrChannelLayout_Name(PrChannelLayout value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrChannelLayout_descriptor,
+inline const std::string& RvChannelLayout_Name(RvChannelLayout value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvChannelLayout_descriptor,
                                                  0, 1>(
       static_cast<int>(value));
 }
-inline bool PrChannelLayout_Parse(absl::string_view name, PrChannelLayout* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrChannelLayout>(
-      PrChannelLayout_descriptor(), name, value);
+inline bool RvChannelLayout_Parse(absl::string_view name, RvChannelLayout* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvChannelLayout>(
+      RvChannelLayout_descriptor(), name, value);
 }
-enum PrPacketEncoding : int {
-  PR_PACKET_ENCODING_AVP_L16_MONO = 0,
-  PR_PACKET_ENCODING_AVP_L16_STEREO = 1,
-  PrPacketEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvPacketEncoding : int {
+  RV_PACKET_ENCODING_AVP_L16_MONO = 0,
+  RV_PACKET_ENCODING_AVP_L16_STEREO = 1,
+  RvPacketEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrPacketEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvPacketEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrPacketEncoding_IsValid(int value);
-extern const uint32_t PrPacketEncoding_internal_data_[];
-constexpr PrPacketEncoding PrPacketEncoding_MIN = static_cast<PrPacketEncoding>(0);
-constexpr PrPacketEncoding PrPacketEncoding_MAX = static_cast<PrPacketEncoding>(1);
-constexpr int PrPacketEncoding_ARRAYSIZE = 1 + 1;
+bool RvPacketEncoding_IsValid(int value);
+extern const uint32_t RvPacketEncoding_internal_data_[];
+constexpr RvPacketEncoding RvPacketEncoding_MIN = static_cast<RvPacketEncoding>(0);
+constexpr RvPacketEncoding RvPacketEncoding_MAX = static_cast<RvPacketEncoding>(1);
+constexpr int RvPacketEncoding_ARRAYSIZE = 1 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrPacketEncoding_descriptor();
+RvPacketEncoding_descriptor();
 template <typename T>
-const std::string& PrPacketEncoding_Name(T value) {
-  static_assert(std::is_same<T, PrPacketEncoding>::value ||
+const std::string& RvPacketEncoding_Name(T value) {
+  static_assert(std::is_same<T, RvPacketEncoding>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrPacketEncoding_Name().");
-  return PrPacketEncoding_Name(static_cast<PrPacketEncoding>(value));
+                "Incorrect type passed to RvPacketEncoding_Name().");
+  return RvPacketEncoding_Name(static_cast<RvPacketEncoding>(value));
 }
 template <>
-inline const std::string& PrPacketEncoding_Name(PrPacketEncoding value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrPacketEncoding_descriptor,
+inline const std::string& RvPacketEncoding_Name(RvPacketEncoding value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvPacketEncoding_descriptor,
                                                  0, 1>(
       static_cast<int>(value));
 }
-inline bool PrPacketEncoding_Parse(absl::string_view name, PrPacketEncoding* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrPacketEncoding>(
-      PrPacketEncoding_descriptor(), name, value);
+inline bool RvPacketEncoding_Parse(absl::string_view name, RvPacketEncoding* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvPacketEncoding>(
+      RvPacketEncoding_descriptor(), name, value);
 }
-enum PrFecEncoding : int {
-  PR_FEC_ENCODING_DISABLE = 0,
-  PR_FEC_ENCODING_RS8M = 1,
-  PR_FEC_ENCODING_LDPC_STAIRCASE = 2,
-  PrFecEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvFecEncoding : int {
+  RV_FEC_ENCODING_DISABLE = 0,
+  RV_FEC_ENCODING_RS8M = 1,
+  RV_FEC_ENCODING_LDPC_STAIRCASE = 2,
+  RvFecEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrFecEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvFecEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrFecEncoding_IsValid(int value);
-extern const uint32_t PrFecEncoding_internal_data_[];
-constexpr PrFecEncoding PrFecEncoding_MIN = static_cast<PrFecEncoding>(0);
-constexpr PrFecEncoding PrFecEncoding_MAX = static_cast<PrFecEncoding>(2);
-constexpr int PrFecEncoding_ARRAYSIZE = 2 + 1;
+bool RvFecEncoding_IsValid(int value);
+extern const uint32_t RvFecEncoding_internal_data_[];
+constexpr RvFecEncoding RvFecEncoding_MIN = static_cast<RvFecEncoding>(0);
+constexpr RvFecEncoding RvFecEncoding_MAX = static_cast<RvFecEncoding>(2);
+constexpr int RvFecEncoding_ARRAYSIZE = 2 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrFecEncoding_descriptor();
+RvFecEncoding_descriptor();
 template <typename T>
-const std::string& PrFecEncoding_Name(T value) {
-  static_assert(std::is_same<T, PrFecEncoding>::value ||
+const std::string& RvFecEncoding_Name(T value) {
+  static_assert(std::is_same<T, RvFecEncoding>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrFecEncoding_Name().");
-  return PrFecEncoding_Name(static_cast<PrFecEncoding>(value));
+                "Incorrect type passed to RvFecEncoding_Name().");
+  return RvFecEncoding_Name(static_cast<RvFecEncoding>(value));
 }
 template <>
-inline const std::string& PrFecEncoding_Name(PrFecEncoding value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrFecEncoding_descriptor,
+inline const std::string& RvFecEncoding_Name(RvFecEncoding value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvFecEncoding_descriptor,
                                                  0, 2>(
       static_cast<int>(value));
 }
-inline bool PrFecEncoding_Parse(absl::string_view name, PrFecEncoding* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrFecEncoding>(
-      PrFecEncoding_descriptor(), name, value);
+inline bool RvFecEncoding_Parse(absl::string_view name, RvFecEncoding* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvFecEncoding>(
+      RvFecEncoding_descriptor(), name, value);
 }
-enum PrLatencyTunerBackend : int {
-  PR_LATENCY_TUNER_BACKEND_DEFAULT = 0,
-  PR_LATENCY_TUNER_BACKEND_NIQ = 2,
-  PrLatencyTunerBackend_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvLatencyTunerBackend : int {
+  RV_LATENCY_TUNER_BACKEND_DEFAULT = 0,
+  RV_LATENCY_TUNER_BACKEND_NIQ = 2,
+  RvLatencyTunerBackend_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrLatencyTunerBackend_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvLatencyTunerBackend_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrLatencyTunerBackend_IsValid(int value);
-extern const uint32_t PrLatencyTunerBackend_internal_data_[];
-constexpr PrLatencyTunerBackend PrLatencyTunerBackend_MIN = static_cast<PrLatencyTunerBackend>(0);
-constexpr PrLatencyTunerBackend PrLatencyTunerBackend_MAX = static_cast<PrLatencyTunerBackend>(2);
-constexpr int PrLatencyTunerBackend_ARRAYSIZE = 2 + 1;
+bool RvLatencyTunerBackend_IsValid(int value);
+extern const uint32_t RvLatencyTunerBackend_internal_data_[];
+constexpr RvLatencyTunerBackend RvLatencyTunerBackend_MIN = static_cast<RvLatencyTunerBackend>(0);
+constexpr RvLatencyTunerBackend RvLatencyTunerBackend_MAX = static_cast<RvLatencyTunerBackend>(2);
+constexpr int RvLatencyTunerBackend_ARRAYSIZE = 2 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrLatencyTunerBackend_descriptor();
+RvLatencyTunerBackend_descriptor();
 template <typename T>
-const std::string& PrLatencyTunerBackend_Name(T value) {
-  static_assert(std::is_same<T, PrLatencyTunerBackend>::value ||
+const std::string& RvLatencyTunerBackend_Name(T value) {
+  static_assert(std::is_same<T, RvLatencyTunerBackend>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrLatencyTunerBackend_Name().");
-  return PrLatencyTunerBackend_Name(static_cast<PrLatencyTunerBackend>(value));
+                "Incorrect type passed to RvLatencyTunerBackend_Name().");
+  return RvLatencyTunerBackend_Name(static_cast<RvLatencyTunerBackend>(value));
 }
 template <>
-inline const std::string& PrLatencyTunerBackend_Name(PrLatencyTunerBackend value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrLatencyTunerBackend_descriptor,
+inline const std::string& RvLatencyTunerBackend_Name(RvLatencyTunerBackend value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvLatencyTunerBackend_descriptor,
                                                  0, 2>(
       static_cast<int>(value));
 }
-inline bool PrLatencyTunerBackend_Parse(absl::string_view name, PrLatencyTunerBackend* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrLatencyTunerBackend>(
-      PrLatencyTunerBackend_descriptor(), name, value);
+inline bool RvLatencyTunerBackend_Parse(absl::string_view name, RvLatencyTunerBackend* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvLatencyTunerBackend>(
+      RvLatencyTunerBackend_descriptor(), name, value);
 }
-enum PrLatencyTunerProfile : int {
-  PR_LATENCY_TUNER_PROFILE_DEFAULT = 0,
-  PR_LATENCY_TUNER_PROFILE_INTACT = 1,
-  PR_LATENCY_TUNER_PROFILE_RESPONSIVE = 2,
-  PR_LATENCY_TUNER_PROFILE_GRADUAL = 3,
-  PrLatencyTunerProfile_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvLatencyTunerProfile : int {
+  RV_LATENCY_TUNER_PROFILE_DEFAULT = 0,
+  RV_LATENCY_TUNER_PROFILE_INTACT = 1,
+  RV_LATENCY_TUNER_PROFILE_RESPONSIVE = 2,
+  RV_LATENCY_TUNER_PROFILE_GRADUAL = 3,
+  RvLatencyTunerProfile_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrLatencyTunerProfile_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvLatencyTunerProfile_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrLatencyTunerProfile_IsValid(int value);
-extern const uint32_t PrLatencyTunerProfile_internal_data_[];
-constexpr PrLatencyTunerProfile PrLatencyTunerProfile_MIN = static_cast<PrLatencyTunerProfile>(0);
-constexpr PrLatencyTunerProfile PrLatencyTunerProfile_MAX = static_cast<PrLatencyTunerProfile>(3);
-constexpr int PrLatencyTunerProfile_ARRAYSIZE = 3 + 1;
+bool RvLatencyTunerProfile_IsValid(int value);
+extern const uint32_t RvLatencyTunerProfile_internal_data_[];
+constexpr RvLatencyTunerProfile RvLatencyTunerProfile_MIN = static_cast<RvLatencyTunerProfile>(0);
+constexpr RvLatencyTunerProfile RvLatencyTunerProfile_MAX = static_cast<RvLatencyTunerProfile>(3);
+constexpr int RvLatencyTunerProfile_ARRAYSIZE = 3 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrLatencyTunerProfile_descriptor();
+RvLatencyTunerProfile_descriptor();
 template <typename T>
-const std::string& PrLatencyTunerProfile_Name(T value) {
-  static_assert(std::is_same<T, PrLatencyTunerProfile>::value ||
+const std::string& RvLatencyTunerProfile_Name(T value) {
+  static_assert(std::is_same<T, RvLatencyTunerProfile>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrLatencyTunerProfile_Name().");
-  return PrLatencyTunerProfile_Name(static_cast<PrLatencyTunerProfile>(value));
+                "Incorrect type passed to RvLatencyTunerProfile_Name().");
+  return RvLatencyTunerProfile_Name(static_cast<RvLatencyTunerProfile>(value));
 }
 template <>
-inline const std::string& PrLatencyTunerProfile_Name(PrLatencyTunerProfile value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrLatencyTunerProfile_descriptor,
+inline const std::string& RvLatencyTunerProfile_Name(RvLatencyTunerProfile value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvLatencyTunerProfile_descriptor,
                                                  0, 3>(
       static_cast<int>(value));
 }
-inline bool PrLatencyTunerProfile_Parse(absl::string_view name, PrLatencyTunerProfile* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrLatencyTunerProfile>(
-      PrLatencyTunerProfile_descriptor(), name, value);
+inline bool RvLatencyTunerProfile_Parse(absl::string_view name, RvLatencyTunerProfile* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvLatencyTunerProfile>(
+      RvLatencyTunerProfile_descriptor(), name, value);
 }
-enum PrResamplerBackend : int {
-  PR_RESAMPLER_BACKEND_DEFAULT = 0,
-  PR_RESAMPLER_BACKEND_BUILTIN = 1,
-  PR_RESAMPLER_BACKEND_SPEEX = 2,
-  PR_RESAMPLER_BACKEND_SPEEXDEC = 3,
-  PrResamplerBackend_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvResamplerBackend : int {
+  RV_RESAMPLER_BACKEND_DEFAULT = 0,
+  RV_RESAMPLER_BACKEND_BUILTIN = 1,
+  RV_RESAMPLER_BACKEND_SPEEX = 2,
+  RV_RESAMPLER_BACKEND_SPEEXDEC = 3,
+  RvResamplerBackend_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrResamplerBackend_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvResamplerBackend_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrResamplerBackend_IsValid(int value);
-extern const uint32_t PrResamplerBackend_internal_data_[];
-constexpr PrResamplerBackend PrResamplerBackend_MIN = static_cast<PrResamplerBackend>(0);
-constexpr PrResamplerBackend PrResamplerBackend_MAX = static_cast<PrResamplerBackend>(3);
-constexpr int PrResamplerBackend_ARRAYSIZE = 3 + 1;
+bool RvResamplerBackend_IsValid(int value);
+extern const uint32_t RvResamplerBackend_internal_data_[];
+constexpr RvResamplerBackend RvResamplerBackend_MIN = static_cast<RvResamplerBackend>(0);
+constexpr RvResamplerBackend RvResamplerBackend_MAX = static_cast<RvResamplerBackend>(3);
+constexpr int RvResamplerBackend_ARRAYSIZE = 3 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrResamplerBackend_descriptor();
+RvResamplerBackend_descriptor();
 template <typename T>
-const std::string& PrResamplerBackend_Name(T value) {
-  static_assert(std::is_same<T, PrResamplerBackend>::value ||
+const std::string& RvResamplerBackend_Name(T value) {
+  static_assert(std::is_same<T, RvResamplerBackend>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrResamplerBackend_Name().");
-  return PrResamplerBackend_Name(static_cast<PrResamplerBackend>(value));
+                "Incorrect type passed to RvResamplerBackend_Name().");
+  return RvResamplerBackend_Name(static_cast<RvResamplerBackend>(value));
 }
 template <>
-inline const std::string& PrResamplerBackend_Name(PrResamplerBackend value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrResamplerBackend_descriptor,
+inline const std::string& RvResamplerBackend_Name(RvResamplerBackend value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvResamplerBackend_descriptor,
                                                  0, 3>(
       static_cast<int>(value));
 }
-inline bool PrResamplerBackend_Parse(absl::string_view name, PrResamplerBackend* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrResamplerBackend>(
-      PrResamplerBackend_descriptor(), name, value);
+inline bool RvResamplerBackend_Parse(absl::string_view name, RvResamplerBackend* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvResamplerBackend>(
+      RvResamplerBackend_descriptor(), name, value);
 }
-enum PrResamplerProfile : int {
-  PR_RESAMPLER_PROFILE_DEFAULT = 0,
-  PR_RESAMPLER_PROFILE_HIGH = 1,
-  PR_RESAMPLER_PROFILE_MEDIUM = 2,
-  PR_RESAMPLER_PROFILE_LOW = 3,
-  PrResamplerProfile_INT_MIN_SENTINEL_DO_NOT_USE_ =
+enum RvResamplerProfile : int {
+  RV_RESAMPLER_PROFILE_DEFAULT = 0,
+  RV_RESAMPLER_PROFILE_HIGH = 1,
+  RV_RESAMPLER_PROFILE_MEDIUM = 2,
+  RV_RESAMPLER_PROFILE_LOW = 3,
+  RvResamplerProfile_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
-  PrResamplerProfile_INT_MAX_SENTINEL_DO_NOT_USE_ =
+  RvResamplerProfile_INT_MAX_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::max(),
 };
 
-bool PrResamplerProfile_IsValid(int value);
-extern const uint32_t PrResamplerProfile_internal_data_[];
-constexpr PrResamplerProfile PrResamplerProfile_MIN = static_cast<PrResamplerProfile>(0);
-constexpr PrResamplerProfile PrResamplerProfile_MAX = static_cast<PrResamplerProfile>(3);
-constexpr int PrResamplerProfile_ARRAYSIZE = 3 + 1;
+bool RvResamplerProfile_IsValid(int value);
+extern const uint32_t RvResamplerProfile_internal_data_[];
+constexpr RvResamplerProfile RvResamplerProfile_MIN = static_cast<RvResamplerProfile>(0);
+constexpr RvResamplerProfile RvResamplerProfile_MAX = static_cast<RvResamplerProfile>(3);
+constexpr int RvResamplerProfile_ARRAYSIZE = 3 + 1;
 const ::google::protobuf::EnumDescriptor*
-PrResamplerProfile_descriptor();
+RvResamplerProfile_descriptor();
 template <typename T>
-const std::string& PrResamplerProfile_Name(T value) {
-  static_assert(std::is_same<T, PrResamplerProfile>::value ||
+const std::string& RvResamplerProfile_Name(T value) {
+  static_assert(std::is_same<T, RvResamplerProfile>::value ||
                     std::is_integral<T>::value,
-                "Incorrect type passed to PrResamplerProfile_Name().");
-  return PrResamplerProfile_Name(static_cast<PrResamplerProfile>(value));
+                "Incorrect type passed to RvResamplerProfile_Name().");
+  return RvResamplerProfile_Name(static_cast<RvResamplerProfile>(value));
 }
 template <>
-inline const std::string& PrResamplerProfile_Name(PrResamplerProfile value) {
-  return ::google::protobuf::internal::NameOfDenseEnum<PrResamplerProfile_descriptor,
+inline const std::string& RvResamplerProfile_Name(RvResamplerProfile value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RvResamplerProfile_descriptor,
                                                  0, 3>(
       static_cast<int>(value));
 }
-inline bool PrResamplerProfile_Parse(absl::string_view name, PrResamplerProfile* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<PrResamplerProfile>(
-      PrResamplerProfile_descriptor(), name, value);
+inline bool RvResamplerProfile_Parse(absl::string_view name, RvResamplerProfile* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RvResamplerProfile>(
+      RvResamplerProfile_descriptor(), name, value);
 }
 
 // ===================================================================
@@ -443,22 +443,22 @@ inline bool PrResamplerProfile_Parse(absl::string_view name, PrResamplerProfile*
 
 // -------------------------------------------------------------------
 
-class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
-/* @@protoc_insertion_point(class_definition:rocvad.PrNone) */ {
+class RvNone final : public ::google::protobuf::internal::ZeroFieldsBase
+/* @@protoc_insertion_point(class_definition:rvpb.RvNone) */ {
  public:
-  inline PrNone() : PrNone(nullptr) {}
+  inline RvNone() : RvNone(nullptr) {}
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrNone(
+  explicit PROTOBUF_CONSTEXPR RvNone(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrNone(const PrNone& from) : PrNone(nullptr, from) {}
-  inline PrNone(PrNone&& from) noexcept
-      : PrNone(nullptr, std::move(from)) {}
-  inline PrNone& operator=(const PrNone& from) {
+  inline RvNone(const RvNone& from) : RvNone(nullptr, from) {}
+  inline RvNone(RvNone&& from) noexcept
+      : RvNone(nullptr, std::move(from)) {}
+  inline RvNone& operator=(const RvNone& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrNone& operator=(PrNone&& from) noexcept {
+  inline RvNone& operator=(RvNone&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -490,16 +490,16 @@ class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrNone& default_instance() {
+  static const RvNone& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrNone* internal_default_instance() {
-    return reinterpret_cast<const PrNone*>(
-        &_PrNone_default_instance_);
+  static inline const RvNone* internal_default_instance() {
+    return reinterpret_cast<const RvNone*>(
+        &_RvNone_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 0;
-  friend void swap(PrNone& a, PrNone& b) { a.Swap(&b); }
-  inline void Swap(PrNone* other) {
+  friend void swap(RvNone& a, RvNone& b) { a.Swap(&b); }
+  inline void Swap(RvNone* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -511,7 +511,7 @@ class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrNone* other) {
+  void UnsafeArenaSwap(RvNone* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -519,28 +519,28 @@ class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
 
   // implements Message ----------------------------------------------
 
-  PrNone* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::internal::ZeroFieldsBase::DefaultConstruct<PrNone>(arena);
+  RvNone* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::internal::ZeroFieldsBase::DefaultConstruct<RvNone>(arena);
   }
   using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const PrNone& from) {
+  inline void CopyFrom(const RvNone& from) {
     ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
   }
   using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const PrNone& from) {
+  void MergeFrom(const RvNone& from) {
     ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
   }
 
   public:
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrNone"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvNone"; }
 
  protected:
-  explicit PrNone(::google::protobuf::Arena* arena);
-  PrNone(::google::protobuf::Arena* arena, const PrNone& from);
-  PrNone(::google::protobuf::Arena* arena, PrNone&& from) noexcept
-      : PrNone(arena) {
+  explicit RvNone(::google::protobuf::Arena* arena);
+  RvNone(::google::protobuf::Arena* arena, const RvNone& from);
+  RvNone(::google::protobuf::Arena* arena, RvNone&& from) noexcept
+      : RvNone(arena) {
     *this = ::std::move(from);
   }
 
@@ -549,7 +549,7 @@ class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
-  // @@protoc_insertion_point(class_scope:rocvad.PrNone)
+  // @@protoc_insertion_point(class_scope:rvpb.RvNone)
  private:
   class _Internal;
   friend class ::google::protobuf::MessageLite;
@@ -571,23 +571,23 @@ class PrNone final : public ::google::protobuf::internal::ZeroFieldsBase
 };
 // -------------------------------------------------------------------
 
-class PrLocalConfig final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrLocalConfig) */ {
+class RvLocalConfig final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvLocalConfig) */ {
  public:
-  inline PrLocalConfig() : PrLocalConfig(nullptr) {}
-  ~PrLocalConfig() override;
+  inline RvLocalConfig() : RvLocalConfig(nullptr) {}
+  ~RvLocalConfig() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrLocalConfig(
+  explicit PROTOBUF_CONSTEXPR RvLocalConfig(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrLocalConfig(const PrLocalConfig& from) : PrLocalConfig(nullptr, from) {}
-  inline PrLocalConfig(PrLocalConfig&& from) noexcept
-      : PrLocalConfig(nullptr, std::move(from)) {}
-  inline PrLocalConfig& operator=(const PrLocalConfig& from) {
+  inline RvLocalConfig(const RvLocalConfig& from) : RvLocalConfig(nullptr, from) {}
+  inline RvLocalConfig(RvLocalConfig&& from) noexcept
+      : RvLocalConfig(nullptr, std::move(from)) {}
+  inline RvLocalConfig& operator=(const RvLocalConfig& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrLocalConfig& operator=(PrLocalConfig&& from) noexcept {
+  inline RvLocalConfig& operator=(RvLocalConfig&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -619,16 +619,16 @@ class PrLocalConfig final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrLocalConfig& default_instance() {
+  static const RvLocalConfig& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrLocalConfig* internal_default_instance() {
-    return reinterpret_cast<const PrLocalConfig*>(
-        &_PrLocalConfig_default_instance_);
+  static inline const RvLocalConfig* internal_default_instance() {
+    return reinterpret_cast<const RvLocalConfig*>(
+        &_RvLocalConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 8;
-  friend void swap(PrLocalConfig& a, PrLocalConfig& b) { a.Swap(&b); }
-  inline void Swap(PrLocalConfig* other) {
+  friend void swap(RvLocalConfig& a, RvLocalConfig& b) { a.Swap(&b); }
+  inline void Swap(RvLocalConfig* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -640,7 +640,7 @@ class PrLocalConfig final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrLocalConfig* other) {
+  void UnsafeArenaSwap(RvLocalConfig* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -648,13 +648,13 @@ class PrLocalConfig final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrLocalConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrLocalConfig>(arena);
+  RvLocalConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvLocalConfig>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrLocalConfig& from);
+  void CopyFrom(const RvLocalConfig& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrLocalConfig& from) { PrLocalConfig::MergeImpl(*this, from); }
+  void MergeFrom(const RvLocalConfig& from) { RvLocalConfig::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -675,16 +675,16 @@ class PrLocalConfig final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrLocalConfig* other);
+  void InternalSwap(RvLocalConfig* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrLocalConfig"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvLocalConfig"; }
 
  protected:
-  explicit PrLocalConfig(::google::protobuf::Arena* arena);
-  PrLocalConfig(::google::protobuf::Arena* arena, const PrLocalConfig& from);
-  PrLocalConfig(::google::protobuf::Arena* arena, PrLocalConfig&& from) noexcept
-      : PrLocalConfig(arena) {
+  explicit RvLocalConfig(::google::protobuf::Arena* arena);
+  RvLocalConfig(::google::protobuf::Arena* arena, const RvLocalConfig& from);
+  RvLocalConfig(::google::protobuf::Arena* arena, RvLocalConfig&& from) noexcept
+      : RvLocalConfig(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -710,18 +710,18 @@ class PrLocalConfig final : public ::google::protobuf::Message
   void _internal_set_sample_rate(::uint32_t value);
 
   public:
-  // optional .rocvad.PrChannelLayout channel_layout = 2;
+  // optional .rvpb.RvChannelLayout channel_layout = 2;
   bool has_channel_layout() const;
   void clear_channel_layout() ;
-  ::rocvad::PrChannelLayout channel_layout() const;
-  void set_channel_layout(::rocvad::PrChannelLayout value);
+  ::rvpb::RvChannelLayout channel_layout() const;
+  void set_channel_layout(::rvpb::RvChannelLayout value);
 
   private:
-  ::rocvad::PrChannelLayout _internal_channel_layout() const;
-  void _internal_set_channel_layout(::rocvad::PrChannelLayout value);
+  ::rvpb::RvChannelLayout _internal_channel_layout() const;
+  void _internal_set_channel_layout(::rvpb::RvChannelLayout value);
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrLocalConfig)
+  // @@protoc_insertion_point(class_scope:rvpb.RvLocalConfig)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -753,23 +753,23 @@ class PrLocalConfig final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrEndpointInfo final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrEndpointInfo) */ {
+class RvEndpointInfo final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvEndpointInfo) */ {
  public:
-  inline PrEndpointInfo() : PrEndpointInfo(nullptr) {}
-  ~PrEndpointInfo() override;
+  inline RvEndpointInfo() : RvEndpointInfo(nullptr) {}
+  ~RvEndpointInfo() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrEndpointInfo(
+  explicit PROTOBUF_CONSTEXPR RvEndpointInfo(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrEndpointInfo(const PrEndpointInfo& from) : PrEndpointInfo(nullptr, from) {}
-  inline PrEndpointInfo(PrEndpointInfo&& from) noexcept
-      : PrEndpointInfo(nullptr, std::move(from)) {}
-  inline PrEndpointInfo& operator=(const PrEndpointInfo& from) {
+  inline RvEndpointInfo(const RvEndpointInfo& from) : RvEndpointInfo(nullptr, from) {}
+  inline RvEndpointInfo(RvEndpointInfo&& from) noexcept
+      : RvEndpointInfo(nullptr, std::move(from)) {}
+  inline RvEndpointInfo& operator=(const RvEndpointInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrEndpointInfo& operator=(PrEndpointInfo&& from) noexcept {
+  inline RvEndpointInfo& operator=(RvEndpointInfo&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -801,16 +801,16 @@ class PrEndpointInfo final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrEndpointInfo& default_instance() {
+  static const RvEndpointInfo& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrEndpointInfo* internal_default_instance() {
-    return reinterpret_cast<const PrEndpointInfo*>(
-        &_PrEndpointInfo_default_instance_);
+  static inline const RvEndpointInfo* internal_default_instance() {
+    return reinterpret_cast<const RvEndpointInfo*>(
+        &_RvEndpointInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 7;
-  friend void swap(PrEndpointInfo& a, PrEndpointInfo& b) { a.Swap(&b); }
-  inline void Swap(PrEndpointInfo* other) {
+  friend void swap(RvEndpointInfo& a, RvEndpointInfo& b) { a.Swap(&b); }
+  inline void Swap(RvEndpointInfo* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -822,7 +822,7 @@ class PrEndpointInfo final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrEndpointInfo* other) {
+  void UnsafeArenaSwap(RvEndpointInfo* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -830,13 +830,13 @@ class PrEndpointInfo final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrEndpointInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrEndpointInfo>(arena);
+  RvEndpointInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvEndpointInfo>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrEndpointInfo& from);
+  void CopyFrom(const RvEndpointInfo& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrEndpointInfo& from) { PrEndpointInfo::MergeImpl(*this, from); }
+  void MergeFrom(const RvEndpointInfo& from) { RvEndpointInfo::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -857,16 +857,16 @@ class PrEndpointInfo final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrEndpointInfo* other);
+  void InternalSwap(RvEndpointInfo* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrEndpointInfo"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvEndpointInfo"; }
 
  protected:
-  explicit PrEndpointInfo(::google::protobuf::Arena* arena);
-  PrEndpointInfo(::google::protobuf::Arena* arena, const PrEndpointInfo& from);
-  PrEndpointInfo(::google::protobuf::Arena* arena, PrEndpointInfo&& from) noexcept
-      : PrEndpointInfo(arena) {
+  explicit RvEndpointInfo(::google::protobuf::Arena* arena);
+  RvEndpointInfo(::google::protobuf::Arena* arena, const RvEndpointInfo& from);
+  RvEndpointInfo(::google::protobuf::Arena* arena, RvEndpointInfo&& from) noexcept
+      : RvEndpointInfo(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -909,23 +909,23 @@ class PrEndpointInfo final : public ::google::protobuf::Message
   void _internal_set_slot(::uint32_t value);
 
   public:
-  // .rocvad.PrInterface interface = 2;
+  // .rvpb.RvInterface interface = 2;
   void clear_interface() ;
-  ::rocvad::PrInterface interface() const;
-  void set_interface(::rocvad::PrInterface value);
+  ::rvpb::RvInterface interface() const;
+  void set_interface(::rvpb::RvInterface value);
 
   private:
-  ::rocvad::PrInterface _internal_interface() const;
-  void _internal_set_interface(::rocvad::PrInterface value);
+  ::rvpb::RvInterface _internal_interface() const;
+  void _internal_set_interface(::rvpb::RvInterface value);
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrEndpointInfo)
+  // @@protoc_insertion_point(class_scope:rvpb.RvEndpointInfo)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       2, 3, 0,
-      33, 2>
+      31, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
   friend class ::google::protobuf::Arena;
@@ -952,23 +952,23 @@ class PrEndpointInfo final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrDriverInfo final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrDriverInfo) */ {
+class RvDriverInfo final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvDriverInfo) */ {
  public:
-  inline PrDriverInfo() : PrDriverInfo(nullptr) {}
-  ~PrDriverInfo() override;
+  inline RvDriverInfo() : RvDriverInfo(nullptr) {}
+  ~RvDriverInfo() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrDriverInfo(
+  explicit PROTOBUF_CONSTEXPR RvDriverInfo(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrDriverInfo(const PrDriverInfo& from) : PrDriverInfo(nullptr, from) {}
-  inline PrDriverInfo(PrDriverInfo&& from) noexcept
-      : PrDriverInfo(nullptr, std::move(from)) {}
-  inline PrDriverInfo& operator=(const PrDriverInfo& from) {
+  inline RvDriverInfo(const RvDriverInfo& from) : RvDriverInfo(nullptr, from) {}
+  inline RvDriverInfo(RvDriverInfo&& from) noexcept
+      : RvDriverInfo(nullptr, std::move(from)) {}
+  inline RvDriverInfo& operator=(const RvDriverInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrDriverInfo& operator=(PrDriverInfo&& from) noexcept {
+  inline RvDriverInfo& operator=(RvDriverInfo&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1000,16 +1000,16 @@ class PrDriverInfo final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrDriverInfo& default_instance() {
+  static const RvDriverInfo& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrDriverInfo* internal_default_instance() {
-    return reinterpret_cast<const PrDriverInfo*>(
-        &_PrDriverInfo_default_instance_);
+  static inline const RvDriverInfo* internal_default_instance() {
+    return reinterpret_cast<const RvDriverInfo*>(
+        &_RvDriverInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 1;
-  friend void swap(PrDriverInfo& a, PrDriverInfo& b) { a.Swap(&b); }
-  inline void Swap(PrDriverInfo* other) {
+  friend void swap(RvDriverInfo& a, RvDriverInfo& b) { a.Swap(&b); }
+  inline void Swap(RvDriverInfo* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -1021,7 +1021,7 @@ class PrDriverInfo final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrDriverInfo* other) {
+  void UnsafeArenaSwap(RvDriverInfo* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1029,13 +1029,13 @@ class PrDriverInfo final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrDriverInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrDriverInfo>(arena);
+  RvDriverInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvDriverInfo>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrDriverInfo& from);
+  void CopyFrom(const RvDriverInfo& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrDriverInfo& from) { PrDriverInfo::MergeImpl(*this, from); }
+  void MergeFrom(const RvDriverInfo& from) { RvDriverInfo::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -1056,16 +1056,16 @@ class PrDriverInfo final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrDriverInfo* other);
+  void InternalSwap(RvDriverInfo* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrDriverInfo"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvDriverInfo"; }
 
  protected:
-  explicit PrDriverInfo(::google::protobuf::Arena* arena);
-  PrDriverInfo(::google::protobuf::Arena* arena, const PrDriverInfo& from);
-  PrDriverInfo(::google::protobuf::Arena* arena, PrDriverInfo&& from) noexcept
-      : PrDriverInfo(arena) {
+  explicit RvDriverInfo(::google::protobuf::Arena* arena);
+  RvDriverInfo(::google::protobuf::Arena* arena, const RvDriverInfo& from);
+  RvDriverInfo(::google::protobuf::Arena* arena, RvDriverInfo&& from) noexcept
+      : RvDriverInfo(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -1112,13 +1112,13 @@ class PrDriverInfo final : public ::google::protobuf::Message
   std::string* _internal_mutable_commit();
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrDriverInfo)
+  // @@protoc_insertion_point(class_scope:rvpb.RvDriverInfo)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       1, 2, 0,
-      41, 2>
+      39, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
   friend class ::google::protobuf::Arena;
@@ -1143,23 +1143,23 @@ class PrDriverInfo final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrDeviceSelector final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrDeviceSelector) */ {
+class RvDeviceSelector final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvDeviceSelector) */ {
  public:
-  inline PrDeviceSelector() : PrDeviceSelector(nullptr) {}
-  ~PrDeviceSelector() override;
+  inline RvDeviceSelector() : RvDeviceSelector(nullptr) {}
+  ~RvDeviceSelector() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrDeviceSelector(
+  explicit PROTOBUF_CONSTEXPR RvDeviceSelector(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrDeviceSelector(const PrDeviceSelector& from) : PrDeviceSelector(nullptr, from) {}
-  inline PrDeviceSelector(PrDeviceSelector&& from) noexcept
-      : PrDeviceSelector(nullptr, std::move(from)) {}
-  inline PrDeviceSelector& operator=(const PrDeviceSelector& from) {
+  inline RvDeviceSelector(const RvDeviceSelector& from) : RvDeviceSelector(nullptr, from) {}
+  inline RvDeviceSelector(RvDeviceSelector&& from) noexcept
+      : RvDeviceSelector(nullptr, std::move(from)) {}
+  inline RvDeviceSelector& operator=(const RvDeviceSelector& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrDeviceSelector& operator=(PrDeviceSelector&& from) noexcept {
+  inline RvDeviceSelector& operator=(RvDeviceSelector&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1191,7 +1191,7 @@ class PrDeviceSelector final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrDeviceSelector& default_instance() {
+  static const RvDeviceSelector& default_instance() {
     return *internal_default_instance();
   }
   enum SelectorCase {
@@ -1199,13 +1199,13 @@ class PrDeviceSelector final : public ::google::protobuf::Message
     kUid = 2,
     SELECTOR_NOT_SET = 0,
   };
-  static inline const PrDeviceSelector* internal_default_instance() {
-    return reinterpret_cast<const PrDeviceSelector*>(
-        &_PrDeviceSelector_default_instance_);
+  static inline const RvDeviceSelector* internal_default_instance() {
+    return reinterpret_cast<const RvDeviceSelector*>(
+        &_RvDeviceSelector_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 3;
-  friend void swap(PrDeviceSelector& a, PrDeviceSelector& b) { a.Swap(&b); }
-  inline void Swap(PrDeviceSelector* other) {
+  friend void swap(RvDeviceSelector& a, RvDeviceSelector& b) { a.Swap(&b); }
+  inline void Swap(RvDeviceSelector* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -1217,7 +1217,7 @@ class PrDeviceSelector final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrDeviceSelector* other) {
+  void UnsafeArenaSwap(RvDeviceSelector* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1225,13 +1225,13 @@ class PrDeviceSelector final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrDeviceSelector* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrDeviceSelector>(arena);
+  RvDeviceSelector* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvDeviceSelector>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrDeviceSelector& from);
+  void CopyFrom(const RvDeviceSelector& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrDeviceSelector& from) { PrDeviceSelector::MergeImpl(*this, from); }
+  void MergeFrom(const RvDeviceSelector& from) { RvDeviceSelector::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -1252,16 +1252,16 @@ class PrDeviceSelector final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrDeviceSelector* other);
+  void InternalSwap(RvDeviceSelector* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrDeviceSelector"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvDeviceSelector"; }
 
  protected:
-  explicit PrDeviceSelector(::google::protobuf::Arena* arena);
-  PrDeviceSelector(::google::protobuf::Arena* arena, const PrDeviceSelector& from);
-  PrDeviceSelector(::google::protobuf::Arena* arena, PrDeviceSelector&& from) noexcept
-      : PrDeviceSelector(arena) {
+  explicit RvDeviceSelector(::google::protobuf::Arena* arena);
+  RvDeviceSelector(::google::protobuf::Arena* arena, const RvDeviceSelector& from);
+  RvDeviceSelector(::google::protobuf::Arena* arena, RvDeviceSelector&& from) noexcept
+      : RvDeviceSelector(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -1306,7 +1306,7 @@ class PrDeviceSelector final : public ::google::protobuf::Message
   public:
   void clear_Selector();
   SelectorCase Selector_case() const;
-  // @@protoc_insertion_point(class_scope:rocvad.PrDeviceSelector)
+  // @@protoc_insertion_point(class_scope:rvpb.RvDeviceSelector)
  private:
   class _Internal;
   void set_has_index();
@@ -1316,7 +1316,7 @@ class PrDeviceSelector final : public ::google::protobuf::Message
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       0, 2, 0,
-      35, 2>
+      33, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
   friend class ::google::protobuf::Arena;
@@ -1346,23 +1346,23 @@ class PrDeviceSelector final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrSenderConfig final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrSenderConfig) */ {
+class RvSenderConfig final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvSenderConfig) */ {
  public:
-  inline PrSenderConfig() : PrSenderConfig(nullptr) {}
-  ~PrSenderConfig() override;
+  inline RvSenderConfig() : RvSenderConfig(nullptr) {}
+  ~RvSenderConfig() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrSenderConfig(
+  explicit PROTOBUF_CONSTEXPR RvSenderConfig(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrSenderConfig(const PrSenderConfig& from) : PrSenderConfig(nullptr, from) {}
-  inline PrSenderConfig(PrSenderConfig&& from) noexcept
-      : PrSenderConfig(nullptr, std::move(from)) {}
-  inline PrSenderConfig& operator=(const PrSenderConfig& from) {
+  inline RvSenderConfig(const RvSenderConfig& from) : RvSenderConfig(nullptr, from) {}
+  inline RvSenderConfig(RvSenderConfig&& from) noexcept
+      : RvSenderConfig(nullptr, std::move(from)) {}
+  inline RvSenderConfig& operator=(const RvSenderConfig& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrSenderConfig& operator=(PrSenderConfig&& from) noexcept {
+  inline RvSenderConfig& operator=(RvSenderConfig&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1394,16 +1394,16 @@ class PrSenderConfig final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrSenderConfig& default_instance() {
+  static const RvSenderConfig& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrSenderConfig* internal_default_instance() {
-    return reinterpret_cast<const PrSenderConfig*>(
-        &_PrSenderConfig_default_instance_);
+  static inline const RvSenderConfig* internal_default_instance() {
+    return reinterpret_cast<const RvSenderConfig*>(
+        &_RvSenderConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 9;
-  friend void swap(PrSenderConfig& a, PrSenderConfig& b) { a.Swap(&b); }
-  inline void Swap(PrSenderConfig* other) {
+  friend void swap(RvSenderConfig& a, RvSenderConfig& b) { a.Swap(&b); }
+  inline void Swap(RvSenderConfig* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -1415,7 +1415,7 @@ class PrSenderConfig final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrSenderConfig* other) {
+  void UnsafeArenaSwap(RvSenderConfig* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1423,13 +1423,13 @@ class PrSenderConfig final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrSenderConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrSenderConfig>(arena);
+  RvSenderConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvSenderConfig>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrSenderConfig& from);
+  void CopyFrom(const RvSenderConfig& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrSenderConfig& from) { PrSenderConfig::MergeImpl(*this, from); }
+  void MergeFrom(const RvSenderConfig& from) { RvSenderConfig::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -1450,16 +1450,16 @@ class PrSenderConfig final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrSenderConfig* other);
+  void InternalSwap(RvSenderConfig* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrSenderConfig"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvSenderConfig"; }
 
  protected:
-  explicit PrSenderConfig(::google::protobuf::Arena* arena);
-  PrSenderConfig(::google::protobuf::Arena* arena, const PrSenderConfig& from);
-  PrSenderConfig(::google::protobuf::Arena* arena, PrSenderConfig&& from) noexcept
-      : PrSenderConfig(arena) {
+  explicit RvSenderConfig(::google::protobuf::Arena* arena);
+  RvSenderConfig(::google::protobuf::Arena* arena, const RvSenderConfig& from);
+  RvSenderConfig(::google::protobuf::Arena* arena, RvSenderConfig&& from) noexcept
+      : RvSenderConfig(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -1545,15 +1545,15 @@ class PrSenderConfig final : public ::google::protobuf::Message
   ::google::protobuf::Duration* _internal_mutable_max_latency();
 
   public:
-  // optional .rocvad.PrPacketEncoding packet_encoding = 1;
+  // optional .rvpb.RvPacketEncoding packet_encoding = 1;
   bool has_packet_encoding() const;
   void clear_packet_encoding() ;
-  ::rocvad::PrPacketEncoding packet_encoding() const;
-  void set_packet_encoding(::rocvad::PrPacketEncoding value);
+  ::rvpb::RvPacketEncoding packet_encoding() const;
+  void set_packet_encoding(::rvpb::RvPacketEncoding value);
 
   private:
-  ::rocvad::PrPacketEncoding _internal_packet_encoding() const;
-  void _internal_set_packet_encoding(::rocvad::PrPacketEncoding value);
+  ::rvpb::RvPacketEncoding _internal_packet_encoding() const;
+  void _internal_set_packet_encoding(::rvpb::RvPacketEncoding value);
 
   public:
   // optional bool packet_interleaving = 3;
@@ -1567,15 +1567,15 @@ class PrSenderConfig final : public ::google::protobuf::Message
   void _internal_set_packet_interleaving(bool value);
 
   public:
-  // optional .rocvad.PrFecEncoding fec_encoding = 4;
+  // optional .rvpb.RvFecEncoding fec_encoding = 4;
   bool has_fec_encoding() const;
   void clear_fec_encoding() ;
-  ::rocvad::PrFecEncoding fec_encoding() const;
-  void set_fec_encoding(::rocvad::PrFecEncoding value);
+  ::rvpb::RvFecEncoding fec_encoding() const;
+  void set_fec_encoding(::rvpb::RvFecEncoding value);
 
   private:
-  ::rocvad::PrFecEncoding _internal_fec_encoding() const;
-  void _internal_set_fec_encoding(::rocvad::PrFecEncoding value);
+  ::rvpb::RvFecEncoding _internal_fec_encoding() const;
+  void _internal_set_fec_encoding(::rvpb::RvFecEncoding value);
 
   public:
   // optional uint32 fec_block_source_packets = 5;
@@ -1600,51 +1600,51 @@ class PrSenderConfig final : public ::google::protobuf::Message
   void _internal_set_fec_block_repair_packets(::uint32_t value);
 
   public:
-  // optional .rocvad.PrLatencyTunerBackend latency_tuner_backend = 10;
+  // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 10;
   bool has_latency_tuner_backend() const;
   void clear_latency_tuner_backend() ;
-  ::rocvad::PrLatencyTunerBackend latency_tuner_backend() const;
-  void set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value);
+  ::rvpb::RvLatencyTunerBackend latency_tuner_backend() const;
+  void set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value);
 
   private:
-  ::rocvad::PrLatencyTunerBackend _internal_latency_tuner_backend() const;
-  void _internal_set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value);
+  ::rvpb::RvLatencyTunerBackend _internal_latency_tuner_backend() const;
+  void _internal_set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value);
 
   public:
-  // optional .rocvad.PrLatencyTunerProfile latency_tuner_profile = 11;
+  // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 11;
   bool has_latency_tuner_profile() const;
   void clear_latency_tuner_profile() ;
-  ::rocvad::PrLatencyTunerProfile latency_tuner_profile() const;
-  void set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value);
+  ::rvpb::RvLatencyTunerProfile latency_tuner_profile() const;
+  void set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value);
 
   private:
-  ::rocvad::PrLatencyTunerProfile _internal_latency_tuner_profile() const;
-  void _internal_set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value);
+  ::rvpb::RvLatencyTunerProfile _internal_latency_tuner_profile() const;
+  void _internal_set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value);
 
   public:
-  // optional .rocvad.PrResamplerBackend resampler_backend = 12;
+  // optional .rvpb.RvResamplerBackend resampler_backend = 12;
   bool has_resampler_backend() const;
   void clear_resampler_backend() ;
-  ::rocvad::PrResamplerBackend resampler_backend() const;
-  void set_resampler_backend(::rocvad::PrResamplerBackend value);
+  ::rvpb::RvResamplerBackend resampler_backend() const;
+  void set_resampler_backend(::rvpb::RvResamplerBackend value);
 
   private:
-  ::rocvad::PrResamplerBackend _internal_resampler_backend() const;
-  void _internal_set_resampler_backend(::rocvad::PrResamplerBackend value);
+  ::rvpb::RvResamplerBackend _internal_resampler_backend() const;
+  void _internal_set_resampler_backend(::rvpb::RvResamplerBackend value);
 
   public:
-  // optional .rocvad.PrResamplerProfile resampler_profile = 13;
+  // optional .rvpb.RvResamplerProfile resampler_profile = 13;
   bool has_resampler_profile() const;
   void clear_resampler_profile() ;
-  ::rocvad::PrResamplerProfile resampler_profile() const;
-  void set_resampler_profile(::rocvad::PrResamplerProfile value);
+  ::rvpb::RvResamplerProfile resampler_profile() const;
+  void set_resampler_profile(::rvpb::RvResamplerProfile value);
 
   private:
-  ::rocvad::PrResamplerProfile _internal_resampler_profile() const;
-  void _internal_set_resampler_profile(::rocvad::PrResamplerProfile value);
+  ::rvpb::RvResamplerProfile _internal_resampler_profile() const;
+  void _internal_set_resampler_profile(::rvpb::RvResamplerProfile value);
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrSenderConfig)
+  // @@protoc_insertion_point(class_scope:rvpb.RvSenderConfig)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -1687,23 +1687,23 @@ class PrSenderConfig final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrReceiverConfig final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrReceiverConfig) */ {
+class RvReceiverConfig final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvReceiverConfig) */ {
  public:
-  inline PrReceiverConfig() : PrReceiverConfig(nullptr) {}
-  ~PrReceiverConfig() override;
+  inline RvReceiverConfig() : RvReceiverConfig(nullptr) {}
+  ~RvReceiverConfig() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrReceiverConfig(
+  explicit PROTOBUF_CONSTEXPR RvReceiverConfig(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrReceiverConfig(const PrReceiverConfig& from) : PrReceiverConfig(nullptr, from) {}
-  inline PrReceiverConfig(PrReceiverConfig&& from) noexcept
-      : PrReceiverConfig(nullptr, std::move(from)) {}
-  inline PrReceiverConfig& operator=(const PrReceiverConfig& from) {
+  inline RvReceiverConfig(const RvReceiverConfig& from) : RvReceiverConfig(nullptr, from) {}
+  inline RvReceiverConfig(RvReceiverConfig&& from) noexcept
+      : RvReceiverConfig(nullptr, std::move(from)) {}
+  inline RvReceiverConfig& operator=(const RvReceiverConfig& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrReceiverConfig& operator=(PrReceiverConfig&& from) noexcept {
+  inline RvReceiverConfig& operator=(RvReceiverConfig&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1735,16 +1735,16 @@ class PrReceiverConfig final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrReceiverConfig& default_instance() {
+  static const RvReceiverConfig& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrReceiverConfig* internal_default_instance() {
-    return reinterpret_cast<const PrReceiverConfig*>(
-        &_PrReceiverConfig_default_instance_);
+  static inline const RvReceiverConfig* internal_default_instance() {
+    return reinterpret_cast<const RvReceiverConfig*>(
+        &_RvReceiverConfig_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 10;
-  friend void swap(PrReceiverConfig& a, PrReceiverConfig& b) { a.Swap(&b); }
-  inline void Swap(PrReceiverConfig* other) {
+  friend void swap(RvReceiverConfig& a, RvReceiverConfig& b) { a.Swap(&b); }
+  inline void Swap(RvReceiverConfig* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -1756,7 +1756,7 @@ class PrReceiverConfig final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrReceiverConfig* other) {
+  void UnsafeArenaSwap(RvReceiverConfig* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1764,13 +1764,13 @@ class PrReceiverConfig final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrReceiverConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrReceiverConfig>(arena);
+  RvReceiverConfig* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvReceiverConfig>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrReceiverConfig& from);
+  void CopyFrom(const RvReceiverConfig& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrReceiverConfig& from) { PrReceiverConfig::MergeImpl(*this, from); }
+  void MergeFrom(const RvReceiverConfig& from) { RvReceiverConfig::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -1791,16 +1791,16 @@ class PrReceiverConfig final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrReceiverConfig* other);
+  void InternalSwap(RvReceiverConfig* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrReceiverConfig"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvReceiverConfig"; }
 
  protected:
-  explicit PrReceiverConfig(::google::protobuf::Arena* arena);
-  PrReceiverConfig(::google::protobuf::Arena* arena, const PrReceiverConfig& from);
-  PrReceiverConfig(::google::protobuf::Arena* arena, PrReceiverConfig&& from) noexcept
-      : PrReceiverConfig(arena) {
+  explicit RvReceiverConfig(::google::protobuf::Arena* arena);
+  RvReceiverConfig(::google::protobuf::Arena* arena, const RvReceiverConfig& from);
+  RvReceiverConfig(::google::protobuf::Arena* arena, RvReceiverConfig&& from) noexcept
+      : RvReceiverConfig(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -1897,51 +1897,51 @@ class PrReceiverConfig final : public ::google::protobuf::Message
   ::google::protobuf::Duration* _internal_mutable_choppy_playback_timeout();
 
   public:
-  // optional .rocvad.PrLatencyTunerBackend latency_tuner_backend = 4;
+  // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 4;
   bool has_latency_tuner_backend() const;
   void clear_latency_tuner_backend() ;
-  ::rocvad::PrLatencyTunerBackend latency_tuner_backend() const;
-  void set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value);
+  ::rvpb::RvLatencyTunerBackend latency_tuner_backend() const;
+  void set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value);
 
   private:
-  ::rocvad::PrLatencyTunerBackend _internal_latency_tuner_backend() const;
-  void _internal_set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value);
+  ::rvpb::RvLatencyTunerBackend _internal_latency_tuner_backend() const;
+  void _internal_set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value);
 
   public:
-  // optional .rocvad.PrLatencyTunerProfile latency_tuner_profile = 5;
+  // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 5;
   bool has_latency_tuner_profile() const;
   void clear_latency_tuner_profile() ;
-  ::rocvad::PrLatencyTunerProfile latency_tuner_profile() const;
-  void set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value);
+  ::rvpb::RvLatencyTunerProfile latency_tuner_profile() const;
+  void set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value);
 
   private:
-  ::rocvad::PrLatencyTunerProfile _internal_latency_tuner_profile() const;
-  void _internal_set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value);
+  ::rvpb::RvLatencyTunerProfile _internal_latency_tuner_profile() const;
+  void _internal_set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value);
 
   public:
-  // optional .rocvad.PrResamplerBackend resampler_backend = 6;
+  // optional .rvpb.RvResamplerBackend resampler_backend = 6;
   bool has_resampler_backend() const;
   void clear_resampler_backend() ;
-  ::rocvad::PrResamplerBackend resampler_backend() const;
-  void set_resampler_backend(::rocvad::PrResamplerBackend value);
+  ::rvpb::RvResamplerBackend resampler_backend() const;
+  void set_resampler_backend(::rvpb::RvResamplerBackend value);
 
   private:
-  ::rocvad::PrResamplerBackend _internal_resampler_backend() const;
-  void _internal_set_resampler_backend(::rocvad::PrResamplerBackend value);
+  ::rvpb::RvResamplerBackend _internal_resampler_backend() const;
+  void _internal_set_resampler_backend(::rvpb::RvResamplerBackend value);
 
   public:
-  // optional .rocvad.PrResamplerProfile resampler_profile = 7;
+  // optional .rvpb.RvResamplerProfile resampler_profile = 7;
   bool has_resampler_profile() const;
   void clear_resampler_profile() ;
-  ::rocvad::PrResamplerProfile resampler_profile() const;
-  void set_resampler_profile(::rocvad::PrResamplerProfile value);
+  ::rvpb::RvResamplerProfile resampler_profile() const;
+  void set_resampler_profile(::rvpb::RvResamplerProfile value);
 
   private:
-  ::rocvad::PrResamplerProfile _internal_resampler_profile() const;
-  void _internal_set_resampler_profile(::rocvad::PrResamplerProfile value);
+  ::rvpb::RvResamplerProfile _internal_resampler_profile() const;
+  void _internal_set_resampler_profile(::rvpb::RvResamplerProfile value);
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrReceiverConfig)
+  // @@protoc_insertion_point(class_scope:rvpb.RvReceiverConfig)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -1980,23 +1980,23 @@ class PrReceiverConfig final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrLogEntry final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrLogEntry) */ {
+class RvLogEntry final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvLogEntry) */ {
  public:
-  inline PrLogEntry() : PrLogEntry(nullptr) {}
-  ~PrLogEntry() override;
+  inline RvLogEntry() : RvLogEntry(nullptr) {}
+  ~RvLogEntry() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrLogEntry(
+  explicit PROTOBUF_CONSTEXPR RvLogEntry(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrLogEntry(const PrLogEntry& from) : PrLogEntry(nullptr, from) {}
-  inline PrLogEntry(PrLogEntry&& from) noexcept
-      : PrLogEntry(nullptr, std::move(from)) {}
-  inline PrLogEntry& operator=(const PrLogEntry& from) {
+  inline RvLogEntry(const RvLogEntry& from) : RvLogEntry(nullptr, from) {}
+  inline RvLogEntry(RvLogEntry&& from) noexcept
+      : RvLogEntry(nullptr, std::move(from)) {}
+  inline RvLogEntry& operator=(const RvLogEntry& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrLogEntry& operator=(PrLogEntry&& from) noexcept {
+  inline RvLogEntry& operator=(RvLogEntry&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2028,16 +2028,16 @@ class PrLogEntry final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrLogEntry& default_instance() {
+  static const RvLogEntry& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrLogEntry* internal_default_instance() {
-    return reinterpret_cast<const PrLogEntry*>(
-        &_PrLogEntry_default_instance_);
+  static inline const RvLogEntry* internal_default_instance() {
+    return reinterpret_cast<const RvLogEntry*>(
+        &_RvLogEntry_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 2;
-  friend void swap(PrLogEntry& a, PrLogEntry& b) { a.Swap(&b); }
-  inline void Swap(PrLogEntry* other) {
+  friend void swap(RvLogEntry& a, RvLogEntry& b) { a.Swap(&b); }
+  inline void Swap(RvLogEntry* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -2049,7 +2049,7 @@ class PrLogEntry final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrLogEntry* other) {
+  void UnsafeArenaSwap(RvLogEntry* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2057,13 +2057,13 @@ class PrLogEntry final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrLogEntry* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrLogEntry>(arena);
+  RvLogEntry* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvLogEntry>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrLogEntry& from);
+  void CopyFrom(const RvLogEntry& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrLogEntry& from) { PrLogEntry::MergeImpl(*this, from); }
+  void MergeFrom(const RvLogEntry& from) { RvLogEntry::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -2084,16 +2084,16 @@ class PrLogEntry final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrLogEntry* other);
+  void InternalSwap(RvLogEntry* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrLogEntry"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvLogEntry"; }
 
  protected:
-  explicit PrLogEntry(::google::protobuf::Arena* arena);
-  PrLogEntry(::google::protobuf::Arena* arena, const PrLogEntry& from);
-  PrLogEntry(::google::protobuf::Arena* arena, PrLogEntry&& from) noexcept
-      : PrLogEntry(arena) {
+  explicit RvLogEntry(::google::protobuf::Arena* arena);
+  RvLogEntry(::google::protobuf::Arena* arena, const RvLogEntry& from);
+  RvLogEntry(::google::protobuf::Arena* arena, RvLogEntry&& from) noexcept
+      : RvLogEntry(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -2102,28 +2102,28 @@ class PrLogEntry final : public ::google::protobuf::Message
  public:
   ::google::protobuf::Metadata GetMetadata() const final;
   // nested types ----------------------------------------------------
-  using Level = PrLogEntry_Level;
-  static constexpr Level CRIT = PrLogEntry_Level_CRIT;
-  static constexpr Level ERROR = PrLogEntry_Level_ERROR;
-  static constexpr Level WARN = PrLogEntry_Level_WARN;
-  static constexpr Level INFO = PrLogEntry_Level_INFO;
-  static constexpr Level DEBUG = PrLogEntry_Level_DEBUG;
-  static constexpr Level TRACE = PrLogEntry_Level_TRACE;
+  using Level = RvLogEntry_Level;
+  static constexpr Level CRIT = RvLogEntry_Level_CRIT;
+  static constexpr Level ERROR = RvLogEntry_Level_ERROR;
+  static constexpr Level WARN = RvLogEntry_Level_WARN;
+  static constexpr Level INFO = RvLogEntry_Level_INFO;
+  static constexpr Level DEBUG = RvLogEntry_Level_DEBUG;
+  static constexpr Level TRACE = RvLogEntry_Level_TRACE;
   static inline bool Level_IsValid(int value) {
-    return PrLogEntry_Level_IsValid(value);
+    return RvLogEntry_Level_IsValid(value);
   }
-  static constexpr Level Level_MIN = PrLogEntry_Level_Level_MIN;
-  static constexpr Level Level_MAX = PrLogEntry_Level_Level_MAX;
-  static constexpr int Level_ARRAYSIZE = PrLogEntry_Level_Level_ARRAYSIZE;
+  static constexpr Level Level_MIN = RvLogEntry_Level_Level_MIN;
+  static constexpr Level Level_MAX = RvLogEntry_Level_Level_MAX;
+  static constexpr int Level_ARRAYSIZE = RvLogEntry_Level_Level_ARRAYSIZE;
   static inline const ::google::protobuf::EnumDescriptor* Level_descriptor() {
-    return PrLogEntry_Level_descriptor();
+    return RvLogEntry_Level_descriptor();
   }
   template <typename T>
   static inline const std::string& Level_Name(T value) {
-    return PrLogEntry_Level_Name(value);
+    return RvLogEntry_Level_Name(value);
   }
   static inline bool Level_Parse(absl::string_view name, Level* value) {
-    return PrLogEntry_Level_Parse(name, value);
+    return RvLogEntry_Level_Parse(name, value);
   }
 
   // accessors -------------------------------------------------------
@@ -2163,23 +2163,23 @@ class PrLogEntry final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_time();
 
   public:
-  // .rocvad.PrLogEntry.Level level = 2;
+  // .rvpb.RvLogEntry.Level level = 2;
   void clear_level() ;
-  ::rocvad::PrLogEntry_Level level() const;
-  void set_level(::rocvad::PrLogEntry_Level value);
+  ::rvpb::RvLogEntry_Level level() const;
+  void set_level(::rvpb::RvLogEntry_Level value);
 
   private:
-  ::rocvad::PrLogEntry_Level _internal_level() const;
-  void _internal_set_level(::rocvad::PrLogEntry_Level value);
+  ::rvpb::RvLogEntry_Level _internal_level() const;
+  void _internal_set_level(::rvpb::RvLogEntry_Level value);
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrLogEntry)
+  // @@protoc_insertion_point(class_scope:rvpb.RvLogEntry)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       2, 3, 1,
-      30, 2>
+      28, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
   friend class ::google::protobuf::Arena;
@@ -2206,23 +2206,23 @@ class PrLogEntry final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrEndpointRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrEndpointRequest) */ {
+class RvEndpointRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvEndpointRequest) */ {
  public:
-  inline PrEndpointRequest() : PrEndpointRequest(nullptr) {}
-  ~PrEndpointRequest() override;
+  inline RvEndpointRequest() : RvEndpointRequest(nullptr) {}
+  ~RvEndpointRequest() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrEndpointRequest(
+  explicit PROTOBUF_CONSTEXPR RvEndpointRequest(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrEndpointRequest(const PrEndpointRequest& from) : PrEndpointRequest(nullptr, from) {}
-  inline PrEndpointRequest(PrEndpointRequest&& from) noexcept
-      : PrEndpointRequest(nullptr, std::move(from)) {}
-  inline PrEndpointRequest& operator=(const PrEndpointRequest& from) {
+  inline RvEndpointRequest(const RvEndpointRequest& from) : RvEndpointRequest(nullptr, from) {}
+  inline RvEndpointRequest(RvEndpointRequest&& from) noexcept
+      : RvEndpointRequest(nullptr, std::move(from)) {}
+  inline RvEndpointRequest& operator=(const RvEndpointRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrEndpointRequest& operator=(PrEndpointRequest&& from) noexcept {
+  inline RvEndpointRequest& operator=(RvEndpointRequest&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2254,16 +2254,16 @@ class PrEndpointRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrEndpointRequest& default_instance() {
+  static const RvEndpointRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrEndpointRequest* internal_default_instance() {
-    return reinterpret_cast<const PrEndpointRequest*>(
-        &_PrEndpointRequest_default_instance_);
+  static inline const RvEndpointRequest* internal_default_instance() {
+    return reinterpret_cast<const RvEndpointRequest*>(
+        &_RvEndpointRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 6;
-  friend void swap(PrEndpointRequest& a, PrEndpointRequest& b) { a.Swap(&b); }
-  inline void Swap(PrEndpointRequest* other) {
+  friend void swap(RvEndpointRequest& a, RvEndpointRequest& b) { a.Swap(&b); }
+  inline void Swap(RvEndpointRequest* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -2275,7 +2275,7 @@ class PrEndpointRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrEndpointRequest* other) {
+  void UnsafeArenaSwap(RvEndpointRequest* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2283,13 +2283,13 @@ class PrEndpointRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrEndpointRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrEndpointRequest>(arena);
+  RvEndpointRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvEndpointRequest>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrEndpointRequest& from);
+  void CopyFrom(const RvEndpointRequest& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrEndpointRequest& from) { PrEndpointRequest::MergeImpl(*this, from); }
+  void MergeFrom(const RvEndpointRequest& from) { RvEndpointRequest::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -2310,16 +2310,16 @@ class PrEndpointRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrEndpointRequest* other);
+  void InternalSwap(RvEndpointRequest* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrEndpointRequest"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvEndpointRequest"; }
 
  protected:
-  explicit PrEndpointRequest(::google::protobuf::Arena* arena);
-  PrEndpointRequest(::google::protobuf::Arena* arena, const PrEndpointRequest& from);
-  PrEndpointRequest(::google::protobuf::Arena* arena, PrEndpointRequest&& from) noexcept
-      : PrEndpointRequest(arena) {
+  explicit RvEndpointRequest(::google::protobuf::Arena* arena);
+  RvEndpointRequest(::google::protobuf::Arena* arena, const RvEndpointRequest& from);
+  RvEndpointRequest(::google::protobuf::Arena* arena, RvEndpointRequest&& from) noexcept
+      : RvEndpointRequest(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -2334,37 +2334,37 @@ class PrEndpointRequest final : public ::google::protobuf::Message
     kDeviceFieldNumber = 1,
     kEndpointFieldNumber = 2,
   };
-  // .rocvad.PrDeviceSelector device = 1;
+  // .rvpb.RvDeviceSelector device = 1;
   bool has_device() const;
   void clear_device() ;
-  const ::rocvad::PrDeviceSelector& device() const;
-  PROTOBUF_NODISCARD ::rocvad::PrDeviceSelector* release_device();
-  ::rocvad::PrDeviceSelector* mutable_device();
-  void set_allocated_device(::rocvad::PrDeviceSelector* value);
-  void unsafe_arena_set_allocated_device(::rocvad::PrDeviceSelector* value);
-  ::rocvad::PrDeviceSelector* unsafe_arena_release_device();
+  const ::rvpb::RvDeviceSelector& device() const;
+  PROTOBUF_NODISCARD ::rvpb::RvDeviceSelector* release_device();
+  ::rvpb::RvDeviceSelector* mutable_device();
+  void set_allocated_device(::rvpb::RvDeviceSelector* value);
+  void unsafe_arena_set_allocated_device(::rvpb::RvDeviceSelector* value);
+  ::rvpb::RvDeviceSelector* unsafe_arena_release_device();
 
   private:
-  const ::rocvad::PrDeviceSelector& _internal_device() const;
-  ::rocvad::PrDeviceSelector* _internal_mutable_device();
+  const ::rvpb::RvDeviceSelector& _internal_device() const;
+  ::rvpb::RvDeviceSelector* _internal_mutable_device();
 
   public:
-  // .rocvad.PrEndpointInfo endpoint = 2;
+  // .rvpb.RvEndpointInfo endpoint = 2;
   bool has_endpoint() const;
   void clear_endpoint() ;
-  const ::rocvad::PrEndpointInfo& endpoint() const;
-  PROTOBUF_NODISCARD ::rocvad::PrEndpointInfo* release_endpoint();
-  ::rocvad::PrEndpointInfo* mutable_endpoint();
-  void set_allocated_endpoint(::rocvad::PrEndpointInfo* value);
-  void unsafe_arena_set_allocated_endpoint(::rocvad::PrEndpointInfo* value);
-  ::rocvad::PrEndpointInfo* unsafe_arena_release_endpoint();
+  const ::rvpb::RvEndpointInfo& endpoint() const;
+  PROTOBUF_NODISCARD ::rvpb::RvEndpointInfo* release_endpoint();
+  ::rvpb::RvEndpointInfo* mutable_endpoint();
+  void set_allocated_endpoint(::rvpb::RvEndpointInfo* value);
+  void unsafe_arena_set_allocated_endpoint(::rvpb::RvEndpointInfo* value);
+  ::rvpb::RvEndpointInfo* unsafe_arena_release_endpoint();
 
   private:
-  const ::rocvad::PrEndpointInfo& _internal_endpoint() const;
-  ::rocvad::PrEndpointInfo* _internal_mutable_endpoint();
+  const ::rvpb::RvEndpointInfo& _internal_endpoint() const;
+  ::rvpb::RvEndpointInfo* _internal_mutable_endpoint();
 
   public:
-  // @@protoc_insertion_point(class_scope:rocvad.PrEndpointRequest)
+  // @@protoc_insertion_point(class_scope:rvpb.RvEndpointRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -2387,8 +2387,8 @@ class PrEndpointRequest final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena, const Impl_& from);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
-    ::rocvad::PrDeviceSelector* device_;
-    ::rocvad::PrEndpointInfo* endpoint_;
+    ::rvpb::RvDeviceSelector* device_;
+    ::rvpb::RvEndpointInfo* endpoint_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2396,23 +2396,23 @@ class PrEndpointRequest final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrDeviceInfo final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrDeviceInfo) */ {
+class RvDeviceInfo final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvDeviceInfo) */ {
  public:
-  inline PrDeviceInfo() : PrDeviceInfo(nullptr) {}
-  ~PrDeviceInfo() override;
+  inline RvDeviceInfo() : RvDeviceInfo(nullptr) {}
+  ~RvDeviceInfo() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrDeviceInfo(
+  explicit PROTOBUF_CONSTEXPR RvDeviceInfo(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrDeviceInfo(const PrDeviceInfo& from) : PrDeviceInfo(nullptr, from) {}
-  inline PrDeviceInfo(PrDeviceInfo&& from) noexcept
-      : PrDeviceInfo(nullptr, std::move(from)) {}
-  inline PrDeviceInfo& operator=(const PrDeviceInfo& from) {
+  inline RvDeviceInfo(const RvDeviceInfo& from) : RvDeviceInfo(nullptr, from) {}
+  inline RvDeviceInfo(RvDeviceInfo&& from) noexcept
+      : RvDeviceInfo(nullptr, std::move(from)) {}
+  inline RvDeviceInfo& operator=(const RvDeviceInfo& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrDeviceInfo& operator=(PrDeviceInfo&& from) noexcept {
+  inline RvDeviceInfo& operator=(RvDeviceInfo&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2444,7 +2444,7 @@ class PrDeviceInfo final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrDeviceInfo& default_instance() {
+  static const RvDeviceInfo& default_instance() {
     return *internal_default_instance();
   }
   enum NetworkConfigCase {
@@ -2452,13 +2452,13 @@ class PrDeviceInfo final : public ::google::protobuf::Message
     kReceiverConfig = 7,
     NETWORKCONFIG_NOT_SET = 0,
   };
-  static inline const PrDeviceInfo* internal_default_instance() {
-    return reinterpret_cast<const PrDeviceInfo*>(
-        &_PrDeviceInfo_default_instance_);
+  static inline const RvDeviceInfo* internal_default_instance() {
+    return reinterpret_cast<const RvDeviceInfo*>(
+        &_RvDeviceInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 4;
-  friend void swap(PrDeviceInfo& a, PrDeviceInfo& b) { a.Swap(&b); }
-  inline void Swap(PrDeviceInfo* other) {
+  friend void swap(RvDeviceInfo& a, RvDeviceInfo& b) { a.Swap(&b); }
+  inline void Swap(RvDeviceInfo* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -2470,7 +2470,7 @@ class PrDeviceInfo final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrDeviceInfo* other) {
+  void UnsafeArenaSwap(RvDeviceInfo* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2478,13 +2478,13 @@ class PrDeviceInfo final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrDeviceInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrDeviceInfo>(arena);
+  RvDeviceInfo* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvDeviceInfo>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrDeviceInfo& from);
+  void CopyFrom(const RvDeviceInfo& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrDeviceInfo& from) { PrDeviceInfo::MergeImpl(*this, from); }
+  void MergeFrom(const RvDeviceInfo& from) { RvDeviceInfo::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -2505,16 +2505,16 @@ class PrDeviceInfo final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrDeviceInfo* other);
+  void InternalSwap(RvDeviceInfo* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrDeviceInfo"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvDeviceInfo"; }
 
  protected:
-  explicit PrDeviceInfo(::google::protobuf::Arena* arena);
-  PrDeviceInfo(::google::protobuf::Arena* arena, const PrDeviceInfo& from);
-  PrDeviceInfo(::google::protobuf::Arena* arena, PrDeviceInfo&& from) noexcept
-      : PrDeviceInfo(arena) {
+  explicit RvDeviceInfo(::google::protobuf::Arena* arena);
+  RvDeviceInfo(::google::protobuf::Arena* arena, const RvDeviceInfo& from);
+  RvDeviceInfo(::google::protobuf::Arena* arena, RvDeviceInfo&& from) noexcept
+      : RvDeviceInfo(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -2536,40 +2536,40 @@ class PrDeviceInfo final : public ::google::protobuf::Message
     kSenderConfigFieldNumber = 6,
     kReceiverConfigFieldNumber = 7,
   };
-  // repeated .rocvad.PrEndpointInfo local_endpoints = 8;
+  // repeated .rvpb.RvEndpointInfo local_endpoints = 8;
   int local_endpoints_size() const;
   private:
   int _internal_local_endpoints_size() const;
 
   public:
   void clear_local_endpoints() ;
-  ::rocvad::PrEndpointInfo* mutable_local_endpoints(int index);
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* mutable_local_endpoints();
+  ::rvpb::RvEndpointInfo* mutable_local_endpoints(int index);
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* mutable_local_endpoints();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& _internal_local_endpoints() const;
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* _internal_mutable_local_endpoints();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& _internal_local_endpoints() const;
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* _internal_mutable_local_endpoints();
   public:
-  const ::rocvad::PrEndpointInfo& local_endpoints(int index) const;
-  ::rocvad::PrEndpointInfo* add_local_endpoints();
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& local_endpoints() const;
-  // repeated .rocvad.PrEndpointInfo remote_endpoints = 9;
+  const ::rvpb::RvEndpointInfo& local_endpoints(int index) const;
+  ::rvpb::RvEndpointInfo* add_local_endpoints();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& local_endpoints() const;
+  // repeated .rvpb.RvEndpointInfo remote_endpoints = 9;
   int remote_endpoints_size() const;
   private:
   int _internal_remote_endpoints_size() const;
 
   public:
   void clear_remote_endpoints() ;
-  ::rocvad::PrEndpointInfo* mutable_remote_endpoints(int index);
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* mutable_remote_endpoints();
+  ::rvpb::RvEndpointInfo* mutable_remote_endpoints(int index);
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* mutable_remote_endpoints();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& _internal_remote_endpoints() const;
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* _internal_mutable_remote_endpoints();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& _internal_remote_endpoints() const;
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* _internal_mutable_remote_endpoints();
   public:
-  const ::rocvad::PrEndpointInfo& remote_endpoints(int index) const;
-  ::rocvad::PrEndpointInfo* add_remote_endpoints();
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& remote_endpoints() const;
+  const ::rvpb::RvEndpointInfo& remote_endpoints(int index) const;
+  ::rvpb::RvEndpointInfo* add_remote_endpoints();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& remote_endpoints() const;
   // optional string uid = 3;
   bool has_uid() const;
   void clear_uid() ;
@@ -2604,29 +2604,29 @@ class PrDeviceInfo final : public ::google::protobuf::Message
   std::string* _internal_mutable_name();
 
   public:
-  // .rocvad.PrLocalConfig local_config = 5;
+  // .rvpb.RvLocalConfig local_config = 5;
   bool has_local_config() const;
   void clear_local_config() ;
-  const ::rocvad::PrLocalConfig& local_config() const;
-  PROTOBUF_NODISCARD ::rocvad::PrLocalConfig* release_local_config();
-  ::rocvad::PrLocalConfig* mutable_local_config();
-  void set_allocated_local_config(::rocvad::PrLocalConfig* value);
-  void unsafe_arena_set_allocated_local_config(::rocvad::PrLocalConfig* value);
-  ::rocvad::PrLocalConfig* unsafe_arena_release_local_config();
+  const ::rvpb::RvLocalConfig& local_config() const;
+  PROTOBUF_NODISCARD ::rvpb::RvLocalConfig* release_local_config();
+  ::rvpb::RvLocalConfig* mutable_local_config();
+  void set_allocated_local_config(::rvpb::RvLocalConfig* value);
+  void unsafe_arena_set_allocated_local_config(::rvpb::RvLocalConfig* value);
+  ::rvpb::RvLocalConfig* unsafe_arena_release_local_config();
 
   private:
-  const ::rocvad::PrLocalConfig& _internal_local_config() const;
-  ::rocvad::PrLocalConfig* _internal_mutable_local_config();
+  const ::rvpb::RvLocalConfig& _internal_local_config() const;
+  ::rvpb::RvLocalConfig* _internal_mutable_local_config();
 
   public:
-  // .rocvad.PrDeviceType type = 1;
+  // .rvpb.RvDeviceType type = 1;
   void clear_type() ;
-  ::rocvad::PrDeviceType type() const;
-  void set_type(::rocvad::PrDeviceType value);
+  ::rvpb::RvDeviceType type() const;
+  void set_type(::rvpb::RvDeviceType value);
 
   private:
-  ::rocvad::PrDeviceType _internal_type() const;
-  void _internal_set_type(::rocvad::PrDeviceType value);
+  ::rvpb::RvDeviceType _internal_type() const;
+  void _internal_set_type(::rvpb::RvDeviceType value);
 
   public:
   // optional uint32 index = 2;
@@ -2640,47 +2640,47 @@ class PrDeviceInfo final : public ::google::protobuf::Message
   void _internal_set_index(::uint32_t value);
 
   public:
-  // .rocvad.PrSenderConfig sender_config = 6;
+  // .rvpb.RvSenderConfig sender_config = 6;
   bool has_sender_config() const;
   private:
   bool _internal_has_sender_config() const;
 
   public:
   void clear_sender_config() ;
-  const ::rocvad::PrSenderConfig& sender_config() const;
-  PROTOBUF_NODISCARD ::rocvad::PrSenderConfig* release_sender_config();
-  ::rocvad::PrSenderConfig* mutable_sender_config();
-  void set_allocated_sender_config(::rocvad::PrSenderConfig* value);
-  void unsafe_arena_set_allocated_sender_config(::rocvad::PrSenderConfig* value);
-  ::rocvad::PrSenderConfig* unsafe_arena_release_sender_config();
+  const ::rvpb::RvSenderConfig& sender_config() const;
+  PROTOBUF_NODISCARD ::rvpb::RvSenderConfig* release_sender_config();
+  ::rvpb::RvSenderConfig* mutable_sender_config();
+  void set_allocated_sender_config(::rvpb::RvSenderConfig* value);
+  void unsafe_arena_set_allocated_sender_config(::rvpb::RvSenderConfig* value);
+  ::rvpb::RvSenderConfig* unsafe_arena_release_sender_config();
 
   private:
-  const ::rocvad::PrSenderConfig& _internal_sender_config() const;
-  ::rocvad::PrSenderConfig* _internal_mutable_sender_config();
+  const ::rvpb::RvSenderConfig& _internal_sender_config() const;
+  ::rvpb::RvSenderConfig* _internal_mutable_sender_config();
 
   public:
-  // .rocvad.PrReceiverConfig receiver_config = 7;
+  // .rvpb.RvReceiverConfig receiver_config = 7;
   bool has_receiver_config() const;
   private:
   bool _internal_has_receiver_config() const;
 
   public:
   void clear_receiver_config() ;
-  const ::rocvad::PrReceiverConfig& receiver_config() const;
-  PROTOBUF_NODISCARD ::rocvad::PrReceiverConfig* release_receiver_config();
-  ::rocvad::PrReceiverConfig* mutable_receiver_config();
-  void set_allocated_receiver_config(::rocvad::PrReceiverConfig* value);
-  void unsafe_arena_set_allocated_receiver_config(::rocvad::PrReceiverConfig* value);
-  ::rocvad::PrReceiverConfig* unsafe_arena_release_receiver_config();
+  const ::rvpb::RvReceiverConfig& receiver_config() const;
+  PROTOBUF_NODISCARD ::rvpb::RvReceiverConfig* release_receiver_config();
+  ::rvpb::RvReceiverConfig* mutable_receiver_config();
+  void set_allocated_receiver_config(::rvpb::RvReceiverConfig* value);
+  void unsafe_arena_set_allocated_receiver_config(::rvpb::RvReceiverConfig* value);
+  ::rvpb::RvReceiverConfig* unsafe_arena_release_receiver_config();
 
   private:
-  const ::rocvad::PrReceiverConfig& _internal_receiver_config() const;
-  ::rocvad::PrReceiverConfig* _internal_mutable_receiver_config();
+  const ::rvpb::RvReceiverConfig& _internal_receiver_config() const;
+  ::rvpb::RvReceiverConfig* _internal_mutable_receiver_config();
 
   public:
   void clear_NetworkConfig();
   NetworkConfigCase NetworkConfig_case() const;
-  // @@protoc_insertion_point(class_scope:rocvad.PrDeviceInfo)
+  // @@protoc_insertion_point(class_scope:rvpb.RvDeviceInfo)
  private:
   class _Internal;
   void set_has_sender_config();
@@ -2690,7 +2690,7 @@ class PrDeviceInfo final : public ::google::protobuf::Message
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       4, 9, 5,
-      43, 2>
+      41, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
   friend class ::google::protobuf::Arena;
@@ -2707,18 +2707,18 @@ class PrDeviceInfo final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena, const Impl_& from);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::RepeatedPtrField< ::rocvad::PrEndpointInfo > local_endpoints_;
-    ::google::protobuf::RepeatedPtrField< ::rocvad::PrEndpointInfo > remote_endpoints_;
+    ::google::protobuf::RepeatedPtrField< ::rvpb::RvEndpointInfo > local_endpoints_;
+    ::google::protobuf::RepeatedPtrField< ::rvpb::RvEndpointInfo > remote_endpoints_;
     ::google::protobuf::internal::ArenaStringPtr uid_;
     ::google::protobuf::internal::ArenaStringPtr name_;
-    ::rocvad::PrLocalConfig* local_config_;
+    ::rvpb::RvLocalConfig* local_config_;
     int type_;
     ::uint32_t index_;
     union NetworkConfigUnion {
       constexpr NetworkConfigUnion() : _constinit_{} {}
       ::google::protobuf::internal::ConstantInitialized _constinit_;
-      ::rocvad::PrSenderConfig* sender_config_;
-      ::rocvad::PrReceiverConfig* receiver_config_;
+      ::rvpb::RvSenderConfig* sender_config_;
+      ::rvpb::RvReceiverConfig* receiver_config_;
     } NetworkConfig_;
     ::uint32_t _oneof_case_[1];
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -2728,23 +2728,23 @@ class PrDeviceInfo final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
-class PrDeviceList final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:rocvad.PrDeviceList) */ {
+class RvDeviceList final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvDeviceList) */ {
  public:
-  inline PrDeviceList() : PrDeviceList(nullptr) {}
-  ~PrDeviceList() override;
+  inline RvDeviceList() : RvDeviceList(nullptr) {}
+  ~RvDeviceList() override;
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR PrDeviceList(
+  explicit PROTOBUF_CONSTEXPR RvDeviceList(
       ::google::protobuf::internal::ConstantInitialized);
 
-  inline PrDeviceList(const PrDeviceList& from) : PrDeviceList(nullptr, from) {}
-  inline PrDeviceList(PrDeviceList&& from) noexcept
-      : PrDeviceList(nullptr, std::move(from)) {}
-  inline PrDeviceList& operator=(const PrDeviceList& from) {
+  inline RvDeviceList(const RvDeviceList& from) : RvDeviceList(nullptr, from) {}
+  inline RvDeviceList(RvDeviceList&& from) noexcept
+      : RvDeviceList(nullptr, std::move(from)) {}
+  inline RvDeviceList& operator=(const RvDeviceList& from) {
     CopyFrom(from);
     return *this;
   }
-  inline PrDeviceList& operator=(PrDeviceList&& from) noexcept {
+  inline RvDeviceList& operator=(RvDeviceList&& from) noexcept {
     if (this == &from) return *this;
     if (GetArena() == from.GetArena()
 #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -2776,16 +2776,16 @@ class PrDeviceList final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const PrDeviceList& default_instance() {
+  static const RvDeviceList& default_instance() {
     return *internal_default_instance();
   }
-  static inline const PrDeviceList* internal_default_instance() {
-    return reinterpret_cast<const PrDeviceList*>(
-        &_PrDeviceList_default_instance_);
+  static inline const RvDeviceList* internal_default_instance() {
+    return reinterpret_cast<const RvDeviceList*>(
+        &_RvDeviceList_default_instance_);
   }
   static constexpr int kIndexInFileMessages = 5;
-  friend void swap(PrDeviceList& a, PrDeviceList& b) { a.Swap(&b); }
-  inline void Swap(PrDeviceList* other) {
+  friend void swap(RvDeviceList& a, RvDeviceList& b) { a.Swap(&b); }
+  inline void Swap(RvDeviceList* other) {
     if (other == this) return;
 #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetArena() != nullptr && GetArena() == other->GetArena()) {
@@ -2797,7 +2797,7 @@ class PrDeviceList final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(PrDeviceList* other) {
+  void UnsafeArenaSwap(RvDeviceList* other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2805,13 +2805,13 @@ class PrDeviceList final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  PrDeviceList* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return ::google::protobuf::Message::DefaultConstruct<PrDeviceList>(arena);
+  RvDeviceList* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvDeviceList>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const PrDeviceList& from);
+  void CopyFrom(const RvDeviceList& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const PrDeviceList& from) { PrDeviceList::MergeImpl(*this, from); }
+  void MergeFrom(const RvDeviceList& from) { RvDeviceList::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(
@@ -2832,16 +2832,16 @@ class PrDeviceList final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* arena);
   void SharedDtor();
-  void InternalSwap(PrDeviceList* other);
+  void InternalSwap(RvDeviceList* other);
  private:
   friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() { return "rocvad.PrDeviceList"; }
+  static ::absl::string_view FullMessageName() { return "rvpb.RvDeviceList"; }
 
  protected:
-  explicit PrDeviceList(::google::protobuf::Arena* arena);
-  PrDeviceList(::google::protobuf::Arena* arena, const PrDeviceList& from);
-  PrDeviceList(::google::protobuf::Arena* arena, PrDeviceList&& from) noexcept
-      : PrDeviceList(arena) {
+  explicit RvDeviceList(::google::protobuf::Arena* arena);
+  RvDeviceList(::google::protobuf::Arena* arena, const RvDeviceList& from);
+  RvDeviceList(::google::protobuf::Arena* arena, RvDeviceList&& from) noexcept
+      : RvDeviceList(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::MessageLite::ClassData* GetClassData()
@@ -2855,24 +2855,24 @@ class PrDeviceList final : public ::google::protobuf::Message
   enum : int {
     kDevicesFieldNumber = 1,
   };
-  // repeated .rocvad.PrDeviceInfo devices = 1;
+  // repeated .rvpb.RvDeviceInfo devices = 1;
   int devices_size() const;
   private:
   int _internal_devices_size() const;
 
   public:
   void clear_devices() ;
-  ::rocvad::PrDeviceInfo* mutable_devices(int index);
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>* mutable_devices();
+  ::rvpb::RvDeviceInfo* mutable_devices(int index);
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>* mutable_devices();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>& _internal_devices() const;
-  ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>* _internal_mutable_devices();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>& _internal_devices() const;
+  ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>* _internal_mutable_devices();
   public:
-  const ::rocvad::PrDeviceInfo& devices(int index) const;
-  ::rocvad::PrDeviceInfo* add_devices();
-  const ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>& devices() const;
-  // @@protoc_insertion_point(class_scope:rocvad.PrDeviceList)
+  const ::rvpb::RvDeviceInfo& devices(int index) const;
+  ::rvpb::RvDeviceInfo* add_devices();
+  const ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>& devices() const;
+  // @@protoc_insertion_point(class_scope:rvpb.RvDeviceList)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -2893,7 +2893,7 @@ class PrDeviceList final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena);
     inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
                           ::google::protobuf::Arena* arena, const Impl_& from);
-    ::google::protobuf::RepeatedPtrField< ::rocvad::PrDeviceInfo > devices_;
+    ::google::protobuf::RepeatedPtrField< ::rvpb::RvDeviceInfo > devices_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2915,52 +2915,52 @@ class PrDeviceList final : public ::google::protobuf::Message
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 
-// PrNone
+// RvNone
 
 // -------------------------------------------------------------------
 
-// PrDriverInfo
+// RvDriverInfo
 
 // string version = 1;
-inline void PrDriverInfo::clear_version() {
+inline void RvDriverInfo::clear_version() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.version_.ClearToEmpty();
 }
-inline const std::string& PrDriverInfo::version() const
+inline const std::string& RvDriverInfo::version() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDriverInfo.version)
+  // @@protoc_insertion_point(field_get:rvpb.RvDriverInfo.version)
   return _internal_version();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrDriverInfo::set_version(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvDriverInfo::set_version(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.version_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrDriverInfo.version)
+  // @@protoc_insertion_point(field_set:rvpb.RvDriverInfo.version)
 }
-inline std::string* PrDriverInfo::mutable_version() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvDriverInfo::mutable_version() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDriverInfo.version)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDriverInfo.version)
   return _s;
 }
-inline const std::string& PrDriverInfo::_internal_version() const {
+inline const std::string& RvDriverInfo::_internal_version() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.version_.Get();
 }
-inline void PrDriverInfo::_internal_set_version(const std::string& value) {
+inline void RvDriverInfo::_internal_set_version(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.version_.Set(value, GetArena());
 }
-inline std::string* PrDriverInfo::_internal_mutable_version() {
+inline std::string* RvDriverInfo::_internal_mutable_version() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _impl_.version_.Mutable( GetArena());
 }
-inline std::string* PrDriverInfo::release_version() {
+inline std::string* RvDriverInfo::release_version() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDriverInfo.version)
+  // @@protoc_insertion_point(field_release:rvpb.RvDriverInfo.version)
   return _impl_.version_.Release();
 }
-inline void PrDriverInfo::set_allocated_version(std::string* value) {
+inline void RvDriverInfo::set_allocated_version(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.version_.SetAllocated(value, GetArena());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -2968,49 +2968,49 @@ inline void PrDriverInfo::set_allocated_version(std::string* value) {
           _impl_.version_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDriverInfo.version)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDriverInfo.version)
 }
 
 // string commit = 2;
-inline void PrDriverInfo::clear_commit() {
+inline void RvDriverInfo::clear_commit() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.commit_.ClearToEmpty();
 }
-inline const std::string& PrDriverInfo::commit() const
+inline const std::string& RvDriverInfo::commit() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDriverInfo.commit)
+  // @@protoc_insertion_point(field_get:rvpb.RvDriverInfo.commit)
   return _internal_commit();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrDriverInfo::set_commit(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvDriverInfo::set_commit(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.commit_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrDriverInfo.commit)
+  // @@protoc_insertion_point(field_set:rvpb.RvDriverInfo.commit)
 }
-inline std::string* PrDriverInfo::mutable_commit() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvDriverInfo::mutable_commit() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_commit();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDriverInfo.commit)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDriverInfo.commit)
   return _s;
 }
-inline const std::string& PrDriverInfo::_internal_commit() const {
+inline const std::string& RvDriverInfo::_internal_commit() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.commit_.Get();
 }
-inline void PrDriverInfo::_internal_set_commit(const std::string& value) {
+inline void RvDriverInfo::_internal_set_commit(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.commit_.Set(value, GetArena());
 }
-inline std::string* PrDriverInfo::_internal_mutable_commit() {
+inline std::string* RvDriverInfo::_internal_mutable_commit() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _impl_.commit_.Mutable( GetArena());
 }
-inline std::string* PrDriverInfo::release_commit() {
+inline std::string* RvDriverInfo::release_commit() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDriverInfo.commit)
+  // @@protoc_insertion_point(field_release:rvpb.RvDriverInfo.commit)
   return _impl_.commit_.Release();
 }
-inline void PrDriverInfo::set_allocated_commit(std::string* value) {
+inline void RvDriverInfo::set_allocated_commit(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.commit_.SetAllocated(value, GetArena());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -3018,29 +3018,29 @@ inline void PrDriverInfo::set_allocated_commit(std::string* value) {
           _impl_.commit_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDriverInfo.commit)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDriverInfo.commit)
 }
 
 // -------------------------------------------------------------------
 
-// PrLogEntry
+// RvLogEntry
 
 // .google.protobuf.Timestamp time = 1;
-inline bool PrLogEntry::has_time() const {
+inline bool RvLogEntry::has_time() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.time_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Timestamp& PrLogEntry::_internal_time() const {
+inline const ::google::protobuf::Timestamp& RvLogEntry::_internal_time() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Timestamp* p = _impl_.time_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
-inline const ::google::protobuf::Timestamp& PrLogEntry::time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrLogEntry.time)
+inline const ::google::protobuf::Timestamp& RvLogEntry::time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvLogEntry.time)
   return _internal_time();
 }
-inline void PrLogEntry::unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value) {
+inline void RvLogEntry::unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
@@ -3051,9 +3051,9 @@ inline void PrLogEntry::unsafe_arena_set_allocated_time(::google::protobuf::Time
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrLogEntry.time)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvLogEntry.time)
 }
-inline ::google::protobuf::Timestamp* PrLogEntry::release_time() {
+inline ::google::protobuf::Timestamp* RvLogEntry::release_time() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
@@ -3072,16 +3072,16 @@ inline ::google::protobuf::Timestamp* PrLogEntry::release_time() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Timestamp* PrLogEntry::unsafe_arena_release_time() {
+inline ::google::protobuf::Timestamp* RvLogEntry::unsafe_arena_release_time() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrLogEntry.time)
+  // @@protoc_insertion_point(field_release:rvpb.RvLogEntry.time)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
   ::google::protobuf::Timestamp* temp = _impl_.time_;
   _impl_.time_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Timestamp* PrLogEntry::_internal_mutable_time() {
+inline ::google::protobuf::Timestamp* RvLogEntry::_internal_mutable_time() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.time_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
@@ -3089,13 +3089,13 @@ inline ::google::protobuf::Timestamp* PrLogEntry::_internal_mutable_time() {
   }
   return _impl_.time_;
 }
-inline ::google::protobuf::Timestamp* PrLogEntry::mutable_time() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Timestamp* RvLogEntry::mutable_time() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_time();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrLogEntry.time)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvLogEntry.time)
   return _msg;
 }
-inline void PrLogEntry::set_allocated_time(::google::protobuf::Timestamp* value) {
+inline void RvLogEntry::set_allocated_time(::google::protobuf::Timestamp* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -3113,71 +3113,71 @@ inline void PrLogEntry::set_allocated_time(::google::protobuf::Timestamp* value)
   }
 
   _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrLogEntry.time)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvLogEntry.time)
 }
 
-// .rocvad.PrLogEntry.Level level = 2;
-inline void PrLogEntry::clear_level() {
+// .rvpb.RvLogEntry.Level level = 2;
+inline void RvLogEntry::clear_level() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.level_ = 0;
 }
-inline ::rocvad::PrLogEntry_Level PrLogEntry::level() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrLogEntry.level)
+inline ::rvpb::RvLogEntry_Level RvLogEntry::level() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvLogEntry.level)
   return _internal_level();
 }
-inline void PrLogEntry::set_level(::rocvad::PrLogEntry_Level value) {
+inline void RvLogEntry::set_level(::rvpb::RvLogEntry_Level value) {
   _internal_set_level(value);
-  // @@protoc_insertion_point(field_set:rocvad.PrLogEntry.level)
+  // @@protoc_insertion_point(field_set:rvpb.RvLogEntry.level)
 }
-inline ::rocvad::PrLogEntry_Level PrLogEntry::_internal_level() const {
+inline ::rvpb::RvLogEntry_Level RvLogEntry::_internal_level() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrLogEntry_Level>(_impl_.level_);
+  return static_cast<::rvpb::RvLogEntry_Level>(_impl_.level_);
 }
-inline void PrLogEntry::_internal_set_level(::rocvad::PrLogEntry_Level value) {
+inline void RvLogEntry::_internal_set_level(::rvpb::RvLogEntry_Level value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.level_ = value;
 }
 
 // string text = 3;
-inline void PrLogEntry::clear_text() {
+inline void RvLogEntry::clear_text() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.text_.ClearToEmpty();
 }
-inline const std::string& PrLogEntry::text() const
+inline const std::string& RvLogEntry::text() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrLogEntry.text)
+  // @@protoc_insertion_point(field_get:rvpb.RvLogEntry.text)
   return _internal_text();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrLogEntry::set_text(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvLogEntry::set_text(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.text_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrLogEntry.text)
+  // @@protoc_insertion_point(field_set:rvpb.RvLogEntry.text)
 }
-inline std::string* PrLogEntry::mutable_text() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvLogEntry::mutable_text() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_text();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrLogEntry.text)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvLogEntry.text)
   return _s;
 }
-inline const std::string& PrLogEntry::_internal_text() const {
+inline const std::string& RvLogEntry::_internal_text() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.text_.Get();
 }
-inline void PrLogEntry::_internal_set_text(const std::string& value) {
+inline void RvLogEntry::_internal_set_text(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.text_.Set(value, GetArena());
 }
-inline std::string* PrLogEntry::_internal_mutable_text() {
+inline std::string* RvLogEntry::_internal_mutable_text() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _impl_.text_.Mutable( GetArena());
 }
-inline std::string* PrLogEntry::release_text() {
+inline std::string* RvLogEntry::release_text() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrLogEntry.text)
+  // @@protoc_insertion_point(field_release:rvpb.RvLogEntry.text)
   return _impl_.text_.Release();
 }
-inline void PrLogEntry::set_allocated_text(std::string* value) {
+inline void RvLogEntry::set_allocated_text(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.text_.SetAllocated(value, GetArena());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -3185,40 +3185,40 @@ inline void PrLogEntry::set_allocated_text(std::string* value) {
           _impl_.text_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrLogEntry.text)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvLogEntry.text)
 }
 
 // -------------------------------------------------------------------
 
-// PrDeviceSelector
+// RvDeviceSelector
 
 // uint32 index = 1;
-inline bool PrDeviceSelector::has_index() const {
+inline bool RvDeviceSelector::has_index() const {
   return Selector_case() == kIndex;
 }
-inline void PrDeviceSelector::set_has_index() {
+inline void RvDeviceSelector::set_has_index() {
   _impl_._oneof_case_[0] = kIndex;
 }
-inline void PrDeviceSelector::clear_index() {
+inline void RvDeviceSelector::clear_index() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (Selector_case() == kIndex) {
     _impl_.Selector_.index_ = 0u;
     clear_has_Selector();
   }
 }
-inline ::uint32_t PrDeviceSelector::index() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceSelector.index)
+inline ::uint32_t RvDeviceSelector::index() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceSelector.index)
   return _internal_index();
 }
-inline void PrDeviceSelector::set_index(::uint32_t value) {
+inline void RvDeviceSelector::set_index(::uint32_t value) {
   if (Selector_case() != kIndex) {
     clear_Selector();
     set_has_index();
   }
   _impl_.Selector_.index_ = value;
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceSelector.index)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceSelector.index)
 }
-inline ::uint32_t PrDeviceSelector::_internal_index() const {
+inline ::uint32_t RvDeviceSelector::_internal_index() const {
   if (Selector_case() == kIndex) {
     return _impl_.Selector_.index_;
   }
@@ -3226,26 +3226,26 @@ inline ::uint32_t PrDeviceSelector::_internal_index() const {
 }
 
 // string uid = 2;
-inline bool PrDeviceSelector::has_uid() const {
+inline bool RvDeviceSelector::has_uid() const {
   return Selector_case() == kUid;
 }
-inline void PrDeviceSelector::set_has_uid() {
+inline void RvDeviceSelector::set_has_uid() {
   _impl_._oneof_case_[0] = kUid;
 }
-inline void PrDeviceSelector::clear_uid() {
+inline void RvDeviceSelector::clear_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (Selector_case() == kUid) {
     _impl_.Selector_.uid_.Destroy();
     clear_has_Selector();
   }
 }
-inline const std::string& PrDeviceSelector::uid() const
+inline const std::string& RvDeviceSelector::uid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceSelector.uid)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceSelector.uid)
   return _internal_uid();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrDeviceSelector::set_uid(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvDeviceSelector::set_uid(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (Selector_case() != kUid) {
@@ -3255,21 +3255,21 @@ inline PROTOBUF_ALWAYS_INLINE void PrDeviceSelector::set_uid(Arg_&& arg,
     _impl_.Selector_.uid_.InitDefault();
   }
   _impl_.Selector_.uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceSelector.uid)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceSelector.uid)
 }
-inline std::string* PrDeviceSelector::mutable_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvDeviceSelector::mutable_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_uid();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceSelector.uid)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceSelector.uid)
   return _s;
 }
-inline const std::string& PrDeviceSelector::_internal_uid() const {
+inline const std::string& RvDeviceSelector::_internal_uid() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   if (Selector_case() != kUid) {
     return ::google::protobuf::internal::GetEmptyStringAlreadyInited();
   }
   return _impl_.Selector_.uid_.Get();
 }
-inline void PrDeviceSelector::_internal_set_uid(const std::string& value) {
+inline void RvDeviceSelector::_internal_set_uid(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (Selector_case() != kUid) {
     clear_Selector();
@@ -3279,7 +3279,7 @@ inline void PrDeviceSelector::_internal_set_uid(const std::string& value) {
   }
   _impl_.Selector_.uid_.Set(value, GetArena());
 }
-inline std::string* PrDeviceSelector::_internal_mutable_uid() {
+inline std::string* RvDeviceSelector::_internal_mutable_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (Selector_case() != kUid) {
     clear_Selector();
@@ -3289,16 +3289,16 @@ inline std::string* PrDeviceSelector::_internal_mutable_uid() {
   }
   return _impl_.Selector_.uid_.Mutable( GetArena());
 }
-inline std::string* PrDeviceSelector::release_uid() {
+inline std::string* RvDeviceSelector::release_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceSelector.uid)
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceSelector.uid)
   if (Selector_case() != kUid) {
     return nullptr;
   }
   clear_has_Selector();
   return _impl_.Selector_.uid_.Release();
 }
-inline void PrDeviceSelector::set_allocated_uid(std::string* value) {
+inline void RvDeviceSelector::set_allocated_uid(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (has_Selector()) {
     clear_Selector();
@@ -3307,117 +3307,117 @@ inline void PrDeviceSelector::set_allocated_uid(std::string* value) {
     set_has_uid();
     _impl_.Selector_.uid_.InitAllocated(value, GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDeviceSelector.uid)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceSelector.uid)
 }
 
-inline bool PrDeviceSelector::has_Selector() const {
+inline bool RvDeviceSelector::has_Selector() const {
   return Selector_case() != SELECTOR_NOT_SET;
 }
-inline void PrDeviceSelector::clear_has_Selector() {
+inline void RvDeviceSelector::clear_has_Selector() {
   _impl_._oneof_case_[0] = SELECTOR_NOT_SET;
 }
-inline PrDeviceSelector::SelectorCase PrDeviceSelector::Selector_case() const {
-  return PrDeviceSelector::SelectorCase(_impl_._oneof_case_[0]);
+inline RvDeviceSelector::SelectorCase RvDeviceSelector::Selector_case() const {
+  return RvDeviceSelector::SelectorCase(_impl_._oneof_case_[0]);
 }
 // -------------------------------------------------------------------
 
-// PrDeviceInfo
+// RvDeviceInfo
 
-// .rocvad.PrDeviceType type = 1;
-inline void PrDeviceInfo::clear_type() {
+// .rvpb.RvDeviceType type = 1;
+inline void RvDeviceInfo::clear_type() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.type_ = 0;
 }
-inline ::rocvad::PrDeviceType PrDeviceInfo::type() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.type)
+inline ::rvpb::RvDeviceType RvDeviceInfo::type() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.type)
   return _internal_type();
 }
-inline void PrDeviceInfo::set_type(::rocvad::PrDeviceType value) {
+inline void RvDeviceInfo::set_type(::rvpb::RvDeviceType value) {
   _internal_set_type(value);
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceInfo.type)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceInfo.type)
 }
-inline ::rocvad::PrDeviceType PrDeviceInfo::_internal_type() const {
+inline ::rvpb::RvDeviceType RvDeviceInfo::_internal_type() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrDeviceType>(_impl_.type_);
+  return static_cast<::rvpb::RvDeviceType>(_impl_.type_);
 }
-inline void PrDeviceInfo::_internal_set_type(::rocvad::PrDeviceType value) {
+inline void RvDeviceInfo::_internal_set_type(::rvpb::RvDeviceType value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.type_ = value;
 }
 
 // optional uint32 index = 2;
-inline bool PrDeviceInfo::has_index() const {
+inline bool RvDeviceInfo::has_index() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
-inline void PrDeviceInfo::clear_index() {
+inline void RvDeviceInfo::clear_index() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.index_ = 0u;
   _impl_._has_bits_[0] &= ~0x00000008u;
 }
-inline ::uint32_t PrDeviceInfo::index() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.index)
+inline ::uint32_t RvDeviceInfo::index() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.index)
   return _internal_index();
 }
-inline void PrDeviceInfo::set_index(::uint32_t value) {
+inline void RvDeviceInfo::set_index(::uint32_t value) {
   _internal_set_index(value);
   _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceInfo.index)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceInfo.index)
 }
-inline ::uint32_t PrDeviceInfo::_internal_index() const {
+inline ::uint32_t RvDeviceInfo::_internal_index() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.index_;
 }
-inline void PrDeviceInfo::_internal_set_index(::uint32_t value) {
+inline void RvDeviceInfo::_internal_set_index(::uint32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.index_ = value;
 }
 
 // optional string uid = 3;
-inline bool PrDeviceInfo::has_uid() const {
+inline bool RvDeviceInfo::has_uid() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline void PrDeviceInfo::clear_uid() {
+inline void RvDeviceInfo::clear_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.uid_.ClearToEmpty();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& PrDeviceInfo::uid() const
+inline const std::string& RvDeviceInfo::uid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.uid)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.uid)
   return _internal_uid();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrDeviceInfo::set_uid(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvDeviceInfo::set_uid(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceInfo.uid)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceInfo.uid)
 }
-inline std::string* PrDeviceInfo::mutable_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvDeviceInfo::mutable_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_uid();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.uid)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.uid)
   return _s;
 }
-inline const std::string& PrDeviceInfo::_internal_uid() const {
+inline const std::string& RvDeviceInfo::_internal_uid() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.uid_.Get();
 }
-inline void PrDeviceInfo::_internal_set_uid(const std::string& value) {
+inline void RvDeviceInfo::_internal_set_uid(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.uid_.Set(value, GetArena());
 }
-inline std::string* PrDeviceInfo::_internal_mutable_uid() {
+inline std::string* RvDeviceInfo::_internal_mutable_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000001u;
   return _impl_.uid_.Mutable( GetArena());
 }
-inline std::string* PrDeviceInfo::release_uid() {
+inline std::string* RvDeviceInfo::release_uid() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceInfo.uid)
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceInfo.uid)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -3428,7 +3428,7 @@ inline std::string* PrDeviceInfo::release_uid() {
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   return released;
 }
-inline void PrDeviceInfo::set_allocated_uid(std::string* value) {
+inline void RvDeviceInfo::set_allocated_uid(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000001u;
@@ -3441,54 +3441,54 @@ inline void PrDeviceInfo::set_allocated_uid(std::string* value) {
           _impl_.uid_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDeviceInfo.uid)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceInfo.uid)
 }
 
 // optional string name = 4;
-inline bool PrDeviceInfo::has_name() const {
+inline bool RvDeviceInfo::has_name() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline void PrDeviceInfo::clear_name() {
+inline void RvDeviceInfo::clear_name() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.name_.ClearToEmpty();
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline const std::string& PrDeviceInfo::name() const
+inline const std::string& RvDeviceInfo::name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.name)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.name)
   return _internal_name();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrDeviceInfo::set_name(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvDeviceInfo::set_name(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000002u;
   _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrDeviceInfo.name)
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceInfo.name)
 }
-inline std::string* PrDeviceInfo::mutable_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvDeviceInfo::mutable_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.name)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.name)
   return _s;
 }
-inline const std::string& PrDeviceInfo::_internal_name() const {
+inline const std::string& RvDeviceInfo::_internal_name() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.name_.Get();
 }
-inline void PrDeviceInfo::_internal_set_name(const std::string& value) {
+inline void RvDeviceInfo::_internal_set_name(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000002u;
   _impl_.name_.Set(value, GetArena());
 }
-inline std::string* PrDeviceInfo::_internal_mutable_name() {
+inline std::string* RvDeviceInfo::_internal_mutable_name() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_._has_bits_[0] |= 0x00000002u;
   return _impl_.name_.Mutable( GetArena());
 }
-inline std::string* PrDeviceInfo::release_name() {
+inline std::string* RvDeviceInfo::release_name() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceInfo.name)
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceInfo.name)
   if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
     return nullptr;
   }
@@ -3499,7 +3499,7 @@ inline std::string* PrDeviceInfo::release_name() {
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   return released;
 }
-inline void PrDeviceInfo::set_allocated_name(std::string* value) {
+inline void RvDeviceInfo::set_allocated_name(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
@@ -3512,47 +3512,47 @@ inline void PrDeviceInfo::set_allocated_name(std::string* value) {
           _impl_.name_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDeviceInfo.name)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceInfo.name)
 }
 
-// .rocvad.PrLocalConfig local_config = 5;
-inline bool PrDeviceInfo::has_local_config() const {
+// .rvpb.RvLocalConfig local_config = 5;
+inline bool RvDeviceInfo::has_local_config() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.local_config_ != nullptr);
   return value;
 }
-inline void PrDeviceInfo::clear_local_config() {
+inline void RvDeviceInfo::clear_local_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.local_config_ != nullptr) _impl_.local_config_->Clear();
   _impl_._has_bits_[0] &= ~0x00000004u;
 }
-inline const ::rocvad::PrLocalConfig& PrDeviceInfo::_internal_local_config() const {
+inline const ::rvpb::RvLocalConfig& RvDeviceInfo::_internal_local_config() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::rocvad::PrLocalConfig* p = _impl_.local_config_;
-  return p != nullptr ? *p : reinterpret_cast<const ::rocvad::PrLocalConfig&>(::rocvad::_PrLocalConfig_default_instance_);
+  const ::rvpb::RvLocalConfig* p = _impl_.local_config_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rvpb::RvLocalConfig&>(::rvpb::_RvLocalConfig_default_instance_);
 }
-inline const ::rocvad::PrLocalConfig& PrDeviceInfo::local_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.local_config)
+inline const ::rvpb::RvLocalConfig& RvDeviceInfo::local_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.local_config)
   return _internal_local_config();
 }
-inline void PrDeviceInfo::unsafe_arena_set_allocated_local_config(::rocvad::PrLocalConfig* value) {
+inline void RvDeviceInfo::unsafe_arena_set_allocated_local_config(::rvpb::RvLocalConfig* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.local_config_);
   }
-  _impl_.local_config_ = reinterpret_cast<::rocvad::PrLocalConfig*>(value);
+  _impl_.local_config_ = reinterpret_cast<::rvpb::RvLocalConfig*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000004u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrDeviceInfo.local_config)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvDeviceInfo.local_config)
 }
-inline ::rocvad::PrLocalConfig* PrDeviceInfo::release_local_config() {
+inline ::rvpb::RvLocalConfig* RvDeviceInfo::release_local_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::rocvad::PrLocalConfig* released = _impl_.local_config_;
+  ::rvpb::RvLocalConfig* released = _impl_.local_config_;
   _impl_.local_config_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -3567,30 +3567,30 @@ inline ::rocvad::PrLocalConfig* PrDeviceInfo::release_local_config() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::rocvad::PrLocalConfig* PrDeviceInfo::unsafe_arena_release_local_config() {
+inline ::rvpb::RvLocalConfig* RvDeviceInfo::unsafe_arena_release_local_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceInfo.local_config)
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceInfo.local_config)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::rocvad::PrLocalConfig* temp = _impl_.local_config_;
+  ::rvpb::RvLocalConfig* temp = _impl_.local_config_;
   _impl_.local_config_ = nullptr;
   return temp;
 }
-inline ::rocvad::PrLocalConfig* PrDeviceInfo::_internal_mutable_local_config() {
+inline ::rvpb::RvLocalConfig* RvDeviceInfo::_internal_mutable_local_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.local_config_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::rocvad::PrLocalConfig>(GetArena());
-    _impl_.local_config_ = reinterpret_cast<::rocvad::PrLocalConfig*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::rvpb::RvLocalConfig>(GetArena());
+    _impl_.local_config_ = reinterpret_cast<::rvpb::RvLocalConfig*>(p);
   }
   return _impl_.local_config_;
 }
-inline ::rocvad::PrLocalConfig* PrDeviceInfo::mutable_local_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvLocalConfig* RvDeviceInfo::mutable_local_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
-  ::rocvad::PrLocalConfig* _msg = _internal_mutable_local_config();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.local_config)
+  ::rvpb::RvLocalConfig* _msg = _internal_mutable_local_config();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.local_config)
   return _msg;
 }
-inline void PrDeviceInfo::set_allocated_local_config(::rocvad::PrLocalConfig* value) {
+inline void RvDeviceInfo::set_allocated_local_config(::rvpb::RvLocalConfig* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -3607,21 +3607,21 @@ inline void PrDeviceInfo::set_allocated_local_config(::rocvad::PrLocalConfig* va
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
-  _impl_.local_config_ = reinterpret_cast<::rocvad::PrLocalConfig*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrDeviceInfo.local_config)
+  _impl_.local_config_ = reinterpret_cast<::rvpb::RvLocalConfig*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceInfo.local_config)
 }
 
-// .rocvad.PrSenderConfig sender_config = 6;
-inline bool PrDeviceInfo::has_sender_config() const {
+// .rvpb.RvSenderConfig sender_config = 6;
+inline bool RvDeviceInfo::has_sender_config() const {
   return NetworkConfig_case() == kSenderConfig;
 }
-inline bool PrDeviceInfo::_internal_has_sender_config() const {
+inline bool RvDeviceInfo::_internal_has_sender_config() const {
   return NetworkConfig_case() == kSenderConfig;
 }
-inline void PrDeviceInfo::set_has_sender_config() {
+inline void RvDeviceInfo::set_has_sender_config() {
   _impl_._oneof_case_[0] = kSenderConfig;
 }
-inline void PrDeviceInfo::clear_sender_config() {
+inline void RvDeviceInfo::clear_sender_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (NetworkConfig_case() == kSenderConfig) {
     if (GetArena() == nullptr) {
@@ -3630,8 +3630,8 @@ inline void PrDeviceInfo::clear_sender_config() {
     clear_has_NetworkConfig();
   }
 }
-inline ::rocvad::PrSenderConfig* PrDeviceInfo::release_sender_config() {
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceInfo.sender_config)
+inline ::rvpb::RvSenderConfig* RvDeviceInfo::release_sender_config() {
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceInfo.sender_config)
   if (NetworkConfig_case() == kSenderConfig) {
     clear_has_NetworkConfig();
     auto* temp = _impl_.NetworkConfig_.sender_config_;
@@ -3644,15 +3644,15 @@ inline ::rocvad::PrSenderConfig* PrDeviceInfo::release_sender_config() {
     return nullptr;
   }
 }
-inline const ::rocvad::PrSenderConfig& PrDeviceInfo::_internal_sender_config() const {
-  return NetworkConfig_case() == kSenderConfig ? *_impl_.NetworkConfig_.sender_config_ : reinterpret_cast<::rocvad::PrSenderConfig&>(::rocvad::_PrSenderConfig_default_instance_);
+inline const ::rvpb::RvSenderConfig& RvDeviceInfo::_internal_sender_config() const {
+  return NetworkConfig_case() == kSenderConfig ? *_impl_.NetworkConfig_.sender_config_ : reinterpret_cast<::rvpb::RvSenderConfig&>(::rvpb::_RvSenderConfig_default_instance_);
 }
-inline const ::rocvad::PrSenderConfig& PrDeviceInfo::sender_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.sender_config)
+inline const ::rvpb::RvSenderConfig& RvDeviceInfo::sender_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.sender_config)
   return _internal_sender_config();
 }
-inline ::rocvad::PrSenderConfig* PrDeviceInfo::unsafe_arena_release_sender_config() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:rocvad.PrDeviceInfo.sender_config)
+inline ::rvpb::RvSenderConfig* RvDeviceInfo::unsafe_arena_release_sender_config() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:rvpb.RvDeviceInfo.sender_config)
   if (NetworkConfig_case() == kSenderConfig) {
     clear_has_NetworkConfig();
     auto* temp = _impl_.NetworkConfig_.sender_config_;
@@ -3662,7 +3662,7 @@ inline ::rocvad::PrSenderConfig* PrDeviceInfo::unsafe_arena_release_sender_confi
     return nullptr;
   }
 }
-inline void PrDeviceInfo::unsafe_arena_set_allocated_sender_config(::rocvad::PrSenderConfig* value) {
+inline void RvDeviceInfo::unsafe_arena_set_allocated_sender_config(::rvpb::RvSenderConfig* value) {
   // We rely on the oneof clear method to free the earlier contents
   // of this oneof. We can directly use the pointer we're given to
   // set the new value.
@@ -3671,34 +3671,34 @@ inline void PrDeviceInfo::unsafe_arena_set_allocated_sender_config(::rocvad::PrS
     set_has_sender_config();
     _impl_.NetworkConfig_.sender_config_ = value;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrDeviceInfo.sender_config)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvDeviceInfo.sender_config)
 }
-inline ::rocvad::PrSenderConfig* PrDeviceInfo::_internal_mutable_sender_config() {
+inline ::rvpb::RvSenderConfig* RvDeviceInfo::_internal_mutable_sender_config() {
   if (NetworkConfig_case() != kSenderConfig) {
     clear_NetworkConfig();
     set_has_sender_config();
     _impl_.NetworkConfig_.sender_config_ =
-        ::google::protobuf::Message::DefaultConstruct<::rocvad::PrSenderConfig>(GetArena());
+        ::google::protobuf::Message::DefaultConstruct<::rvpb::RvSenderConfig>(GetArena());
   }
   return _impl_.NetworkConfig_.sender_config_;
 }
-inline ::rocvad::PrSenderConfig* PrDeviceInfo::mutable_sender_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::rocvad::PrSenderConfig* _msg = _internal_mutable_sender_config();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.sender_config)
+inline ::rvpb::RvSenderConfig* RvDeviceInfo::mutable_sender_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::rvpb::RvSenderConfig* _msg = _internal_mutable_sender_config();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.sender_config)
   return _msg;
 }
 
-// .rocvad.PrReceiverConfig receiver_config = 7;
-inline bool PrDeviceInfo::has_receiver_config() const {
+// .rvpb.RvReceiverConfig receiver_config = 7;
+inline bool RvDeviceInfo::has_receiver_config() const {
   return NetworkConfig_case() == kReceiverConfig;
 }
-inline bool PrDeviceInfo::_internal_has_receiver_config() const {
+inline bool RvDeviceInfo::_internal_has_receiver_config() const {
   return NetworkConfig_case() == kReceiverConfig;
 }
-inline void PrDeviceInfo::set_has_receiver_config() {
+inline void RvDeviceInfo::set_has_receiver_config() {
   _impl_._oneof_case_[0] = kReceiverConfig;
 }
-inline void PrDeviceInfo::clear_receiver_config() {
+inline void RvDeviceInfo::clear_receiver_config() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (NetworkConfig_case() == kReceiverConfig) {
     if (GetArena() == nullptr) {
@@ -3707,8 +3707,8 @@ inline void PrDeviceInfo::clear_receiver_config() {
     clear_has_NetworkConfig();
   }
 }
-inline ::rocvad::PrReceiverConfig* PrDeviceInfo::release_receiver_config() {
-  // @@protoc_insertion_point(field_release:rocvad.PrDeviceInfo.receiver_config)
+inline ::rvpb::RvReceiverConfig* RvDeviceInfo::release_receiver_config() {
+  // @@protoc_insertion_point(field_release:rvpb.RvDeviceInfo.receiver_config)
   if (NetworkConfig_case() == kReceiverConfig) {
     clear_has_NetworkConfig();
     auto* temp = _impl_.NetworkConfig_.receiver_config_;
@@ -3721,15 +3721,15 @@ inline ::rocvad::PrReceiverConfig* PrDeviceInfo::release_receiver_config() {
     return nullptr;
   }
 }
-inline const ::rocvad::PrReceiverConfig& PrDeviceInfo::_internal_receiver_config() const {
-  return NetworkConfig_case() == kReceiverConfig ? *_impl_.NetworkConfig_.receiver_config_ : reinterpret_cast<::rocvad::PrReceiverConfig&>(::rocvad::_PrReceiverConfig_default_instance_);
+inline const ::rvpb::RvReceiverConfig& RvDeviceInfo::_internal_receiver_config() const {
+  return NetworkConfig_case() == kReceiverConfig ? *_impl_.NetworkConfig_.receiver_config_ : reinterpret_cast<::rvpb::RvReceiverConfig&>(::rvpb::_RvReceiverConfig_default_instance_);
 }
-inline const ::rocvad::PrReceiverConfig& PrDeviceInfo::receiver_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.receiver_config)
+inline const ::rvpb::RvReceiverConfig& RvDeviceInfo::receiver_config() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.receiver_config)
   return _internal_receiver_config();
 }
-inline ::rocvad::PrReceiverConfig* PrDeviceInfo::unsafe_arena_release_receiver_config() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:rocvad.PrDeviceInfo.receiver_config)
+inline ::rvpb::RvReceiverConfig* RvDeviceInfo::unsafe_arena_release_receiver_config() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:rvpb.RvDeviceInfo.receiver_config)
   if (NetworkConfig_case() == kReceiverConfig) {
     clear_has_NetworkConfig();
     auto* temp = _impl_.NetworkConfig_.receiver_config_;
@@ -3739,7 +3739,7 @@ inline ::rocvad::PrReceiverConfig* PrDeviceInfo::unsafe_arena_release_receiver_c
     return nullptr;
   }
 }
-inline void PrDeviceInfo::unsafe_arena_set_allocated_receiver_config(::rocvad::PrReceiverConfig* value) {
+inline void RvDeviceInfo::unsafe_arena_set_allocated_receiver_config(::rvpb::RvReceiverConfig* value) {
   // We rely on the oneof clear method to free the earlier contents
   // of this oneof. We can directly use the pointer we're given to
   // set the new value.
@@ -3748,225 +3748,225 @@ inline void PrDeviceInfo::unsafe_arena_set_allocated_receiver_config(::rocvad::P
     set_has_receiver_config();
     _impl_.NetworkConfig_.receiver_config_ = value;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrDeviceInfo.receiver_config)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvDeviceInfo.receiver_config)
 }
-inline ::rocvad::PrReceiverConfig* PrDeviceInfo::_internal_mutable_receiver_config() {
+inline ::rvpb::RvReceiverConfig* RvDeviceInfo::_internal_mutable_receiver_config() {
   if (NetworkConfig_case() != kReceiverConfig) {
     clear_NetworkConfig();
     set_has_receiver_config();
     _impl_.NetworkConfig_.receiver_config_ =
-        ::google::protobuf::Message::DefaultConstruct<::rocvad::PrReceiverConfig>(GetArena());
+        ::google::protobuf::Message::DefaultConstruct<::rvpb::RvReceiverConfig>(GetArena());
   }
   return _impl_.NetworkConfig_.receiver_config_;
 }
-inline ::rocvad::PrReceiverConfig* PrDeviceInfo::mutable_receiver_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::rocvad::PrReceiverConfig* _msg = _internal_mutable_receiver_config();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.receiver_config)
+inline ::rvpb::RvReceiverConfig* RvDeviceInfo::mutable_receiver_config() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::rvpb::RvReceiverConfig* _msg = _internal_mutable_receiver_config();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.receiver_config)
   return _msg;
 }
 
-// repeated .rocvad.PrEndpointInfo local_endpoints = 8;
-inline int PrDeviceInfo::_internal_local_endpoints_size() const {
+// repeated .rvpb.RvEndpointInfo local_endpoints = 8;
+inline int RvDeviceInfo::_internal_local_endpoints_size() const {
   return _internal_local_endpoints().size();
 }
-inline int PrDeviceInfo::local_endpoints_size() const {
+inline int RvDeviceInfo::local_endpoints_size() const {
   return _internal_local_endpoints_size();
 }
-inline void PrDeviceInfo::clear_local_endpoints() {
+inline void RvDeviceInfo::clear_local_endpoints() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.local_endpoints_.Clear();
 }
-inline ::rocvad::PrEndpointInfo* PrDeviceInfo::mutable_local_endpoints(int index)
+inline ::rvpb::RvEndpointInfo* RvDeviceInfo::mutable_local_endpoints(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.local_endpoints)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.local_endpoints)
   return _internal_mutable_local_endpoints()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* PrDeviceInfo::mutable_local_endpoints()
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* RvDeviceInfo::mutable_local_endpoints()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:rocvad.PrDeviceInfo.local_endpoints)
+  // @@protoc_insertion_point(field_mutable_list:rvpb.RvDeviceInfo.local_endpoints)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _internal_mutable_local_endpoints();
 }
-inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::local_endpoints(int index) const
+inline const ::rvpb::RvEndpointInfo& RvDeviceInfo::local_endpoints(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.local_endpoints)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.local_endpoints)
   return _internal_local_endpoints().Get(index);
 }
-inline ::rocvad::PrEndpointInfo* PrDeviceInfo::add_local_endpoints() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvEndpointInfo* RvDeviceInfo::add_local_endpoints() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ::rocvad::PrEndpointInfo* _add = _internal_mutable_local_endpoints()->Add();
-  // @@protoc_insertion_point(field_add:rocvad.PrDeviceInfo.local_endpoints)
+  ::rvpb::RvEndpointInfo* _add = _internal_mutable_local_endpoints()->Add();
+  // @@protoc_insertion_point(field_add:rvpb.RvDeviceInfo.local_endpoints)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& PrDeviceInfo::local_endpoints() const
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& RvDeviceInfo::local_endpoints() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:rocvad.PrDeviceInfo.local_endpoints)
+  // @@protoc_insertion_point(field_list:rvpb.RvDeviceInfo.local_endpoints)
   return _internal_local_endpoints();
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>&
-PrDeviceInfo::_internal_local_endpoints() const {
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>&
+RvDeviceInfo::_internal_local_endpoints() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.local_endpoints_;
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>*
-PrDeviceInfo::_internal_mutable_local_endpoints() {
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>*
+RvDeviceInfo::_internal_mutable_local_endpoints() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.local_endpoints_;
 }
 
-// repeated .rocvad.PrEndpointInfo remote_endpoints = 9;
-inline int PrDeviceInfo::_internal_remote_endpoints_size() const {
+// repeated .rvpb.RvEndpointInfo remote_endpoints = 9;
+inline int RvDeviceInfo::_internal_remote_endpoints_size() const {
   return _internal_remote_endpoints().size();
 }
-inline int PrDeviceInfo::remote_endpoints_size() const {
+inline int RvDeviceInfo::remote_endpoints_size() const {
   return _internal_remote_endpoints_size();
 }
-inline void PrDeviceInfo::clear_remote_endpoints() {
+inline void RvDeviceInfo::clear_remote_endpoints() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.remote_endpoints_.Clear();
 }
-inline ::rocvad::PrEndpointInfo* PrDeviceInfo::mutable_remote_endpoints(int index)
+inline ::rvpb::RvEndpointInfo* RvDeviceInfo::mutable_remote_endpoints(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceInfo.remote_endpoints)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceInfo.remote_endpoints)
   return _internal_mutable_remote_endpoints()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>* PrDeviceInfo::mutable_remote_endpoints()
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>* RvDeviceInfo::mutable_remote_endpoints()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:rocvad.PrDeviceInfo.remote_endpoints)
+  // @@protoc_insertion_point(field_mutable_list:rvpb.RvDeviceInfo.remote_endpoints)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _internal_mutable_remote_endpoints();
 }
-inline const ::rocvad::PrEndpointInfo& PrDeviceInfo::remote_endpoints(int index) const
+inline const ::rvpb::RvEndpointInfo& RvDeviceInfo::remote_endpoints(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceInfo.remote_endpoints)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.remote_endpoints)
   return _internal_remote_endpoints().Get(index);
 }
-inline ::rocvad::PrEndpointInfo* PrDeviceInfo::add_remote_endpoints() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvEndpointInfo* RvDeviceInfo::add_remote_endpoints() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ::rocvad::PrEndpointInfo* _add = _internal_mutable_remote_endpoints()->Add();
-  // @@protoc_insertion_point(field_add:rocvad.PrDeviceInfo.remote_endpoints)
+  ::rvpb::RvEndpointInfo* _add = _internal_mutable_remote_endpoints()->Add();
+  // @@protoc_insertion_point(field_add:rvpb.RvDeviceInfo.remote_endpoints)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>& PrDeviceInfo::remote_endpoints() const
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& RvDeviceInfo::remote_endpoints() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:rocvad.PrDeviceInfo.remote_endpoints)
+  // @@protoc_insertion_point(field_list:rvpb.RvDeviceInfo.remote_endpoints)
   return _internal_remote_endpoints();
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>&
-PrDeviceInfo::_internal_remote_endpoints() const {
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>&
+RvDeviceInfo::_internal_remote_endpoints() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.remote_endpoints_;
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrEndpointInfo>*
-PrDeviceInfo::_internal_mutable_remote_endpoints() {
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>*
+RvDeviceInfo::_internal_mutable_remote_endpoints() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.remote_endpoints_;
 }
 
-inline bool PrDeviceInfo::has_NetworkConfig() const {
+inline bool RvDeviceInfo::has_NetworkConfig() const {
   return NetworkConfig_case() != NETWORKCONFIG_NOT_SET;
 }
-inline void PrDeviceInfo::clear_has_NetworkConfig() {
+inline void RvDeviceInfo::clear_has_NetworkConfig() {
   _impl_._oneof_case_[0] = NETWORKCONFIG_NOT_SET;
 }
-inline PrDeviceInfo::NetworkConfigCase PrDeviceInfo::NetworkConfig_case() const {
-  return PrDeviceInfo::NetworkConfigCase(_impl_._oneof_case_[0]);
+inline RvDeviceInfo::NetworkConfigCase RvDeviceInfo::NetworkConfig_case() const {
+  return RvDeviceInfo::NetworkConfigCase(_impl_._oneof_case_[0]);
 }
 // -------------------------------------------------------------------
 
-// PrDeviceList
+// RvDeviceList
 
-// repeated .rocvad.PrDeviceInfo devices = 1;
-inline int PrDeviceList::_internal_devices_size() const {
+// repeated .rvpb.RvDeviceInfo devices = 1;
+inline int RvDeviceList::_internal_devices_size() const {
   return _internal_devices().size();
 }
-inline int PrDeviceList::devices_size() const {
+inline int RvDeviceList::devices_size() const {
   return _internal_devices_size();
 }
-inline void PrDeviceList::clear_devices() {
+inline void RvDeviceList::clear_devices() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.devices_.Clear();
 }
-inline ::rocvad::PrDeviceInfo* PrDeviceList::mutable_devices(int index)
+inline ::rvpb::RvDeviceInfo* RvDeviceList::mutable_devices(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:rocvad.PrDeviceList.devices)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvDeviceList.devices)
   return _internal_mutable_devices()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>* PrDeviceList::mutable_devices()
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>* RvDeviceList::mutable_devices()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:rocvad.PrDeviceList.devices)
+  // @@protoc_insertion_point(field_mutable_list:rvpb.RvDeviceList.devices)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _internal_mutable_devices();
 }
-inline const ::rocvad::PrDeviceInfo& PrDeviceList::devices(int index) const
+inline const ::rvpb::RvDeviceInfo& RvDeviceList::devices(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrDeviceList.devices)
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceList.devices)
   return _internal_devices().Get(index);
 }
-inline ::rocvad::PrDeviceInfo* PrDeviceList::add_devices() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvDeviceInfo* RvDeviceList::add_devices() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ::rocvad::PrDeviceInfo* _add = _internal_mutable_devices()->Add();
-  // @@protoc_insertion_point(field_add:rocvad.PrDeviceList.devices)
+  ::rvpb::RvDeviceInfo* _add = _internal_mutable_devices()->Add();
+  // @@protoc_insertion_point(field_add:rvpb.RvDeviceList.devices)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>& PrDeviceList::devices() const
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>& RvDeviceList::devices() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:rocvad.PrDeviceList.devices)
+  // @@protoc_insertion_point(field_list:rvpb.RvDeviceList.devices)
   return _internal_devices();
 }
-inline const ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>&
-PrDeviceList::_internal_devices() const {
+inline const ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>&
+RvDeviceList::_internal_devices() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.devices_;
 }
-inline ::google::protobuf::RepeatedPtrField<::rocvad::PrDeviceInfo>*
-PrDeviceList::_internal_mutable_devices() {
+inline ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>*
+RvDeviceList::_internal_mutable_devices() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.devices_;
 }
 
 // -------------------------------------------------------------------
 
-// PrEndpointRequest
+// RvEndpointRequest
 
-// .rocvad.PrDeviceSelector device = 1;
-inline bool PrEndpointRequest::has_device() const {
+// .rvpb.RvDeviceSelector device = 1;
+inline bool RvEndpointRequest::has_device() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.device_ != nullptr);
   return value;
 }
-inline void PrEndpointRequest::clear_device() {
+inline void RvEndpointRequest::clear_device() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.device_ != nullptr) _impl_.device_->Clear();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline const ::rocvad::PrDeviceSelector& PrEndpointRequest::_internal_device() const {
+inline const ::rvpb::RvDeviceSelector& RvEndpointRequest::_internal_device() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::rocvad::PrDeviceSelector* p = _impl_.device_;
-  return p != nullptr ? *p : reinterpret_cast<const ::rocvad::PrDeviceSelector&>(::rocvad::_PrDeviceSelector_default_instance_);
+  const ::rvpb::RvDeviceSelector* p = _impl_.device_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rvpb::RvDeviceSelector&>(::rvpb::_RvDeviceSelector_default_instance_);
 }
-inline const ::rocvad::PrDeviceSelector& PrEndpointRequest::device() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrEndpointRequest.device)
+inline const ::rvpb::RvDeviceSelector& RvEndpointRequest::device() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvEndpointRequest.device)
   return _internal_device();
 }
-inline void PrEndpointRequest::unsafe_arena_set_allocated_device(::rocvad::PrDeviceSelector* value) {
+inline void RvEndpointRequest::unsafe_arena_set_allocated_device(::rvpb::RvDeviceSelector* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.device_);
   }
-  _impl_.device_ = reinterpret_cast<::rocvad::PrDeviceSelector*>(value);
+  _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000001u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrEndpointRequest.device)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvEndpointRequest.device)
 }
-inline ::rocvad::PrDeviceSelector* PrEndpointRequest::release_device() {
+inline ::rvpb::RvDeviceSelector* RvEndpointRequest::release_device() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::rocvad::PrDeviceSelector* released = _impl_.device_;
+  ::rvpb::RvDeviceSelector* released = _impl_.device_;
   _impl_.device_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -3981,30 +3981,30 @@ inline ::rocvad::PrDeviceSelector* PrEndpointRequest::release_device() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::rocvad::PrDeviceSelector* PrEndpointRequest::unsafe_arena_release_device() {
+inline ::rvpb::RvDeviceSelector* RvEndpointRequest::unsafe_arena_release_device() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrEndpointRequest.device)
+  // @@protoc_insertion_point(field_release:rvpb.RvEndpointRequest.device)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::rocvad::PrDeviceSelector* temp = _impl_.device_;
+  ::rvpb::RvDeviceSelector* temp = _impl_.device_;
   _impl_.device_ = nullptr;
   return temp;
 }
-inline ::rocvad::PrDeviceSelector* PrEndpointRequest::_internal_mutable_device() {
+inline ::rvpb::RvDeviceSelector* RvEndpointRequest::_internal_mutable_device() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.device_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::rocvad::PrDeviceSelector>(GetArena());
-    _impl_.device_ = reinterpret_cast<::rocvad::PrDeviceSelector*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::rvpb::RvDeviceSelector>(GetArena());
+    _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(p);
   }
   return _impl_.device_;
 }
-inline ::rocvad::PrDeviceSelector* PrEndpointRequest::mutable_device() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvDeviceSelector* RvEndpointRequest::mutable_device() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
-  ::rocvad::PrDeviceSelector* _msg = _internal_mutable_device();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointRequest.device)
+  ::rvpb::RvDeviceSelector* _msg = _internal_mutable_device();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvEndpointRequest.device)
   return _msg;
 }
-inline void PrEndpointRequest::set_allocated_device(::rocvad::PrDeviceSelector* value) {
+inline void RvEndpointRequest::set_allocated_device(::rvpb::RvDeviceSelector* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4021,48 +4021,48 @@ inline void PrEndpointRequest::set_allocated_device(::rocvad::PrDeviceSelector* 
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
 
-  _impl_.device_ = reinterpret_cast<::rocvad::PrDeviceSelector*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointRequest.device)
+  _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvEndpointRequest.device)
 }
 
-// .rocvad.PrEndpointInfo endpoint = 2;
-inline bool PrEndpointRequest::has_endpoint() const {
+// .rvpb.RvEndpointInfo endpoint = 2;
+inline bool RvEndpointRequest::has_endpoint() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.endpoint_ != nullptr);
   return value;
 }
-inline void PrEndpointRequest::clear_endpoint() {
+inline void RvEndpointRequest::clear_endpoint() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.endpoint_ != nullptr) _impl_.endpoint_->Clear();
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline const ::rocvad::PrEndpointInfo& PrEndpointRequest::_internal_endpoint() const {
+inline const ::rvpb::RvEndpointInfo& RvEndpointRequest::_internal_endpoint() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::rocvad::PrEndpointInfo* p = _impl_.endpoint_;
-  return p != nullptr ? *p : reinterpret_cast<const ::rocvad::PrEndpointInfo&>(::rocvad::_PrEndpointInfo_default_instance_);
+  const ::rvpb::RvEndpointInfo* p = _impl_.endpoint_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rvpb::RvEndpointInfo&>(::rvpb::_RvEndpointInfo_default_instance_);
 }
-inline const ::rocvad::PrEndpointInfo& PrEndpointRequest::endpoint() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrEndpointRequest.endpoint)
+inline const ::rvpb::RvEndpointInfo& RvEndpointRequest::endpoint() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvEndpointRequest.endpoint)
   return _internal_endpoint();
 }
-inline void PrEndpointRequest::unsafe_arena_set_allocated_endpoint(::rocvad::PrEndpointInfo* value) {
+inline void RvEndpointRequest::unsafe_arena_set_allocated_endpoint(::rvpb::RvEndpointInfo* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.endpoint_);
   }
-  _impl_.endpoint_ = reinterpret_cast<::rocvad::PrEndpointInfo*>(value);
+  _impl_.endpoint_ = reinterpret_cast<::rvpb::RvEndpointInfo*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000002u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrEndpointRequest.endpoint)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvEndpointRequest.endpoint)
 }
-inline ::rocvad::PrEndpointInfo* PrEndpointRequest::release_endpoint() {
+inline ::rvpb::RvEndpointInfo* RvEndpointRequest::release_endpoint() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::rocvad::PrEndpointInfo* released = _impl_.endpoint_;
+  ::rvpb::RvEndpointInfo* released = _impl_.endpoint_;
   _impl_.endpoint_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -4077,30 +4077,30 @@ inline ::rocvad::PrEndpointInfo* PrEndpointRequest::release_endpoint() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::rocvad::PrEndpointInfo* PrEndpointRequest::unsafe_arena_release_endpoint() {
+inline ::rvpb::RvEndpointInfo* RvEndpointRequest::unsafe_arena_release_endpoint() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrEndpointRequest.endpoint)
+  // @@protoc_insertion_point(field_release:rvpb.RvEndpointRequest.endpoint)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
-  ::rocvad::PrEndpointInfo* temp = _impl_.endpoint_;
+  ::rvpb::RvEndpointInfo* temp = _impl_.endpoint_;
   _impl_.endpoint_ = nullptr;
   return temp;
 }
-inline ::rocvad::PrEndpointInfo* PrEndpointRequest::_internal_mutable_endpoint() {
+inline ::rvpb::RvEndpointInfo* RvEndpointRequest::_internal_mutable_endpoint() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.endpoint_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::rocvad::PrEndpointInfo>(GetArena());
-    _impl_.endpoint_ = reinterpret_cast<::rocvad::PrEndpointInfo*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::rvpb::RvEndpointInfo>(GetArena());
+    _impl_.endpoint_ = reinterpret_cast<::rvpb::RvEndpointInfo*>(p);
   }
   return _impl_.endpoint_;
 }
-inline ::rocvad::PrEndpointInfo* PrEndpointRequest::mutable_endpoint() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::rvpb::RvEndpointInfo* RvEndpointRequest::mutable_endpoint() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
-  ::rocvad::PrEndpointInfo* _msg = _internal_mutable_endpoint();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointRequest.endpoint)
+  ::rvpb::RvEndpointInfo* _msg = _internal_mutable_endpoint();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvEndpointRequest.endpoint)
   return _msg;
 }
-inline void PrEndpointRequest::set_allocated_endpoint(::rocvad::PrEndpointInfo* value) {
+inline void RvEndpointRequest::set_allocated_endpoint(::rvpb::RvEndpointInfo* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4117,104 +4117,104 @@ inline void PrEndpointRequest::set_allocated_endpoint(::rocvad::PrEndpointInfo* 
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
-  _impl_.endpoint_ = reinterpret_cast<::rocvad::PrEndpointInfo*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointRequest.endpoint)
+  _impl_.endpoint_ = reinterpret_cast<::rvpb::RvEndpointInfo*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvEndpointRequest.endpoint)
 }
 
 // -------------------------------------------------------------------
 
-// PrEndpointInfo
+// RvEndpointInfo
 
 // optional uint32 slot = 1;
-inline bool PrEndpointInfo::has_slot() const {
+inline bool RvEndpointInfo::has_slot() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline void PrEndpointInfo::clear_slot() {
+inline void RvEndpointInfo::clear_slot() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.slot_ = 0u;
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline ::uint32_t PrEndpointInfo::slot() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.slot)
+inline ::uint32_t RvEndpointInfo::slot() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvEndpointInfo.slot)
   return _internal_slot();
 }
-inline void PrEndpointInfo::set_slot(::uint32_t value) {
+inline void RvEndpointInfo::set_slot(::uint32_t value) {
   _internal_set_slot(value);
   _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.slot)
+  // @@protoc_insertion_point(field_set:rvpb.RvEndpointInfo.slot)
 }
-inline ::uint32_t PrEndpointInfo::_internal_slot() const {
+inline ::uint32_t RvEndpointInfo::_internal_slot() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.slot_;
 }
-inline void PrEndpointInfo::_internal_set_slot(::uint32_t value) {
+inline void RvEndpointInfo::_internal_set_slot(::uint32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.slot_ = value;
 }
 
-// .rocvad.PrInterface interface = 2;
-inline void PrEndpointInfo::clear_interface() {
+// .rvpb.RvInterface interface = 2;
+inline void RvEndpointInfo::clear_interface() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.interface_ = 0;
 }
-inline ::rocvad::PrInterface PrEndpointInfo::interface() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.interface)
+inline ::rvpb::RvInterface RvEndpointInfo::interface() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvEndpointInfo.interface)
   return _internal_interface();
 }
-inline void PrEndpointInfo::set_interface(::rocvad::PrInterface value) {
+inline void RvEndpointInfo::set_interface(::rvpb::RvInterface value) {
   _internal_set_interface(value);
-  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.interface)
+  // @@protoc_insertion_point(field_set:rvpb.RvEndpointInfo.interface)
 }
-inline ::rocvad::PrInterface PrEndpointInfo::_internal_interface() const {
+inline ::rvpb::RvInterface RvEndpointInfo::_internal_interface() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrInterface>(_impl_.interface_);
+  return static_cast<::rvpb::RvInterface>(_impl_.interface_);
 }
-inline void PrEndpointInfo::_internal_set_interface(::rocvad::PrInterface value) {
+inline void RvEndpointInfo::_internal_set_interface(::rvpb::RvInterface value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.interface_ = value;
 }
 
 // string uri = 3;
-inline void PrEndpointInfo::clear_uri() {
+inline void RvEndpointInfo::clear_uri() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.uri_.ClearToEmpty();
 }
-inline const std::string& PrEndpointInfo::uri() const
+inline const std::string& RvEndpointInfo::uri() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrEndpointInfo.uri)
+  // @@protoc_insertion_point(field_get:rvpb.RvEndpointInfo.uri)
   return _internal_uri();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void PrEndpointInfo::set_uri(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void RvEndpointInfo::set_uri(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.uri_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:rocvad.PrEndpointInfo.uri)
+  // @@protoc_insertion_point(field_set:rvpb.RvEndpointInfo.uri)
 }
-inline std::string* PrEndpointInfo::mutable_uri() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline std::string* RvEndpointInfo::mutable_uri() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_uri();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrEndpointInfo.uri)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvEndpointInfo.uri)
   return _s;
 }
-inline const std::string& PrEndpointInfo::_internal_uri() const {
+inline const std::string& RvEndpointInfo::_internal_uri() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.uri_.Get();
 }
-inline void PrEndpointInfo::_internal_set_uri(const std::string& value) {
+inline void RvEndpointInfo::_internal_set_uri(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.uri_.Set(value, GetArena());
 }
-inline std::string* PrEndpointInfo::_internal_mutable_uri() {
+inline std::string* RvEndpointInfo::_internal_mutable_uri() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   return _impl_.uri_.Mutable( GetArena());
 }
-inline std::string* PrEndpointInfo::release_uri() {
+inline std::string* RvEndpointInfo::release_uri() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrEndpointInfo.uri)
+  // @@protoc_insertion_point(field_release:rvpb.RvEndpointInfo.uri)
   return _impl_.uri_.Release();
 }
-inline void PrEndpointInfo::set_allocated_uri(std::string* value) {
+inline void RvEndpointInfo::set_allocated_uri(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.uri_.SetAllocated(value, GetArena());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -4222,117 +4222,117 @@ inline void PrEndpointInfo::set_allocated_uri(std::string* value) {
           _impl_.uri_.Set("", GetArena());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrEndpointInfo.uri)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvEndpointInfo.uri)
 }
 
 // -------------------------------------------------------------------
 
-// PrLocalConfig
+// RvLocalConfig
 
 // optional uint32 sample_rate = 1;
-inline bool PrLocalConfig::has_sample_rate() const {
+inline bool RvLocalConfig::has_sample_rate() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline void PrLocalConfig::clear_sample_rate() {
+inline void RvLocalConfig::clear_sample_rate() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.sample_rate_ = 0u;
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-inline ::uint32_t PrLocalConfig::sample_rate() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrLocalConfig.sample_rate)
+inline ::uint32_t RvLocalConfig::sample_rate() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvLocalConfig.sample_rate)
   return _internal_sample_rate();
 }
-inline void PrLocalConfig::set_sample_rate(::uint32_t value) {
+inline void RvLocalConfig::set_sample_rate(::uint32_t value) {
   _internal_set_sample_rate(value);
   _impl_._has_bits_[0] |= 0x00000001u;
-  // @@protoc_insertion_point(field_set:rocvad.PrLocalConfig.sample_rate)
+  // @@protoc_insertion_point(field_set:rvpb.RvLocalConfig.sample_rate)
 }
-inline ::uint32_t PrLocalConfig::_internal_sample_rate() const {
+inline ::uint32_t RvLocalConfig::_internal_sample_rate() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.sample_rate_;
 }
-inline void PrLocalConfig::_internal_set_sample_rate(::uint32_t value) {
+inline void RvLocalConfig::_internal_set_sample_rate(::uint32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.sample_rate_ = value;
 }
 
-// optional .rocvad.PrChannelLayout channel_layout = 2;
-inline bool PrLocalConfig::has_channel_layout() const {
+// optional .rvpb.RvChannelLayout channel_layout = 2;
+inline bool RvLocalConfig::has_channel_layout() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
-inline void PrLocalConfig::clear_channel_layout() {
+inline void RvLocalConfig::clear_channel_layout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.channel_layout_ = 0;
   _impl_._has_bits_[0] &= ~0x00000002u;
 }
-inline ::rocvad::PrChannelLayout PrLocalConfig::channel_layout() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrLocalConfig.channel_layout)
+inline ::rvpb::RvChannelLayout RvLocalConfig::channel_layout() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvLocalConfig.channel_layout)
   return _internal_channel_layout();
 }
-inline void PrLocalConfig::set_channel_layout(::rocvad::PrChannelLayout value) {
+inline void RvLocalConfig::set_channel_layout(::rvpb::RvChannelLayout value) {
   _internal_set_channel_layout(value);
   _impl_._has_bits_[0] |= 0x00000002u;
-  // @@protoc_insertion_point(field_set:rocvad.PrLocalConfig.channel_layout)
+  // @@protoc_insertion_point(field_set:rvpb.RvLocalConfig.channel_layout)
 }
-inline ::rocvad::PrChannelLayout PrLocalConfig::_internal_channel_layout() const {
+inline ::rvpb::RvChannelLayout RvLocalConfig::_internal_channel_layout() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrChannelLayout>(_impl_.channel_layout_);
+  return static_cast<::rvpb::RvChannelLayout>(_impl_.channel_layout_);
 }
-inline void PrLocalConfig::_internal_set_channel_layout(::rocvad::PrChannelLayout value) {
+inline void RvLocalConfig::_internal_set_channel_layout(::rvpb::RvChannelLayout value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.channel_layout_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PrSenderConfig
+// RvSenderConfig
 
-// optional .rocvad.PrPacketEncoding packet_encoding = 1;
-inline bool PrSenderConfig::has_packet_encoding() const {
+// optional .rvpb.RvPacketEncoding packet_encoding = 1;
+inline bool RvSenderConfig::has_packet_encoding() const {
   bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_packet_encoding() {
+inline void RvSenderConfig::clear_packet_encoding() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.packet_encoding_ = 0;
   _impl_._has_bits_[0] &= ~0x00000010u;
 }
-inline ::rocvad::PrPacketEncoding PrSenderConfig::packet_encoding() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.packet_encoding)
+inline ::rvpb::RvPacketEncoding RvSenderConfig::packet_encoding() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.packet_encoding)
   return _internal_packet_encoding();
 }
-inline void PrSenderConfig::set_packet_encoding(::rocvad::PrPacketEncoding value) {
+inline void RvSenderConfig::set_packet_encoding(::rvpb::RvPacketEncoding value) {
   _internal_set_packet_encoding(value);
   _impl_._has_bits_[0] |= 0x00000010u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.packet_encoding)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.packet_encoding)
 }
-inline ::rocvad::PrPacketEncoding PrSenderConfig::_internal_packet_encoding() const {
+inline ::rvpb::RvPacketEncoding RvSenderConfig::_internal_packet_encoding() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrPacketEncoding>(_impl_.packet_encoding_);
+  return static_cast<::rvpb::RvPacketEncoding>(_impl_.packet_encoding_);
 }
-inline void PrSenderConfig::_internal_set_packet_encoding(::rocvad::PrPacketEncoding value) {
+inline void RvSenderConfig::_internal_set_packet_encoding(::rvpb::RvPacketEncoding value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.packet_encoding_ = value;
 }
 
 // optional .google.protobuf.Duration packet_length = 2;
-inline bool PrSenderConfig::has_packet_length() const {
+inline bool RvSenderConfig::has_packet_length() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.packet_length_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::_internal_packet_length() const {
+inline const ::google::protobuf::Duration& RvSenderConfig::_internal_packet_length() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.packet_length_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::packet_length() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.packet_length)
+inline const ::google::protobuf::Duration& RvSenderConfig::packet_length() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.packet_length)
   return _internal_packet_length();
 }
-inline void PrSenderConfig::unsafe_arena_set_allocated_packet_length(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::unsafe_arena_set_allocated_packet_length(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.packet_length_);
@@ -4343,9 +4343,9 @@ inline void PrSenderConfig::unsafe_arena_set_allocated_packet_length(::google::p
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrSenderConfig.packet_length)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.packet_length)
 }
-inline ::google::protobuf::Duration* PrSenderConfig::release_packet_length() {
+inline ::google::protobuf::Duration* RvSenderConfig::release_packet_length() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
@@ -4364,16 +4364,16 @@ inline ::google::protobuf::Duration* PrSenderConfig::release_packet_length() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::unsafe_arena_release_packet_length() {
+inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_packet_length() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrSenderConfig.packet_length)
+  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.packet_length)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
   ::google::protobuf::Duration* temp = _impl_.packet_length_;
   _impl_.packet_length_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_packet_length() {
+inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_packet_length() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.packet_length_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -4381,13 +4381,13 @@ inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_packet_le
   }
   return _impl_.packet_length_;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::mutable_packet_length() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvSenderConfig::mutable_packet_length() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
   ::google::protobuf::Duration* _msg = _internal_mutable_packet_length();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrSenderConfig.packet_length)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.packet_length)
   return _msg;
 }
-inline void PrSenderConfig::set_allocated_packet_length(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::set_allocated_packet_length(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4405,137 +4405,137 @@ inline void PrSenderConfig::set_allocated_packet_length(::google::protobuf::Dura
   }
 
   _impl_.packet_length_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrSenderConfig.packet_length)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.packet_length)
 }
 
 // optional bool packet_interleaving = 3;
-inline bool PrSenderConfig::has_packet_interleaving() const {
+inline bool RvSenderConfig::has_packet_interleaving() const {
   bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_packet_interleaving() {
+inline void RvSenderConfig::clear_packet_interleaving() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.packet_interleaving_ = false;
   _impl_._has_bits_[0] &= ~0x00000020u;
 }
-inline bool PrSenderConfig::packet_interleaving() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.packet_interleaving)
+inline bool RvSenderConfig::packet_interleaving() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.packet_interleaving)
   return _internal_packet_interleaving();
 }
-inline void PrSenderConfig::set_packet_interleaving(bool value) {
+inline void RvSenderConfig::set_packet_interleaving(bool value) {
   _internal_set_packet_interleaving(value);
   _impl_._has_bits_[0] |= 0x00000020u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.packet_interleaving)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.packet_interleaving)
 }
-inline bool PrSenderConfig::_internal_packet_interleaving() const {
+inline bool RvSenderConfig::_internal_packet_interleaving() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.packet_interleaving_;
 }
-inline void PrSenderConfig::_internal_set_packet_interleaving(bool value) {
+inline void RvSenderConfig::_internal_set_packet_interleaving(bool value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.packet_interleaving_ = value;
 }
 
-// optional .rocvad.PrFecEncoding fec_encoding = 4;
-inline bool PrSenderConfig::has_fec_encoding() const {
+// optional .rvpb.RvFecEncoding fec_encoding = 4;
+inline bool RvSenderConfig::has_fec_encoding() const {
   bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_fec_encoding() {
+inline void RvSenderConfig::clear_fec_encoding() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_encoding_ = 0;
   _impl_._has_bits_[0] &= ~0x00000040u;
 }
-inline ::rocvad::PrFecEncoding PrSenderConfig::fec_encoding() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.fec_encoding)
+inline ::rvpb::RvFecEncoding RvSenderConfig::fec_encoding() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_encoding)
   return _internal_fec_encoding();
 }
-inline void PrSenderConfig::set_fec_encoding(::rocvad::PrFecEncoding value) {
+inline void RvSenderConfig::set_fec_encoding(::rvpb::RvFecEncoding value) {
   _internal_set_fec_encoding(value);
   _impl_._has_bits_[0] |= 0x00000040u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.fec_encoding)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_encoding)
 }
-inline ::rocvad::PrFecEncoding PrSenderConfig::_internal_fec_encoding() const {
+inline ::rvpb::RvFecEncoding RvSenderConfig::_internal_fec_encoding() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrFecEncoding>(_impl_.fec_encoding_);
+  return static_cast<::rvpb::RvFecEncoding>(_impl_.fec_encoding_);
 }
-inline void PrSenderConfig::_internal_set_fec_encoding(::rocvad::PrFecEncoding value) {
+inline void RvSenderConfig::_internal_set_fec_encoding(::rvpb::RvFecEncoding value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_encoding_ = value;
 }
 
 // optional uint32 fec_block_source_packets = 5;
-inline bool PrSenderConfig::has_fec_block_source_packets() const {
+inline bool RvSenderConfig::has_fec_block_source_packets() const {
   bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_fec_block_source_packets() {
+inline void RvSenderConfig::clear_fec_block_source_packets() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_source_packets_ = 0u;
   _impl_._has_bits_[0] &= ~0x00000080u;
 }
-inline ::uint32_t PrSenderConfig::fec_block_source_packets() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.fec_block_source_packets)
+inline ::uint32_t RvSenderConfig::fec_block_source_packets() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_block_source_packets)
   return _internal_fec_block_source_packets();
 }
-inline void PrSenderConfig::set_fec_block_source_packets(::uint32_t value) {
+inline void RvSenderConfig::set_fec_block_source_packets(::uint32_t value) {
   _internal_set_fec_block_source_packets(value);
   _impl_._has_bits_[0] |= 0x00000080u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.fec_block_source_packets)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_block_source_packets)
 }
-inline ::uint32_t PrSenderConfig::_internal_fec_block_source_packets() const {
+inline ::uint32_t RvSenderConfig::_internal_fec_block_source_packets() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.fec_block_source_packets_;
 }
-inline void PrSenderConfig::_internal_set_fec_block_source_packets(::uint32_t value) {
+inline void RvSenderConfig::_internal_set_fec_block_source_packets(::uint32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_source_packets_ = value;
 }
 
 // optional uint32 fec_block_repair_packets = 6;
-inline bool PrSenderConfig::has_fec_block_repair_packets() const {
+inline bool RvSenderConfig::has_fec_block_repair_packets() const {
   bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_fec_block_repair_packets() {
+inline void RvSenderConfig::clear_fec_block_repair_packets() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_repair_packets_ = 0u;
   _impl_._has_bits_[0] &= ~0x00000100u;
 }
-inline ::uint32_t PrSenderConfig::fec_block_repair_packets() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.fec_block_repair_packets)
+inline ::uint32_t RvSenderConfig::fec_block_repair_packets() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_block_repair_packets)
   return _internal_fec_block_repair_packets();
 }
-inline void PrSenderConfig::set_fec_block_repair_packets(::uint32_t value) {
+inline void RvSenderConfig::set_fec_block_repair_packets(::uint32_t value) {
   _internal_set_fec_block_repair_packets(value);
   _impl_._has_bits_[0] |= 0x00000100u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.fec_block_repair_packets)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_block_repair_packets)
 }
-inline ::uint32_t PrSenderConfig::_internal_fec_block_repair_packets() const {
+inline ::uint32_t RvSenderConfig::_internal_fec_block_repair_packets() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return _impl_.fec_block_repair_packets_;
 }
-inline void PrSenderConfig::_internal_set_fec_block_repair_packets(::uint32_t value) {
+inline void RvSenderConfig::_internal_set_fec_block_repair_packets(::uint32_t value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_repair_packets_ = value;
 }
 
 // optional .google.protobuf.Duration target_latency = 7;
-inline bool PrSenderConfig::has_target_latency() const {
+inline bool RvSenderConfig::has_target_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.target_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::_internal_target_latency() const {
+inline const ::google::protobuf::Duration& RvSenderConfig::_internal_target_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.target_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::target_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.target_latency)
+inline const ::google::protobuf::Duration& RvSenderConfig::target_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.target_latency)
   return _internal_target_latency();
 }
-inline void PrSenderConfig::unsafe_arena_set_allocated_target_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::unsafe_arena_set_allocated_target_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.target_latency_);
@@ -4546,9 +4546,9 @@ inline void PrSenderConfig::unsafe_arena_set_allocated_target_latency(::google::
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrSenderConfig.target_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.target_latency)
 }
-inline ::google::protobuf::Duration* PrSenderConfig::release_target_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::release_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
@@ -4567,16 +4567,16 @@ inline ::google::protobuf::Duration* PrSenderConfig::release_target_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::unsafe_arena_release_target_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrSenderConfig.target_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.target_latency)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
   ::google::protobuf::Duration* temp = _impl_.target_latency_;
   _impl_.target_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_target_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.target_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -4584,13 +4584,13 @@ inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_target_la
   }
   return _impl_.target_latency_;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::mutable_target_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvSenderConfig::mutable_target_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
   ::google::protobuf::Duration* _msg = _internal_mutable_target_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrSenderConfig.target_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.target_latency)
   return _msg;
 }
-inline void PrSenderConfig::set_allocated_target_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::set_allocated_target_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4608,25 +4608,25 @@ inline void PrSenderConfig::set_allocated_target_latency(::google::protobuf::Dur
   }
 
   _impl_.target_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrSenderConfig.target_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.target_latency)
 }
 
 // optional .google.protobuf.Duration min_latency = 8;
-inline bool PrSenderConfig::has_min_latency() const {
+inline bool RvSenderConfig::has_min_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.min_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::_internal_min_latency() const {
+inline const ::google::protobuf::Duration& RvSenderConfig::_internal_min_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.min_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.min_latency)
+inline const ::google::protobuf::Duration& RvSenderConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.min_latency)
   return _internal_min_latency();
 }
-inline void PrSenderConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
@@ -4637,9 +4637,9 @@ inline void PrSenderConfig::unsafe_arena_set_allocated_min_latency(::google::pro
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.min_latency)
 }
-inline ::google::protobuf::Duration* PrSenderConfig::release_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::release_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
@@ -4658,16 +4658,16 @@ inline ::google::protobuf::Duration* PrSenderConfig::release_min_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::unsafe_arena_release_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.min_latency)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
   ::google::protobuf::Duration* temp = _impl_.min_latency_;
   _impl_.min_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.min_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -4675,13 +4675,13 @@ inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_min_laten
   }
   return _impl_.min_latency_;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvSenderConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
   ::google::protobuf::Duration* _msg = _internal_mutable_min_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.min_latency)
   return _msg;
 }
-inline void PrSenderConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4699,25 +4699,25 @@ inline void PrSenderConfig::set_allocated_min_latency(::google::protobuf::Durati
   }
 
   _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.min_latency)
 }
 
 // optional .google.protobuf.Duration max_latency = 9;
-inline bool PrSenderConfig::has_max_latency() const {
+inline bool RvSenderConfig::has_max_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.max_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::_internal_max_latency() const {
+inline const ::google::protobuf::Duration& RvSenderConfig::_internal_max_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.max_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrSenderConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.max_latency)
+inline const ::google::protobuf::Duration& RvSenderConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.max_latency)
   return _internal_max_latency();
 }
-inline void PrSenderConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
@@ -4728,9 +4728,9 @@ inline void PrSenderConfig::unsafe_arena_set_allocated_max_latency(::google::pro
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrSenderConfig.max_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.max_latency)
 }
-inline ::google::protobuf::Duration* PrSenderConfig::release_max_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::release_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000008u;
@@ -4749,16 +4749,16 @@ inline ::google::protobuf::Duration* PrSenderConfig::release_max_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::unsafe_arena_release_max_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrSenderConfig.max_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.max_latency)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
   ::google::protobuf::Duration* temp = _impl_.max_latency_;
   _impl_.max_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_max_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.max_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -4766,13 +4766,13 @@ inline ::google::protobuf::Duration* PrSenderConfig::_internal_mutable_max_laten
   }
   return _impl_.max_latency_;
 }
-inline ::google::protobuf::Duration* PrSenderConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvSenderConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
   ::google::protobuf::Duration* _msg = _internal_mutable_max_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrSenderConfig.max_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.max_latency)
   return _msg;
 }
-inline void PrSenderConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4790,141 +4790,141 @@ inline void PrSenderConfig::set_allocated_max_latency(::google::protobuf::Durati
   }
 
   _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrSenderConfig.max_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.max_latency)
 }
 
-// optional .rocvad.PrLatencyTunerBackend latency_tuner_backend = 10;
-inline bool PrSenderConfig::has_latency_tuner_backend() const {
+// optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 10;
+inline bool RvSenderConfig::has_latency_tuner_backend() const {
   bool value = (_impl_._has_bits_[0] & 0x00000200u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_latency_tuner_backend() {
+inline void RvSenderConfig::clear_latency_tuner_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = 0;
   _impl_._has_bits_[0] &= ~0x00000200u;
 }
-inline ::rocvad::PrLatencyTunerBackend PrSenderConfig::latency_tuner_backend() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.latency_tuner_backend)
+inline ::rvpb::RvLatencyTunerBackend RvSenderConfig::latency_tuner_backend() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.latency_tuner_backend)
   return _internal_latency_tuner_backend();
 }
-inline void PrSenderConfig::set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value) {
+inline void RvSenderConfig::set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   _internal_set_latency_tuner_backend(value);
   _impl_._has_bits_[0] |= 0x00000200u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.latency_tuner_backend)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.latency_tuner_backend)
 }
-inline ::rocvad::PrLatencyTunerBackend PrSenderConfig::_internal_latency_tuner_backend() const {
+inline ::rvpb::RvLatencyTunerBackend RvSenderConfig::_internal_latency_tuner_backend() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrLatencyTunerBackend>(_impl_.latency_tuner_backend_);
+  return static_cast<::rvpb::RvLatencyTunerBackend>(_impl_.latency_tuner_backend_);
 }
-inline void PrSenderConfig::_internal_set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value) {
+inline void RvSenderConfig::_internal_set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = value;
 }
 
-// optional .rocvad.PrLatencyTunerProfile latency_tuner_profile = 11;
-inline bool PrSenderConfig::has_latency_tuner_profile() const {
+// optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 11;
+inline bool RvSenderConfig::has_latency_tuner_profile() const {
   bool value = (_impl_._has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_latency_tuner_profile() {
+inline void RvSenderConfig::clear_latency_tuner_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = 0;
   _impl_._has_bits_[0] &= ~0x00000400u;
 }
-inline ::rocvad::PrLatencyTunerProfile PrSenderConfig::latency_tuner_profile() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.latency_tuner_profile)
+inline ::rvpb::RvLatencyTunerProfile RvSenderConfig::latency_tuner_profile() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.latency_tuner_profile)
   return _internal_latency_tuner_profile();
 }
-inline void PrSenderConfig::set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value) {
+inline void RvSenderConfig::set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   _internal_set_latency_tuner_profile(value);
   _impl_._has_bits_[0] |= 0x00000400u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.latency_tuner_profile)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.latency_tuner_profile)
 }
-inline ::rocvad::PrLatencyTunerProfile PrSenderConfig::_internal_latency_tuner_profile() const {
+inline ::rvpb::RvLatencyTunerProfile RvSenderConfig::_internal_latency_tuner_profile() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrLatencyTunerProfile>(_impl_.latency_tuner_profile_);
+  return static_cast<::rvpb::RvLatencyTunerProfile>(_impl_.latency_tuner_profile_);
 }
-inline void PrSenderConfig::_internal_set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value) {
+inline void RvSenderConfig::_internal_set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = value;
 }
 
-// optional .rocvad.PrResamplerBackend resampler_backend = 12;
-inline bool PrSenderConfig::has_resampler_backend() const {
+// optional .rvpb.RvResamplerBackend resampler_backend = 12;
+inline bool RvSenderConfig::has_resampler_backend() const {
   bool value = (_impl_._has_bits_[0] & 0x00000800u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_resampler_backend() {
+inline void RvSenderConfig::clear_resampler_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = 0;
   _impl_._has_bits_[0] &= ~0x00000800u;
 }
-inline ::rocvad::PrResamplerBackend PrSenderConfig::resampler_backend() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.resampler_backend)
+inline ::rvpb::RvResamplerBackend RvSenderConfig::resampler_backend() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.resampler_backend)
   return _internal_resampler_backend();
 }
-inline void PrSenderConfig::set_resampler_backend(::rocvad::PrResamplerBackend value) {
+inline void RvSenderConfig::set_resampler_backend(::rvpb::RvResamplerBackend value) {
   _internal_set_resampler_backend(value);
   _impl_._has_bits_[0] |= 0x00000800u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.resampler_backend)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.resampler_backend)
 }
-inline ::rocvad::PrResamplerBackend PrSenderConfig::_internal_resampler_backend() const {
+inline ::rvpb::RvResamplerBackend RvSenderConfig::_internal_resampler_backend() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrResamplerBackend>(_impl_.resampler_backend_);
+  return static_cast<::rvpb::RvResamplerBackend>(_impl_.resampler_backend_);
 }
-inline void PrSenderConfig::_internal_set_resampler_backend(::rocvad::PrResamplerBackend value) {
+inline void RvSenderConfig::_internal_set_resampler_backend(::rvpb::RvResamplerBackend value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = value;
 }
 
-// optional .rocvad.PrResamplerProfile resampler_profile = 13;
-inline bool PrSenderConfig::has_resampler_profile() const {
+// optional .rvpb.RvResamplerProfile resampler_profile = 13;
+inline bool RvSenderConfig::has_resampler_profile() const {
   bool value = (_impl_._has_bits_[0] & 0x00001000u) != 0;
   return value;
 }
-inline void PrSenderConfig::clear_resampler_profile() {
+inline void RvSenderConfig::clear_resampler_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = 0;
   _impl_._has_bits_[0] &= ~0x00001000u;
 }
-inline ::rocvad::PrResamplerProfile PrSenderConfig::resampler_profile() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrSenderConfig.resampler_profile)
+inline ::rvpb::RvResamplerProfile RvSenderConfig::resampler_profile() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.resampler_profile)
   return _internal_resampler_profile();
 }
-inline void PrSenderConfig::set_resampler_profile(::rocvad::PrResamplerProfile value) {
+inline void RvSenderConfig::set_resampler_profile(::rvpb::RvResamplerProfile value) {
   _internal_set_resampler_profile(value);
   _impl_._has_bits_[0] |= 0x00001000u;
-  // @@protoc_insertion_point(field_set:rocvad.PrSenderConfig.resampler_profile)
+  // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.resampler_profile)
 }
-inline ::rocvad::PrResamplerProfile PrSenderConfig::_internal_resampler_profile() const {
+inline ::rvpb::RvResamplerProfile RvSenderConfig::_internal_resampler_profile() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrResamplerProfile>(_impl_.resampler_profile_);
+  return static_cast<::rvpb::RvResamplerProfile>(_impl_.resampler_profile_);
 }
-inline void PrSenderConfig::_internal_set_resampler_profile(::rocvad::PrResamplerProfile value) {
+inline void RvSenderConfig::_internal_set_resampler_profile(::rvpb::RvResamplerProfile value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// PrReceiverConfig
+// RvReceiverConfig
 
 // optional .google.protobuf.Duration target_latency = 1;
-inline bool PrReceiverConfig::has_target_latency() const {
+inline bool RvReceiverConfig::has_target_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.target_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::_internal_target_latency() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_target_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.target_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::target_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.target_latency)
+inline const ::google::protobuf::Duration& RvReceiverConfig::target_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.target_latency)
   return _internal_target_latency();
 }
-inline void PrReceiverConfig::unsafe_arena_set_allocated_target_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_target_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.target_latency_);
@@ -4935,9 +4935,9 @@ inline void PrReceiverConfig::unsafe_arena_set_allocated_target_latency(::google
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrReceiverConfig.target_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.target_latency)
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::release_target_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
@@ -4956,16 +4956,16 @@ inline ::google::protobuf::Duration* PrReceiverConfig::release_target_latency() 
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::unsafe_arena_release_target_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrReceiverConfig.target_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.target_latency)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
   ::google::protobuf::Duration* temp = _impl_.target_latency_;
   _impl_.target_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_target_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_target_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.target_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -4973,13 +4973,13 @@ inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_target_
   }
   return _impl_.target_latency_;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::mutable_target_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_target_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
   ::google::protobuf::Duration* _msg = _internal_mutable_target_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrReceiverConfig.target_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.target_latency)
   return _msg;
 }
-inline void PrReceiverConfig::set_allocated_target_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_target_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -4997,25 +4997,25 @@ inline void PrReceiverConfig::set_allocated_target_latency(::google::protobuf::D
   }
 
   _impl_.target_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrReceiverConfig.target_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.target_latency)
 }
 
 // optional .google.protobuf.Duration min_latency = 2;
-inline bool PrReceiverConfig::has_min_latency() const {
+inline bool RvReceiverConfig::has_min_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.min_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::_internal_min_latency() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_min_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.min_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.min_latency)
+inline const ::google::protobuf::Duration& RvReceiverConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.min_latency)
   return _internal_min_latency();
 }
-inline void PrReceiverConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
@@ -5026,9 +5026,9 @@ inline void PrReceiverConfig::unsafe_arena_set_allocated_min_latency(::google::p
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.min_latency)
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::release_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000002u;
@@ -5047,16 +5047,16 @@ inline ::google::protobuf::Duration* PrReceiverConfig::release_min_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::unsafe_arena_release_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.min_latency)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
   ::google::protobuf::Duration* temp = _impl_.min_latency_;
   _impl_.min_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_min_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.min_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -5064,13 +5064,13 @@ inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_min_lat
   }
   return _impl_.min_latency_;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
   ::google::protobuf::Duration* _msg = _internal_mutable_min_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.min_latency)
   return _msg;
 }
-inline void PrReceiverConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -5088,25 +5088,25 @@ inline void PrReceiverConfig::set_allocated_min_latency(::google::protobuf::Dura
   }
 
   _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.min_latency)
 }
 
 // optional .google.protobuf.Duration max_latency = 3;
-inline bool PrReceiverConfig::has_max_latency() const {
+inline bool RvReceiverConfig::has_max_latency() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.max_latency_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::_internal_max_latency() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_max_latency() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.max_latency_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.max_latency)
+inline const ::google::protobuf::Duration& RvReceiverConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.max_latency)
   return _internal_max_latency();
 }
-inline void PrReceiverConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
@@ -5117,9 +5117,9 @@ inline void PrReceiverConfig::unsafe_arena_set_allocated_max_latency(::google::p
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrReceiverConfig.max_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.max_latency)
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::release_max_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
@@ -5138,16 +5138,16 @@ inline ::google::protobuf::Duration* PrReceiverConfig::release_max_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::unsafe_arena_release_max_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrReceiverConfig.max_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.max_latency)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
   ::google::protobuf::Duration* temp = _impl_.max_latency_;
   _impl_.max_latency_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_max_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_max_latency() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.max_latency_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -5155,13 +5155,13 @@ inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_max_lat
   }
   return _impl_.max_latency_;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
   ::google::protobuf::Duration* _msg = _internal_mutable_max_latency();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrReceiverConfig.max_latency)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.max_latency)
   return _msg;
 }
-inline void PrReceiverConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -5179,137 +5179,137 @@ inline void PrReceiverConfig::set_allocated_max_latency(::google::protobuf::Dura
   }
 
   _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrReceiverConfig.max_latency)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.max_latency)
 }
 
-// optional .rocvad.PrLatencyTunerBackend latency_tuner_backend = 4;
-inline bool PrReceiverConfig::has_latency_tuner_backend() const {
+// optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 4;
+inline bool RvReceiverConfig::has_latency_tuner_backend() const {
   bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
-inline void PrReceiverConfig::clear_latency_tuner_backend() {
+inline void RvReceiverConfig::clear_latency_tuner_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = 0;
   _impl_._has_bits_[0] &= ~0x00000020u;
 }
-inline ::rocvad::PrLatencyTunerBackend PrReceiverConfig::latency_tuner_backend() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.latency_tuner_backend)
+inline ::rvpb::RvLatencyTunerBackend RvReceiverConfig::latency_tuner_backend() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.latency_tuner_backend)
   return _internal_latency_tuner_backend();
 }
-inline void PrReceiverConfig::set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value) {
+inline void RvReceiverConfig::set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   _internal_set_latency_tuner_backend(value);
   _impl_._has_bits_[0] |= 0x00000020u;
-  // @@protoc_insertion_point(field_set:rocvad.PrReceiverConfig.latency_tuner_backend)
+  // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.latency_tuner_backend)
 }
-inline ::rocvad::PrLatencyTunerBackend PrReceiverConfig::_internal_latency_tuner_backend() const {
+inline ::rvpb::RvLatencyTunerBackend RvReceiverConfig::_internal_latency_tuner_backend() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrLatencyTunerBackend>(_impl_.latency_tuner_backend_);
+  return static_cast<::rvpb::RvLatencyTunerBackend>(_impl_.latency_tuner_backend_);
 }
-inline void PrReceiverConfig::_internal_set_latency_tuner_backend(::rocvad::PrLatencyTunerBackend value) {
+inline void RvReceiverConfig::_internal_set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = value;
 }
 
-// optional .rocvad.PrLatencyTunerProfile latency_tuner_profile = 5;
-inline bool PrReceiverConfig::has_latency_tuner_profile() const {
+// optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 5;
+inline bool RvReceiverConfig::has_latency_tuner_profile() const {
   bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
-inline void PrReceiverConfig::clear_latency_tuner_profile() {
+inline void RvReceiverConfig::clear_latency_tuner_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = 0;
   _impl_._has_bits_[0] &= ~0x00000040u;
 }
-inline ::rocvad::PrLatencyTunerProfile PrReceiverConfig::latency_tuner_profile() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.latency_tuner_profile)
+inline ::rvpb::RvLatencyTunerProfile RvReceiverConfig::latency_tuner_profile() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.latency_tuner_profile)
   return _internal_latency_tuner_profile();
 }
-inline void PrReceiverConfig::set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value) {
+inline void RvReceiverConfig::set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   _internal_set_latency_tuner_profile(value);
   _impl_._has_bits_[0] |= 0x00000040u;
-  // @@protoc_insertion_point(field_set:rocvad.PrReceiverConfig.latency_tuner_profile)
+  // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.latency_tuner_profile)
 }
-inline ::rocvad::PrLatencyTunerProfile PrReceiverConfig::_internal_latency_tuner_profile() const {
+inline ::rvpb::RvLatencyTunerProfile RvReceiverConfig::_internal_latency_tuner_profile() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrLatencyTunerProfile>(_impl_.latency_tuner_profile_);
+  return static_cast<::rvpb::RvLatencyTunerProfile>(_impl_.latency_tuner_profile_);
 }
-inline void PrReceiverConfig::_internal_set_latency_tuner_profile(::rocvad::PrLatencyTunerProfile value) {
+inline void RvReceiverConfig::_internal_set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = value;
 }
 
-// optional .rocvad.PrResamplerBackend resampler_backend = 6;
-inline bool PrReceiverConfig::has_resampler_backend() const {
+// optional .rvpb.RvResamplerBackend resampler_backend = 6;
+inline bool RvReceiverConfig::has_resampler_backend() const {
   bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
-inline void PrReceiverConfig::clear_resampler_backend() {
+inline void RvReceiverConfig::clear_resampler_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = 0;
   _impl_._has_bits_[0] &= ~0x00000080u;
 }
-inline ::rocvad::PrResamplerBackend PrReceiverConfig::resampler_backend() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.resampler_backend)
+inline ::rvpb::RvResamplerBackend RvReceiverConfig::resampler_backend() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.resampler_backend)
   return _internal_resampler_backend();
 }
-inline void PrReceiverConfig::set_resampler_backend(::rocvad::PrResamplerBackend value) {
+inline void RvReceiverConfig::set_resampler_backend(::rvpb::RvResamplerBackend value) {
   _internal_set_resampler_backend(value);
   _impl_._has_bits_[0] |= 0x00000080u;
-  // @@protoc_insertion_point(field_set:rocvad.PrReceiverConfig.resampler_backend)
+  // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.resampler_backend)
 }
-inline ::rocvad::PrResamplerBackend PrReceiverConfig::_internal_resampler_backend() const {
+inline ::rvpb::RvResamplerBackend RvReceiverConfig::_internal_resampler_backend() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrResamplerBackend>(_impl_.resampler_backend_);
+  return static_cast<::rvpb::RvResamplerBackend>(_impl_.resampler_backend_);
 }
-inline void PrReceiverConfig::_internal_set_resampler_backend(::rocvad::PrResamplerBackend value) {
+inline void RvReceiverConfig::_internal_set_resampler_backend(::rvpb::RvResamplerBackend value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = value;
 }
 
-// optional .rocvad.PrResamplerProfile resampler_profile = 7;
-inline bool PrReceiverConfig::has_resampler_profile() const {
+// optional .rvpb.RvResamplerProfile resampler_profile = 7;
+inline bool RvReceiverConfig::has_resampler_profile() const {
   bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
-inline void PrReceiverConfig::clear_resampler_profile() {
+inline void RvReceiverConfig::clear_resampler_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = 0;
   _impl_._has_bits_[0] &= ~0x00000100u;
 }
-inline ::rocvad::PrResamplerProfile PrReceiverConfig::resampler_profile() const {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.resampler_profile)
+inline ::rvpb::RvResamplerProfile RvReceiverConfig::resampler_profile() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.resampler_profile)
   return _internal_resampler_profile();
 }
-inline void PrReceiverConfig::set_resampler_profile(::rocvad::PrResamplerProfile value) {
+inline void RvReceiverConfig::set_resampler_profile(::rvpb::RvResamplerProfile value) {
   _internal_set_resampler_profile(value);
   _impl_._has_bits_[0] |= 0x00000100u;
-  // @@protoc_insertion_point(field_set:rocvad.PrReceiverConfig.resampler_profile)
+  // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.resampler_profile)
 }
-inline ::rocvad::PrResamplerProfile PrReceiverConfig::_internal_resampler_profile() const {
+inline ::rvpb::RvResamplerProfile RvReceiverConfig::_internal_resampler_profile() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return static_cast<::rocvad::PrResamplerProfile>(_impl_.resampler_profile_);
+  return static_cast<::rvpb::RvResamplerProfile>(_impl_.resampler_profile_);
 }
-inline void PrReceiverConfig::_internal_set_resampler_profile(::rocvad::PrResamplerProfile value) {
+inline void RvReceiverConfig::_internal_set_resampler_profile(::rvpb::RvResamplerProfile value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = value;
 }
 
 // optional .google.protobuf.Duration no_playback_timeout = 8;
-inline bool PrReceiverConfig::has_no_playback_timeout() const {
+inline bool RvReceiverConfig::has_no_playback_timeout() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.no_playback_timeout_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::_internal_no_playback_timeout() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_no_playback_timeout() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.no_playback_timeout_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::no_playback_timeout() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.no_playback_timeout)
+inline const ::google::protobuf::Duration& RvReceiverConfig::no_playback_timeout() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.no_playback_timeout)
   return _internal_no_playback_timeout();
 }
-inline void PrReceiverConfig::unsafe_arena_set_allocated_no_playback_timeout(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_no_playback_timeout(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.no_playback_timeout_);
@@ -5320,9 +5320,9 @@ inline void PrReceiverConfig::unsafe_arena_set_allocated_no_playback_timeout(::g
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrReceiverConfig.no_playback_timeout)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.no_playback_timeout)
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::release_no_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_no_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000008u;
@@ -5341,16 +5341,16 @@ inline ::google::protobuf::Duration* PrReceiverConfig::release_no_playback_timeo
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::unsafe_arena_release_no_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_no_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrReceiverConfig.no_playback_timeout)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.no_playback_timeout)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
   ::google::protobuf::Duration* temp = _impl_.no_playback_timeout_;
   _impl_.no_playback_timeout_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_no_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_no_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.no_playback_timeout_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -5358,13 +5358,13 @@ inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_no_play
   }
   return _impl_.no_playback_timeout_;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::mutable_no_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_no_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
   ::google::protobuf::Duration* _msg = _internal_mutable_no_playback_timeout();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrReceiverConfig.no_playback_timeout)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.no_playback_timeout)
   return _msg;
 }
-inline void PrReceiverConfig::set_allocated_no_playback_timeout(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_no_playback_timeout(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -5382,25 +5382,25 @@ inline void PrReceiverConfig::set_allocated_no_playback_timeout(::google::protob
   }
 
   _impl_.no_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrReceiverConfig.no_playback_timeout)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.no_playback_timeout)
 }
 
 // optional .google.protobuf.Duration choppy_playback_timeout = 9;
-inline bool PrReceiverConfig::has_choppy_playback_timeout() const {
+inline bool RvReceiverConfig::has_choppy_playback_timeout() const {
   bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.choppy_playback_timeout_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::_internal_choppy_playback_timeout() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_choppy_playback_timeout() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   const ::google::protobuf::Duration* p = _impl_.choppy_playback_timeout_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& PrReceiverConfig::choppy_playback_timeout() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rocvad.PrReceiverConfig.choppy_playback_timeout)
+inline const ::google::protobuf::Duration& RvReceiverConfig::choppy_playback_timeout() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.choppy_playback_timeout)
   return _internal_choppy_playback_timeout();
 }
-inline void PrReceiverConfig::unsafe_arena_set_allocated_choppy_playback_timeout(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_choppy_playback_timeout(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.choppy_playback_timeout_);
@@ -5411,9 +5411,9 @@ inline void PrReceiverConfig::unsafe_arena_set_allocated_choppy_playback_timeout
   } else {
     _impl_._has_bits_[0] &= ~0x00000010u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rocvad.PrReceiverConfig.choppy_playback_timeout)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.choppy_playback_timeout)
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::release_choppy_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_choppy_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000010u;
@@ -5432,16 +5432,16 @@ inline ::google::protobuf::Duration* PrReceiverConfig::release_choppy_playback_t
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::unsafe_arena_release_choppy_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_choppy_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rocvad.PrReceiverConfig.choppy_playback_timeout)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.choppy_playback_timeout)
 
   _impl_._has_bits_[0] &= ~0x00000010u;
   ::google::protobuf::Duration* temp = _impl_.choppy_playback_timeout_;
   _impl_.choppy_playback_timeout_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_choppy_playback_timeout() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_choppy_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.choppy_playback_timeout_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
@@ -5449,13 +5449,13 @@ inline ::google::protobuf::Duration* PrReceiverConfig::_internal_mutable_choppy_
   }
   return _impl_.choppy_playback_timeout_;
 }
-inline ::google::protobuf::Duration* PrReceiverConfig::mutable_choppy_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_choppy_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000010u;
   ::google::protobuf::Duration* _msg = _internal_mutable_choppy_playback_timeout();
-  // @@protoc_insertion_point(field_mutable:rocvad.PrReceiverConfig.choppy_playback_timeout)
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.choppy_playback_timeout)
   return _msg;
 }
-inline void PrReceiverConfig::set_allocated_choppy_playback_timeout(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_choppy_playback_timeout(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
@@ -5473,7 +5473,7 @@ inline void PrReceiverConfig::set_allocated_choppy_playback_timeout(::google::pr
   }
 
   _impl_.choppy_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rocvad.PrReceiverConfig.choppy_playback_timeout)
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.choppy_playback_timeout)
 }
 
 #ifdef __GNUC__
@@ -5481,71 +5481,71 @@ inline void PrReceiverConfig::set_allocated_choppy_playback_timeout(::google::pr
 #endif  // __GNUC__
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace rocvad
+}  // namespace rvpb
 
 
 namespace google {
 namespace protobuf {
 
 template <>
-struct is_proto_enum<::rocvad::PrLogEntry_Level> : std::true_type {};
+struct is_proto_enum<::rvpb::RvLogEntry_Level> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrLogEntry_Level>() {
-  return ::rocvad::PrLogEntry_Level_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvLogEntry_Level>() {
+  return ::rvpb::RvLogEntry_Level_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrDeviceType> : std::true_type {};
+struct is_proto_enum<::rvpb::RvDeviceType> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrDeviceType>() {
-  return ::rocvad::PrDeviceType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvDeviceType>() {
+  return ::rvpb::RvDeviceType_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrInterface> : std::true_type {};
+struct is_proto_enum<::rvpb::RvInterface> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrInterface>() {
-  return ::rocvad::PrInterface_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvInterface>() {
+  return ::rvpb::RvInterface_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrChannelLayout> : std::true_type {};
+struct is_proto_enum<::rvpb::RvChannelLayout> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrChannelLayout>() {
-  return ::rocvad::PrChannelLayout_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvChannelLayout>() {
+  return ::rvpb::RvChannelLayout_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrPacketEncoding> : std::true_type {};
+struct is_proto_enum<::rvpb::RvPacketEncoding> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrPacketEncoding>() {
-  return ::rocvad::PrPacketEncoding_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvPacketEncoding>() {
+  return ::rvpb::RvPacketEncoding_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrFecEncoding> : std::true_type {};
+struct is_proto_enum<::rvpb::RvFecEncoding> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrFecEncoding>() {
-  return ::rocvad::PrFecEncoding_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvFecEncoding>() {
+  return ::rvpb::RvFecEncoding_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrLatencyTunerBackend> : std::true_type {};
+struct is_proto_enum<::rvpb::RvLatencyTunerBackend> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrLatencyTunerBackend>() {
-  return ::rocvad::PrLatencyTunerBackend_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvLatencyTunerBackend>() {
+  return ::rvpb::RvLatencyTunerBackend_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrLatencyTunerProfile> : std::true_type {};
+struct is_proto_enum<::rvpb::RvLatencyTunerProfile> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrLatencyTunerProfile>() {
-  return ::rocvad::PrLatencyTunerProfile_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvLatencyTunerProfile>() {
+  return ::rvpb::RvLatencyTunerProfile_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrResamplerBackend> : std::true_type {};
+struct is_proto_enum<::rvpb::RvResamplerBackend> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrResamplerBackend>() {
-  return ::rocvad::PrResamplerBackend_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvResamplerBackend>() {
+  return ::rvpb::RvResamplerBackend_descriptor();
 }
 template <>
-struct is_proto_enum<::rocvad::PrResamplerProfile> : std::true_type {};
+struct is_proto_enum<::rvpb::RvResamplerProfile> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::rocvad::PrResamplerProfile>() {
-  return ::rocvad::PrResamplerProfile_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::rvpb::RvResamplerProfile>() {
+  return ::rvpb::RvResamplerProfile_descriptor();
 }
 
 }  // namespace protobuf

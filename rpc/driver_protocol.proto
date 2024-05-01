@@ -8,55 +8,55 @@
 
 syntax = "proto3";
 
-package rocvad;
+package rvpb;
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 // RPC interface for Roc Virtual Audio Device driver.
-service DriverProtocol
+service RvDriver
 {
     // Check driver presence.
     // This command does nothing and just returns success.
-    rpc ping(PrNone) returns (PrNone) {}
+    rpc ping(RvNone) returns (RvNone) {}
 
     // Get driver info.
-    rpc driver_info(PrNone) returns (PrDriverInfo) {}
+    rpc driver_info(RvNone) returns (RvDriverInfo) {}
 
     // Stream driver logs to client.
     // Logs are duplicated to all clients that want to stream them.
     // Logs are also duplicated to syslog.
-    rpc stream_logs(PrNone) returns (stream PrLogEntry) {}
+    rpc stream_logs(RvNone) returns (stream RvLogEntry) {}
 
     // Get info for all virtual devices.
-    rpc get_all_devices(PrNone) returns (PrDeviceList) {}
+    rpc get_all_devices(RvNone) returns (RvDeviceList) {}
 
     // Get info for one virtual device.
     // Device can be selected by index or UID.
-    rpc get_device(PrDeviceSelector) returns (PrDeviceInfo) {}
+    rpc get_device(RvDeviceSelector) returns (RvDeviceInfo) {}
 
     // Create new virtual device.
     // Returns updated device info with all fields set.
-    rpc add_device(PrDeviceInfo) returns (PrDeviceInfo) {}
+    rpc add_device(RvDeviceInfo) returns (RvDeviceInfo) {}
 
     // Delete virtual device.
     // Device can be selected by index or UID.
-    rpc delete_device(PrDeviceSelector) returns (PrNone) {}
+    rpc delete_device(RvDeviceSelector) returns (RvNone) {}
 
     // Bind device to local endpoint.
-    rpc bind(PrEndpointRequest) returns (PrEndpointInfo) {}
+    rpc bind(RvEndpointRequest) returns (RvEndpointInfo) {}
 
     // Connect device to remote endpoint.
-    rpc connect(PrEndpointRequest) returns (PrEndpointInfo) {}
+    rpc connect(RvEndpointRequest) returns (RvEndpointInfo) {}
 }
 
 // No data.
-message PrNone
+message RvNone
 {
 }
 
 // Info about driver.
-message PrDriverInfo
+message RvDriverInfo
 {
     // Driver version (comes from git tag).
     string version = 1;
@@ -66,7 +66,7 @@ message PrDriverInfo
 }
 
 // Driver log message.
-message PrLogEntry
+message RvLogEntry
 {
     enum Level
     {
@@ -89,7 +89,7 @@ message PrLogEntry
 }
 
 // Virtual device selector.
-message PrDeviceSelector
+message RvDeviceSelector
 {
     oneof Selector
     {
@@ -102,13 +102,13 @@ message PrDeviceSelector
 }
 
 // Virtual device info.
-message PrDeviceInfo
+message RvDeviceInfo
 {
     // Device type.
     // Each virtual device can be either sender (output device) or
     // receiver (input device).
     // Required field.
-    PrDeviceType type = 1;
+    RvDeviceType type = 1;
 
     // Device index identifier.
     // Index is a small numeric value that is reused for new devices
@@ -135,48 +135,48 @@ message PrDeviceInfo
 
     // Local configuration of device.
     // Parameters of virtual device, as it's shown to the local apps.
-    PrLocalConfig local_config = 5;
+    RvLocalConfig local_config = 5;
 
     // Network configuration of device.
     // Parameters of network sender or receiver.
     oneof NetworkConfig
     {
         // Configuration for sender device.
-        // Should be used if device type is PR_DEVICE_TYPE_SENDER.
-        PrSenderConfig sender_config = 6;
+        // Should be used if device type is RV_DEVICE_TYPE_SENDER.
+        RvSenderConfig sender_config = 6;
 
         // Configuration for receiver device.
-        // Should be used if device type is PR_DEVICE_TYPE_RECEIVER.
-        PrReceiverConfig receiver_config = 7;
+        // Should be used if device type is RV_DEVICE_TYPE_RECEIVER.
+        RvReceiverConfig receiver_config = 7;
     }
 
     // List of local endpoints on which device is receiving traffic or control requests.
     // Local endpoints can be added intially via add_device() or on fly via bind().
-    repeated PrEndpointInfo local_endpoints = 8;
+    repeated RvEndpointInfo local_endpoints = 8;
 
     // List of remote endpoints to which device is sending traffic or control requests.
     // Remote endpoints can be added intially via add_device() or on fly via connect().
-    repeated PrEndpointInfo remote_endpoints = 9;
+    repeated RvEndpointInfo remote_endpoints = 9;
 }
 
 // Virtual device list.
-message PrDeviceList
+message RvDeviceList
 {
-    repeated PrDeviceInfo devices = 1;
+    repeated RvDeviceInfo devices = 1;
 }
 
 // Endpoint bind or connect request.
-message PrEndpointRequest
+message RvEndpointRequest
 {
     // Virtual device to which request is send.
-    PrDeviceSelector device = 1;
+    RvDeviceSelector device = 1;
 
     // New local or remote endpoint to be bound or connected.
-    PrEndpointInfo endpoint = 2;
+    RvEndpointInfo endpoint = 2;
 }
 
 // Endpoint description.
-message PrEndpointInfo
+message RvEndpointInfo
 {
     // Slot to which this endpoint belongs.
     // Slot is a group of related endpoints, like complementary transport and control
@@ -192,7 +192,7 @@ message PrEndpointInfo
     // Interface defines type of data transfered via endpoint, and list of allowed
     // endpoint protocols (URI schemas). Each slot can have up to one endpoint of
     // every interface type, e.g. one source endpoint and one control endpoint.
-    PrInterface interface = 2;
+    RvInterface interface = 2;
 
     // URI is address associated with endpoint.
     // For local endpoint, URI defines address to which endpoint is bound.
@@ -202,7 +202,7 @@ message PrEndpointInfo
 }
 
 // Local parameters of virtual device.
-message PrLocalConfig
+message RvLocalConfig
 {
     // Virtual device sample rate, in Hertz (e.g. 44100).
     // Keep unset to use default.
@@ -210,15 +210,15 @@ message PrLocalConfig
 
     // Virtual device channel layout (e.g. stereo).
     // Keep unset to use default.
-    optional PrChannelLayout channel_layout = 2;
+    optional RvChannelLayout channel_layout = 2;
 }
 
 // Parameters of sender device.
-message PrSenderConfig
+message RvSenderConfig
 {
     // Encoding for network packets.
     // Keep unset to use default.
-    optional PrPacketEncoding packet_encoding = 1;
+    optional RvPacketEncoding packet_encoding = 1;
 
     // Duration of a single packet.
     // Keep unset to use default.
@@ -230,7 +230,7 @@ message PrSenderConfig
 
     // Forward Error Correction encoding.
     // Keep unset to use default.
-    optional PrFecEncoding fec_encoding = 4;
+    optional RvFecEncoding fec_encoding = 4;
 
     // Number of source packets per FEC block.
     // Keep unset to use default.
@@ -258,24 +258,24 @@ message PrSenderConfig
     // Latency tuning algorithm.
     // Use only if you need sender-side latency tuning.
     // Keep unset to disable.
-    optional PrLatencyTunerBackend latency_tuner_backend = 10;
+    optional RvLatencyTunerBackend latency_tuner_backend = 10;
 
     // Latency tuning profile.
     // Use only if you need sender-side latency tuning.
     // Keep unset to disable.
-    optional PrLatencyTunerProfile latency_tuner_profile = 11;
+    optional RvLatencyTunerProfile latency_tuner_profile = 11;
 
     // Resampling algorithm.
     // Keep unset to use default.
-    optional PrResamplerBackend resampler_backend = 12;
+    optional RvResamplerBackend resampler_backend = 12;
 
     // Resampling quality.
     // Keep unset to use default.
-    optional PrResamplerProfile resampler_profile = 13;
+    optional RvResamplerProfile resampler_profile = 13;
 }
 
 // Parameters of receiver device.
-message PrReceiverConfig
+message RvReceiverConfig
 {
     // Target latency.
     // Keep unset to use default.
@@ -291,19 +291,19 @@ message PrReceiverConfig
 
     // Latency tuning algorithm.
     // Keep unset to use default.
-    optional PrLatencyTunerBackend latency_tuner_backend = 4;
+    optional RvLatencyTunerBackend latency_tuner_backend = 4;
 
     // Latency tuning profile.
     // Keep unset to use default.
-    optional PrLatencyTunerProfile latency_tuner_profile = 5;
+    optional RvLatencyTunerProfile latency_tuner_profile = 5;
 
     // Resampling algorithm.
     // Keep unset to use default.
-    optional PrResamplerBackend resampler_backend = 6;
+    optional RvResamplerBackend resampler_backend = 6;
 
     // Resampling quality.
     // Keep unset to use default.
-    optional PrResamplerProfile resampler_profile = 7;
+    optional RvResamplerProfile resampler_profile = 7;
 
     // Timeout for the lack of playback.
     // Keep unset to use default.
@@ -316,139 +316,139 @@ message PrReceiverConfig
 
 // Device type.
 // Defines whether device will be input or output.
-enum PrDeviceType
+enum RvDeviceType
 {
     // Output device that sends sound to remote receiver.
-    PR_DEVICE_TYPE_SENDER = 0;
+    RV_DEVICE_TYPE_SENDER = 0;
 
     // Input device that receives sound from remote sender.
-    PR_DEVICE_TYPE_RECEIVER = 1;
+    RV_DEVICE_TYPE_RECEIVER = 1;
 }
 
 // Endpoint interface type.
-enum PrInterface
+enum RvInterface
 {
     // Interface that consolidates all types of streams.
-    PR_INTERFACE_CONSOLIDATED = 0;
+    RV_INTERFACE_CONSOLIDATED = 0;
 
     // Interface for audio stream source data.
-    PR_INTERFACE_AUDIO_SOURCE = 1;
+    RV_INTERFACE_AUDIO_SOURCE = 1;
 
     // Interface for audio stream repair data.
-    PR_INTERFACE_AUDIO_REPAIR = 2;
+    RV_INTERFACE_AUDIO_REPAIR = 2;
 
     // Interface for audio control messages.
-    PR_INTERFACE_AUDIO_CONTROL = 3;
+    RV_INTERFACE_AUDIO_CONTROL = 3;
 }
 
 // Device channel layout.
 // Defines what channels will be shown to apps that use the device.
-enum PrChannelLayout
+enum RvChannelLayout
 {
     // One monochromatic channel.
-    PR_CHANNEL_LAYOUT_MONO = 0;
+    RV_CHANNEL_LAYOUT_MONO = 0;
 
     // Two channels: left and right.
-    PR_CHANNEL_LAYOUT_STEREO = 1;
+    RV_CHANNEL_LAYOUT_STEREO = 1;
 }
 
 // Network packet encoding.
 // Defines how samples are encoded when sent over network.
-enum PrPacketEncoding
+enum RvPacketEncoding
 {
     // PCM signed 16-bit (mono).
     // "L16" encoding from RTP A/V Profile (RFC 3551).
     // Uncompressed samples coded as interleaved 16-bit signed big-endian
     // integers in two's complement notation.
-    PR_PACKET_ENCODING_AVP_L16_MONO = 0;
+    RV_PACKET_ENCODING_AVP_L16_MONO = 0;
 
     // PCM signed 16-bit (stereo).
     // "L16" encoding from RTP A/V Profile (RFC 3551).
     // Uncompressed samples coded as interleaved 16-bit signed big-endian
     // integers in two's complement notation.
-    PR_PACKET_ENCODING_AVP_L16_STEREO = 1;
+    RV_PACKET_ENCODING_AVP_L16_STEREO = 1;
 }
 
 // Forward Error Correction encoding.
 // Defines method for repairing lost packets to improve quality on
 // unreliable networks.
-enum PrFecEncoding
+enum RvFecEncoding
 {
     // No FEC encoding.
-    PR_FEC_ENCODING_DISABLE = 0;
+    RV_FEC_ENCODING_DISABLE = 0;
 
     // Reed-Solomon FEC encoding (RFC 6865) with m=8.
     // Good for small block sizes (below 256 packets).
-    PR_FEC_ENCODING_RS8M = 1;
+    RV_FEC_ENCODING_RS8M = 1;
 
     // LDPC-Staircase FEC encoding (RFC 6816).
     // Good for large block sizes (above 1024 packets).
-    PR_FEC_ENCODING_LDPC_STAIRCASE = 2;
+    RV_FEC_ENCODING_LDPC_STAIRCASE = 2;
 }
 
 // Defines which latency is monitored and adjusted.
-enum PrLatencyTunerBackend
+enum RvLatencyTunerBackend
 {
     // Select best backend automatically.
-    PR_LATENCY_TUNER_BACKEND_DEFAULT = 0;
+    RV_LATENCY_TUNER_BACKEND_DEFAULT = 0;
 
     // Latency tuning based on network incoming queue length.
-    PR_LATENCY_TUNER_BACKEND_NIQ = 2;
+    RV_LATENCY_TUNER_BACKEND_NIQ = 2;
 }
 
 // Defines whether latency tuning is enabled and which algorithm is used.
-enum PrLatencyTunerProfile
+enum RvLatencyTunerProfile
 {
     // Select best profile automatically.
-    PR_LATENCY_TUNER_PROFILE_DEFAULT = 0;
+    RV_LATENCY_TUNER_PROFILE_DEFAULT = 0;
 
     // No latency tuning.
     // Expect regular underruns or overruns.
-    PR_LATENCY_TUNER_PROFILE_INTACT = 1;
+    RV_LATENCY_TUNER_PROFILE_INTACT = 1;
 
     // Responsive latency tuning.
     // Clock speed is adjusted quickly and accurately.
-    PR_LATENCY_TUNER_PROFILE_RESPONSIVE = 2;
+    RV_LATENCY_TUNER_PROFILE_RESPONSIVE = 2;
 
     // Gradual latency tuning.
     // Clock speed is adjusted slowly and smoothly.
-    PR_LATENCY_TUNER_PROFILE_GRADUAL = 3;
+    RV_LATENCY_TUNER_PROFILE_GRADUAL = 3;
 }
 
 // Resampler backend.
 // Affects speed and quality.
-enum PrResamplerBackend
+enum RvResamplerBackend
 {
     // Select best backend automatically.
-    PR_RESAMPLER_BACKEND_DEFAULT = 0;
+    RV_RESAMPLER_BACKEND_DEFAULT = 0;
 
     // CPU-demanding good-quality built-in resampler.
     // Works fine with any latency.
-    PR_RESAMPLER_BACKEND_BUILTIN = 1;
+    RV_RESAMPLER_BACKEND_BUILTIN = 1;
 
     // Fast good-quality resampler from SpeexDSP.
     // Works fine with higher latency.
-    PR_RESAMPLER_BACKEND_SPEEX = 2;
+    RV_RESAMPLER_BACKEND_SPEEX = 2;
 
     // Lower quiality fast resampler combining SpeexDSP and decimation.
     // Works fine with any latency.
-    PR_RESAMPLER_BACKEND_SPEEXDEC = 3;
+    RV_RESAMPLER_BACKEND_SPEEXDEC = 3;
 }
 
 // Resampler profile.
 // Affects speed and quality.
 // Each resampler backend treats profile in its own way.
-enum PrResamplerProfile
+enum RvResamplerProfile
 {
     // Select default profile.
-    PR_RESAMPLER_PROFILE_DEFAULT = 0;
+    RV_RESAMPLER_PROFILE_DEFAULT = 0;
 
     // High quality, low speed.
-    PR_RESAMPLER_PROFILE_HIGH = 1;
+    RV_RESAMPLER_PROFILE_HIGH = 1;
 
     // Medium quality, medium speed.
-    PR_RESAMPLER_PROFILE_MEDIUM = 2;
+    RV_RESAMPLER_PROFILE_MEDIUM = 2;
 
     // Low quality, high speed.
-    PR_RESAMPLER_PROFILE_LOW = 3;
+    RV_RESAMPLER_PROFILE_LOW = 3;
 }

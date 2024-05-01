@@ -35,8 +35,8 @@ bool CmdDeviceList::execute(const Environment& env)
     spdlog::debug("sending get_all_devices command");
 
     grpc::ClientContext context;
-    PrNone request;
-    PrDeviceList response;
+    rvpb::RvNone request;
+    rvpb::RvDeviceList response;
 
     const grpc::Status status = stub->get_all_devices(&context, request, &response);
 

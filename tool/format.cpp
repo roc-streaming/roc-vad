@@ -10,9 +10,9 @@
 
 namespace rocvad {
 
-std::string format_device_type(PrDeviceType device_type)
+std::string format_device_type(rvpb::RvDeviceType device_type)
 {
-    return device_type == PR_DEVICE_TYPE_SENDER ? "sender" : "receiver";
+    return device_type == rvpb::RV_DEVICE_TYPE_SENDER ? "sender" : "receiver";
 }
 
 std::string format_duration(uint64_t nanoseconds)

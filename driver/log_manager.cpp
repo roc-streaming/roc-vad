@@ -46,7 +46,7 @@ LogManager::~LogManager()
 }
 
 std::shared_ptr<LogSender> LogManager::attach_sender(
-    grpc::ServerWriter<PrLogEntry>& stream_writer)
+    grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer)
 {
     spdlog::debug("attaching log sender to dist sink");
 

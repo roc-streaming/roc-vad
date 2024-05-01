@@ -61,7 +61,7 @@ google::protobuf::Duration nanoseconds_to_rpc(const char* name, uint64_t nanosec
 
 } // namespace
 
-void device_list_from_rpc(std::vector<DeviceInfo>& out, const PrDeviceList& in)
+void device_list_from_rpc(std::vector<DeviceInfo>& out, const rvpb::RvDeviceList& in)
 {
     out.clear();
 
@@ -73,18 +73,18 @@ void device_list_from_rpc(std::vector<DeviceInfo>& out, const PrDeviceList& in)
     }
 }
 
-void device_list_to_rpc(PrDeviceList& out, const std::vector<DeviceInfo>& in)
+void device_list_to_rpc(rvpb::RvDeviceList& out, const std::vector<DeviceInfo>& in)
 {
     for (const auto& in_info : in) {
         device_info_to_rpc(*out.add_devices(), in_info);
     }
 }
 
-void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
+void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
 {
     // type
     switch (in.type()) {
-    case PR_DEVICE_TYPE_SENDER:
+    case rvpb::RV_DEVICE_TYPE_SENDER:
         out.type = DeviceType::Sender;
         out.sender_config = DeviceSenderConfig {};
 
@@ -95,7 +95,7 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
 
         break;
 
-    case PR_DEVICE_TYPE_RECEIVER:
+    case rvpb::RV_DEVICE_TYPE_RECEIVER:
         out.type = DeviceType::Receiver;
         out.receiver_config = DeviceReceiverConfig {};
 
@@ -237,11 +237,11 @@ void device_info_from_rpc(DeviceInfo& out, const PrDeviceInfo& in)
     }
 }
 
-void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
+void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
 {
     // type
-    out.set_type(
-        in.type == DeviceType::Sender ? PR_DEVICE_TYPE_SENDER : PR_DEVICE_TYPE_RECEIVER);
+    out.set_type(in.type == DeviceType::Sender ? rvpb::RV_DEVICE_TYPE_SENDER
+                                               : rvpb::RV_DEVICE_TYPE_RECEIVER);
 
     // identification
     out.set_index(in.index);
@@ -289,21 +289,21 @@ void device_info_to_rpc(PrDeviceInfo& out, const DeviceInfo& in)
 
     // endpoints
     for (const auto& in_info : in.local_endpoints) {
-        PrEndpointInfo out_info;
+        rvpb::RvEndpointInfo out_info;
         endpoint_info_to_rpc(out_info, in_info);
 
         *out.add_local_endpoints() = out_info;
     }
 
     for (const auto& in_info : in.remote_endpoints) {
-        PrEndpointInfo out_info;
+        rvpb::RvEndpointInfo out_info;
         endpoint_info_to_rpc(out_info, in_info);
 
         *out.add_remote_endpoints() = out_info;
     }
 }
 
-void endpoint_info_from_rpc(DeviceEndpointInfo& out, const PrEndpointInfo& in)
+void endpoint_info_from_rpc(DeviceEndpointInfo& out, const rvpb::RvEndpointInfo& in)
 {
     if (in.has_slot()) {
         out.slot = in.slot();
@@ -317,7 +317,7 @@ void endpoint_info_from_rpc(DeviceEndpointInfo& out, const PrEndpointInfo& in)
     }
 }
 
-void endpoint_info_to_rpc(PrEndpointInfo& out, const DeviceEndpointInfo& in)
+void endpoint_info_to_rpc(rvpb::RvEndpointInfo& out, const DeviceEndpointInfo& in)
 {
     out.set_slot(in.slot);
     out.set_interface(enum_to_rpc("endpoint interface", interface_map, in.interface));

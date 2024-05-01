@@ -60,10 +60,10 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     spdlog::debug("sending add_device command");
 
     grpc::ClientContext context;
-    PrDeviceInfo request;
-    PrDeviceInfo response;
+    rvpb::RvDeviceInfo request;
+    rvpb::RvDeviceInfo response;
 
-    request.set_type(PR_DEVICE_TYPE_RECEIVER);
+    request.set_type(rvpb::RV_DEVICE_TYPE_RECEIVER);
 
     if (uid_) {
         request.set_uid(*uid_);
@@ -78,7 +78,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     }
 
     if (chans_) {
-        PrChannelLayout channel_layout;
+        rvpb::RvChannelLayout channel_layout;
         if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
             return false;
         }
@@ -94,7 +94,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     }
 
     if (resampler_backend_) {
-        PrResamplerBackend resampler_backend;
+        rvpb::RvResamplerBackend resampler_backend;
         if (!parse_enum("--resampler-backend",
                 resampler_backend_map,
                 *resampler_backend_,
@@ -105,7 +105,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     }
 
     if (resampler_profile_) {
-        PrResamplerProfile resampler_profile;
+        rvpb::RvResamplerProfile resampler_profile;
         if (!parse_enum("--resampler-profile",
                 resampler_profile_map,
                 *resampler_profile_,

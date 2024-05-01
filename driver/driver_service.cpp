@@ -28,8 +28,8 @@ DriverService::DriverService(std::shared_ptr<LogManager> log_manager,
 }
 
 grpc::Status DriverService::ping(grpc::ServerContext* context,
-    const PrNone* request,
-    PrNone* response)
+    const rvpb::RvNone* request,
+    rvpb::RvNone* response)
 {
     return execute_command_("ping", [=]() {
         // no-op
@@ -37,8 +37,8 @@ grpc::Status DriverService::ping(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::driver_info(grpc::ServerContext* context,
-    const PrNone* request,
-    PrDriverInfo* response)
+    const rvpb::RvNone* request,
+    rvpb::RvDriverInfo* response)
 {
     return execute_command_("driver_info", [=]() {
         response->set_version(BuildInfo::git_version);
@@ -47,8 +47,8 @@ grpc::Status DriverService::driver_info(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
-    const PrNone* request,
-    grpc::ServerWriter<PrLogEntry>* writer)
+    const rvpb::RvNone* request,
+    grpc::ServerWriter<rvpb::RvLogEntry>* writer)
 {
     return execute_command_("stream_logs", [=]() {
         auto log_sender = log_manager_->attach_sender(*writer);
@@ -62,8 +62,8 @@ grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::get_all_devices(grpc::ServerContext* context,
-    const PrNone* request,
-    PrDeviceList* response)
+    const rvpb::RvNone* request,
+    rvpb::RvDeviceList* response)
 {
     return execute_command_("get_all_devices", [=]() {
         const auto devices = device_manager_->get_all_devices();
@@ -73,8 +73,8 @@ grpc::Status DriverService::get_all_devices(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::get_device(grpc::ServerContext* context,
-    const PrDeviceSelector* request,
-    PrDeviceInfo* response)
+    const rvpb::RvDeviceSelector* request,
+    rvpb::RvDeviceInfo* response)
 {
     return execute_command_("get_device", [=]() {
         DeviceInfo device_info;
@@ -90,8 +90,8 @@ grpc::Status DriverService::get_device(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::add_device(grpc::ServerContext* context,
-    const PrDeviceInfo* request,
-    PrDeviceInfo* response)
+    const rvpb::RvDeviceInfo* request,
+    rvpb::RvDeviceInfo* response)
 {
     return execute_command_("add_device", [=]() {
         DeviceInfo device_info;
@@ -104,8 +104,8 @@ grpc::Status DriverService::add_device(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::delete_device(grpc::ServerContext* context,
-    const PrDeviceSelector* request,
-    PrNone* response)
+    const rvpb::RvDeviceSelector* request,
+    rvpb::RvNone* response)
 {
     return execute_command_("delete_device", [=]() {
         if (request->has_index()) {
@@ -117,8 +117,8 @@ grpc::Status DriverService::delete_device(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::bind(grpc::ServerContext* context,
-    const PrEndpointRequest* request,
-    PrEndpointInfo* response)
+    const rvpb::RvEndpointRequest* request,
+    rvpb::RvEndpointInfo* response)
 {
     return execute_command_("bind", [=]() {
         DeviceEndpointInfo endpoint_info;
@@ -137,8 +137,8 @@ grpc::Status DriverService::bind(grpc::ServerContext* context,
 }
 
 grpc::Status DriverService::connect(grpc::ServerContext* context,
-    const PrEndpointRequest* request,
-    PrEndpointInfo* response)
+    const rvpb::RvEndpointRequest* request,
+    rvpb::RvEndpointInfo* response)
 {
     return execute_command_("connect", [=]() {
         DeviceEndpointInfo endpoint_info;

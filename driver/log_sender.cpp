@@ -28,34 +28,34 @@ google::protobuf::Timestamp map_time(std::chrono::system_clock::time_point time_
     return google::protobuf::util::TimeUtil::NanosecondsToTimestamp(nanoseconds);
 }
 
-PrLogEntry::Level map_level(spdlog::level::level_enum level)
+rvpb::RvLogEntry::Level map_level(spdlog::level::level_enum level)
 {
     switch (level) {
     case spdlog::level::critical:
-        return PrLogEntry::CRIT;
+        return rvpb::RvLogEntry::CRIT;
 
     case spdlog::level::err:
-        return PrLogEntry::ERROR;
+        return rvpb::RvLogEntry::ERROR;
 
     case spdlog::level::warn:
-        return PrLogEntry::WARN;
+        return rvpb::RvLogEntry::WARN;
 
     case spdlog::level::info:
-        return PrLogEntry::INFO;
+        return rvpb::RvLogEntry::INFO;
 
     case spdlog::level::debug:
-        return PrLogEntry::DEBUG;
+        return rvpb::RvLogEntry::DEBUG;
 
     default:
         break;
     }
 
-    return PrLogEntry::TRACE;
+    return rvpb::RvLogEntry::TRACE;
 }
 
 } // namespace
 
-LogSender::LogSender(grpc::ServerWriter<PrLogEntry>& stream_writer)
+LogSender::LogSender(grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer)
     : stream_writer_(stream_writer)
 {
 }
@@ -83,7 +83,7 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
         buf_.resize(buf_.size() - 1);
     }
 
-    PrLogEntry entry;
+    rvpb::RvLogEntry entry;
     *entry.mutable_time() = map_time(msg.time);
     entry.set_level(map_level(msg.level));
     entry.set_text(std::string(buf_.begin(), buf_.end()));

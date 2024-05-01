@@ -21,7 +21,7 @@
 
 namespace rocvad {
 
-void print_driver_and_client_info(const PrDriverInfo& driver_info)
+void print_driver_and_client_info(const rvpb::RvDriverInfo& driver_info)
 {
     fmt::println("driver is loaded");
 
@@ -38,7 +38,7 @@ void print_driver_and_client_info(const PrDriverInfo& driver_info)
     fmt::println("  commit:  {}", std::string(BuildInfo::git_commit).substr(0, 7));
 }
 
-void print_device_info(const PrDeviceInfo& device_info)
+void print_device_info(const rvpb::RvDeviceInfo& device_info)
 {
     fmt::println("device #{}", device_info.index());
 
@@ -112,7 +112,7 @@ void print_device_info(const PrDeviceInfo& device_info)
     }
 }
 
-void print_device_list(const PrDeviceList& device_list, bool show_info)
+void print_device_list(const rvpb::RvDeviceList& device_list, bool show_info)
 {
     if (!show_info) {
         fmt::println("{:<8} {:<10} {:<22} {}", //
@@ -141,7 +141,7 @@ void print_device_list(const PrDeviceList& device_list, bool show_info)
     }
 }
 
-void print_endpoint_info(const PrEndpointInfo& endpoint_info)
+void print_endpoint_info(const rvpb::RvEndpointInfo& endpoint_info)
 {
     fmt::println("endpoint:");
 
@@ -152,9 +152,9 @@ void print_endpoint_info(const PrEndpointInfo& endpoint_info)
 }
 
 void print_endpoint_list(
-    const google::protobuf::RepeatedPtrField<PrEndpointInfo>& endpoint_list)
+    const google::protobuf::RepeatedPtrField<rvpb::RvEndpointInfo>& endpoint_list)
 {
-    std::map<unsigned int, std::vector<std::tuple<PrInterface, std::string>>>
+    std::map<unsigned int, std::vector<std::tuple<rvpb::RvInterface, std::string>>>
         endpoint_table;
 
     for (const auto& endpoint_info : endpoint_list) {

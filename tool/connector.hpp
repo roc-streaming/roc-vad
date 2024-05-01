@@ -21,7 +21,7 @@ public:
     Connector(const Connector&) = delete;
     Connector& operator=(const Connector&) = delete;
 
-    DriverProtocol::Stub* connect();
+    rvpb::RvDriver::Stub* connect();
 
     void disconnect();
 
@@ -29,7 +29,7 @@ private:
     const bool quiet_;
     const std::string driver_socket_;
 
-    std::unique_ptr<DriverProtocol::Stub> stub_;
+    std::unique_ptr<rvpb::RvDriver::Stub> stub_;
     std::shared_ptr<grpc::Channel> channel_;
 };
 

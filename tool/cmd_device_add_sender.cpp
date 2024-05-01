@@ -66,10 +66,10 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     spdlog::debug("sending add_device command");
 
     grpc::ClientContext context;
-    PrDeviceInfo request;
-    PrDeviceInfo response;
+    rvpb::RvDeviceInfo request;
+    rvpb::RvDeviceInfo response;
 
-    request.set_type(PR_DEVICE_TYPE_SENDER);
+    request.set_type(rvpb::RV_DEVICE_TYPE_SENDER);
 
     if (uid_) {
         request.set_uid(*uid_);
@@ -84,7 +84,7 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     }
 
     if (chans_) {
-        PrChannelLayout channel_layout;
+        rvpb::RvChannelLayout channel_layout;
         if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
             return false;
         }
@@ -92,7 +92,7 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     }
 
     if (packet_encoding_) {
-        PrPacketEncoding packet_encoding;
+        rvpb::RvPacketEncoding packet_encoding;
         if (!parse_enum("--packet-encoding",
                 packet_encoding_map,
                 *packet_encoding_,
@@ -111,7 +111,7 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     }
 
     if (fec_encoding_) {
-        PrFecEncoding fec_encoding;
+        rvpb::RvFecEncoding fec_encoding;
         if (!parse_enum("--fec", fec_encoding_map, *fec_encoding_, fec_encoding)) {
             return false;
         }

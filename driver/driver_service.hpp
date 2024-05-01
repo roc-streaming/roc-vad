@@ -18,7 +18,7 @@
 namespace rocvad {
 
 // Implements RPC methods defined by .proto file.
-class DriverService : public DriverProtocol::Service
+class DriverService : public rvpb::RvDriver::Service
 {
 public:
     DriverService(std::shared_ptr<LogManager> log_manager,
@@ -28,40 +28,40 @@ public:
     DriverService& operator=(const DriverService&) = delete;
 
     grpc::Status ping(grpc::ServerContext* context,
-        const PrNone* request,
-        PrNone* response) override;
+        const rvpb::RvNone* request,
+        rvpb::RvNone* response) override;
 
     grpc::Status driver_info(grpc::ServerContext* context,
-        const PrNone* request,
-        PrDriverInfo* response) override;
+        const rvpb::RvNone* request,
+        rvpb::RvDriverInfo* response) override;
 
     grpc::Status stream_logs(grpc::ServerContext* context,
-        const PrNone* request,
-        grpc::ServerWriter<PrLogEntry>* writer) override;
+        const rvpb::RvNone* request,
+        grpc::ServerWriter<rvpb::RvLogEntry>* writer) override;
 
     grpc::Status get_all_devices(grpc::ServerContext* context,
-        const PrNone* request,
-        PrDeviceList* response) override;
+        const rvpb::RvNone* request,
+        rvpb::RvDeviceList* response) override;
 
     grpc::Status get_device(grpc::ServerContext* context,
-        const PrDeviceSelector* request,
-        PrDeviceInfo* response) override;
+        const rvpb::RvDeviceSelector* request,
+        rvpb::RvDeviceInfo* response) override;
 
     grpc::Status add_device(grpc::ServerContext* context,
-        const PrDeviceInfo* request,
-        PrDeviceInfo* response) override;
+        const rvpb::RvDeviceInfo* request,
+        rvpb::RvDeviceInfo* response) override;
 
     grpc::Status delete_device(grpc::ServerContext* context,
-        const PrDeviceSelector* request,
-        PrNone* response) override;
+        const rvpb::RvDeviceSelector* request,
+        rvpb::RvNone* response) override;
 
     grpc::Status bind(grpc::ServerContext* context,
-        const PrEndpointRequest* request,
-        PrEndpointInfo* response) override;
+        const rvpb::RvEndpointRequest* request,
+        rvpb::RvEndpointInfo* response) override;
 
     grpc::Status connect(grpc::ServerContext* context,
-        const PrEndpointRequest* request,
-        PrEndpointInfo* response) override;
+        const rvpb::RvEndpointRequest* request,
+        rvpb::RvEndpointInfo* response) override;
 
 private:
     grpc::Status execute_command_(const char* name, std::function<void()> func);

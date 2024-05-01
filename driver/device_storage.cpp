@@ -35,7 +35,7 @@ std::vector<DeviceInfo> DeviceStorage::load_devices()
         return {};
     }
 
-    PrDeviceList msg;
+    rvpb::RvDeviceList msg;
     if (!msg.ParseFromArray(bytes.data(), bytes.size())) {
         spdlog::warn("ignoring invalid device list from persistent storage");
         return {};
@@ -51,7 +51,7 @@ std::vector<DeviceInfo> DeviceStorage::load_devices()
 
 void DeviceStorage::save_devices(const std::vector<DeviceInfo>& devices)
 {
-    PrDeviceList msg;
+    rvpb::RvDeviceList msg;
     device_list_to_rpc(msg, devices);
 
     std::vector<UInt8> bytes(msg.ByteSizeLong());

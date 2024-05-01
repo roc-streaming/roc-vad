@@ -31,7 +31,7 @@ private:
     void session_();
 
     std::unique_ptr<Connector> conn_;
-    DriverProtocol::Stub* stub_ = nullptr;
+    rvpb::RvDriver::Stub* stub_ = nullptr;
 
     std::shared_ptr<spdlog::logger> logger_;
 };

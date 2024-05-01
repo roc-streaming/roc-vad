@@ -25,9 +25,9 @@ public:
     bool execute(const Environment& env) override;
 
 private:
-    bool send_command_(DriverProtocol::Stub* stub,
+    bool send_command_(rvpb::RvDriver::Stub* stub,
         const char* name,
-        PrInterface interface,
+        rvpb::RvInterface interface,
         const std::string& uri);
 
     bool use_uid_ = false;

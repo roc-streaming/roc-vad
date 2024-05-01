@@ -34,22 +34,22 @@ std::chrono::system_clock::time_point map_time(google::protobuf::Timestamp times
             std::chrono::nanoseconds(nanoseconds)));
 }
 
-spdlog::level::level_enum map_level(PrLogEntry::Level level)
+spdlog::level::level_enum map_level(rvpb::RvLogEntry::Level level)
 {
     switch (level) {
-    case PrLogEntry::CRIT:
+    case rvpb::RvLogEntry::CRIT:
         return spdlog::level::critical;
 
-    case PrLogEntry::ERROR:
+    case rvpb::RvLogEntry::ERROR:
         return spdlog::level::err;
 
-    case PrLogEntry::WARN:
+    case rvpb::RvLogEntry::WARN:
         return spdlog::level::warn;
 
-    case PrLogEntry::INFO:
+    case rvpb::RvLogEntry::INFO:
         return spdlog::level::info;
 
-    case PrLogEntry::DEBUG:
+    case rvpb::RvLogEntry::DEBUG:
         return spdlog::level::debug;
 
     default:
@@ -141,10 +141,10 @@ void CmdLogcat::session_()
     spdlog::debug("sending stream_logs command");
 
     grpc::ClientContext context;
-    PrNone request;
+    rvpb::RvNone request;
 
     assert(stub_);
-    std::unique_ptr<grpc::ClientReader<PrLogEntry>> stream_reader =
+    std::unique_ptr<grpc::ClientReader<rvpb::RvLogEntry>> stream_reader =
         stub_->stream_logs(&context, request);
 
     if (!stream_reader) {
@@ -152,7 +152,7 @@ void CmdLogcat::session_()
     }
 
     for (;;) {
-        PrLogEntry entry;
+        rvpb::RvLogEntry entry;
 
         if (!stream_reader->Read(&entry)) {
             stream_reader->Finish();

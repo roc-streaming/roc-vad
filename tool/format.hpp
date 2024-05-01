@@ -19,7 +19,7 @@
 
 namespace rocvad {
 
-std::string format_device_type(PrDeviceType device_type);
+std::string format_device_type(rvpb::RvDeviceType device_type);
 
 std::string format_duration(uint64_t nanoseconds);
 std::string format_duration(google::protobuf::Duration duration);
