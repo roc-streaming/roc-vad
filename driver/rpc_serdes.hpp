@@ -21,6 +21,10 @@ void device_list_to_rpc(rvpb::RvDeviceList& out, const std::vector<DeviceInfo>& 
 void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in);
 void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in);
 
+void packet_encoding_from_rpc(DevicePacketEncoding& out,
+    const rvpb::RvPacketEncoding& in);
+void packet_encoding_to_rpc(rvpb::RvPacketEncoding& out, const DevicePacketEncoding& in);
+
 void endpoint_info_from_rpc(DeviceEndpointInfo& out, const rvpb::RvEndpointInfo& in);
 void endpoint_info_to_rpc(rvpb::RvEndpointInfo& out, const DeviceEndpointInfo& in);
 

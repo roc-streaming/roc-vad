@@ -17,22 +17,14 @@ enum_map<rvpb::RvInterface, roc_interface> interface_map {
     {rvpb::RV_INTERFACE_AUDIO_CONTROL, ROC_INTERFACE_AUDIO_CONTROL, "audioctl"},
 };
 
+enum_map<rvpb::RvSampleFormat, roc_format> sample_format_map {
+    // FIXME
+    {rvpb::ROC_FORMAT_PCM_SINT16, ROC_FORMAT_PCM_FLOAT32, "s16"},
+};
+
 enum_map<rvpb::RvChannelLayout, roc_channel_layout> channel_layout_map {
     {rvpb::RV_CHANNEL_LAYOUT_MONO, ROC_CHANNEL_LAYOUT_MONO, "mono"},
     {rvpb::RV_CHANNEL_LAYOUT_STEREO, ROC_CHANNEL_LAYOUT_STEREO, "stereo"},
-};
-
-enum_map<rvpb::RvPacketEncoding, roc_packet_encoding> packet_encoding_map {
-    {
-        rvpb::RV_PACKET_ENCODING_AVP_L16_MONO,
-        ROC_PACKET_ENCODING_AVP_L16_MONO,
-        "avp/l16/mono",
-    },
-    {
-        rvpb::RV_PACKET_ENCODING_AVP_L16_STEREO,
-        ROC_PACKET_ENCODING_AVP_L16_STEREO,
-        "avp/l16/stereo",
-    },
 };
 
 enum_map<rvpb::RvFecEncoding, roc_fec_encoding> fec_encoding_map {
@@ -40,6 +32,30 @@ enum_map<rvpb::RvFecEncoding, roc_fec_encoding> fec_encoding_map {
     {rvpb::RV_FEC_ENCODING_RS8M, ROC_FEC_ENCODING_RS8M, "rs8m"},
     {rvpb::RV_FEC_ENCODING_LDPC_STAIRCASE, ROC_FEC_ENCODING_LDPC_STAIRCASE, "ldpc"},
 };
+
+enum_map<rvpb::RvLatencyTunerBackend, roc_latency_tuner_backend>
+    latency_tuner_backend_map {
+        {rvpb::RV_LATENCY_TUNER_BACKEND_DEFAULT,
+            ROC_LATENCY_TUNER_BACKEND_DEFAULT,
+            "default"},
+        {rvpb::RV_LATENCY_TUNER_BACKEND_NIQ, ROC_LATENCY_TUNER_BACKEND_NIQ, "niq"},
+    };
+
+enum_map<rvpb::RvLatencyTunerProfile, roc_latency_tuner_profile>
+    latency_tuner_profile_map {
+        {rvpb::RV_LATENCY_TUNER_PROFILE_DEFAULT,
+            ROC_LATENCY_TUNER_PROFILE_DEFAULT,
+            "default"},
+        {rvpb::RV_LATENCY_TUNER_PROFILE_INTACT,
+            ROC_LATENCY_TUNER_PROFILE_INTACT,
+            "intact"},
+        {rvpb::RV_LATENCY_TUNER_PROFILE_RESPONSIVE,
+            ROC_LATENCY_TUNER_PROFILE_RESPONSIVE,
+            "responsive"},
+        {rvpb::RV_LATENCY_TUNER_PROFILE_GRADUAL,
+            ROC_LATENCY_TUNER_PROFILE_GRADUAL,
+            "gradual"},
+    };
 
 enum_map<rvpb::RvResamplerBackend, roc_resampler_backend> resampler_backend_map {
     {rvpb::RV_RESAMPLER_BACKEND_DEFAULT, ROC_RESAMPLER_BACKEND_DEFAULT, "default"},

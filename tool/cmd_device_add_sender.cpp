@@ -31,11 +31,7 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
         fmt::format("Channel set for virtual device (supported values: {})",
             supported_enum_values(channel_layout_map)));
 
-    command->add_option("--packet-encoding",
-        packet_encoding_,
-        fmt::format("Sender packet encoding (supported values: {})",
-            supported_enum_values(packet_encoding_map)));
-    command->add_option("--packet-len",
+    command->add_option("--packet-length",
         packet_length_,
         fmt::format("Sender packet length (number with one of the suffixes: {})",
             supported_duration_suffixes()));
@@ -80,7 +76,7 @@ bool CmdDeviceAddSender::execute(const Environment& env)
     }
 
     if (rate_) {
-        request.mutable_local_config()->set_sample_rate(*rate_);
+        request.mutable_device_encoding()->set_sample_rate(*rate_);
     }
 
     if (chans_) {
@@ -88,18 +84,7 @@ bool CmdDeviceAddSender::execute(const Environment& env)
         if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
             return false;
         }
-        request.mutable_local_config()->set_channel_layout(channel_layout);
-    }
-
-    if (packet_encoding_) {
-        rvpb::RvPacketEncoding packet_encoding;
-        if (!parse_enum("--packet-encoding",
-                packet_encoding_map,
-                *packet_encoding_,
-                packet_encoding)) {
-            return false;
-        }
-        request.mutable_sender_config()->set_packet_encoding(packet_encoding);
+        request.mutable_device_encoding()->set_channel_layout(channel_layout);
     }
 
     if (packet_length_) {

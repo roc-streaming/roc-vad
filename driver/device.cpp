@@ -29,9 +29,9 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
     device_params.DeviceUID = info.uid;
     device_params.ModelUID = BuildInfo::driver_bundle_id;
 
-    device_params.SampleRate = info.local_config.sample_rate;
+    device_params.SampleRate = info.device_encoding.sample_rate;
 
-    switch (info.local_config.channel_layout) {
+    switch (info.device_encoding.channel_layout) {
     case ROC_CHANNEL_LAYOUT_MONO:
         device_params.ChannelCount = 1;
         break;

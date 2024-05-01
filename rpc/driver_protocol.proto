@@ -133,9 +133,9 @@ message RvDeviceInfo
     // When set, should not be empty.
     optional string name = 4;
 
-    // Local configuration of device.
-    // Parameters of virtual device, as it's shown to the local apps.
-    RvLocalConfig local_config = 5;
+    // Local encoding of device.
+    // Parameters of virtual device, as it's shown to the apps.
+    RvDeviceEncoding device_encoding = 5;
 
     // Network configuration of device.
     // Parameters of network sender or receiver.
@@ -201,23 +201,13 @@ message RvEndpointInfo
     string uri = 3;
 }
 
-// Local parameters of virtual device.
-message RvLocalConfig
-{
-    // Virtual device sample rate, in Hertz (e.g. 44100).
-    // Keep unset to use default.
-    optional uint32 sample_rate = 1;
-
-    // Virtual device channel layout (e.g. stereo).
-    // Keep unset to use default.
-    optional RvChannelLayout channel_layout = 2;
-}
-
 // Parameters of sender device.
 message RvSenderConfig
 {
-    // Encoding for network packets.
-    // Keep unset to use default.
+    // Non-standard encoding for network packets.
+    // If you use non-default device encoding (e.g. change sample rate), you
+    // should also explicitly provide packet encoding on both sender and
+    // receiver, using the same encoding id.
     optional RvPacketEncoding packet_encoding = 1;
 
     // Duration of a single packet.
@@ -240,82 +230,119 @@ message RvSenderConfig
     // Keep unset to use default.
     optional uint32 fec_block_repair_packets = 6;
 
-    // Target latency.
-    // Use only if you need sender-side latency tuning.
-    // Keep unset to disable.
-    optional google.protobuf.Duration target_latency = 7;
-
-    // Minimum latency.
-    // Use only if you need sender-side latency tuning.
-    // Keep unset to disable.
-    optional google.protobuf.Duration min_latency = 8;
-
-    // Maximum latency.
-    // Use only if you need sender-side latency tuning.
-    // Keep unset to disable.
-    optional google.protobuf.Duration max_latency = 9;
-
     // Latency tuning algorithm.
     // Use only if you need sender-side latency tuning.
     // Keep unset to disable.
-    optional RvLatencyTunerBackend latency_tuner_backend = 10;
+    optional RvLatencyTunerBackend latency_tuner_backend = 7;
 
     // Latency tuning profile.
     // Use only if you need sender-side latency tuning.
     // Keep unset to disable.
-    optional RvLatencyTunerProfile latency_tuner_profile = 11;
+    optional RvLatencyTunerProfile latency_tuner_profile = 8;
 
     // Resampling algorithm.
     // Keep unset to use default.
-    optional RvResamplerBackend resampler_backend = 12;
+    optional RvResamplerBackend resampler_backend = 9;
 
     // Resampling quality.
     // Keep unset to use default.
-    optional RvResamplerProfile resampler_profile = 13;
+    optional RvResamplerProfile resampler_profile = 10;
+
+    // Target latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration target_latency = 11;
+
+    // Minimum latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration min_latency = 12;
+
+    // Maximum latency.
+    // Use only if you need sender-side latency tuning.
+    // Keep unset to disable.
+    optional google.protobuf.Duration max_latency = 13;
 }
 
 // Parameters of receiver device.
 message RvReceiverConfig
 {
-    // Target latency.
-    // Keep unset to use default.
-    optional google.protobuf.Duration target_latency = 1;
-
-    // Minimum latency.
-    // Keep unset to use default.
-    optional google.protobuf.Duration min_latency = 2;
-
-    // Maximum latency.
-    // Keep unset to use default.
-    optional google.protobuf.Duration max_latency = 3;
+    // Non-standard encodings for network packets.
+    // If your senders use non-standard packet encodings, you should also
+    // list them on receiver using the same encoding identifiers.
+    repeated RvPacketEncoding packet_encodings = 1;
 
     // Latency tuning algorithm.
     // Keep unset to use default.
-    optional RvLatencyTunerBackend latency_tuner_backend = 4;
+    optional RvLatencyTunerBackend latency_tuner_backend = 2;
 
     // Latency tuning profile.
     // Keep unset to use default.
-    optional RvLatencyTunerProfile latency_tuner_profile = 5;
+    optional RvLatencyTunerProfile latency_tuner_profile = 3;
 
     // Resampling algorithm.
     // Keep unset to use default.
-    optional RvResamplerBackend resampler_backend = 6;
+    optional RvResamplerBackend resampler_backend = 4;
 
     // Resampling quality.
     // Keep unset to use default.
-    optional RvResamplerProfile resampler_profile = 7;
+    optional RvResamplerProfile resampler_profile = 5;
+
+    // Target latency.
+    // Keep unset to use default.
+    optional google.protobuf.Duration target_latency = 6;
+
+    // Minimum latency.
+    // Keep unset to use default.
+    optional google.protobuf.Duration min_latency = 7;
+
+    // Maximum latency.
+    // Keep unset to use default.
+    optional google.protobuf.Duration max_latency = 8;
 
     // Timeout for the lack of playback.
     // Keep unset to use default.
-    optional google.protobuf.Duration no_playback_timeout = 8;
+    optional google.protobuf.Duration no_playback_timeout = 9;
 
     // Timeout for choppy playback.
     // Keep unset to use default.
-    optional google.protobuf.Duration choppy_playback_timeout = 9;
+    optional google.protobuf.Duration choppy_playback_timeout = 10;
+}
+
+// Local encoding of virtual device.
+// Defines how it is presented to apps.
+message RvDeviceEncoding
+{
+    // Virtual device sample rate, in Hertz (e.g. 44100).
+    // Keep unset to use default.
+    optional uint32 sample_rate = 1;
+
+    // Virtual device channel layout (e.g. stereo).
+    // Keep unset to use default.
+    optional RvChannelLayout channel_layout = 2;
+}
+
+// Network packet encoding.
+// Defines how samples are encoded when sent over network.
+message RvPacketEncoding
+{
+    // Encoding identifier (arbitrary 8-bit number).
+    // You should use the same numbers on sender and receiver
+    // to identifiy encodings.
+    uint32 encoding_id = 1;
+
+    // Sample rate, in Hertz (e.g. 44100).
+    uint32 sample_rate = 2;
+
+    // Sample format (e.g. 16-bit PCM).
+    RvSampleFormat sample_format = 3;
+
+    // Channel layout (e.g. stereo).
+    RvChannelLayout channel_layout = 4;
 }
 
 // Device type.
-// Defines whether device will be input or output.
+// Defines whether device will be input (receiver) or output (sender).
 enum RvDeviceType
 {
     // Output device that sends sound to remote receiver.
@@ -341,8 +368,16 @@ enum RvInterface
     RV_INTERFACE_AUDIO_CONTROL = 3;
 }
 
-// Device channel layout.
-// Defines what channels will be shown to apps that use the device.
+// Sample format.
+// Defines how audio samples are encoded.
+enum RvSampleFormat
+{
+    // Uncompressed PCM, 16-bit signed integers, network endian.
+    ROC_FORMAT_PCM_SINT16 = 0;
+}
+
+// Channel layout.
+// Defines what channel count and their meaning.
 enum RvChannelLayout
 {
     // One monochromatic channel.
@@ -350,23 +385,6 @@ enum RvChannelLayout
 
     // Two channels: left and right.
     RV_CHANNEL_LAYOUT_STEREO = 1;
-}
-
-// Network packet encoding.
-// Defines how samples are encoded when sent over network.
-enum RvPacketEncoding
-{
-    // PCM signed 16-bit (mono).
-    // "L16" encoding from RTP A/V Profile (RFC 3551).
-    // Uncompressed samples coded as interleaved 16-bit signed big-endian
-    // integers in two's complement notation.
-    RV_PACKET_ENCODING_AVP_L16_MONO = 0;
-
-    // PCM signed 16-bit (stereo).
-    // "L16" encoding from RTP A/V Profile (RFC 3551).
-    // Uncompressed samples coded as interleaved 16-bit signed big-endian
-    // integers in two's complement notation.
-    RV_PACKET_ENCODING_AVP_L16_STEREO = 1;
 }
 
 // Forward Error Correction encoding.
@@ -386,6 +404,7 @@ enum RvFecEncoding
     RV_FEC_ENCODING_LDPC_STAIRCASE = 2;
 }
 
+// Latency tuner backend.
 // Defines which latency is monitored and adjusted.
 enum RvLatencyTunerBackend
 {
@@ -396,6 +415,7 @@ enum RvLatencyTunerBackend
     RV_LATENCY_TUNER_BACKEND_NIQ = 2;
 }
 
+// Latency tuner profile.
 // Defines whether latency tuning is enabled and which algorithm is used.
 enum RvLatencyTunerProfile
 {

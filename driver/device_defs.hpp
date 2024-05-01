@@ -30,17 +30,28 @@ enum class DeviceType
     Receiver,
 };
 
-// Local parameters of device.
-struct DeviceLocalConfig
+// Local encoding of virtual device.
+struct DeviceLocalEncoding
 {
     uint32_t sample_rate = 44100;
     roc_channel_layout channel_layout = ROC_CHANNEL_LAYOUT_STEREO;
 };
 
+// Network encoding of packets.
+struct DevicePacketEncoding
+{
+    roc_packet_encoding id = (roc_packet_encoding)0;
+    roc_media_encoding spec = {
+        .rate = 0,
+        .format = (roc_format)0,
+        .channels = (roc_channel_layout)0,
+    };
+};
+
 // Network parameters of sender device.
 struct DeviceSenderConfig
 {
-    roc_packet_encoding packet_encoding = ROC_PACKET_ENCODING_AVP_L16_STEREO;
+    std::optional<DevicePacketEncoding> packet_encoding;
     uint64_t packet_length_ns = 5'000'000; // 5ms
 
     roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_RS8M;
@@ -51,6 +62,8 @@ struct DeviceSenderConfig
 // Network parameters of sender device.
 struct DeviceReceiverConfig
 {
+    std::vector<DevicePacketEncoding> packet_encodings;
+
     uint64_t target_latency_ns = 200'000'000; // 200ms
 
     roc_resampler_backend resampler_backend = ROC_RESAMPLER_BACKEND_DEFAULT;
@@ -75,7 +88,7 @@ struct DeviceInfo
     std::string uid;
     std::string name;
 
-    DeviceLocalConfig local_config;
+    DeviceLocalEncoding device_encoding;
 
     std::optional<DeviceSenderConfig> sender_config;
     std::optional<DeviceReceiverConfig> receiver_config;

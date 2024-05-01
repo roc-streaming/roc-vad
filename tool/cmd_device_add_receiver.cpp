@@ -74,7 +74,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     }
 
     if (rate_) {
-        request.mutable_local_config()->set_sample_rate(*rate_);
+        request.mutable_device_encoding()->set_sample_rate(*rate_);
     }
 
     if (chans_) {
@@ -82,7 +82,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
         if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
             return false;
         }
-        request.mutable_local_config()->set_channel_layout(channel_layout);
+        request.mutable_device_encoding()->set_channel_layout(channel_layout);
     }
 
     if (target_latency_) {
