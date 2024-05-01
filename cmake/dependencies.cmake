@@ -28,7 +28,7 @@ set(SCONS_CMD
 )
 ExternalProject_Add(roc_lib
   GIT_REPOSITORY "https://github.com/roc-streaming/roc-toolkit.git"
-  GIT_TAG "v0.3.0"
+  GIT_TAG "3d931c5e7e5c602187415df5ef9f3bc5061d61d7"
   GIT_SHALLOW ON
   GIT_PROGRESS ON
   UPDATE_DISCONNECTED ON
