@@ -44,9 +44,9 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
 
     fmt::println("");
 
-    fmt::println("  type:  {}", format_device_type(device_info.type()));
-    fmt::println("  uid:   {}", device_info.uid());
-    fmt::println("  name:  {}", device_info.name());
+    fmt::println("  type:   {}", format_device_type(device_info.type()));
+    fmt::println("  uid:    {}", device_info.uid());
+    fmt::println("  name:   {}", device_info.name());
 
     if (device_info.has_device_encoding()) {
         fmt::println("");
@@ -70,20 +70,12 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
         }
 
         fmt::println("");
-        fmt::println("    fec_encoding:        {}",
+        fmt::println("    fec_encoding:     {}",
             format_enum(fec_encoding_map, device_info.sender_config().fec_encoding()));
-        fmt::println("    fec_block_nbsrc:     {}",
-            device_info.sender_config().fec_block_source_packets());
-        fmt::println("    fec_block_nbrpr:     {}",
-            device_info.sender_config().fec_block_repair_packets());
-
-        fmt::println("");
-        fmt::println("    latency_backend:  {}",
-            format_enum(latency_tuner_backend_map,
-                device_info.sender_config().latency_tuner_backend()));
-        fmt::println("    latency_profile:  {}",
-            format_enum(latency_tuner_profile_map,
-                device_info.sender_config().latency_tuner_profile()));
+        fmt::println("    fec_block_nbsrc:  {}",
+            format_size(device_info.sender_config().fec_block_source_packets()));
+        fmt::println("    fec_block_nbrpr:  {}",
+            format_size(device_info.sender_config().fec_block_repair_packets()));
 
         fmt::println("");
         fmt::println("    resampler_backend:  {}",
@@ -92,6 +84,14 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
         fmt::println("    resampler_profile:  {}",
             format_enum(
                 resampler_profile_map, device_info.sender_config().resampler_profile()));
+
+        fmt::println("");
+        fmt::println("    latency_backend:  {}",
+            format_enum(latency_tuner_backend_map,
+                device_info.sender_config().latency_tuner_backend()));
+        fmt::println("    latency_profile:  {}",
+            format_enum(latency_tuner_profile_map,
+                device_info.sender_config().latency_tuner_profile()));
 
         fmt::println("");
         fmt::println("    target_latency:  {}",
@@ -111,13 +111,6 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
             fmt::println("");
         }
 
-        fmt::println("    latency_backend:  {}",
-            format_enum(latency_tuner_backend_map,
-                device_info.receiver_config().latency_tuner_backend()));
-        fmt::println("    latency_profile:  {}",
-            format_enum(latency_tuner_profile_map,
-                device_info.receiver_config().latency_tuner_profile()));
-
         fmt::println("");
         fmt::println("    resampler_backend:  {}",
             format_enum(resampler_backend_map,
@@ -125,6 +118,13 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
         fmt::println("    resampler_profile:  {}",
             format_enum(resampler_profile_map,
                 device_info.receiver_config().resampler_profile()));
+
+        fmt::println("    latency_backend:  {}",
+            format_enum(latency_tuner_backend_map,
+                device_info.receiver_config().latency_tuner_backend()));
+        fmt::println("    latency_profile:  {}",
+            format_enum(latency_tuner_profile_map,
+                device_info.receiver_config().latency_tuner_profile()));
 
         fmt::println("");
         fmt::println("    target_latency:  {}",

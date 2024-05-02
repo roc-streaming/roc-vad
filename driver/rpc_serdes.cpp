@@ -133,7 +133,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
 
         if (out.device_encoding.sample_rate == 0) {
             throw std::invalid_argument(
-                "RvDeviceEncoding.sample_rate should not be zero");
+                "RvDeviceEncoding.sample_rate should be either unset or non-zero");
         }
     }
 
@@ -158,11 +158,6 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
         if (in.sender_config().has_packet_length()) {
             out.sender_config->packet_length_ns = nanoseconds_from_rpc(
                 "RvSenderConfig.packet_length", in.sender_config().packet_length());
-
-            if (out.sender_config->packet_length_ns == 0) {
-                throw std::invalid_argument(
-                    "RvSenderConfig.packet_length should not be zero");
-            }
         }
 
         // packet_interleaving
@@ -182,26 +177,12 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
         if (in.sender_config().has_fec_block_source_packets()) {
             out.sender_config->fec_block_source_packets =
                 in.sender_config().fec_block_source_packets();
-
-            if (out.sender_config->fec_block_source_packets == 0 &&
-                out.sender_config->fec_encoding != ROC_FEC_ENCODING_DISABLE) {
-                throw std::invalid_argument(
-                    "RvSenderConfig.fec_block_source_packets should not be zero if "
-                    "RvSenderConfig.fec_encoding is not set to RV_FEC_ENCODING_DISABLE");
-            }
         }
 
         // fec_block_repair_packets
         if (in.sender_config().has_fec_block_repair_packets()) {
             out.sender_config->fec_block_repair_packets =
                 in.sender_config().fec_block_repair_packets();
-
-            if (out.sender_config->fec_block_repair_packets == 0 &&
-                out.sender_config->fec_encoding != ROC_FEC_ENCODING_DISABLE) {
-                throw std::invalid_argument(
-                    "RvSenderConfig.fec_block_repair_packets should not be zero if "
-                    "RvSenderConfig.fec_encoding is not set to RV_FEC_ENCODING_DISABLE");
-            }
         }
 
         // latency_tuner_backend
@@ -366,6 +347,10 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
             in.device_encoding.channel_layout));
 
     // sender_config
+    if (in.type == DeviceType::Sender) {
+        // ensure sender_config is always present for sender device
+        out.mutable_sender_config();
+    }
     if (in.sender_config) {
         // packet_encoding
         if (in.sender_config->packet_encoding) {
@@ -434,6 +419,10 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
     }
 
     // receiver_config
+    if (in.type == DeviceType::Receiver) {
+        // ensure receiver_config is always present for receiver device
+        out.mutable_receiver_config();
+    }
     if (in.receiver_config) {
         // packet_encodings
         for (const auto& in_encoding : in.receiver_config->packet_encodings) {
@@ -510,9 +499,9 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
 void packet_encoding_from_rpc(DevicePacketEncoding& out, const rvpb::RvPacketEncoding& in)
 {
     auto enc_id = in.encoding_id();
-    if (enc_id <= 0 || enc_id >= 128) {
+    if (enc_id <= 0 || enc_id >= 255) {
         throw std::invalid_argument(
-            "RvPacketEncoding.encoding_id should be in range [1; 127]");
+            "RvPacketEncoding.encoding_id should be in range [1; 255]");
     }
 
     out.id = (roc_packet_encoding)enc_id;

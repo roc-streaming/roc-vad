@@ -42,7 +42,7 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
         packet_length_,
         fmt::format("Packet length (number with one of the suffixes: {})",
             supported_duration_suffixes()));
-    packet_encoding_opts->add_option(
+    packet_encoding_opts->add_flag(
         "--packet-interleaving", packet_interleaving_, "Packet interleaving flag");
 
     packet_encoding_opts->add_option("--packet-encoding-id",

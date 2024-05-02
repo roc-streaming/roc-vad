@@ -15,8 +15,21 @@ std::string format_device_type(rvpb::RvDeviceType device_type)
     return device_type == rvpb::RV_DEVICE_TYPE_SENDER ? "sender" : "receiver";
 }
 
+std::string format_size(uint32_t size)
+{
+    if (size == 0) {
+        return "default";
+    }
+
+    return std::to_string(size);
+}
+
 std::string format_duration(int64_t nanoseconds)
 {
+    if (nanoseconds == 0) {
+        return "default";
+    }
+
     int64_t multiplier = 1;
     const char* suffix = "ns";
 

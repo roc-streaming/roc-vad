@@ -21,6 +21,8 @@ namespace rocvad {
 
 std::string format_device_type(rvpb::RvDeviceType device_type);
 
+std::string format_size(uint32_t size);
+
 std::string format_duration(int64_t nanoseconds);
 std::string format_duration(google::protobuf::Duration duration);
 

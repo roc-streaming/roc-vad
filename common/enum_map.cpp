@@ -29,6 +29,7 @@ enum_map<rvpb::RvChannelLayout, roc_channel_layout> channel_layout_map {
 
 enum_map<rvpb::RvFecEncoding, roc_fec_encoding> fec_encoding_map {
     {rvpb::RV_FEC_ENCODING_DISABLE, ROC_FEC_ENCODING_DISABLE, "disable"},
+    {rvpb::RV_FEC_ENCODING_DEFAULT, ROC_FEC_ENCODING_DEFAULT, "default"},
     {rvpb::RV_FEC_ENCODING_RS8M, ROC_FEC_ENCODING_RS8M, "rs8m"},
     {rvpb::RV_FEC_ENCODING_LDPC_STAIRCASE, ROC_FEC_ENCODING_LDPC_STAIRCASE, "ldpc"},
 };

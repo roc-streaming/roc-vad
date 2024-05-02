@@ -270,6 +270,8 @@ message RvReceiverConfig
     // Non-standard encodings for network packets.
     // If your senders use non-standard packet encodings, you should also
     // list them on receiver using the same encoding identifiers.
+    // Multiple encodings can be specified for the case when different
+    // senders use different custom encodings.
     repeated RvPacketEncoding packet_encodings = 1;
 
     // Latency tuning algorithm.
@@ -395,13 +397,16 @@ enum RvFecEncoding
     // No FEC encoding.
     RV_FEC_ENCODING_DISABLE = 0;
 
+    // Default FEC encoding.
+    RV_FEC_ENCODING_DEFAULT = 1;
+
     // Reed-Solomon FEC encoding (RFC 6865) with m=8.
     // Good for small block sizes (below 256 packets).
-    RV_FEC_ENCODING_RS8M = 1;
+    RV_FEC_ENCODING_RS8M = 2;
 
     // LDPC-Staircase FEC encoding (RFC 6816).
     // Good for large block sizes (above 1024 packets).
-    RV_FEC_ENCODING_LDPC_STAIRCASE = 2;
+    RV_FEC_ENCODING_LDPC_STAIRCASE = 3;
 }
 
 // Latency tuner backend.
