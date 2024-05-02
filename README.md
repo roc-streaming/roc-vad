@@ -4,6 +4,29 @@
 
 > <h2>PROJECT IS WORK IN PROGRESS!</h2>
 
+<!-- toc -->
+
+- [What is this?](#what-is-this)
+- [How it works](#how-it-works)
+- [Features](#features)
+- [Platforms](#platforms)
+- [Install from binaries](#install-from-binaries)
+- [Install from sources](#install-from-sources)
+- [Usage](#usage)
+- [Sender options](#sender-options)
+- [Receiver options](#receiver-options)
+- [Advanced configuration](#advanced-configuration)
+- [Troubleshooting](#troubleshooting)
+- [Common issues](#common-issues)
+- [Programmatic control](#programmatic-control)
+- [Socket address](#socket-address)
+- [Hacking](#hacking)
+- [Donating](#donating)
+- [Authors](#authors)
+- [License](#license)
+
+<!-- tocstop -->
+
 ## What is this?
 
 This repo provides macOS **Virtual Audio Device** (VAD) for **streaming audio** to or from remote devices. It is part of [Roc Toolkit](https://github.com/roc-streaming/roc-toolkit) project and is interoperable with both Roc and third-party software.
@@ -19,6 +42,8 @@ After installing Roc VAD, you can:
 When you configure an app (e.g. iTunes) to use virtual device as a speaker, all sound that the app plays to the device is streamed to a remote receiver. Remote receiver could be Roc PipeWire source, or an app using Roc Toolkit library, or even a generic RTP receiver.
 
 And vice versa, when you configure an app (e.g. Zoom) to use virtual device as a microphone, the sound is streamed from a remote sender to the virtual device, and the app reads the received stream.
+
+*TODO: screenshot*
 
 ## Features
 
@@ -131,6 +156,30 @@ client:
   commit:  76ca125
 ```
 
+*TODO: commands*
+
+## Sender options
+
+*TODO: option table*
+
+## Receiver options
+
+*TODO: option table*
+
+## Advanced configuration
+
+### Custom audio encoding
+
+*TODO*
+
+### Custom FEC encoding
+
+*TODO*
+
+### Tuning latency
+
+*TODO*
+
 ## Troubleshooting
 
 To enable verbose logging of the command line tool, use `-v` flag. Specify it multiple times to increase verbosity:
@@ -200,6 +249,10 @@ More details are available here:
 
 * [driver_protocol.proto](rpc/driver_protocol.proto) - protocol definition
 * [RPC.md](RPC.md) - generated protocol documentation
+
+To use RPC interface, you'll need to copy `driver_protocol.proto` to your project and use gRPC tools to generate client code for the language of your choice ([1](https://grpc.io/docs/languages/), [2](https://github.com/grpc/grpc-swift)).
+
+Roc VAD RPC interface mostly mirrors underlying C API of Roc Toolkit. Please refer to the [C API reference](https://roc-streaming.org/toolkit/docs/api/reference.html) for more details on semantics of various options.
 
 ## Socket address
 

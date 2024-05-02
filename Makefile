@@ -60,6 +60,9 @@ docs:
 		--doc_opt=markdown,RPC.md \
 		rpc/*.proto
 
+toc:
+	markdown-toc --maxdepth 2 -i README.md
+
 kick: kickstart
 kickstart:
 	launchctl kickstart -k system/com.apple.audio.coreaudiod
