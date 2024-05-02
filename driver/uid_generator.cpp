@@ -16,6 +16,7 @@ std::string UidGenerator::generate()
         auto uid = make_();
 
         if (uids_.count(uid)) {
+            // can happen only in multiverse
             continue;
         }
 
@@ -26,12 +27,12 @@ std::string UidGenerator::generate()
 
 std::string UidGenerator::make_()
 {
-    constexpr int num_digits = 16;
+    constexpr int num_digits = 24;
     constexpr int num_groups = 4;
 
     constexpr const char* digits = "0123456789abcdef";
 
-    std::uniform_int_distribution<int> dist(0, num_digits - 1);
+    std::uniform_int_distribution<int> dist(0, 15);
 
     std::string res;
 
