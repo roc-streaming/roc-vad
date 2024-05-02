@@ -60,6 +60,7 @@ docs:
 		--doc_opt=markdown,RPC.md \
 		rpc/*.proto
 
+kick: kickstart
 kickstart:
 	launchctl kickstart -k system/com.apple.audio.coreaudiod
 
