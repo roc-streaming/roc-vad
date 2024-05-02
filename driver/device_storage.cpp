@@ -43,10 +43,18 @@ std::vector<DeviceInfo> DeviceStorage::load_devices()
 
     spdlog::debug("loaded device list from persistent storage");
 
-    std::vector<DeviceInfo> devices;
-    device_list_from_rpc(devices, msg);
+    try {
+        std::vector<DeviceInfo> devices;
+        device_list_from_rpc(devices, msg);
 
-    return devices;
+        spdlog::debug("parsed {} devices", devices.size());
+        return devices;
+    }
+    catch (std::exception& e) {
+        spdlog::warn(
+            "ignoring unparseable device list from persistent storage: {}", e.what());
+        return {};
+    }
 }
 
 void DeviceStorage::save_devices(const std::vector<DeviceInfo>& devices)
