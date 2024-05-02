@@ -22,6 +22,7 @@ add_executable(${TOOL_NAME}
   cmd_uninstall.cpp
   connector.cpp
   format.cpp
+  help_formatter.cpp
   main.cpp
   parse.cpp
   print.cpp

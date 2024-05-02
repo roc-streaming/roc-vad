@@ -23,16 +23,29 @@ public:
     bool execute(const Environment& env) override;
 
 private:
-    std::optional<std::string> uid_;
-    std::optional<std::string> name_;
+    std::optional<std::string> device_uid_;
+    std::optional<std::string> device_name_;
 
-    std::optional<uint32_t> rate_;
-    std::optional<std::string> chans_;
+    std::optional<uint32_t> device_encoding_rate_;
+    std::optional<std::string> device_encoding_chans_;
 
-    std::optional<std::string> target_latency_;
+    std::optional<uint8_t> packet_encoding_id_;
+    std::optional<uint32_t> packet_encoding_rate_;
+    std::optional<std::string> packet_encoding_format_;
+    std::optional<std::string> packet_encoding_chans_;
 
     std::optional<std::string> resampler_backend_;
     std::optional<std::string> resampler_profile_;
+
+    std::optional<std::string> latency_tuner_backend_;
+    std::optional<std::string> latency_tuner_profile_;
+
+    std::optional<std::string> target_latency_;
+    std::optional<std::string> min_latency_;
+    std::optional<std::string> max_latency_;
+
+    std::optional<std::string> no_playback_timeout_;
+    std::optional<std::string> choppy_playback_timeout_;
 };
 
 } // namespace rocvad

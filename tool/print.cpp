@@ -61,7 +61,7 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
         fmt::println("    packet_length:        {}",
             format_duration(device_info.sender_config().packet_length()));
         fmt::println("    packet_interleaving:  {}",
-            format_duration(device_info.sender_config().packet_interleaving()));
+            device_info.sender_config().packet_interleaving());
 
         if (device_info.sender_config().has_packet_encoding()) {
             print_packet_encoding(device_info.sender_config().packet_encoding());
@@ -70,11 +70,11 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
         }
 
         fmt::println("");
-        fmt::println("    fec_encoding:  {}",
+        fmt::println("    fec_encoding:        {}",
             format_enum(fec_encoding_map, device_info.sender_config().fec_encoding()));
-        fmt::println("    fec_nbsrc:     {}",
+        fmt::println("    fec_block_nbsrc:     {}",
             device_info.sender_config().fec_block_source_packets());
-        fmt::println("    fec_nbrpr:     {}",
+        fmt::println("    fec_block_nbrpr:     {}",
             device_info.sender_config().fec_block_repair_packets());
 
         fmt::println("");

@@ -20,30 +20,85 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
 {
     auto command = parent.add_subcommand("receiver", "Add receiver virtual device");
 
-    command->add_option("-u,--uid", uid_, "Device UID (omit to auto-generate)");
+    command->add_option("-u,--uid", device_uid_, "Device UID (omit to auto-generate)");
     command->add_option(
-        "-n,--name", name_, "Human-readable device name (omit to auto-generate)");
+        "-n,--name", device_name_, "Human-readable device name (omit to auto-generate)");
 
-    command->add_option(
-        "-r,--rate", rate_, "Sample rate for virtual device, in hertz (e.g. 44100)");
-    command->add_option("-c,--chans",
-        chans_,
+    // device_encoding
+    auto device_encoding_opts = command->add_option_group("Device encoding");
+
+    device_encoding_opts->add_option("-r,--device-rate",
+        device_encoding_rate_,
+        "Sample rate for virtual device, in hertz (e.g. 44100)");
+    device_encoding_opts->add_option("-c,--device-chans",
+        device_encoding_chans_,
         fmt::format("Channel set for virtual device (supported values: {})",
             supported_enum_values(channel_layout_map)));
 
-    command->add_option("--target-latency",
-        target_latency_,
-        fmt::format("Receiver target latency (number with one of the suffixes: {})",
-            supported_duration_suffixes()));
+    // packet_encoding
+    auto packet_encoding_opts = command->add_option_group("Packet encoding");
 
-    command->add_option("--resampler-backend",
+    packet_encoding_opts->add_option("--packet-encoding-id",
+        packet_encoding_id_,
+        "Unique identifier to use for packet encoding");
+    packet_encoding_opts->add_option("--packet-encoding-rate",
+        packet_encoding_rate_,
+        "Sample rate to use for packet encoding");
+    packet_encoding_opts->add_option("--packet-encoding-format",
+        packet_encoding_format_,
+        fmt::format("Sample format to use for packet encoding (supported values: {})",
+            supported_enum_values(sample_format_map)));
+    packet_encoding_opts->add_option("--packet-encoding-chans",
+        packet_encoding_chans_,
+        fmt::format("Channel layout to use for packet encoding (supported values: {})",
+            supported_enum_values(channel_layout_map)));
+
+    // resampler
+    auto resampler_opts = command->add_option_group("Resampler");
+
+    resampler_opts->add_option("--resampler-backend",
         resampler_backend_,
-        fmt::format("Receiver resampler backend (supported values: {})",
+        fmt::format("Resampler backend (supported values: {})",
             supported_enum_values(resampler_backend_map)));
-    command->add_option("--resampler-profile",
+    resampler_opts->add_option("--resampler-profile",
         resampler_profile_,
-        fmt::format("Receiver resampler profile (supported values: {})",
+        fmt::format("Resampler profile (supported values: {})",
             supported_enum_values(resampler_profile_map)));
+
+    // latency_tuner
+    auto latency_tuner_opts = command->add_option_group("Latency tuner");
+
+    latency_tuner_opts->add_option("--latency-backend",
+        latency_tuner_backend_,
+        fmt::format("Latency tuner backend (supported values: {})",
+            supported_enum_values(latency_tuner_backend_map)));
+    latency_tuner_opts->add_option("--latency-profile",
+        latency_tuner_profile_,
+        fmt::format("Latency tuner profile (supported values: {})",
+            supported_enum_values(latency_tuner_profile_map)));
+
+    // latency
+    auto latency_opts = command->add_option_group("Latency");
+
+    latency_opts->add_option("--target-latency",
+        target_latency_,
+        fmt::format("Target latency (number with one of the suffixes: {})",
+            supported_duration_suffixes()));
+    latency_opts->add_option(
+        "--min-latency", min_latency_, "Minimum latency (same format)");
+    latency_opts->add_option(
+        "--max-latency", max_latency_, "Maximum latency (same format)");
+
+    // timeouts
+    auto timeouts_opts = command->add_option_group("Timeouts");
+
+    timeouts_opts->add_option("--no-play-timeout",
+        no_playback_timeout_,
+        fmt::format("No playback timeout (number with one of the suffixes: {})",
+            supported_duration_suffixes()));
+    timeouts_opts->add_option("--choppy-play-timeout",
+        choppy_playback_timeout_,
+        "Choppy playback timeout (same format)");
 
     register_command(command);
 }
@@ -63,36 +118,67 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     rvpb::RvDeviceInfo request;
     rvpb::RvDeviceInfo response;
 
+    // device
     request.set_type(rvpb::RV_DEVICE_TYPE_RECEIVER);
 
-    if (uid_) {
-        request.set_uid(*uid_);
+    if (device_uid_) {
+        request.set_uid(*device_uid_);
+    }
+    if (device_name_) {
+        request.set_name(*device_name_);
     }
 
-    if (name_) {
-        request.set_name(*name_);
+    // device_encoding
+    if (device_encoding_rate_) {
+        request.mutable_device_encoding()->set_sample_rate(*device_encoding_rate_);
     }
-
-    if (rate_) {
-        request.mutable_device_encoding()->set_sample_rate(*rate_);
-    }
-
-    if (chans_) {
+    if (device_encoding_chans_) {
         rvpb::RvChannelLayout channel_layout;
-        if (!parse_enum("--chans", channel_layout_map, *chans_, channel_layout)) {
+        if (!parse_enum("--device-chans",
+                channel_layout_map,
+                *device_encoding_chans_,
+                channel_layout)) {
             return false;
         }
         request.mutable_device_encoding()->set_channel_layout(channel_layout);
     }
 
-    if (target_latency_) {
-        if (!parse_duration("--target-latency",
-                *target_latency_,
-                *request.mutable_receiver_config()->mutable_target_latency())) {
-            return false;
+    // packet_encoding
+    if (packet_encoding_id_ || packet_encoding_rate_ || packet_encoding_format_ ||
+        packet_encoding_chans_) {
+        rvpb::RvPacketEncoding packet_encoding;
+
+        if (packet_encoding_id_) {
+            packet_encoding.set_encoding_id(*packet_encoding_id_);
         }
+        if (packet_encoding_rate_) {
+            packet_encoding.set_sample_rate(*packet_encoding_rate_);
+        }
+        if (packet_encoding_format_) {
+            rvpb::RvSampleFormat sample_format;
+            if (!parse_enum("--packet-encoding-format",
+                    sample_format_map,
+                    *packet_encoding_format_,
+                    sample_format)) {
+                return false;
+            }
+            packet_encoding.set_sample_format(sample_format);
+        }
+        if (packet_encoding_chans_) {
+            rvpb::RvChannelLayout channel_layout;
+            if (!parse_enum("--packet-encoding-chans",
+                    channel_layout_map,
+                    *packet_encoding_chans_,
+                    channel_layout)) {
+                return false;
+            }
+            packet_encoding.set_channel_layout(channel_layout);
+        }
+
+        *request.mutable_receiver_config()->add_packet_encodings() = packet_encoding;
     }
 
+    // resampler
     if (resampler_backend_) {
         rvpb::RvResamplerBackend resampler_backend;
         if (!parse_enum("--resampler-backend",
@@ -103,7 +189,6 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
         }
         request.mutable_receiver_config()->set_resampler_backend(resampler_backend);
     }
-
     if (resampler_profile_) {
         rvpb::RvResamplerProfile resampler_profile;
         if (!parse_enum("--resampler-profile",
@@ -113,6 +198,69 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
             return false;
         }
         request.mutable_receiver_config()->set_resampler_profile(resampler_profile);
+    }
+
+    // latency_tuner
+    if (latency_tuner_backend_) {
+        rvpb::RvLatencyTunerBackend latency_tuner_backend;
+        if (!parse_enum("--latency-backend",
+                latency_tuner_backend_map,
+                *latency_tuner_backend_,
+                latency_tuner_backend)) {
+            return false;
+        }
+        request.mutable_receiver_config()->set_latency_tuner_backend(
+            latency_tuner_backend);
+    }
+    if (latency_tuner_profile_) {
+        rvpb::RvLatencyTunerProfile latency_tuner_profile;
+        if (!parse_enum("--latency-profile",
+                latency_tuner_profile_map,
+                *latency_tuner_profile_,
+                latency_tuner_profile)) {
+            return false;
+        }
+        request.mutable_receiver_config()->set_latency_tuner_profile(
+            latency_tuner_profile);
+    }
+
+    // latency
+    if (target_latency_) {
+        if (!parse_duration("--target-latency",
+                *target_latency_,
+                *request.mutable_receiver_config()->mutable_target_latency())) {
+            return false;
+        }
+    }
+    if (min_latency_) {
+        if (!parse_duration("--min-latency",
+                *min_latency_,
+                *request.mutable_receiver_config()->mutable_min_latency())) {
+            return false;
+        }
+    }
+    if (max_latency_) {
+        if (!parse_duration("--max-latency",
+                *max_latency_,
+                *request.mutable_receiver_config()->mutable_max_latency())) {
+            return false;
+        }
+    }
+
+    // timeouts
+    if (no_playback_timeout_) {
+        if (!parse_duration("--no-play-timeout",
+                *no_playback_timeout_,
+                *request.mutable_receiver_config()->mutable_no_playback_timeout())) {
+            return false;
+        }
+    }
+    if (choppy_playback_timeout_) {
+        if (!parse_duration("--choppy-play-timeout",
+                *choppy_playback_timeout_,
+                *request.mutable_receiver_config()->mutable_choppy_playback_timeout())) {
+            return false;
+        }
     }
 
     const grpc::Status status = stub->add_device(&context, request, &response);

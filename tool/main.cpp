@@ -8,6 +8,7 @@
 
 #include "cmd_root.hpp"
 #include "color_sink.hpp"
+#include "help_formatter.hpp"
 
 #include <grpc/impl/codegen/log.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -50,6 +51,8 @@ void grpc_init()
 int main(int argc, char** argv)
 {
     CLI::App app {"Roc Toolkit Virtual Audio Device control tool"};
+
+    app.formatter(std::make_shared<HelpFormatter>());
 
     int verbosity = 0;
     bool force_color = false, force_no_color = false;
