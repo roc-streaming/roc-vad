@@ -15,12 +15,12 @@ std::string format_device_type(rvpb::RvDeviceType device_type)
     return device_type == rvpb::RV_DEVICE_TYPE_SENDER ? "sender" : "receiver";
 }
 
-std::string format_duration(uint64_t nanoseconds)
+std::string format_duration(int64_t nanoseconds)
 {
-    uint64_t multiplier = 0;
-    const char* suffix = nullptr;
+    int64_t multiplier = 1;
+    const char* suffix = "ns";
 
-    for (auto [m, s] : std::array<std::tuple<uint64_t, const char*>, 6> {{
+    for (auto [m, s] : std::array<std::tuple<int64_t, const char*>, 6> {{
              {1, "ns"},
              {1'000, "us"},
              {1'000'000, "ms"},
@@ -28,7 +28,7 @@ std::string format_duration(uint64_t nanoseconds)
              {60'000'000'000, "m"},
              {3660'000'000'000, "h"},
          }}) {
-        if (nanoseconds >= m) {
+        if (std::abs(nanoseconds) >= m) {
             multiplier = m;
             suffix = s;
         }
@@ -42,7 +42,7 @@ std::string format_duration(google::protobuf::Duration duration)
     const int64_t nanoseconds =
         google::protobuf::util::TimeUtil::DurationToNanoseconds(duration);
 
-    return format_duration((uint64_t)nanoseconds);
+    return format_duration(nanoseconds);
 }
 
 } // namespace rocvad

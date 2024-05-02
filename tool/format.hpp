@@ -21,7 +21,7 @@ namespace rocvad {
 
 std::string format_device_type(rvpb::RvDeviceType device_type);
 
-std::string format_duration(uint64_t nanoseconds);
+std::string format_duration(int64_t nanoseconds);
 std::string format_duration(google::protobuf::Duration duration);
 
 template <class Map, class Enum>

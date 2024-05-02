@@ -44,13 +44,9 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
 
     fmt::println("");
 
-    fmt::println("  type: {}", format_device_type(device_info.type()));
-    fmt::println("  uid:  {}", device_info.uid());
-    fmt::println("  name: {}", device_info.name());
-
-    fmt::println("");
-
-    fmt::println("  config:");
+    fmt::println("  type:  {}", format_device_type(device_info.type()));
+    fmt::println("  uid:   {}", device_info.uid());
+    fmt::println("  name:  {}", device_info.name());
 
     if (device_info.has_device_encoding()) {
         fmt::println("");
@@ -59,57 +55,102 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
     }
 
     if (device_info.has_sender_config()) {
-        if (device_info.sender_config().has_packet_encoding()) {
-            fmt::println("");
+        fmt::println("");
+        fmt::println("  sender_config:");
 
+        fmt::println("    packet_length:        {}",
+            format_duration(device_info.sender_config().packet_length()));
+        fmt::println("    packet_interleaving:  {}",
+            format_duration(device_info.sender_config().packet_interleaving()));
+
+        if (device_info.sender_config().has_packet_encoding()) {
             print_packet_encoding(device_info.sender_config().packet_encoding());
+        } else {
+            fmt::println("    packet_encoding:      default");
         }
 
         fmt::println("");
-
-        fmt::println("    packet_length:   {}",
-            format_duration(device_info.sender_config().packet_length()));
+        fmt::println("    fec_encoding:  {}",
+            format_enum(fec_encoding_map, device_info.sender_config().fec_encoding()));
+        fmt::println("    fec_nbsrc:     {}",
+            device_info.sender_config().fec_block_source_packets());
+        fmt::println("    fec_nbrpr:     {}",
+            device_info.sender_config().fec_block_repair_packets());
 
         fmt::println("");
+        fmt::println("    latency_backend:  {}",
+            format_enum(latency_tuner_backend_map,
+                device_info.sender_config().latency_tuner_backend()));
+        fmt::println("    latency_profile:  {}",
+            format_enum(latency_tuner_profile_map,
+                device_info.sender_config().latency_tuner_profile()));
 
-        fmt::println("    fec_encoding: {}",
-            format_enum(fec_encoding_map, device_info.sender_config().fec_encoding()));
-        fmt::println("    fec_nbsrc:    {}",
-            device_info.sender_config().fec_block_source_packets());
-        fmt::println("    fec_nbrpr:    {}",
-            device_info.sender_config().fec_block_repair_packets());
+        fmt::println("");
+        fmt::println("    resampler_backend:  {}",
+            format_enum(
+                resampler_backend_map, device_info.sender_config().resampler_backend()));
+        fmt::println("    resampler_profile:  {}",
+            format_enum(
+                resampler_profile_map, device_info.sender_config().resampler_profile()));
+
+        fmt::println("");
+        fmt::println("    target_latency:  {}",
+            format_duration(device_info.sender_config().target_latency()));
+        fmt::println("    min_latency:     {}",
+            format_duration(device_info.sender_config().min_latency()));
+        fmt::println("    max_latency:     {}",
+            format_duration(device_info.sender_config().max_latency()));
     }
 
     if (device_info.has_receiver_config()) {
         fmt::println("");
+        fmt::println("  receiver_config:");
 
-        print_packet_encoding_list(device_info.receiver_config().packet_encodings());
+        for (const auto& encoding : device_info.receiver_config().packet_encodings()) {
+            print_packet_encoding(encoding);
+            fmt::println("");
+        }
 
-        fmt::println("    target_latency: {}",
-            format_duration(device_info.receiver_config().target_latency()));
+        fmt::println("    latency_backend:  {}",
+            format_enum(latency_tuner_backend_map,
+                device_info.receiver_config().latency_tuner_backend()));
+        fmt::println("    latency_profile:  {}",
+            format_enum(latency_tuner_profile_map,
+                device_info.receiver_config().latency_tuner_profile()));
 
         fmt::println("");
-
-        fmt::println("    resampler_backend: {}",
+        fmt::println("    resampler_backend:  {}",
             format_enum(resampler_backend_map,
                 device_info.receiver_config().resampler_backend()));
-        fmt::println("    resampler_profile: {}",
+        fmt::println("    resampler_profile:  {}",
             format_enum(resampler_profile_map,
                 device_info.receiver_config().resampler_profile()));
+
+        fmt::println("");
+        fmt::println("    target_latency:  {}",
+            format_duration(device_info.receiver_config().target_latency()));
+        fmt::println("    min_latency:     {}",
+            format_duration(device_info.receiver_config().min_latency()));
+        fmt::println("    max_latency:     {}",
+            format_duration(device_info.receiver_config().max_latency()));
+
+        fmt::println("");
+        fmt::println("    no_play_timeout:      {}",
+            format_duration(device_info.receiver_config().no_playback_timeout()));
+        fmt::println("    choppy_play_timeout:  {}",
+            format_duration(device_info.receiver_config().choppy_playback_timeout()));
     }
 
     if (device_info.local_endpoints_size() != 0) {
         fmt::println("");
-
-        fmt::println("  local endpoints:");
+        fmt::println("  local_endpoints:");
 
         print_endpoint_list(device_info.local_endpoints());
     }
 
     if (device_info.remote_endpoints_size() != 0) {
         fmt::println("");
-
-        fmt::println("  remote endpoints:");
+        fmt::println("  remote_endpoints:");
 
         print_endpoint_list(device_info.remote_endpoints());
     }
@@ -146,43 +187,30 @@ void print_device_list(const rvpb::RvDeviceList& device_list, bool show_info)
 
 void print_device_encoding(const rvpb::RvDeviceEncoding& encoding)
 {
-    fmt::println("device_encoding:");
-
-    fmt::println("  rate:     {}", encoding.sample_rate());
-    fmt::println("  channels: {}", //
+    fmt::println("  device_encoding:");
+    fmt::println("    rate:      {}Hz", encoding.sample_rate());
+    fmt::println("    channels:  {}", //
         format_enum(channel_layout_map, encoding.channel_layout()));
 }
 
 void print_packet_encoding(const rvpb::RvPacketEncoding& encoding)
 {
-    fmt::println("packet_encoding:");
-
-    fmt::println("  id:       {}", encoding.encoding_id());
-    fmt::println("  rate:     {}", encoding.sample_rate());
-    fmt::println("  format:   {}", //
+    fmt::println("    packet_encoding:");
+    fmt::println("      id:        {}", encoding.encoding_id());
+    fmt::println("      rate:      {}Hz", encoding.sample_rate());
+    fmt::println("      format:    {}", //
         format_enum(sample_format_map, encoding.sample_format()));
-    fmt::println("  channels: {}", //
+    fmt::println("      channels:  {}", //
         format_enum(channel_layout_map, encoding.channel_layout()));
-}
-
-void print_packet_encoding_list(
-    const google::protobuf::RepeatedPtrField<rvpb::RvPacketEncoding>& encoding_list)
-{
-    for (const auto& encoding : encoding_list) {
-        fmt::println("");
-
-        print_packet_encoding(encoding);
-    }
 }
 
 void print_endpoint_info(const rvpb::RvEndpointInfo& endpoint_info)
 {
     fmt::println("endpoint:");
-
-    fmt::println("  slot:      {}", endpoint_info.slot());
-    fmt::println("  interface: {}", //
+    fmt::println("  slot:       {}", endpoint_info.slot());
+    fmt::println("  interface:  {}", //
         format_enum(interface_map, endpoint_info.interface()));
-    fmt::println("  uri:       {}", endpoint_info.uri());
+    fmt::println("  uri:        {}", endpoint_info.uri());
 }
 
 void print_endpoint_list(
