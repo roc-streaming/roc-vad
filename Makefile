@@ -69,3 +69,6 @@ kickstart:
 
 syslog:
 	log stream --predicate 'sender == "roc_vad"'
+
+sysprof:
+	system_profiler SPAudioDataType

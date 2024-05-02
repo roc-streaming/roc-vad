@@ -217,6 +217,21 @@ Timestamp                       Thread     Type        Activity             PID 
 ...
 ```
 
+To check if virtual device is actually added to the system, run:
+
+```
+$ system_profiler SPAudioDataType
+Audio:
+
+    Devices:
+
+        Roc Virtual Device #1:
+
+          Manufacturer: Roc Streaming
+          Current SampleRate: 44100
+          Transport: Virtual
+```
+
 ## Common issues
 
 * **Can't connect to driver**
