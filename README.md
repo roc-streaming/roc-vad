@@ -1,6 +1,6 @@
 # Roc Virtual Audio Device for macOS [WIP]
 
-[![Build](https://github.com/roc-streaming/roc-vad/workflows/build/badge.svg)](https://github.com/roc-streaming/roc-vad/actions) [![GitHub release](https://img.shields.io/github/release/roc-streaming/roc-vad.svg)](https://github.com/roc-streaming/roc-vad/releases) [![Matrix chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#roc-streaming:matrix.org)
+[![Build](https://github.com/roc-streaming/roc-vad/actions/workflows/build.yml/badge.svg)](https://github.com/roc-streaming/roc-vad/actions) [![GitHub release](https://img.shields.io/github/release/roc-streaming/roc-vad.svg)](https://github.com/roc-streaming/roc-vad/releases) [![Matrix chat](https://matrix.to/img/matrix-badge.svg)](https://app.element.io/#/room/#roc-streaming:matrix.org)
 
 > <h2>PROJECT IS WORK IN PROGRESS!</h2>
 
