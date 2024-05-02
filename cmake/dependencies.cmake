@@ -78,7 +78,7 @@ list(PREPEND CMAKE_PREFIX_PATH
 ExternalProject_Add(boringssl_lib
   GIT_REPOSITORY "https://github.com/google/boringssl.git"
   GIT_TAG "2db0eb3f96a5756298dcd7f9319e56a98585bd10"
-  GIT_SHALLOW ON
+  GIT_SHALLOW OFF
   GIT_PROGRESS ON
   UPDATE_DISCONNECTED ON
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/boringssl
