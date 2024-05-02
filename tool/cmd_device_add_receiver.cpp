@@ -23,6 +23,7 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
     command->add_option("-u,--uid", device_uid_, "Device UID (omit to auto-generate)");
     command->add_option(
         "-n,--name", device_name_, "Human-readable device name (omit to auto-generate)");
+    command->add_flag("--disabled", device_disabled_, "Create device in disabled state");
 
     // device_encoding
     auto device_encoding_opts = command->add_option_group("Device encoding");
@@ -126,6 +127,9 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
     }
     if (device_name_) {
         request.set_name(*device_name_);
+    }
+    if (device_disabled_) {
+        request.set_enabled(!*device_disabled_);
     }
 
     // device_encoding

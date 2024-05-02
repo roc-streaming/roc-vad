@@ -14,6 +14,8 @@ add_executable(${TOOL_NAME}
   cmd_device_bind.cpp
   cmd_device_connect.cpp
   cmd_device_delete.cpp
+  cmd_device_disable.cpp
+  cmd_device_enable.cpp
   cmd_device_list.cpp
   cmd_device_show.cpp
   cmd_info.cpp

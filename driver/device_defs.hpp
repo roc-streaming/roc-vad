@@ -106,6 +106,7 @@ struct DeviceInfo
     IndexAllocator::index_t index = 0;
     std::string uid;
     std::string name;
+    bool enabled = true;
 
     DeviceLocalEncoding device_encoding;
 

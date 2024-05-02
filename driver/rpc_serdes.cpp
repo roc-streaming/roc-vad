@@ -102,7 +102,7 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             fmt::format("invalid RvDeviceInfo.device_type {}", (int)in.type()));
     }
 
-    // identification
+    // device
     if (in.has_index()) {
         if (in.index() == 0) {
             throw std::invalid_argument(
@@ -125,6 +125,10 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 "RvDeviceInfo.name should be either unset or non-empty");
         }
         out.name = in.name();
+    }
+
+    if (in.has_enabled()) {
+        out.enabled = in.enabled();
     }
 
     // device_encoding
@@ -334,10 +338,11 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
     out.set_type(in.type == DeviceType::Sender ? rvpb::RV_DEVICE_TYPE_SENDER
                                                : rvpb::RV_DEVICE_TYPE_RECEIVER);
 
-    // identification
+    // device
     out.set_index(in.index);
     out.set_uid(in.uid);
     out.set_name(in.name);
+    out.set_enabled(in.enabled);
 
     // device_encoding
     out.mutable_device_encoding()->set_sample_rate(in.device_encoding.sample_rate);

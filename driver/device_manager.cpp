@@ -122,6 +122,26 @@ void DeviceManager::delete_device(const std::string& uid)
     save_devices_();
 }
 
+void DeviceManager::toggle_device(index_t index, bool enabled)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(index);
+    device->toggle(enabled);
+
+    save_devices_();
+}
+
+void DeviceManager::toggle_device(const std::string& uid, bool enabled)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(uid);
+    device->toggle(enabled);
+
+    save_devices_();
+}
+
 DeviceEndpointInfo DeviceManager::bind_device(index_t index, DeviceEndpointInfo endpoint)
 {
     std::lock_guard lock(mutex_);

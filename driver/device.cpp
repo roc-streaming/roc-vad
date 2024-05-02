@@ -90,8 +90,6 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
                                             ? aspl::Direction::Output
                                             : aspl::Direction::Input);
 
-    plugin_->AddDevice(device_);
-
     // TODO: roc_open
 
     sort_endpoints_();
@@ -103,6 +101,8 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
     for (auto& endpoint : info_.remote_endpoints) {
         connect_endpoint_(endpoint);
     }
+
+    toggle(info_.enabled);
 }
 
 Device::~Device()
@@ -113,11 +113,9 @@ Device::~Device()
         info_.type,
         info_.name);
 
-    // TODO: roc_close
+    toggle(false);
 
-    if (device_) {
-        plugin_->RemoveDevice(device_);
-    }
+    // TODO: roc_close
 
     if (info_.index != 0) {
         index_allocator_.release(info_.index);
@@ -127,6 +125,31 @@ Device::~Device()
 DeviceInfo Device::info()
 {
     return info_;
+}
+
+void Device::toggle(bool enabled)
+{
+    info_.enabled = enabled;
+
+    if (enabled) {
+        if (!device_added_) {
+            spdlog::debug("enabling device {}", info_.uid);
+
+            plugin_->AddDevice(device_);
+            device_added_ = true;
+        } else {
+            spdlog::debug("device {} is already enabled", info_.uid);
+        }
+    } else {
+        if (device_added_) {
+            spdlog::debug("disabling device {}", info_.uid);
+
+            plugin_->RemoveDevice(device_);
+            device_added_ = false;
+        } else {
+            spdlog::debug("device {} is already disabled", info_.uid);
+        }
+    }
 }
 
 DeviceEndpointInfo Device::bind(DeviceEndpointInfo endpoint_info)

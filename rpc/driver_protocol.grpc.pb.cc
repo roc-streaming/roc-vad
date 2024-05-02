@@ -29,6 +29,7 @@ static const char* RvDriver_method_names[] = {
   "/rvpb.RvDriver/get_device",
   "/rvpb.RvDriver/add_device",
   "/rvpb.RvDriver/delete_device",
+  "/rvpb.RvDriver/toggle_device",
   "/rvpb.RvDriver/bind",
   "/rvpb.RvDriver/connect",
 };
@@ -47,8 +48,9 @@ RvDriver::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, 
   , rpcmethod_get_device_(RvDriver_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_add_device_(RvDriver_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_delete_device_(RvDriver_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_bind_(RvDriver_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_connect_(RvDriver_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_toggle_device_(RvDriver_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_bind_(RvDriver_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_connect_(RvDriver_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status RvDriver::Stub::ping(::grpc::ClientContext* context, const ::rvpb::RvNone& request, ::rvpb::RvNone* response) {
@@ -205,6 +207,29 @@ void RvDriver::Stub::async::delete_device(::grpc::ClientContext* context, const 
   return result;
 }
 
+::grpc::Status RvDriver::Stub::toggle_device(::grpc::ClientContext* context, const ::rvpb::RvToggleRequest& request, ::rvpb::RvNone* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rvpb::RvToggleRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_toggle_device_, context, request, response);
+}
+
+void RvDriver::Stub::async::toggle_device(::grpc::ClientContext* context, const ::rvpb::RvToggleRequest* request, ::rvpb::RvNone* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rvpb::RvToggleRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_toggle_device_, context, request, response, std::move(f));
+}
+
+void RvDriver::Stub::async::toggle_device(::grpc::ClientContext* context, const ::rvpb::RvToggleRequest* request, ::rvpb::RvNone* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_toggle_device_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rvpb::RvNone>* RvDriver::Stub::PrepareAsynctoggle_deviceRaw(::grpc::ClientContext* context, const ::rvpb::RvToggleRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rvpb::RvNone, ::rvpb::RvToggleRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_toggle_device_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rvpb::RvNone>* RvDriver::Stub::Asynctoggle_deviceRaw(::grpc::ClientContext* context, const ::rvpb::RvToggleRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsynctoggle_deviceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status RvDriver::Stub::bind(::grpc::ClientContext* context, const ::rvpb::RvEndpointRequest& request, ::rvpb::RvEndpointInfo* response) {
   return ::grpc::internal::BlockingUnaryCall< ::rvpb::RvEndpointRequest, ::rvpb::RvEndpointInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_bind_, context, request, response);
 }
@@ -325,6 +350,16 @@ RvDriver::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RvDriver_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< RvDriver::Service, ::rvpb::RvToggleRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](RvDriver::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rvpb::RvToggleRequest* req,
+             ::rvpb::RvNone* resp) {
+               return service->toggle_device(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RvDriver_method_names[8],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RvDriver::Service, ::rvpb::RvEndpointRequest, ::rvpb::RvEndpointInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RvDriver::Service* service,
              ::grpc::ServerContext* ctx,
@@ -333,7 +368,7 @@ RvDriver::Service::Service() {
                return service->bind(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RvDriver_method_names[8],
+      RvDriver_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< RvDriver::Service, ::rvpb::RvEndpointRequest, ::rvpb::RvEndpointInfo, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](RvDriver::Service* service,
@@ -390,6 +425,13 @@ RvDriver::Service::~Service() {
 }
 
 ::grpc::Status RvDriver::Service::delete_device(::grpc::ServerContext* context, const ::rvpb::RvDeviceSelector* request, ::rvpb::RvNone* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RvDriver::Service::toggle_device(::grpc::ServerContext* context, const ::rvpb::RvToggleRequest* request, ::rvpb::RvNone* response) {
   (void) context;
   (void) request;
   (void) response;

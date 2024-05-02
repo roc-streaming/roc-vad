@@ -47,6 +47,9 @@ public:
     void delete_device(index_t index);
     void delete_device(const std::string& uid);
 
+    void toggle_device(index_t index, bool enabled);
+    void toggle_device(const std::string& uid, bool enabled);
+
     DeviceEndpointInfo bind_device(index_t index, DeviceEndpointInfo endpoint);
     DeviceEndpointInfo bind_device(const std::string& uid, DeviceEndpointInfo endpoint);
 

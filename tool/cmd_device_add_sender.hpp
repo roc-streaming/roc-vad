@@ -25,6 +25,7 @@ public:
 private:
     std::optional<std::string> device_uid_;
     std::optional<std::string> device_name_;
+    std::optional<bool> device_disabled_;
 
     std::optional<uint32_t> device_encoding_rate_;
     std::optional<std::string> device_encoding_chans_;

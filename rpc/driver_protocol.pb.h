@@ -90,6 +90,9 @@ extern RvReceiverConfigDefaultTypeInternal _RvReceiverConfig_default_instance_;
 class RvSenderConfig;
 struct RvSenderConfigDefaultTypeInternal;
 extern RvSenderConfigDefaultTypeInternal _RvSenderConfig_default_instance_;
+class RvToggleRequest;
+struct RvToggleRequestDefaultTypeInternal;
+extern RvToggleRequestDefaultTypeInternal _RvToggleRequest_default_instance_;
 }  // namespace rvpb
 namespace google {
 namespace protobuf {
@@ -269,8 +272,9 @@ inline bool RvChannelLayout_Parse(absl::string_view name, RvChannelLayout* value
 }
 enum RvFecEncoding : int {
   RV_FEC_ENCODING_DISABLE = 0,
-  RV_FEC_ENCODING_RS8M = 1,
-  RV_FEC_ENCODING_LDPC_STAIRCASE = 2,
+  RV_FEC_ENCODING_DEFAULT = 1,
+  RV_FEC_ENCODING_RS8M = 2,
+  RV_FEC_ENCODING_LDPC_STAIRCASE = 3,
   RvFecEncoding_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   RvFecEncoding_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -280,8 +284,8 @@ enum RvFecEncoding : int {
 bool RvFecEncoding_IsValid(int value);
 extern const uint32_t RvFecEncoding_internal_data_[];
 constexpr RvFecEncoding RvFecEncoding_MIN = static_cast<RvFecEncoding>(0);
-constexpr RvFecEncoding RvFecEncoding_MAX = static_cast<RvFecEncoding>(2);
-constexpr int RvFecEncoding_ARRAYSIZE = 2 + 1;
+constexpr RvFecEncoding RvFecEncoding_MAX = static_cast<RvFecEncoding>(3);
+constexpr int RvFecEncoding_ARRAYSIZE = 3 + 1;
 const ::google::protobuf::EnumDescriptor*
 RvFecEncoding_descriptor();
 template <typename T>
@@ -294,7 +298,7 @@ const std::string& RvFecEncoding_Name(T value) {
 template <>
 inline const std::string& RvFecEncoding_Name(RvFecEncoding value) {
   return ::google::protobuf::internal::NameOfDenseEnum<RvFecEncoding_descriptor,
-                                                 0, 2>(
+                                                 0, 3>(
       static_cast<int>(value));
 }
 inline bool RvFecEncoding_Parse(absl::string_view name, RvFecEncoding* value) {
@@ -500,7 +504,7 @@ class RvPacketEncoding final : public ::google::protobuf::Message
     return reinterpret_cast<const RvPacketEncoding*>(
         &_RvPacketEncoding_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 11;
+  static constexpr int kIndexInFileMessages = 12;
   friend void swap(RvPacketEncoding& a, RvPacketEncoding& b) { a.Swap(&b); }
   inline void Swap(RvPacketEncoding* other) {
     if (other == this) return;
@@ -831,7 +835,7 @@ class RvEndpointInfo final : public ::google::protobuf::Message
     return reinterpret_cast<const RvEndpointInfo*>(
         &_RvEndpointInfo_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 7;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(RvEndpointInfo& a, RvEndpointInfo& b) { a.Swap(&b); }
   inline void Swap(RvEndpointInfo* other) {
     if (other == this) return;
@@ -1424,7 +1428,7 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
     return reinterpret_cast<const RvDeviceEncoding*>(
         &_RvDeviceEncoding_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 11;
   friend void swap(RvDeviceEncoding& a, RvDeviceEncoding& b) { a.Swap(&b); }
   inline void Swap(RvDeviceEncoding* other) {
     if (other == this) return;
@@ -1551,6 +1555,191 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
+class RvToggleRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:rvpb.RvToggleRequest) */ {
+ public:
+  inline RvToggleRequest() : RvToggleRequest(nullptr) {}
+  ~RvToggleRequest() override;
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR RvToggleRequest(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline RvToggleRequest(const RvToggleRequest& from) : RvToggleRequest(nullptr, from) {}
+  inline RvToggleRequest(RvToggleRequest&& from) noexcept
+      : RvToggleRequest(nullptr, std::move(from)) {}
+  inline RvToggleRequest& operator=(const RvToggleRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RvToggleRequest& operator=(RvToggleRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetArena() == from.GetArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetArena() != nullptr
+#endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RvToggleRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RvToggleRequest* internal_default_instance() {
+    return reinterpret_cast<const RvToggleRequest*>(
+        &_RvToggleRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 6;
+  friend void swap(RvToggleRequest& a, RvToggleRequest& b) { a.Swap(&b); }
+  inline void Swap(RvToggleRequest* other) {
+    if (other == this) return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() != nullptr && GetArena() == other->GetArena()) {
+#else   // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetArena() == other->GetArena()) {
+#endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RvToggleRequest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RvToggleRequest* New(::google::protobuf::Arena* arena = nullptr) const final {
+    return ::google::protobuf::Message::DefaultConstruct<RvToggleRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RvToggleRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const RvToggleRequest& from) { RvToggleRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  void SharedDtor();
+  void InternalSwap(RvToggleRequest* other);
+ private:
+  friend class ::google::protobuf::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() { return "rvpb.RvToggleRequest"; }
+
+ protected:
+  explicit RvToggleRequest(::google::protobuf::Arena* arena);
+  RvToggleRequest(::google::protobuf::Arena* arena, const RvToggleRequest& from);
+  RvToggleRequest(::google::protobuf::Arena* arena, RvToggleRequest&& from) noexcept
+      : RvToggleRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::MessageLite::ClassData* GetClassData()
+      const final;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const final;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kDeviceFieldNumber = 1,
+    kEnabledFieldNumber = 2,
+  };
+  // .rvpb.RvDeviceSelector device = 1;
+  bool has_device() const;
+  void clear_device() ;
+  const ::rvpb::RvDeviceSelector& device() const;
+  PROTOBUF_NODISCARD ::rvpb::RvDeviceSelector* release_device();
+  ::rvpb::RvDeviceSelector* mutable_device();
+  void set_allocated_device(::rvpb::RvDeviceSelector* value);
+  void unsafe_arena_set_allocated_device(::rvpb::RvDeviceSelector* value);
+  ::rvpb::RvDeviceSelector* unsafe_arena_release_device();
+
+  private:
+  const ::rvpb::RvDeviceSelector& _internal_device() const;
+  ::rvpb::RvDeviceSelector* _internal_mutable_device();
+
+  public:
+  // bool enabled = 2;
+  void clear_enabled() ;
+  bool enabled() const;
+  void set_enabled(bool value);
+
+  private:
+  bool _internal_enabled() const;
+  void _internal_set_enabled(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:rvpb.RvToggleRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      1, 2, 1,
+      0, 2>
+      _table_;
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::rvpb::RvDeviceSelector* device_;
+    bool enabled_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_driver_5fprotocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class RvSenderConfig final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:rvpb.RvSenderConfig) */ {
  public:
@@ -1606,7 +1795,7 @@ class RvSenderConfig final : public ::google::protobuf::Message
     return reinterpret_cast<const RvSenderConfig*>(
         &_RvSenderConfig_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(RvSenderConfig& a, RvSenderConfig& b) { a.Swap(&b); }
   inline void Swap(RvSenderConfig* other) {
     if (other == this) return;
@@ -1951,7 +2140,7 @@ class RvReceiverConfig final : public ::google::protobuf::Message
     return reinterpret_cast<const RvReceiverConfig*>(
         &_RvReceiverConfig_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 9;
+  static constexpr int kIndexInFileMessages = 10;
   friend void swap(RvReceiverConfig& a, RvReceiverConfig& b) { a.Swap(&b); }
   inline void Swap(RvReceiverConfig* other) {
     if (other == this) return;
@@ -2489,7 +2678,7 @@ class RvEndpointRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const RvEndpointRequest*>(
         &_RvEndpointRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 6;
+  static constexpr int kIndexInFileMessages = 7;
   friend void swap(RvEndpointRequest& a, RvEndpointRequest& b) { a.Swap(&b); }
   inline void Swap(RvEndpointRequest* other) {
     if (other == this) return;
@@ -2676,8 +2865,8 @@ class RvDeviceInfo final : public ::google::protobuf::Message
     return *internal_default_instance();
   }
   enum NetworkConfigCase {
-    kSenderConfig = 6,
-    kReceiverConfig = 7,
+    kSenderConfig = 7,
+    kReceiverConfig = 8,
     NETWORKCONFIG_NOT_SET = 0,
   };
   static inline const RvDeviceInfo* internal_default_instance() {
@@ -2754,17 +2943,18 @@ class RvDeviceInfo final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kLocalEndpointsFieldNumber = 8,
-    kRemoteEndpointsFieldNumber = 9,
+    kLocalEndpointsFieldNumber = 9,
+    kRemoteEndpointsFieldNumber = 10,
     kUidFieldNumber = 3,
     kNameFieldNumber = 4,
-    kDeviceEncodingFieldNumber = 5,
+    kDeviceEncodingFieldNumber = 6,
     kTypeFieldNumber = 1,
     kIndexFieldNumber = 2,
-    kSenderConfigFieldNumber = 6,
-    kReceiverConfigFieldNumber = 7,
+    kEnabledFieldNumber = 5,
+    kSenderConfigFieldNumber = 7,
+    kReceiverConfigFieldNumber = 8,
   };
-  // repeated .rvpb.RvEndpointInfo local_endpoints = 8;
+  // repeated .rvpb.RvEndpointInfo local_endpoints = 9;
   int local_endpoints_size() const;
   private:
   int _internal_local_endpoints_size() const;
@@ -2781,7 +2971,7 @@ class RvDeviceInfo final : public ::google::protobuf::Message
   const ::rvpb::RvEndpointInfo& local_endpoints(int index) const;
   ::rvpb::RvEndpointInfo* add_local_endpoints();
   const ::google::protobuf::RepeatedPtrField<::rvpb::RvEndpointInfo>& local_endpoints() const;
-  // repeated .rvpb.RvEndpointInfo remote_endpoints = 9;
+  // repeated .rvpb.RvEndpointInfo remote_endpoints = 10;
   int remote_endpoints_size() const;
   private:
   int _internal_remote_endpoints_size() const;
@@ -2832,7 +3022,7 @@ class RvDeviceInfo final : public ::google::protobuf::Message
   std::string* _internal_mutable_name();
 
   public:
-  // .rvpb.RvDeviceEncoding device_encoding = 5;
+  // .rvpb.RvDeviceEncoding device_encoding = 6;
   bool has_device_encoding() const;
   void clear_device_encoding() ;
   const ::rvpb::RvDeviceEncoding& device_encoding() const;
@@ -2868,7 +3058,18 @@ class RvDeviceInfo final : public ::google::protobuf::Message
   void _internal_set_index(::uint32_t value);
 
   public:
-  // .rvpb.RvSenderConfig sender_config = 6;
+  // optional bool enabled = 5;
+  bool has_enabled() const;
+  void clear_enabled() ;
+  bool enabled() const;
+  void set_enabled(bool value);
+
+  private:
+  bool _internal_enabled() const;
+  void _internal_set_enabled(bool value);
+
+  public:
+  // .rvpb.RvSenderConfig sender_config = 7;
   bool has_sender_config() const;
   private:
   bool _internal_has_sender_config() const;
@@ -2887,7 +3088,7 @@ class RvDeviceInfo final : public ::google::protobuf::Message
   ::rvpb::RvSenderConfig* _internal_mutable_sender_config();
 
   public:
-  // .rvpb.RvReceiverConfig receiver_config = 7;
+  // .rvpb.RvReceiverConfig receiver_config = 8;
   bool has_receiver_config() const;
   private:
   bool _internal_has_receiver_config() const;
@@ -2917,7 +3118,7 @@ class RvDeviceInfo final : public ::google::protobuf::Message
   inline void clear_has_NetworkConfig();
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 9, 5,
+      4, 10, 5,
       41, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -2942,6 +3143,7 @@ class RvDeviceInfo final : public ::google::protobuf::Message
     ::rvpb::RvDeviceEncoding* device_encoding_;
     int type_;
     ::uint32_t index_;
+    bool enabled_;
     union NetworkConfigUnion {
       constexpr NetworkConfigUnion() : _constinit_{} {}
       ::google::protobuf::internal::ConstantInitialized _constinit_;
@@ -3743,7 +3945,35 @@ inline void RvDeviceInfo::set_allocated_name(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceInfo.name)
 }
 
-// .rvpb.RvDeviceEncoding device_encoding = 5;
+// optional bool enabled = 5;
+inline bool RvDeviceInfo::has_enabled() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline void RvDeviceInfo::clear_enabled() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.enabled_ = false;
+  _impl_._has_bits_[0] &= ~0x00000010u;
+}
+inline bool RvDeviceInfo::enabled() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceInfo.enabled)
+  return _internal_enabled();
+}
+inline void RvDeviceInfo::set_enabled(bool value) {
+  _internal_set_enabled(value);
+  _impl_._has_bits_[0] |= 0x00000010u;
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceInfo.enabled)
+}
+inline bool RvDeviceInfo::_internal_enabled() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.enabled_;
+}
+inline void RvDeviceInfo::_internal_set_enabled(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.enabled_ = value;
+}
+
+// .rvpb.RvDeviceEncoding device_encoding = 6;
 inline bool RvDeviceInfo::has_device_encoding() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.device_encoding_ != nullptr);
@@ -3839,7 +4069,7 @@ inline void RvDeviceInfo::set_allocated_device_encoding(::rvpb::RvDeviceEncoding
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceInfo.device_encoding)
 }
 
-// .rvpb.RvSenderConfig sender_config = 6;
+// .rvpb.RvSenderConfig sender_config = 7;
 inline bool RvDeviceInfo::has_sender_config() const {
   return NetworkConfig_case() == kSenderConfig;
 }
@@ -3916,7 +4146,7 @@ inline ::rvpb::RvSenderConfig* RvDeviceInfo::mutable_sender_config() ABSL_ATTRIB
   return _msg;
 }
 
-// .rvpb.RvReceiverConfig receiver_config = 7;
+// .rvpb.RvReceiverConfig receiver_config = 8;
 inline bool RvDeviceInfo::has_receiver_config() const {
   return NetworkConfig_case() == kReceiverConfig;
 }
@@ -3993,7 +4223,7 @@ inline ::rvpb::RvReceiverConfig* RvDeviceInfo::mutable_receiver_config() ABSL_AT
   return _msg;
 }
 
-// repeated .rvpb.RvEndpointInfo local_endpoints = 8;
+// repeated .rvpb.RvEndpointInfo local_endpoints = 9;
 inline int RvDeviceInfo::_internal_local_endpoints_size() const {
   return _internal_local_endpoints().size();
 }
@@ -4042,7 +4272,7 @@ RvDeviceInfo::_internal_mutable_local_endpoints() {
   return &_impl_.local_endpoints_;
 }
 
-// repeated .rvpb.RvEndpointInfo remote_endpoints = 9;
+// repeated .rvpb.RvEndpointInfo remote_endpoints = 10;
 inline int RvDeviceInfo::_internal_remote_endpoints_size() const {
   return _internal_remote_endpoints().size();
 }
@@ -4151,6 +4381,128 @@ inline ::google::protobuf::RepeatedPtrField<::rvpb::RvDeviceInfo>*
 RvDeviceList::_internal_mutable_devices() {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
   return &_impl_.devices_;
+}
+
+// -------------------------------------------------------------------
+
+// RvToggleRequest
+
+// .rvpb.RvDeviceSelector device = 1;
+inline bool RvToggleRequest::has_device() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.device_ != nullptr);
+  return value;
+}
+inline void RvToggleRequest::clear_device() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (_impl_.device_ != nullptr) _impl_.device_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline const ::rvpb::RvDeviceSelector& RvToggleRequest::_internal_device() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  const ::rvpb::RvDeviceSelector* p = _impl_.device_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rvpb::RvDeviceSelector&>(::rvpb::_RvDeviceSelector_default_instance_);
+}
+inline const ::rvpb::RvDeviceSelector& RvToggleRequest::device() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvToggleRequest.device)
+  return _internal_device();
+}
+inline void RvToggleRequest::unsafe_arena_set_allocated_device(::rvpb::RvDeviceSelector* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.device_);
+  }
+  _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvToggleRequest.device)
+}
+inline ::rvpb::RvDeviceSelector* RvToggleRequest::release_device() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::rvpb::RvDeviceSelector* released = _impl_.device_;
+  _impl_.device_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  if (GetArena() == nullptr) {
+    delete old;
+  }
+#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArena() != nullptr) {
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return released;
+}
+inline ::rvpb::RvDeviceSelector* RvToggleRequest::unsafe_arena_release_device() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:rvpb.RvToggleRequest.device)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::rvpb::RvDeviceSelector* temp = _impl_.device_;
+  _impl_.device_ = nullptr;
+  return temp;
+}
+inline ::rvpb::RvDeviceSelector* RvToggleRequest::_internal_mutable_device() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (_impl_.device_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::rvpb::RvDeviceSelector>(GetArena());
+    _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(p);
+  }
+  return _impl_.device_;
+}
+inline ::rvpb::RvDeviceSelector* RvToggleRequest::mutable_device() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::rvpb::RvDeviceSelector* _msg = _internal_mutable_device();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvToggleRequest.device)
+  return _msg;
+}
+inline void RvToggleRequest::set_allocated_device(::rvpb::RvDeviceSelector* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  if (message_arena == nullptr) {
+    delete (_impl_.device_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = (value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.device_ = reinterpret_cast<::rvpb::RvDeviceSelector*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvToggleRequest.device)
+}
+
+// bool enabled = 2;
+inline void RvToggleRequest::clear_enabled() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.enabled_ = false;
+}
+inline bool RvToggleRequest::enabled() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvToggleRequest.enabled)
+  return _internal_enabled();
+}
+inline void RvToggleRequest::set_enabled(bool value) {
+  _internal_set_enabled(value);
+  // @@protoc_insertion_point(field_set:rvpb.RvToggleRequest.enabled)
+}
+inline bool RvToggleRequest::_internal_enabled() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.enabled_;
+}
+inline void RvToggleRequest::_internal_set_enabled(bool value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.enabled_ = value;
 }
 
 // -------------------------------------------------------------------

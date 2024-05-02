@@ -43,6 +43,10 @@ service RvDriver
     // Device can be selected by index or UID.
     rpc delete_device(RvDeviceSelector) returns (RvNone) {}
 
+    // Enable or disable device.
+    // Device can be selected by index or UID.
+    rpc toggle_device(RvToggleRequest) returns (RvNone) {}
+
     // Bind device to local endpoint.
     rpc bind(RvEndpointRequest) returns (RvEndpointInfo) {}
 
@@ -133,9 +137,17 @@ message RvDeviceInfo
     // When set, should not be empty.
     optional string name = 4;
 
+    // Whether device is active and visible to the user.
+    // Device can be disabled to remove it from system without losing configuration,
+    // and then re-enabled later.
+    // When retrieving device info, always present and non-empty.
+    // When creating device, if this field is unset or set to true, devices is
+    // enabled emmediately, and if it's set to false, it's created disabled.
+    optional bool enabled = 5;
+
     // Local encoding of device.
     // Parameters of virtual device, as it's shown to the apps.
-    RvDeviceEncoding device_encoding = 5;
+    RvDeviceEncoding device_encoding = 6;
 
     // Network configuration of device.
     // Parameters of network sender or receiver.
@@ -143,26 +155,36 @@ message RvDeviceInfo
     {
         // Configuration for sender device.
         // Should be used if device type is RV_DEVICE_TYPE_SENDER.
-        RvSenderConfig sender_config = 6;
+        RvSenderConfig sender_config = 7;
 
         // Configuration for receiver device.
         // Should be used if device type is RV_DEVICE_TYPE_RECEIVER.
-        RvReceiverConfig receiver_config = 7;
+        RvReceiverConfig receiver_config = 8;
     }
 
     // List of local endpoints on which device is receiving traffic or control requests.
     // Local endpoints can be added intially via add_device() or on fly via bind().
-    repeated RvEndpointInfo local_endpoints = 8;
+    repeated RvEndpointInfo local_endpoints = 9;
 
     // List of remote endpoints to which device is sending traffic or control requests.
     // Remote endpoints can be added intially via add_device() or on fly via connect().
-    repeated RvEndpointInfo remote_endpoints = 9;
+    repeated RvEndpointInfo remote_endpoints = 10;
 }
 
 // Virtual device list.
 message RvDeviceList
 {
     repeated RvDeviceInfo devices = 1;
+}
+
+// Device enable/disable request.
+message RvToggleRequest
+{
+    // Virtual device to which request is send.
+    RvDeviceSelector device = 1;
+
+    // Should device be enabled or disabled.
+    bool enabled = 2;
 }
 
 // Endpoint bind or connect request.

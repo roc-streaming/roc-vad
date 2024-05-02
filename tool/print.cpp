@@ -47,6 +47,7 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
     fmt::println("  type:   {}", format_device_type(device_info.type()));
     fmt::println("  uid:    {}", device_info.uid());
     fmt::println("  name:   {}", device_info.name());
+    fmt::println("  state:  {}", device_info.enabled() ? "on" : "off");
 
     if (device_info.has_device_encoding()) {
         fmt::println("");
@@ -159,9 +160,10 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
 void print_device_list(const rvpb::RvDeviceList& device_list, bool show_info)
 {
     if (!show_info) {
-        fmt::println("{:<8} {:<10} {:<22} {}", //
+        fmt::println("{:<8} {:<10} {:<7} {:<30} {}", //
             "index",
             "type",
+            "state",
             "uid",
             "name");
     }
@@ -175,9 +177,10 @@ void print_device_list(const rvpb::RvDeviceList& device_list, bool show_info)
             }
             print_device_info(device_info);
         } else {
-            fmt::println("{:<8} {:<10} {:<22} {}",
+            fmt::println("{:<8} {:<10} {:<7} {:<30} {}",
                 device_info.index(),
                 format_device_type(device_info.type()),
+                device_info.enabled() ? "on" : "off",
                 device_info.uid(),
                 device_info.name());
         }

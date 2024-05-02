@@ -34,6 +34,8 @@ public:
 
     DeviceInfo info();
 
+    void toggle(bool enabled);
+
     DeviceEndpointInfo bind(DeviceEndpointInfo endpoint_info);
     DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
 
@@ -51,6 +53,7 @@ private:
     // aspl::Device correspond to this specific device
     std::shared_ptr<aspl::Plugin> plugin_;
     std::shared_ptr<aspl::Device> device_;
+    bool device_added_ = false;
 
     // run-time device info
     DeviceInfo info_;

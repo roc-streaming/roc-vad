@@ -55,6 +55,10 @@ public:
         const rvpb::RvDeviceSelector* request,
         rvpb::RvNone* response) override;
 
+    grpc::Status toggle_device(grpc::ServerContext* context,
+        const rvpb::RvToggleRequest* request,
+        rvpb::RvNone* response) override;
+
     grpc::Status bind(grpc::ServerContext* context,
         const rvpb::RvEndpointRequest* request,
         rvpb::RvEndpointInfo* response) override;

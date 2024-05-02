@@ -116,6 +116,19 @@ grpc::Status DriverService::delete_device(grpc::ServerContext* context,
     });
 }
 
+grpc::Status DriverService::toggle_device(grpc::ServerContext* context,
+    const rvpb::RvToggleRequest* request,
+    rvpb::RvNone* response)
+{
+    return execute_command_("toggle_device", [=]() {
+        if (request->device().has_index()) {
+            device_manager_->toggle_device(request->device().index(), request->enabled());
+        } else {
+            device_manager_->toggle_device(request->device().uid(), request->enabled());
+        }
+    });
+}
+
 grpc::Status DriverService::bind(grpc::ServerContext* context,
     const rvpb::RvEndpointRequest* request,
     rvpb::RvEndpointInfo* response)
