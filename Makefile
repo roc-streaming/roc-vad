@@ -1,18 +1,20 @@
 NUM_CPU ?= $(shell sysctl -n hw.logicalcpu 2>/dev/null || echo 1)
+
+BUILDDIR ?= build/darwin-$(shell uname -r).noindex
 DESTDIR ?=
 
 all: build
 
 .PHONY: build
 build:
-	mkdir -p build
-	if [ ! -e build/3rdparty/bootstrap.commit ]; then \
-		cd build ;\
-		cmake -DBOOTSTRAP=ON .. ;\
+	mkdir -p $(BUILDDIR)
+	if [ ! -e $(BUILDDIR)/3rdparty/bootstrap.commit ]; then \
+		cd $(BUILDDIR) ;\
+		cmake -DBOOTSTRAP=ON ../.. ;\
 		make --no-print-directory -j$(NUM_CPU) ;\
 	fi
-	cd build && cmake -DBOOTSTRAP=OFF ..
-	cd build && make --no-print-directory -j$(NUM_CPU)
+	cd $(BUILDDIR) && cmake -DBOOTSTRAP=OFF ../..
+	cd $(BUILDDIR) && make --no-print-directory -j$(NUM_CPU)
 
 clean:
 	rm -rf bin build
