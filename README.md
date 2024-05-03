@@ -9,7 +9,8 @@
 - [What is this?](#what-is-this)
 - [How it works](#how-it-works)
 - [Features](#features)
-- [Platforms](#platforms)
+- [Donations](#donations)
+- [Supported platforms](#supported-platforms)
 - [Install from binaries](#install-from-binaries)
 - [Install from sources](#install-from-sources)
 - [Usage](#usage)
@@ -21,7 +22,6 @@
 - [Programmatic control](#programmatic-control)
 - [Socket address](#socket-address)
 - [Hacking](#hacking)
-- [Donating](#donating)
 - [Authors](#authors)
 - [License](#license)
 
@@ -63,11 +63,17 @@ Compatible Roc Toolkit senders and receivers include:
 * [C library](https://roc-streaming.org/toolkit/docs/api.html) and [bindings for other languages](https://roc-streaming.org/toolkit/docs/api/bindings.html)
 * [end-user apps](https://roc-streaming.org/toolkit/docs/tools/applications.html)
 
-## Platforms
+## Donations
+
+If you would like to support the project financially, see details on [this page](https://roc-streaming.org/toolkit/docs/about_project/sponsors.html). Thank you!
+
+<a href="https://liberapay.com/roc-streaming"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+## Supported platforms
 
 macOS 10.15 (Catalina) or later is required.
 
-Both x86_64 (Intel) and arm64 (ARM) architectures are supported.
+Both x86_64 (Intel) and arm64 (M1, etc.) architectures are supported.
 
 ## Install from binaries
 
@@ -280,12 +286,6 @@ If you want to change the address, you can edit `DriverSocket` entry in `/Librar
 Contributions in any form are always welcome! You can find issues needing help using [help wanted](https://github.com/roc-streaming/roc-vad/labels/help%20wanted) and [good first issue](https://github.com/roc-streaming/roc-vad/labels/good%20first%20issue) labels.
 
 If you would like to dig into the project internals, have a look at [HACKING.md](HACKING.md).
-
-## Donating
-
-If you would like to support the project financially, see details on [this page](https://roc-streaming.org/toolkit/docs/about_project/sponsors.html).
-
-Thank you!
 
 ## Authors
 
