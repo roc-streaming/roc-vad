@@ -20,6 +20,20 @@ namespace rocvad {
 
 namespace {
 
+UInt32 compute_channel_count(const DeviceInfo& info)
+{
+    switch (info.device_encoding.channel_layout) {
+    case ROC_CHANNEL_LAYOUT_MONO:
+        return 1;
+
+    case ROC_CHANNEL_LAYOUT_STEREO:
+        return 2;
+
+    default:
+        throw std::runtime_error("selected channel_layout not supported by device");
+    }
+}
+
 aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 {
     aspl::DeviceParameters device_params;
@@ -29,25 +43,74 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
     device_params.DeviceUID = info.uid;
     device_params.ModelUID = BuildInfo::driver_bundle_id;
 
-    device_params.SampleRate = info.device_encoding.sample_rate;
-
-    switch (info.device_encoding.channel_layout) {
-    case ROC_CHANNEL_LAYOUT_MONO:
-        device_params.ChannelCount = 1;
-        break;
-
-    case ROC_CHANNEL_LAYOUT_STEREO:
-        device_params.ChannelCount = 2;
-        break;
-
-    default:
-        throw std::runtime_error("selected channel_layout not supported by device");
-    }
+    device_params.CanBeDefault = true;
+    device_params.CanBeDefaultForSystemSounds = true;
 
     device_params.EnableMixing = true;
     device_params.EnableRealtimeTracing = false;
 
+    device_params.SampleRate = info.device_encoding.sample_rate;
+    device_params.ChannelCount = compute_channel_count(info);
+
+    spdlog::debug(
+        "device parameters: Name=\"{}\" Manufacturer=\"{}\""
+        " DeviceUID=\"{}\" ModelUID=\"{}\""
+        " CanBeDefault={} CanBeDefaultForSystemSounds={}"
+        " SampleRate={} ChannelCount={}"
+        " Latency={} SafetyOffset={} ZeroTimeStampPeriod={}",
+        device_params.Name,
+        device_params.Manufacturer,
+        device_params.DeviceUID,
+        device_params.ModelUID,
+        device_params.CanBeDefault,
+        device_params.CanBeDefaultForSystemSounds,
+        device_params.SampleRate,
+        device_params.ChannelCount,
+        device_params.Latency,
+        device_params.SafetyOffset,
+        device_params.ZeroTimeStampPeriod);
+
     return device_params;
+}
+
+aspl::StreamParameters make_stream_params(const DeviceInfo& info)
+{
+    aspl::StreamParameters stream_params;
+
+    const UInt32 num_chans = compute_channel_count(info);
+
+    stream_params.Direction = info.type == DeviceType::Sender ? aspl::Direction::Output
+                                                              : aspl::Direction::Input;
+
+    stream_params.Format.mSampleRate = UInt32(info.device_encoding.sample_rate);
+    stream_params.Format.mFormatFlags = kAudioFormatFlagIsFloat |
+                                        kAudioFormatFlagsNativeEndian |
+                                        kAudioFormatFlagIsPacked;
+    stream_params.Format.mBitsPerChannel = sizeof(Float32) * 8;
+    stream_params.Format.mChannelsPerFrame = num_chans;
+    stream_params.Format.mBytesPerFrame = sizeof(Float32) * num_chans;
+    stream_params.Format.mFramesPerPacket = 1;
+    stream_params.Format.mBytesPerPacket = sizeof(Float32) * num_chans;
+
+    spdlog::debug(
+        "stream parameters: Direction={} StartingChannel={}"
+        " SampleRate={} FormatID={} FormatFlags={}"
+        " BitsPerChannel={} ChannelsPerFrame={} BytesPerFrame={}"
+        " FramesPerPacket={} BytesPerPacket={}"
+        " Latency={}",
+        (int)stream_params.Direction,
+        stream_params.StartingChannel,
+        stream_params.Format.mSampleRate,
+        stream_params.Format.mFormatID,
+        stream_params.Format.mFormatFlags,
+        stream_params.Format.mBitsPerChannel,
+        stream_params.Format.mChannelsPerFrame,
+        stream_params.Format.mBytesPerFrame,
+        stream_params.Format.mFramesPerPacket,
+        stream_params.Format.mBytesPerPacket,
+        stream_params.Latency);
+
+    return stream_params;
 }
 
 } // namespace
@@ -86,9 +149,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
     device_ =
         std::make_shared<aspl::Device>(plugin_->GetContext(), make_device_params(info_));
 
-    device_->AddStreamWithControlsAsync(info_.type == DeviceType::Sender
-                                            ? aspl::Direction::Output
-                                            : aspl::Direction::Input);
+    device_->AddStreamWithControlsAsync(make_stream_params(info_));
 
     // TODO: roc_open
 
@@ -194,15 +255,17 @@ void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
 
 void Device::sort_endpoints_()
 {
-    std::sort(info_.local_endpoints.begin(),
-        info_.local_endpoints.end(),
-        [](const DeviceEndpointInfo& a, const DeviceEndpointInfo& b) {
-            if (a.slot != b.slot) {
-                return a.slot < b.slot;
-            } else {
-                return (int)a.interface < (int)b.interface;
-            }
-        });
+    for (auto endpoints : {&info_.local_endpoints, &info_.remote_endpoints}) {
+        std::sort(endpoints->begin(),
+            endpoints->end(),
+            [](const DeviceEndpointInfo& a, const DeviceEndpointInfo& b) {
+                if (a.slot != b.slot) {
+                    return a.slot < b.slot;
+                } else {
+                    return (int)a.interface < (int)b.interface;
+                }
+            });
+    }
 }
 
 } // namespace rocvad
