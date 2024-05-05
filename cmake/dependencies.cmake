@@ -24,6 +24,7 @@ set(SCONS_CMD
     --disable-shared
     --disable-tools
     --disable-sox
+    --disable-openssl
     --build-3rdparty=all
     --compiler-launcher=${CMAKE_CXX_COMPILER_LAUNCHER}
     --macos-platform=${CMAKE_OSX_DEPLOYMENT_TARGET}
@@ -31,7 +32,7 @@ set(SCONS_CMD
 )
 ExternalProject_Add(roc_lib
   GIT_REPOSITORY "https://github.com/roc-streaming/roc-toolkit.git"
-  GIT_TAG "3d931c5e7e5c602187415df5ef9f3bc5061d61d7"
+  GIT_TAG "8f75c4b336f81bfaa13229e3605697b180154929"
   GIT_SHALLOW ON
   GIT_PROGRESS ON
   UPDATE_DISCONNECTED ON
