@@ -23,7 +23,7 @@ namespace rocvad {
 class Device
 {
 public:
-    Device(std::shared_ptr<aspl::Plugin> plugin,
+    Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         IndexAllocator& index_allocator,
         UidGenerator& uid_generator,
         const DeviceInfo& device_info);
@@ -51,9 +51,9 @@ private:
     // objects registered in coreaudiod
     // aspl::Plugin is parent object for all devices
     // aspl::Device correspond to this specific device
-    std::shared_ptr<aspl::Plugin> plugin_;
-    std::shared_ptr<aspl::Device> device_;
-    bool device_added_ = false;
+    std::shared_ptr<aspl::Plugin> hal_plugin_;
+    std::shared_ptr<aspl::Device> hal_device_;
+
 
     // run-time device info
     DeviceInfo info_;

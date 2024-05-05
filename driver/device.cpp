@@ -115,16 +115,16 @@ aspl::StreamParameters make_stream_params(const DeviceInfo& info)
 
 } // namespace
 
-Device::Device(std::shared_ptr<aspl::Plugin> plugin,
+Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
     IndexAllocator& index_allocator,
     UidGenerator& uid_generator,
     const DeviceInfo& device_info)
     : index_allocator_(index_allocator)
     , uid_generator_(uid_generator)
-    , plugin_(plugin)
+    , hal_plugin_(hal_plugin)
     , info_(device_info)
 {
-    assert(plugin_);
+    assert(hal_plugin_);
 
     if (info_.index == 0) {
         info_.index = index_allocator_.allocate_and_acquire();
@@ -146,10 +146,10 @@ Device::Device(std::shared_ptr<aspl::Plugin> plugin,
         info_.type,
         info_.name);
 
-    device_ =
-        std::make_shared<aspl::Device>(plugin_->GetContext(), make_device_params(info_));
+    hal_device_ = std::make_shared<aspl::Device>(
+        hal_plugin_->GetContext(), make_device_params(info_));
 
-    device_->AddStreamWithControlsAsync(make_stream_params(info_));
+    hal_device_->AddStreamWithControlsAsync(make_stream_params(info_));
 
     // TODO: roc_open
 
@@ -193,20 +193,18 @@ void Device::toggle(bool enabled)
     info_.enabled = enabled;
 
     if (enabled) {
-        if (!device_added_) {
+        if (!hal_plugin_->HasDevice(hal_device_)) {
             spdlog::debug("enabling device {}", info_.uid);
 
-            plugin_->AddDevice(device_);
-            device_added_ = true;
+            hal_plugin_->AddDevice(hal_device_);
         } else {
             spdlog::debug("device {} is already enabled", info_.uid);
         }
     } else {
-        if (device_added_) {
+        if (hal_plugin_->HasDevice(hal_device_)) {
             spdlog::debug("disabling device {}", info_.uid);
 
-            plugin_->RemoveDevice(device_);
-            device_added_ = false;
+            hal_plugin_->RemoveDevice(hal_device_);
         } else {
             spdlog::debug("device {} is already disabled", info_.uid);
         }
@@ -215,6 +213,7 @@ void Device::toggle(bool enabled)
 
 DeviceEndpointInfo Device::bind(DeviceEndpointInfo endpoint_info)
 {
+    // may modify endpoint_info
     bind_endpoint_(endpoint_info);
 
     info_.local_endpoints.push_back(endpoint_info);
@@ -225,6 +224,7 @@ DeviceEndpointInfo Device::bind(DeviceEndpointInfo endpoint_info)
 
 DeviceEndpointInfo Device::connect(DeviceEndpointInfo endpoint_info)
 {
+    // may modify endpoint_info
     connect_endpoint_(endpoint_info);
 
     info_.remote_endpoints.push_back(endpoint_info);

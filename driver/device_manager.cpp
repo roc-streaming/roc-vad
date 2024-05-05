@@ -16,12 +16,12 @@
 
 namespace rocvad {
 
-DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> plugin,
-    std::shared_ptr<aspl::Storage> storage)
-    : plugin_(plugin)
-    , device_storage_(storage)
+DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> hal_plugin,
+    std::shared_ptr<aspl::Storage> hal_storage)
+    : hal_plugin_(hal_plugin)
+    , device_storage_(hal_storage)
 {
-    assert(plugin_);
+    assert(hal_plugin_);
 
     load_devices_();
 }
@@ -72,7 +72,7 @@ DeviceInfo DeviceManager::add_device(DeviceInfo info)
     }
 
     auto device =
-        std::make_shared<Device>(plugin_, index_allocator_, uid_generator_, info);
+        std::make_shared<Device>(hal_plugin_, index_allocator_, uid_generator_, info);
 
     info = device->info();
 

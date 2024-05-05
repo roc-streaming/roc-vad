@@ -21,7 +21,7 @@ namespace rocvad {
 class DeviceStorage
 {
 public:
-    DeviceStorage(std::shared_ptr<aspl::Storage> storage);
+    DeviceStorage(std::shared_ptr<aspl::Storage> hal_storage);
 
     DeviceStorage(const DeviceStorage&) = delete;
     DeviceStorage& operator=(const DeviceStorage&) = delete;
@@ -31,7 +31,7 @@ public:
     void save_devices(const std::vector<DeviceInfo>& devices);
 
 private:
-    std::shared_ptr<aspl::Storage> storage_;
+    std::shared_ptr<aspl::Storage> hal_storage_;
 };
 
 } // namespace rocvad

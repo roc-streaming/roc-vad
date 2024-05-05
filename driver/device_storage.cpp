@@ -16,15 +16,15 @@
 
 namespace rocvad {
 
-DeviceStorage::DeviceStorage(std::shared_ptr<aspl::Storage> storage)
-    : storage_(storage)
+DeviceStorage::DeviceStorage(std::shared_ptr<aspl::Storage> hal_storage)
+    : hal_storage_(hal_storage)
 {
-    assert(storage_);
+    assert(hal_storage_);
 }
 
 std::vector<DeviceInfo> DeviceStorage::load_devices()
 {
-    auto [bytes, ok] = storage_->ReadBytes("device_list");
+    auto [bytes, ok] = hal_storage_->ReadBytes("device_list");
     if (!ok) {
         spdlog::debug("found no device list in persistent storage");
         return {};
@@ -68,7 +68,7 @@ void DeviceStorage::save_devices(const std::vector<DeviceInfo>& devices)
         msg.SerializeToArray(bytes.data(), bytes.size());
     }
 
-    if (!storage_->WriteBytes("device_list", bytes)) {
+    if (!hal_storage_->WriteBytes("device_list", bytes)) {
         spdlog::warn("failed to save device list to persistent storage");
         return;
     }

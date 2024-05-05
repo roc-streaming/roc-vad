@@ -37,17 +37,17 @@ public:
     AudioServerPlugInDriverRef reference();
 
 private:
-    // invoked during asynchrnous driver initialization
+    // invoked during asynchronous driver initialization
     // persistent storage becomes available here
     OSStatus OnInitialize() override;
 
-    // objects registerd in coreaudiod
+    // objects registered in coreaudiod
     // aspl::Driver is object tree root and contains aspl::Plugin
     // aspl::Plugin contains all created devices
     // aspl::Storage provides interface to persistent storage
-    std::shared_ptr<aspl::Driver> driver_;
-    std::shared_ptr<aspl::Plugin> plugin_;
-    std::shared_ptr<aspl::Storage> storage_;
+    std::shared_ptr<aspl::Driver> hal_driver_;
+    std::shared_ptr<aspl::Plugin> hal_plugin_;
+    std::shared_ptr<aspl::Storage> hal_storage_;
 
     // business logic
     std::shared_ptr<LogManager> log_manager_;

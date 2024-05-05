@@ -34,15 +34,15 @@ Driver::Driver()
 
     spdlog::info("creating driver");
 
-    auto tracer = std::make_shared<Tracer>();
-    auto context = std::make_shared<aspl::Context>(tracer);
+    auto hal_tracer = std::make_shared<Tracer>();
+    auto hal_context = std::make_shared<aspl::Context>(hal_tracer);
 
-    plugin_ = std::make_shared<aspl::Plugin>(context, make_plugin_params());
-    storage_ = std::make_shared<aspl::Storage>(context);
-    driver_ = std::make_shared<aspl::Driver>(context, plugin_, storage_);
+    hal_plugin_ = std::make_shared<aspl::Plugin>(hal_context, make_plugin_params());
+    hal_storage_ = std::make_shared<aspl::Storage>(hal_context);
+    hal_driver_ = std::make_shared<aspl::Driver>(hal_context, hal_plugin_, hal_storage_);
 
     // will invoke OnInitialize() later
-    driver_->SetDriverHandler(this);
+    hal_driver_->SetDriverHandler(this);
 }
 
 Driver::~Driver()
@@ -58,14 +58,14 @@ AudioServerPlugInDriverRef Driver::reference()
 {
     spdlog::info("received reference request");
 
-    return driver_->GetReference();
+    return hal_driver_->GetReference();
 }
 
 OSStatus Driver::OnInitialize()
 {
     spdlog::info("received initialization request");
 
-    device_manager_ = std::make_shared<DeviceManager>(plugin_, storage_);
+    device_manager_ = std::make_shared<DeviceManager>(hal_plugin_, hal_storage_);
     driver_service_ = std::make_unique<DriverService>(log_manager_, device_manager_);
 
     const std::string driver_socket = PlistInfo::driver_socket();

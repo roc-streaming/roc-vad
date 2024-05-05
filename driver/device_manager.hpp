@@ -31,8 +31,8 @@ class DeviceManager
 public:
     using index_t = IndexAllocator::index_t;
 
-    DeviceManager(std::shared_ptr<aspl::Plugin> plugin,
-        std::shared_ptr<aspl::Storage> storage);
+    DeviceManager(std::shared_ptr<aspl::Plugin> hal_plugin,
+        std::shared_ptr<aspl::Storage> hal_storage);
 
     DeviceManager(const DeviceManager&) = delete;
     DeviceManager& operator=(const DeviceManager&) = delete;
@@ -66,7 +66,7 @@ private:
 
     std::recursive_mutex mutex_;
 
-    std::shared_ptr<aspl::Plugin> plugin_;
+    std::shared_ptr<aspl::Plugin> hal_plugin_;
 
     std::map<uint32_t, std::shared_ptr<Device>> device_by_index_;
     std::unordered_map<std::string, std::shared_ptr<Device>> device_by_uid_;
