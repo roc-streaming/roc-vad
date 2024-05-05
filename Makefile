@@ -62,7 +62,7 @@ docs:
 		rpc/*.proto
 
 toc:
-	markdown-toc --maxdepth 2 -i README.md
+	markdown-toc --maxdepth 3 -i README.md
 
 kick: kickstart
 kickstart:

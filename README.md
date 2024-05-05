@@ -10,17 +10,33 @@
 - [How it works](#how-it-works)
 - [Features](#features)
 - [Donations](#donations)
-- [Supported platforms](#supported-platforms)
-- [Install from binaries](#install-from-binaries)
-- [Install from sources](#install-from-sources)
-- [Usage](#usage)
-- [Sender options](#sender-options)
-- [Receiver options](#receiver-options)
+- [Installation](#installation)
+  * [Supported platforms](#supported-platforms)
+  * [Install from binaries](#install-from-binaries)
+  * [Install from sources](#install-from-sources)
+- [How to use](#how-to-use)
+  * [Health check](#health-check)
+  * [Creating sender](#creating-sender)
+  * [Creating receiver](#creating-receiver)
+  * [Inspecting devices](#inspecting-devices)
+  * [Naming devices](#naming-devices)
+  * [Device persistence](#device-persistence)
+- [Device options](#device-options)
+  * [Sender options](#sender-options)
+  * [Receiver options](#receiver-options)
 - [Advanced configuration](#advanced-configuration)
+  * [Multiple devices](#multiple-devices)
+  * [Multiple endpoints](#multiple-endpoints)
+  * [Custom device encoding](#custom-device-encoding)
+  * [Custom packet encoding](#custom-packet-encoding)
+  * [Custom FEC encoding](#custom-fec-encoding)
+  * [Tuning latency](#tuning-latency)
 - [Troubleshooting](#troubleshooting)
-- [Common issues](#common-issues)
+  * [Retrieving info](#retrieving-info)
+  * [Common issues](#common-issues)
 - [Programmatic control](#programmatic-control)
-- [Socket address](#socket-address)
+  * [gRPC interface](#grpc-interface)
+  * [Socket address](#socket-address)
 - [Hacking](#hacking)
 - [Authors](#authors)
 - [License](#license)
@@ -45,9 +61,21 @@ And vice versa, when you configure an app (e.g. Zoom) to use virtual device as a
 
 *TODO: screenshot*
 
+Internally, Roc VAD consists of two components:
+
+* `roc_vad.driver`
+
+    A plugin for CoreAudio Audio Server based on [libASPL](https://github.com/gavv/libASPL) library. Driver communicates with HAL, implements streaming, and provides gRPC interface that allows to add, remove, and configure virtual devices on fly.
+
+    Although CoreAudio calls these plugins "drivers", note that they're **not** kernel drivers (a.k.a. kernel extensions) and work in user-space.
+
+* `roc-vad`
+
+    A command-line tool that allows to control Roc VAD driver from terminal via its gRPC interface.
+
 ## Features
 
-Key features of Roc Toolkit:
+Key features of Roc Toolkit streaming engine, used by Roc VAD:
 
 * real-time streaming with guaranteed latency;
 * robust work on unreliable networks like Wi-Fi, due to use of Forward Erasure Correction codes;
@@ -59,9 +87,9 @@ Key features of Roc Toolkit:
 Compatible Roc Toolkit senders and receivers include:
 
 * [cross-platform command-line tools](https://roc-streaming.org/toolkit/docs/tools/command_line_tools.html)
-* [modules for sound servers](https://roc-streaming.org/toolkit/docs/tools/sound_server_modules.html) (PulseAudio, PipeWire)
+* [modules for sound servers](https://roc-streaming.org/toolkit/docs/tools/sound_server_modules.html) (PulseAudio, PipeWire, macOS CoreAudio)
 * [C library](https://roc-streaming.org/toolkit/docs/api.html) and [bindings for other languages](https://roc-streaming.org/toolkit/docs/api/bindings.html)
-* [end-user apps](https://roc-streaming.org/toolkit/docs/tools/applications.html)
+* [applications](https://roc-streaming.org/toolkit/docs/tools/applications.html) (Android)
 
 ## Donations
 
@@ -69,13 +97,15 @@ If you would like to support the project financially, see details on [this page]
 
 <a href="https://liberapay.com/roc-streaming"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
-## Supported platforms
+## Installation
+
+### Supported platforms
 
 macOS 10.15 (Catalina) or later is required.
 
-Both x86_64 (Intel) and arm64 (M1, etc.) architectures are supported.
+Both x86_64 (Intel) and arm64 (M1 and further) architectures are supported.
 
-## Install from binaries
+### Install from binaries
 
 Install driver and command-line tool:
 
@@ -94,7 +124,7 @@ sudo roc-vad uninstall
 
 Then reboot your Mac.
 
-## Install from sources
+### Install from sources
 
 Prerequisites:
 
@@ -145,7 +175,9 @@ To **uninstall** everything, run:
 sudo make uninstall
 ```
 
-## Usage
+## How to use
+
+### Health check
 
 First, check that sound server driver was successfully loaded:
 
@@ -162,19 +194,214 @@ client:
   commit:  76ca125
 ```
 
-*TODO: commands*
+> If it didn't work, refer to [Troubleshooting](#troubleshooting) section below.
 
-## Sender options
+### Creating sender
 
-*TODO: option table*
+If you want to **stream from macOS** to remote receiver, create **virtual speakers**:
 
-## Receiver options
+```
+$ roc-vad device add sender [<options>]
+```
 
-*TODO: option table*
+Check that the created device is present:
+
+```
+$ roc-vad device list
+```
+
+After creating sender device, you can connect it to remote receiver. Usually you need to connect three endpoints: source packets (audio traffic), repair packets (for loss recovery), and control packets (for latency tuning).
+
+E.g. if local sender device has index "1" and remote receiver is running at 192.168.0.1 and uses three ports 10001, 10002, and 10003 for source, repair, and control endpoints, then run:
+
+```
+$ roc-vad device connect 1 \
+   --source rtp+rs8m://192.168.0.1:10001 \
+   --repair rs8m://192.168.0.1:10002 \
+   --control rtcp://192.168.0.1:10003
+```
+
+Now, applications play audio to `Roc Virtual Device #1`, the sound is streamed to the remote receiver. If there are multiple applications, the streams are mixed.
+
+> Note that the sound written to sender device is not heard locally. If you need it, you can use third-party software like [BlockHole](https://github.com/ExistentialAudio/BlackHole) to create a loopback from sender device to local speakers.
+
+### Creating receiver
+
+If you want to **stream to macOS** from a remote sender, create **virtual microphone**:
+
+```
+$ roc-vad device add receiver [<options>]
+```
+
+Check that device is present:
+
+```
+$ roc-vad device list
+```
+
+After creating receiver device, you can bind it to local endpoints. Usually you need to bind three endpoints: source packets (audio traffic), repair packets (for loss recovery), and control packets (for latency tuning).
+
+E.g. if receiver device has index "2" and you want to use three ports 10001, 10002, and 10003 for source, repair, and control endpoints, then run:
+
+```
+$ roc-vad device bind 2 \
+   --source rtp+rs8m://0.0.0.0:10001 \
+   --repair rs8m://0.0.0.0:10002 \
+   --control rtcp://0.0.0.0:10003
+```
+
+Now, applications that records audio from `Roc Virtual Device #2` gets the sound streamed to receiver from remote senders. If there are multiple senders, the streams are mixed.
+
+> Note that the sound sent to receiver device is not heard locally. Receiver device acts as a virtual microphone for other applications, not as a player for received sound. If you need it, you can use third-party software like [BlockHole](https://github.com/ExistentialAudio/BlackHole) to create a loopback from receiver device to local speakers. Or don't use virtual device at all and instead run [roc-recv](https://roc-streaming.org/toolkit/docs/tools/command_line_tools.html) command-line tool.
+
+### Inspecting devices
+
+To get a list of all roc-vad devices:
+
+```
+$ roc-vad device list
+```
+
+For more detailed information:
+
+```
+$ roc-vad device list --detail
+```
+
+For information about single device:
+
+```
+$ roc-vad device show 1
+```
+
+### Naming devices
+
+Each roc-vad device has:
+
+* `index` - small numeric identifier; after device is removed, its index may be reused soon
+* `uid` - long string identifier; each newly created device has a unique uid
+* `name` - human-readable device name presented in Sound Preferences
+
+By default, these fields are generated automatically, however you can specify `uid` or `name` explicitly, e.g.:
+
+```
+$ roc-vad device add sender --uid "<my unique id>" --name "My Device Name"
+```
+
+All commands that accept device index as an argument also provide `--uid` flag, which allows to specify uid instead of index, e.g.:
+
+```
+$ roc-vad device show --uid fc302e-ad7856-25f563-72c481
+```
+
+### Device persistence
+
+All created devices and all their settings (including bound and connected endpoints) are stored persistently. If you restart audio server or reboot, roc-vad will recreate them.
+
+If you want to disable device temporarily without losing its configuration, you can use `disable` and `enable` commands:
+
+```
+$ roc-vad device disable 1
+```
+
+```
+$ roc-vad device enable 1
+```
+
+If you want to remove device permanently, use `del` command:
+
+```
+$ roc-vad device del 1
+```
+
+## Device options
+
+### Sender options
+
+When you create sender virtual device using `roc-vad device add sender`, the following options are available:
+
+| option                   | default                | description                                                                 | note                          |
+|--------------------------|------------------------|-----------------------------------------------------------------------------|-------------------------------|
+| --device-rate            | 44100                  | virtual device sample rate                                                  |                               |
+| --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                               |
+| --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding   |
+| --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding   |
+| --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding   |
+| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo)                             | for custom network encoding   |
+| --packet-length          | 5                      | audio packet length (e.g. 123ms)                                            |                               |
+| --packet-interleaving    | false                  | enable packet interleaving                                                  |                               |
+| --fec-encoding           | rs8m                   | encoding for FEC packets (default, disable, rs8m, ldpc)                     |                               |
+| --fec-block-nbsrc        | 18                     | number of source packets in FEC block                                       |                               |
+| --fec-block-nbrpr        | 10                     | number of repair packets in FEC block                                       |                               |
+| --resampler-backend      | selected automatically | resampler backend (default, builtin, speex, speexdec)                       |                               |
+| --resampler-profile      | medium                 | resampler profile (default, high, medium, low)                              |                               |
+| --latency-backend        | disabled               | latency tuner backend (default, niq)                                        | for sender-side latency tuner |
+| --latency-profile        | disabled               | latency tuner profile (default, intact, responsive, gradual)                | for sender-side latency tuner |
+| --target-latency         | disabled               | target latency (e.g. 123ms)                                                 | for sender-side latency tuner |
+| --min-latency            | disabled               | minimum latency (e.g. 123ms)                                                | for sender-side latency tuner |
+| --max-latency            | disabled               | maximum latency (e.g. 123ms)                                                | for sender-side latency tuner |
+
+### Receiver options
+
+When you create receiver virtual device using `roc-vad device add receiver`, the following options are available:
+
+| option                   | default                | description                                                                 | note                        |
+|--------------------------|------------------------|-----------------------------------------------------------------------------|-----------------------------|
+| --device-rate            | 44100                  | virtual device sample rate                                                  |                             |
+| --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                             |
+| --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding |
+| --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding |
+| --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding |
+| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo)                             | for custom network encoding |
+| --resampler-backend      | selected automatically | resampler backend (default, builtin, speex, speexdec)                       |                             |
+| --resampler-profile      | medium                 | resampler profile (default, high, medium, low)                              |                             |
+| --latency-backend        | selected automatically | latency tuner backend (default, niq)                                        |                             |
+| --latency-profile        | selected automatically | latency tuner profile (default, intact, responsive, gradual)                |                             |
+| --target-latency         | 200                    | target latency (e.g. 123ms)                                                 |                             |
+| --min-latency            | selected automatically | minimum latency (e.g. 123ms)                                                |                             |
+| --max-latency            | selected automatically | maximum latency (e.g. 123ms)                                                |                             |
+| --no-play-timeout        | selected automatically | no playback timeout (e.g. 123ms)                                            |                             |
+| --choppy-play-timeout    | selected automatically | choppy playback timeout (e.g. 123ms)                                        |                             |
 
 ## Advanced configuration
 
-### Custom audio encoding
+### Multiple devices
+
+You can create multiple sender or receiver devices, e.g. if you want to connect different apps with different remote peers.
+
+macOS does not provide UI to select audio device per-app, but there are third-party tools for doing that. Also, many apps have built-in UI to select audio input / output.
+
+### Multiple endpoints
+
+Another possibility is to create multiple *slots* within a single sender or receiver device:
+
+* For sender, you can create multiple slots, and connect each slot to different remote receiver. The sound written to sender device will be sent to every slot.
+
+* For receiver, you can create multiple slots, and bind each slot to different set of endpoints, e.g. using different network interface or protocol. The sound retrieved from all slots is mixed.
+
+To use slots, just provide `--slot` argument to `device bind` or `device connect` command. Each slot is identified by a number; you can use any number, it does not have any semantics. When `--slot` is omitted, slot `0` is used.
+
+Example of connecting a sender to two remote receivers:
+
+```
+$ roc-vad device connect 1 --slot 0 \
+   --source rtp+rs8m://192.168.0.1:10001 \
+   --repair rs8m://192.168.0.1:10002 \
+   --control rtcp://192.168.0.1:10003
+```
+
+```
+$ roc-vad device connect 1 --slot 1 \
+   --source rtp+rs8m://10.9.8.14:20001 \
+   --repair rs8m://10.9.8.14:20002 \
+   --control rtcp://10.9.8.14:20003
+```
+
+### Custom device encoding
+
+*TODO*
+
+### Custom packet encoding
 
 *TODO*
 
@@ -187,6 +414,8 @@ client:
 *TODO*
 
 ## Troubleshooting
+
+### Retrieving info
 
 To enable verbose logging of the command line tool, use `-v` flag. Specify it multiple times to increase verbosity:
 
@@ -223,10 +452,10 @@ Timestamp                       Thread     Type        Activity             PID 
 ...
 ```
 
-To check if virtual device is actually added to the system, run:
+To check if virtual device is actually added to the system, use `sysprof` target. It runs `system_profiler SPAudioDataType`, which should print something like this:
 
 ```
-$ system_profiler SPAudioDataType
+$ make sysprof
 Audio:
 
     Devices:
@@ -238,7 +467,7 @@ Audio:
           Transport: Virtual
 ```
 
-## Common issues
+### Common issues
 
 * **Can't connect to driver**
 
@@ -256,11 +485,13 @@ Audio:
 
 * **Decreasing latency**
 
-   If your network allows lower latency, use `--target-latency` (receiver buffer size) option on receiving side and `--packet-length` (packet size), `--nbsrc`, and `--nbrpr` (FEC block size) on sending side.
+   If your network allows lower latency, use `--target-latency` (receiver buffer size) option on receiving side and `--packet-length` (packet size), `--fec-block-nbsrc`, and `--fec-block-nbrpr` (FEC block size) on sending side.
 
-   Each FEC block consists of `--nbsrc` packets of `--packet-length` length; `--nbrpr` should be about 2/3 of `--nbsrc`; `--target-latency` should be greater than FEC block size to allow packet repair to work.
+   Each FEC block consists of `--fec-block-nbsrc` packets of `--packet-length` length; `--fec-block-nbrpr` should be about 2/3 of `--fec-block-nbsrc`; `--target-latency` should be greater than FEC block size to allow packet repair to work.
 
 ## Programmatic control
+
+### gRPC interface
 
 You can control Roc VAD driver from any programming language via [gRPC](https://grpc.io/) interface.
 
@@ -275,7 +506,7 @@ To use RPC interface, you'll need to copy `driver_protocol.proto` to your projec
 
 Roc VAD RPC interface mostly mirrors underlying C API of Roc Toolkit. Please refer to the [C API reference](https://roc-streaming.org/toolkit/docs/api/reference.html) for more details on semantics of various options.
 
-## Socket address
+### Socket address
 
 By default, driver starts (unauthenticated) gRPC server at `127.0.0.1:9712`.
 

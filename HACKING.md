@@ -44,9 +44,13 @@ make docs
 
 ## General overview
 
-Virtual device is implemented as a plugin, a.k.a. driver, for CoreAudio sound daemon. The most part of the driver job is provided by [libASPL](https://github.com/gavv/libASPL) (developed by the author of these lines).
+Virtual device is implemented as a plugin, a.k.a. driver, for CoreAudio sound daemon.
 
 The driver is running in a sandbox, isolated from filesystem, but with network access. The streaming part is integrated right into the driver. The command-line tool controls the driver via gRPC over a TCP socket on localhost.
+
+To communicate with CoreAudio HAL, Roc VAD uses [libASPL](https://github.com/gavv/libASPL) (developed by the author of these lines). You can refer to its documentation to get familiar with CoreAudio HAL concepts, which affect Roc VAD design quite a lot.
+
+For streaming, Roc VAD uses Roc Toolkit [C API](https://roc-streaming.org/toolkit/docs/api.html). Refer to its documentation for more details about interfaces, endpoints, protocols, and various sender and receiver options.
 
 ## Dependencies
 
@@ -60,7 +64,7 @@ The project uses these libraries:
 * [spdlog](https://github.com/gabime/spdlog) - logging library
 * [{fmt}](https://github.com/fmtlib/fmt) - formatting library
 
-All dependencies listed above are downloaded automatically. Besides them, project needs some standard frameworks, build tools installed system-wide, and Xcode or Xcode command-line tools with C++17 support.
+All dependencies listed above are downloaded automatically. Besides them, project needs some standard frameworks, build tools installed system-wide (README lists them), and Xcode or Xcode command-line tools with C++17 support.
 
 ## Build system
 
