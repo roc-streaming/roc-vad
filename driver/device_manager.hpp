@@ -13,6 +13,8 @@
 #include "index_allocator.hpp"
 #include "uid_generator.hpp"
 
+#include <roc/context.h>
+
 #include <aspl/Plugin.hpp>
 #include <aspl/Storage.hpp>
 
@@ -75,6 +77,8 @@ private:
     UidGenerator uid_generator_;
 
     DeviceStorage device_storage_;
+
+    std::shared_ptr<roc_context> network_context_;
 };
 
 } // namespace rocvad

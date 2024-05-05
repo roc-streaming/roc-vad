@@ -17,7 +17,9 @@ add_library(${DRIVER_NAME} MODULE
   log_manager.cpp
   log_sender.cpp
   log_syslog.cpp
+  receiver.cpp
   rpc_serdes.cpp
+  sender.cpp
   tracer.cpp
   uid_generator.cpp
 )
@@ -28,6 +30,7 @@ target_link_libraries(${DRIVER_NAME} PRIVATE
   ${RPC_LIB}
 
   # third-party libs
+  roc
   aspl::libASPL
   gRPC::grpc++_unsecure
   spdlog::spdlog

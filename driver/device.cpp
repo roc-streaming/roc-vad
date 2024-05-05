@@ -8,6 +8,8 @@
 
 #include "device.hpp"
 #include "build_info.hpp"
+#include "receiver.hpp"
+#include "sender.hpp"
 
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
@@ -116,6 +118,7 @@ aspl::StreamParameters make_stream_params(const DeviceInfo& info)
 } // namespace
 
 Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
+    std::shared_ptr<roc_context> network_context,
     IndexAllocator& index_allocator,
     UidGenerator& uid_generator,
     const DeviceInfo& device_info)
@@ -151,7 +154,21 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
 
     hal_device_->AddStreamWithControlsAsync(make_stream_params(info_));
 
-    // TODO: roc_open
+    // we implement both interfaces
+    hal_device_->SetControlHandler(this);
+    hal_device_->SetIOHandler(this);
+
+    if (info_.type == DeviceType::Sender) {
+        network_transceiver_ = std::make_unique<Sender>(
+            network_context, info_.uid, info_.device_encoding, *info_.sender_config);
+    } else {
+        network_transceiver_ = std::make_unique<Receiver>(
+            network_context, info_.uid, info_.device_encoding, *info_.receiver_config);
+    }
+
+    if (!info_.enabled) {
+        network_transceiver_->pause();
+    }
 
     sort_endpoints_();
 
@@ -176,7 +193,7 @@ Device::~Device()
 
     toggle(false);
 
-    // TODO: roc_close
+    network_transceiver_.reset();
 
     if (info_.index != 0) {
         index_allocator_.release(info_.index);
@@ -197,6 +214,7 @@ void Device::toggle(bool enabled)
             spdlog::debug("enabling device {}", info_.uid);
 
             hal_plugin_->AddDevice(hal_device_);
+            network_transceiver_->resume();
         } else {
             spdlog::debug("device {} is already enabled", info_.uid);
         }
@@ -205,6 +223,7 @@ void Device::toggle(bool enabled)
             spdlog::debug("disabling device {}", info_.uid);
 
             hal_plugin_->RemoveDevice(hal_device_);
+            network_transceiver_->pause();
         } else {
             spdlog::debug("device {} is already disabled", info_.uid);
         }
@@ -240,7 +259,7 @@ void Device::bind_endpoint_(DeviceEndpointInfo& endpoint_info)
         endpoint_info.slot,
         endpoint_info.uri);
 
-    // TODO: roc_bind
+    network_transceiver_->bind(endpoint_info);
 }
 
 void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
@@ -250,7 +269,7 @@ void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
         endpoint_info.slot,
         endpoint_info.uri);
 
-    // TODO: roc_connect
+    network_transceiver_->connect(endpoint_info);
 }
 
 void Device::sort_endpoints_()
@@ -266,6 +285,45 @@ void Device::sort_endpoints_()
                 }
             });
     }
+}
+
+// aspl::ControlRequestHandler
+OSStatus Device::OnStartIO()
+{
+    spdlog::info("starting io on device {}", info_.uid);
+
+    network_transceiver_->resume();
+
+    return kAudioHardwareNoError;
+}
+
+void Device::OnStopIO()
+{
+    spdlog::info("stopping io on device {}", info_.uid);
+
+    network_transceiver_->pause();
+}
+
+// aspl::IORequestHandler
+void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
+    const std::shared_ptr<aspl::Stream>& stream,
+    Float64 zero_timestamp,
+    Float64 timestamp,
+    void* bytes,
+    UInt32 bytes_count)
+{
+    // TODO: ringbuf
+    network_transceiver_->read((uint64_t)timestamp, bytes, bytes_count);
+}
+
+void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
+    Float64 zero_timestamp,
+    Float64 timestamp,
+    const void* bytes,
+    UInt32 bytes_count)
+{
+    // TODO: ringbuf
+    network_transceiver_->write((uint64_t)timestamp, bytes, bytes_count);
 }
 
 } // namespace rocvad

@@ -10,7 +10,10 @@
 
 #include "device_defs.hpp"
 #include "index_allocator.hpp"
+#include "transceiver.hpp"
 #include "uid_generator.hpp"
+
+#include <roc/context.h>
 
 #include <aspl/Device.hpp>
 #include <aspl/Plugin.hpp>
@@ -20,10 +23,11 @@
 namespace rocvad {
 
 // Correspond to one virtual device.
-class Device
+class Device : private aspl::ControlRequestHandler, private aspl::IORequestHandler
 {
 public:
     Device(std::shared_ptr<aspl::Plugin> hal_plugin,
+        std::shared_ptr<roc_context> network_context,
         IndexAllocator& index_allocator,
         UidGenerator& uid_generator,
         const DeviceInfo& device_info);
@@ -40,6 +44,24 @@ public:
     DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
 
 private:
+    // aspl::ControlRequestHandler
+    OSStatus OnStartIO() override;
+    void OnStopIO() override;
+
+    // aspl::IORequestHandler
+    void OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
+        const std::shared_ptr<aspl::Stream>& stream,
+        Float64 zero_timestamp,
+        Float64 timestamp,
+        void* bytes,
+        UInt32 bytes_count) override;
+    void OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
+        Float64 zero_timestamp,
+        Float64 timestamp,
+        const void* bytes,
+        UInt32 bytes_count) override;
+
+    // endpoints
     void bind_endpoint_(DeviceEndpointInfo& endpoint_info);
     void connect_endpoint_(DeviceEndpointInfo& endpoint_info);
     void sort_endpoints_();
@@ -54,6 +76,9 @@ private:
     std::shared_ptr<aspl::Plugin> hal_plugin_;
     std::shared_ptr<aspl::Device> hal_device_;
 
+    // network sender or receiver
+    // which one is used depends on device type
+    std::unique_ptr<Transceiver> network_transceiver_;
 
     // run-time device info
     DeviceInfo info_;
