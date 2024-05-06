@@ -17,7 +17,10 @@ msg
 msg "Extracting ..."
 msg
 
-sudo tar --no-same-owner -xPmvf /tmp/roc-vad.tar.bz2
+# this will add:
+#  /Library/Audio/Plug-Ins/HAL/roc_vad.driver
+#  /usr/local/bin/roc-vad
+tar --no-same-owner -xPmvf /tmp/roc-vad.tar.bz2
 rm -f /tmp/roc-vad.tar.bz2
 
 msg
