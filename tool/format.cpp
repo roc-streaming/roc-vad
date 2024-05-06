@@ -39,7 +39,7 @@ std::string format_duration(int64_t nanoseconds)
              {1'000'000, "ms"},
              {1'000'000'000, "s"},
              {60'000'000'000, "m"},
-             {3660'000'000'000, "h"},
+             {3600'000'000'000, "h"},
          }}) {
         if (std::abs(nanoseconds) >= m) {
             multiplier = m;

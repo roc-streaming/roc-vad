@@ -38,21 +38,33 @@ const char* find_suffix(const char* str, const char* suffix)
 
 bool parse_index(const std::string& in, uint32_t& out)
 {
-    try {
-        const long value = std::stol(in);
+    const char* str = in.c_str();
 
-        if (value <= 0 || value > std::numeric_limits<uint32_t>::max()) {
-            spdlog::error("invalid device index \"{}\": out of range", in);
-            return false;
-        }
-
-        out = (uint32_t)value;
-        return true;
-    }
-    catch (std::exception& e) {
-        spdlog::error("invalid device index \"{}\": not a number", in);
+    if (!isdigit(*str) && *str != '-') {
+        spdlog::error("invalid index \"{}\", not a number", str);
         return false;
     }
+
+    char* number_end = nullptr;
+    long number = std::strtol(in.c_str(), &number_end, 10);
+
+    if (number == LONG_MAX || number == LONG_MIN || !number_end || *number_end != '\0') {
+        spdlog::error("invalid index \"{}\", bad number", str);
+        return false;
+    }
+
+    if (number <= 0) {
+        spdlog::error("invalid index \"{}\", should be positive", str);
+        return false;
+    }
+
+    if (number > UINT32_MAX) {
+        spdlog::error("invalid index \"{}\", out of range", str);
+        return false;
+    }
+
+    out = (uint32_t)number;
+    return true;
 }
 
 std::string supported_duration_suffixes()
@@ -62,7 +74,7 @@ std::string supported_duration_suffixes()
 
 bool parse_duration(const char* name, const std::string& in, int64_t& result)
 {
-    uint64_t multiplier = 0;
+    int64_t multiplier = 0;
 
     const char* str = in.c_str();
     const char* suffix = nullptr;
@@ -78,7 +90,7 @@ bool parse_duration(const char* name, const std::string& in, int64_t& result)
     } else if ((suffix = find_suffix(str, "m"))) {
         multiplier = 60'000'000'000;
     } else if ((suffix = find_suffix(str, "h"))) {
-        multiplier = 3660'000'000'000;
+        multiplier = 3600'000'000'000;
     } else {
         spdlog::error("invalid {} value \"{}\", no known suffix found ({})",
             name,
@@ -98,14 +110,20 @@ bool parse_duration(const char* name, const std::string& in, int64_t& result)
     }
 
     char* number_end = nullptr;
-    long number = std::strtol(str, &number_end, 10);
+    int64_t number = std::strtol(str, &number_end, 10);
 
     if (number == LONG_MAX || number == LONG_MIN || !number_end || number_end != suffix) {
-        spdlog::error("invalid {} value \"{}\", not a number", name, str);
+        spdlog::error("invalid {} value \"{}\", bad number", name, str);
         return false;
     }
 
-    result = (int64_t)number * multiplier;
+    result = number * multiplier;
+
+    if (result / multiplier != number) {
+        spdlog::error("invalid {} value \"{}\", out of range", name, str);
+        return false;
+    }
+
     return true;
 }
 

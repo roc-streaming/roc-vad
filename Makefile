@@ -3,6 +3,9 @@ NUM_CPU ?= $(shell sysctl -n hw.logicalcpu 2>/dev/null || echo 1)
 BUILDDIR ?= build/darwin-$(shell uname -r).noindex
 DESTDIR ?=
 
+GTEST_COLOR ?= yes
+export GTEST_COLOR
+
 all: build
 
 .PHONY: build
@@ -15,6 +18,10 @@ build:
 	fi
 	cd $(BUILDDIR) && cmake -DBOOTSTRAP=OFF ../..
 	cd $(BUILDDIR) && make --no-print-directory -j$(NUM_CPU)
+
+.PHONY: test
+test: build
+	cd $(BUILDDIR) && make test ARGS="-V"
 
 clean:
 	rm -rf bin build

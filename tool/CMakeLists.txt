@@ -4,7 +4,7 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_library(LIB_Foundation Foundation REQUIRED)
 
-add_executable(${TOOL_NAME}
+add_library(${TOOL_LIB} STATIC
   cmd_base.cpp
   cmd_compound.cpp
   cmd_device.cpp
@@ -25,13 +25,17 @@ add_executable(${TOOL_NAME}
   connector.cpp
   format.cpp
   help_formatter.cpp
-  main.cpp
   parse.cpp
   print.cpp
 )
 
-target_link_libraries(${TOOL_NAME} PRIVATE
+add_executable(${TOOL_EXE}
+  main.cpp
+)
+
+target_link_libraries(${TOOL_EXE} PRIVATE
   # internal libs
+  ${TOOL_LIB}
   ${COMMON_LIB}
   ${RPC_LIB}
 
@@ -45,21 +49,21 @@ target_link_libraries(${TOOL_NAME} PRIVATE
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-  target_link_options(${TOOL_NAME} PRIVATE
+  target_link_options(${TOOL_EXE} PRIVATE
     # hide all symbols, this significantly reduces binary size
     "-Wl,-unexported_symbol,*"
   )
-  add_custom_command(TARGET ${TOOL_NAME} POST_BUILD
-    COMMENT "Stripping ${TOOL_NAME}"
-    COMMAND strip $<TARGET_FILE:${TOOL_NAME}>
+  add_custom_command(TARGET ${TOOL_EXE} POST_BUILD
+    COMMENT "Stripping ${TOOL_EXE}"
+    COMMAND strip $<TARGET_FILE:${TOOL_EXE}>
   )
 endif()
 
-add_custom_command(TARGET ${TOOL_NAME} POST_BUILD
-  COMMENT "Copying ${TOOL_NAME} to bin"
+add_custom_command(TARGET ${TOOL_EXE} POST_BUILD
+  COMMENT "Copying ${TOOL_EXE} to bin"
   COMMAND ${CMAKE_COMMAND} -E make_directory
     ${PROJECT_ROOT}/bin
   COMMAND ${CMAKE_COMMAND} -E copy
-    $<TARGET_FILE:${TOOL_NAME}>
+    $<TARGET_FILE:${TOOL_EXE}>
     ${PROJECT_ROOT}/bin
 )

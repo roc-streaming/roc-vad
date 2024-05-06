@@ -250,7 +250,36 @@ include_directories(SYSTEM
   ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/cli11/include
 )
 
-# List
+# GoogleTest
+ExternalProject_Add(googletest_lib
+  GIT_REPOSITORY "https://github.com/google/googletest.git"
+  GIT_TAG "v1.14.0"
+  GIT_SHALLOW ON
+  GIT_PROGRESS ON
+  UPDATE_DISCONNECTED ON
+  PREFIX ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/googletest
+  LIST_SEPARATOR ${LIST_SEPARATOR}
+  CMAKE_ARGS
+    -DCMAKE_CXX_COMPILER_LAUNCHER=${CMAKE_CXX_COMPILER_LAUNCHER}
+    -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+    -DCMAKE_OSX_ARCHITECTURES=${OSX_ARCHITECTURES_LISTSEP}
+    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+    -DBUILD_TESTING=OFF
+  BUILD_COMMAND
+    ${CMAKE_COMMAND} --build . -- -j ${NUM_CPU}
+  LOG_DOWNLOAD ${ENABLE_LOGS}
+  LOG_CONFIGURE ${ENABLE_LOGS}
+  LOG_BUILD ${ENABLE_LOGS}
+  LOG_INSTALL ${ENABLE_LOGS}
+)
+include_directories(SYSTEM
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/googletest/include
+)
+list(PREPEND CMAKE_PREFIX_PATH
+  ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/googletest/lib/cmake
+)
+
+# List of all third-party dependencies
 set(ALL_DEPENDENCIES
   roc_lib
   aspl_lib
@@ -259,12 +288,15 @@ set(ALL_DEPENDENCIES
   fmt_lib
   spdlog_lib
   cli11_lib
+  googletest_lib
 )
-list(REVERSE ALL_DEPENDENCIES)
 
-# Serialize
+# Serialize dependencies
+# (each one depends on previous in list)
+set(REV_DEPENDENCIES ${ALL_DEPENDENCIES})
+list(REVERSE REV_DEPENDENCIES)
 set(OTHER_DEPENDENCIES ${ALL_DEPENDENCIES})
-foreach(DEPENDENCY IN LISTS ALL_DEPENDENCIES)
+foreach(DEPENDENCY IN LISTS REV_DEPENDENCIES)
   list(REMOVE_ITEM OTHER_DEPENDENCIES ${DEPENDENCY})
   if(OTHER_DEPENDENCIES)
     add_dependencies(${DEPENDENCY}
@@ -273,7 +305,7 @@ foreach(DEPENDENCY IN LISTS ALL_DEPENDENCIES)
   endif()
 endforeach()
 
-# Commit
+# After building dependencies, touch commit-file
 add_custom_command(
   COMMENT "Commit bootstrap"
   DEPENDS ${ALL_DEPENDENCIES}

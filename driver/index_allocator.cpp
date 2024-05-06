@@ -70,6 +70,7 @@ void IndexAllocator::acquire(index_t index)
 
     set_free_(index, false);
     num_allocated_++;
+    last_allocated_index_ = std::max(last_allocated_index_, index);
 
     spdlog::trace("acquired index={} num_allocated={}", index, num_allocated_);
 }

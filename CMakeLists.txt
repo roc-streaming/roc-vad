@@ -9,9 +9,13 @@ set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(COMMON_LIB "rocvad_common")
 set(RPC_LIB "rocvad_rpc")
 
-set(TOOL_NAME "roc-vad")
+set(TOOL_EXE "roc-vad")
+set(TOOL_LIB "rocvad_tool")
+set(TEST_EXE "rocvad_test")
 
-set(DRIVER_NAME "roc_vad")
+set(DRIVER_BUNDLE "roc_vad")
+set(DRIVER_LIB "rocvad_driver")
+
 set(DRIVER_BUNDLE_ID "org.rocstreaming.rocvad")
 set(DRIVER_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B")
 set(DRIVER_SOCKET "127.0.0.1:9712")
@@ -51,7 +55,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   )
 endif()
 
-include_directories(SYSTEM
+include_directories(
   common
   rpc
 )
@@ -59,12 +63,15 @@ include_directories(SYSTEM
 include(cmake/dependencies.cmake)
 
 if(NOT BOOTSTRAP)
+  enable_testing()
+
   add_subdirectory(common)
   add_subdirectory(rpc)
   add_subdirectory(driver)
   add_subdirectory(tool)
+  add_subdirectory(test)
 
-  foreach(TARGET IN ITEMS ${COMMON_LIB} ${RPC_LIB} ${DRIVER_NAME} ${TOOL_NAME})
+  foreach(TARGET IN ITEMS ${COMMON_LIB} ${RPC_LIB} ${DRIVER_BUNDLE} ${TOOL_EXE} ${TEST_EXE})
     add_dependencies(${TARGET}
       ${ALL_DEPENDENCIES}
     )
@@ -73,7 +80,7 @@ if(NOT BOOTSTRAP)
   add_custom_command(
     COMMENT "Copying compile_commands.json to project root"
     DEPENDS
-      ${COMMON_LIB} ${RPC_LIB} ${DRIVER_NAME} ${TOOL_NAME}
+      ${COMMON_LIB} ${RPC_LIB} ${DRIVER_BUNDLE} ${TOOL_EXE} ${TEST_EXE}
     OUTPUT
       ${PROJECT_SOURCE_DIR}/compile_commands.json
     COMMAND ${CMAKE_COMMAND} -E copy
