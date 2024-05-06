@@ -8,53 +8,155 @@
 
 #include "ring_buffer.hpp"
 
+#include <algorithm>
 #include <cassert>
 
 namespace rocvad {
 
 RingBuffer::RingBuffer(size_t n_samples)
-    : mem_(n_samples)
+    : buf_data_(n_samples)
+    , buf_size_(n_samples)
 {
 }
 
-uint64_t RingBuffer::head_timestamp() const
+bool RingBuffer::first_write() const
 {
-    // TODO
-    return 0;
+    return first_write_;
 }
 
-uint64_t RingBuffer::tail_timestamp() const
+RingBuffer::timestamp_t RingBuffer::head_timestamp() const
 {
-    // TODO
-    return 0;
+    return head_ts_;
 }
 
-size_t RingBuffer::n_need_write(uint64_t timestamp) noexcept
+RingBuffer::timestamp_t RingBuffer::tail_timestamp() const
 {
-    // TODO
-    return 0;
+    return tail_ts_;
 }
 
-void RingBuffer::write(uint64_t timestamp,
+size_t RingBuffer::n_need_write(timestamp_t timestamp) noexcept
+{
+    if (first_write_ || timestamp < tail_ts_) {
+        return 0;
+    } else {
+        return std::min(size_t(timestamp - tail_ts_), buf_size_);
+    }
+}
+
+void RingBuffer::write(timestamp_t timestamp,
     const float* samples,
     size_t n_samples) noexcept
 {
     assert(samples);
 
-    // TODO
+    if (n_samples == 0) {
+        return;
+    }
+
+    if (first_write_) {
+        if (timestamp + n_samples < buf_size_) {
+            return;
+        }
+
+        tail_ts_ = timestamp + n_samples;
+        head_ts_ = tail_ts_ - buf_size_;
+
+        buf_off_ = 0;
+
+        first_write_ = false;
+    } else {
+        const timestamp_t old_head_ts = head_ts_;
+
+        tail_ts_ = std::max(tail_ts_, timestamp + n_samples);
+        head_ts_ = std::max(head_ts_, tail_ts_ - buf_size_);
+
+        if (head_ts_ != old_head_ts) {
+            buf_off_ = (buf_off_ + (head_ts_ - old_head_ts)) % buf_size_;
+        }
+    }
+
+    n_samples = std::min(n_samples, buf_size_);
+
+    copy_to_buffer_(timestamp, samples, n_samples);
 }
 
-size_t RingBuffer::n_can_read(uint64_t timestamp) noexcept
+size_t RingBuffer::n_can_read(timestamp_t timestamp) noexcept
 {
-    // TODO
-    return 0;
+    if (first_write_ || timestamp >= tail_ts_) {
+        return 0;
+    } else {
+        return std::min(size_t(tail_ts_ - timestamp), buf_size_);
+    }
 }
 
-void RingBuffer::read(uint64_t timestamp, float* samples, size_t n_samples) noexcept
+void RingBuffer::read(timestamp_t timestamp, float* samples, size_t n_samples) noexcept
 {
     assert(samples);
 
-    // TODO
+    if (n_samples == 0) {
+        return;
+    }
+
+    if (first_write_) {
+        std::fill_n(samples, n_samples, 0);
+        return;
+    }
+
+    const timestamp_t from_ts = std::max(timestamp, head_ts_);
+    const timestamp_t to_ts = std::min(timestamp + n_samples, tail_ts_);
+
+    const size_t n_from_buffer = to_ts - from_ts;
+
+    const size_t n_zeros_before = from_ts - timestamp;
+    const size_t n_zeros_after = timestamp + n_samples - to_ts;
+
+    if (n_zeros_before > 0) {
+        std::fill_n(samples, n_zeros_before, 0);
+    }
+
+    if (from_ts < to_ts) {
+        copy_from_buffer_(from_ts, samples + n_zeros_before, n_from_buffer);
+    }
+
+    if (n_zeros_after > 0) {
+        std::fill_n(samples + n_zeros_before + n_from_buffer, n_zeros_after, 0);
+    }
+}
+
+void RingBuffer::copy_to_buffer_(timestamp_t timestamp,
+    const float* samples,
+    size_t n_samples) noexcept
+{
+    assert(timestamp >= head_ts_);
+    assert(timestamp + n_samples <= tail_ts_);
+
+    const timestamp_t begin_off = (buf_off_ + timestamp - head_ts_) % buf_size_;
+    const timestamp_t end_off = (begin_off + n_samples) % buf_size_;
+
+    if (begin_off <= end_off) {
+        std::copy_n(samples, end_off - begin_off, &buf_data_[begin_off]);
+    } else {
+        std::copy_n(samples, buf_size_ - begin_off, &buf_data_[begin_off]);
+        std::copy_n(samples + buf_size_ - begin_off, end_off, &buf_data_[0]);
+    }
+}
+
+void RingBuffer::copy_from_buffer_(timestamp_t timestamp,
+    float* samples,
+    size_t n_samples) noexcept
+{
+    assert(timestamp >= head_ts_);
+    assert(timestamp + n_samples <= tail_ts_);
+
+    const timestamp_t begin_off = (buf_off_ + timestamp - head_ts_) % buf_size_;
+    const timestamp_t end_off = (begin_off + n_samples) % buf_size_;
+
+    if (begin_off <= end_off) {
+        std::copy_n(&buf_data_[begin_off], end_off - begin_off, samples);
+    } else {
+        std::copy_n(&buf_data_[begin_off], buf_size_ - begin_off, samples);
+        std::copy_n(&buf_data_[0], end_off, samples + buf_size_ - begin_off);
+    }
 }
 
 } // namespace rocvad

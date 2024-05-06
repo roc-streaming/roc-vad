@@ -6,6 +6,9 @@ DESTDIR ?=
 GTEST_COLOR ?= yes
 export GTEST_COLOR
 
+GTEST_BREAK_ON_FAILURE ?= yes
+export GTEST_BREAK_ON_FAILURE
+
 all: build
 
 .PHONY: build

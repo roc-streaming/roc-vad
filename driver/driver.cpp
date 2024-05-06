@@ -42,6 +42,7 @@ Driver::Driver()
     hal_driver_ = std::make_shared<aspl::Driver>(hal_context, hal_plugin_, hal_storage_);
 
     // will invoke OnInitialize() later
+    // needed because persistent storage is not available until that
     hal_driver_->SetDriverHandler(this);
 }
 
@@ -65,7 +66,9 @@ OSStatus Driver::OnInitialize()
 {
     spdlog::info("received initialization request");
 
+    // creates, deletes, updates, lists devices
     device_manager_ = std::make_shared<DeviceManager>(hal_plugin_, hal_storage_);
+    // implements gRPC interface on top of device manager
     driver_service_ = std::make_unique<DriverService>(log_manager_, device_manager_);
 
     const std::string driver_socket = PlistInfo::driver_socket();

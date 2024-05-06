@@ -167,7 +167,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
     // create HAL device
     hal_device_ = std::make_shared<aspl::Device>(
         hal_plugin_->GetContext(), make_device_params(info_));
-
+    // add single input our output stream with volume control
     hal_device_->AddStreamWithControlsAsync(make_stream_params(info_));
 
     // we implement both interfaces
@@ -182,7 +182,6 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         net_transceiver_ = std::make_unique<Receiver>(
             info_.uid, info_.device_encoding, *info_.receiver_config);
     }
-
     if (!info_.enabled) {
         net_transceiver_->pause();
     }
@@ -306,8 +305,8 @@ void Device::sort_endpoints_()
     }
 }
 
-// implements aspl::ControlRequestHandler
-// called before first I/O request when first client connects
+// Implements aspl::ControlRequestHandler.
+// Called before first I/O request when first client (app) connects.
 OSStatus Device::OnStartIO()
 {
     spdlog::info("starting io on device {}", info_.uid);
@@ -318,18 +317,22 @@ OSStatus Device::OnStartIO()
     return kAudioHardwareNoError;
 }
 
-// implements aspl::ControlRequestHandler
-// called after last I/O request when last client disconnects
+// Implements aspl::ControlRequestHandler.
+// Called after last I/O request when last client (app) disconnects.
 void Device::OnStopIO()
 {
     spdlog::info("stopping io on device {}", info_.uid);
 
-    // tell sender/receiver to keep connection in idle state
+    // tell sender/receiver to put connection in idle state
     net_transceiver_->pause();
 }
 
-// implements aspl::IORequestHandler
-// called if this is receiver device (virtual mic)
+// Implements aspl::IORequestHandler.
+// Called regularly if this is receiver device (virtual mic).
+// Called on real-time thread, should not block
+// Should read requested number samples of samples starting from requested timestamp.
+// Overlapping or sparse read requests are possible when more than one app is
+// reading from the device.
 void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
     const std::shared_ptr<aspl::Stream>& stream,
     Float64 zero_timestamp,
@@ -339,11 +342,14 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
 {
     assert(bytes);
 
-    const auto sample_ts = (uint64_t)timestamp;
-    const auto sample_ptr = (float*)bytes;
-    const auto sample_cnt = bytes_count / sizeof(float);
+    timestamp_t sample_ts = (timestamp_t)timestamp;
+    float* sample_ptr = (float*)bytes;
+    size_t sample_cnt = bytes_count / sizeof(float);
 
-    const size_t wr_samples = ring_buf_->n_need_write(sample_ts + sample_cnt);
+    // how much samples should we append to buffer to fulfill read request?
+    size_t wr_samples = ring_buf_->first_write()
+                            ? sample_cnt
+                            : ring_buf_->n_need_write(sample_ts + sample_cnt);
     if (wr_samples > 0) {
         if (io_buf_.size() < wr_samples) {
             io_buf_.resize(wr_samples);
@@ -351,15 +357,25 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
         // it's time to request more samples from receiver and
         // append to ring buffer
         net_transceiver_->read(io_buf_.data(), wr_samples);
-        ring_buf_->write(ring_buf_->tail_timestamp(), io_buf_.data(), wr_samples);
+
+        ring_buf_->write(
+            ring_buf_->first_write() ? sample_ts : ring_buf_->tail_timestamp(),
+            io_buf_.data(),
+            wr_samples);
     }
 
     // copy from ring buffer to client
     ring_buf_->read(sample_ts, sample_ptr, sample_cnt);
 }
 
-// implements aspl::IORequestHandler
-// called if this is sender device (virtual speakers)
+// Implements aspl::IORequestHandler.
+// Called regularly if this is sender device (virtual speakers).
+// Called on real-time thread, should not block.
+// Should write requested number of samples starting from requested timestamp.
+// Gets samples mixed from all apps that are writing to device
+// (because we set EnableMixing to true in device config).
+// I'm not sure if overlapping or sparse requests are possible when mixing is
+// enabled, so I try to make as little assumptions about timestamps as possible.
 void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
     Float64 zero_timestamp,
     Float64 timestamp,
@@ -368,14 +384,19 @@ void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
 {
     assert(bytes);
 
-    const auto sample_ts = (uint64_t)timestamp;
-    const auto sample_ptr = (const float*)bytes;
-    const auto sample_cnt = bytes_count / sizeof(float);
+    timestamp_t sample_ts = (timestamp_t)timestamp;
+    const float* sample_ptr = (const float*)bytes;
+    size_t sample_cnt = bytes_count / sizeof(float);
+
+    if (ring_buf_->first_write()) {
+        ring_buf_pos_ = sample_ts;
+    }
 
     // copy from clients to ring buffer
     ring_buf_->write(sample_ts, sample_ptr, sample_cnt);
 
-    const size_t rd_samples = ring_buf_->n_can_read(ring_buf_pos_);
+    // how much new samples can we read from buffer since last read?
+    size_t rd_samples = ring_buf_->n_can_read(ring_buf_pos_);
     if (rd_samples > 0) {
         if (io_buf_.size() < rd_samples) {
             io_buf_.resize(rd_samples);
@@ -383,8 +404,9 @@ void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
         // it's time to read more samples from ring buffer and
         // pass to sender
         ring_buf_->read(ring_buf_pos_, io_buf_.data(), rd_samples);
-        net_transceiver_->write(io_buf_.data(), rd_samples);
         ring_buf_pos_ += rd_samples;
+
+        net_transceiver_->write(io_buf_.data(), rd_samples);
     }
 }
 

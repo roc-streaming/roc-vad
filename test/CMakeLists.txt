@@ -12,6 +12,7 @@ add_executable(${TEST_EXE}
   main.cpp
   test_format_parse.cpp
   test_index_allocator.cpp
+  test_ring_buffer.cpp
   test_uid_generator.cpp
 )
 

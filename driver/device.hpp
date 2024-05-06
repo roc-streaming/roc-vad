@@ -24,7 +24,16 @@
 
 namespace rocvad {
 
-// Correspond to one virtual device.
+// Corresponds to one virtual device.
+//
+// Handles requests from HAL (by implementing aspl::ControlRequestHandler and
+// aspl::IORequestHandler), and provides methods to DeviceManager to control
+// device state (which in turn provides methods for gRPC service).
+//
+// Consists of:
+//  - aspl::Device - device representative in coreaudio HAL
+//  - Transceiver  - network sender or receiver (depending on device type)
+//  - RingBuffer   - a buffer between network and HAL
 class Device : private aspl::ControlRequestHandler, private aspl::IORequestHandler
 {
 public:
@@ -45,6 +54,8 @@ public:
     DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
 
 private:
+    using timestamp_t = RingBuffer::timestamp_t;
+
     // aspl::ControlRequestHandler
     OSStatus OnStartIO() override;
     void OnStopIO() override;
