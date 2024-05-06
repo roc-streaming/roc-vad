@@ -8,22 +8,21 @@ set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(COMMON_LIB "rocvad_common")
 set(RPC_LIB "rocvad_rpc")
+set(DRIVER_LIB "rocvad_driver")
 
 set(TOOL_EXE "roc-vad")
 set(TOOL_LIB "rocvad_tool")
 set(TEST_EXE "rocvad_test")
 
-set(DRIVER_BUNDLE "roc_vad")
-set(DRIVER_LIB "rocvad_driver")
+set(DRIVER_BUNDLE_NAME "roc_vad" CACHE STRING "")
+set(DRIVER_BUNDLE_ID "org.rocstreaming.rocvad" CACHE STRING "")
+set(DRIVER_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B" CACHE STRING "")
+set(DRIVER_SOCKET "127.0.0.1:9712" CACHE STRING "")
+set(DRIVER_MANUFACTURER "Roc Streaming" CACHE STRING "")
+set(DRIVER_COPYRIGHT "Copyright (c) Roc Streaming authors" CACHE STRING "")
 
-set(DRIVER_BUNDLE_ID "org.rocstreaming.rocvad")
-set(DRIVER_UUID "FE352D6E-B65E-4496-BD3D-ECBBB6750E8B")
-set(DRIVER_SOCKET "127.0.0.1:9712")
-set(DRIVER_MANUFACTURER "Roc Streaming")
-set(DRIVER_COPYRIGHT "Copyright (c) Roc Streaming authors")
-
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
-set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "")
+set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)

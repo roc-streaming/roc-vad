@@ -24,11 +24,11 @@ add_library(${DRIVER_LIB} STATIC
   uid_generator.cpp
 )
 
-add_library(${DRIVER_BUNDLE} MODULE
+add_library(${DRIVER_BUNDLE_NAME} MODULE
   entry_point.cpp
 )
 
-target_link_libraries(${DRIVER_BUNDLE} PRIVATE
+target_link_libraries(${DRIVER_BUNDLE_NAME} PRIVATE
   # internal libs
   ${DRIVER_LIB}
   ${COMMON_LIB}
@@ -46,20 +46,20 @@ target_link_libraries(${DRIVER_BUNDLE} PRIVATE
   ${LIB_Foundation}
 )
 
-target_link_options(${DRIVER_BUNDLE} PRIVATE
+target_link_options(${DRIVER_BUNDLE_NAME} PRIVATE
   # hide everything except entry_point()
   "-Wl,-exported_symbol,_entry_point"
 )
 
-set_target_properties(${DRIVER_BUNDLE} PROPERTIES
-  OUTPUT_NAME ${DRIVER_BUNDLE}
+set_target_properties(${DRIVER_BUNDLE_NAME} PROPERTIES
+  OUTPUT_NAME ${DRIVER_BUNDLE_NAME}
   BUNDLE true
   BUNDLE_EXTENSION "driver"
   PREFIX ""
   SUFFIX ""
   MACOSX_BUNDLE ON
   MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist.in
-  MACOSX_BUNDLE_BUNDLE_NAME ${DRIVER_BUNDLE}
+  MACOSX_BUNDLE_BUNDLE_NAME ${DRIVER_BUNDLE_NAME}
   MACOSX_BUNDLE_BUNDLE_VERSION ${GIT_RELEASE}
   MACOSX_BUNDLE_SHORT_VERSION_STRING ${GIT_RELEASE}
   MACOSX_BUNDLE_COPYRIGHT ${DRIVER_COPYRIGHT}
@@ -67,20 +67,20 @@ set_target_properties(${DRIVER_BUNDLE} PROPERTIES
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-  add_custom_command(TARGET ${DRIVER_BUNDLE} POST_BUILD
-    COMMENT "Stripping ${DRIVER_BUNDLE}.driver"
+  add_custom_command(TARGET ${DRIVER_BUNDLE_NAME} POST_BUILD
+    COMMENT "Stripping ${DRIVER_BUNDLE_NAME}.driver"
     COMMAND
-      strip -x $<TARGET_FILE:${DRIVER_BUNDLE}>
+      strip -x $<TARGET_FILE:${DRIVER_BUNDLE_NAME}>
   )
 endif()
 
-add_custom_command(TARGET ${DRIVER_BUNDLE} POST_BUILD
-  COMMENT "Copying ${DRIVER_BUNDLE}.driver to bin"
+add_custom_command(TARGET ${DRIVER_BUNDLE_NAME} POST_BUILD
+  COMMENT "Copying ${DRIVER_BUNDLE_NAME}.driver to bin"
   COMMAND mkdir -p
     ${PROJECT_ROOT}/bin
   COMMAND rm -rf
-    ${PROJECT_ROOT}/bin/${DRIVER_BUNDLE}.driver
+    ${PROJECT_ROOT}/bin/${DRIVER_BUNDLE_NAME}.driver
   COMMAND cp -a
-    ${CMAKE_CURRENT_BINARY_DIR}/${DRIVER_BUNDLE}.driver
+    ${CMAKE_CURRENT_BINARY_DIR}/${DRIVER_BUNDLE_NAME}.driver
     ${PROJECT_ROOT}/bin
 )

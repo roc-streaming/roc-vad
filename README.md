@@ -38,6 +38,7 @@
 - [Programmatic control](#programmatic-control)
   * [gRPC interface](#grpc-interface)
   * [Socket address](#socket-address)
+  * [Vendoring driver](#vendoring-driver)
 - [Hacking](#hacking)
 - [Authors](#authors)
 - [License](#license)
@@ -683,6 +684,12 @@ Roc VAD RPC interface mostly mirrors underlying C API of Roc Toolkit. Please ref
 By default, driver starts (unauthenticated) gRPC server at `127.0.0.1:9712`.
 
 If you want to change the address, you can edit `DriverSocket` entry in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read address from there.
+
+### Vendoring driver
+
+If you're going to vendor a copy or a fork of Roc VAD driver and ship with your application, please change `DRIVER_BUNDLE_NAME`, `DRIVER_BUNDLE_ID`, `DRIVER_UUID`, and `DRIVER_SOCKET` via CMake.
+
+This is necessary to ensure that your copy can co-exist with the original on the same system.
 
 ## Hacking
 
