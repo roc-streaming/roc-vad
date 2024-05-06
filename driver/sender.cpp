@@ -8,33 +8,152 @@
 
 #include "sender.hpp"
 
+#include <fmt/core.h>
+#include <spdlog/spdlog.h>
+
 namespace rocvad {
 
-Sender::Sender(std::shared_ptr<roc_context> network_context,
-    const std::string& uid,
+Sender::Sender(const std::string& uid,
     const DeviceLocalEncoding& device_encoding,
-    const DeviceSenderConfig& sender_config)
+    const DeviceSenderConfig& device_sender_config)
+    : uid_(uid)
 {
+    int err = 0;
+
+    roc_context_config net_context_config;
+    memset(&net_context_config, 0, sizeof(net_context_config));
+
+    if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
+        throw std::runtime_error(
+            fmt::format("can't open network context: uid={} err={}", uid_, err));
+    }
+
+    roc_sender_config net_sender_config;
+    memset(&net_sender_config, 0, sizeof(net_sender_config));
+
+    net_sender_config.frame_encoding.rate = device_encoding.sample_rate;
+    net_sender_config.frame_encoding.format = ROC_FORMAT_PCM_FLOAT32;
+    net_sender_config.frame_encoding.channels = device_encoding.channel_layout;
+
+    if (device_sender_config.packet_encoding) {
+        net_sender_config.packet_encoding = device_sender_config.packet_encoding->id;
+
+        if ((err = roc_context_register_encoding(net_context_,
+                 device_sender_config.packet_encoding->id,
+                 &device_sender_config.packet_encoding->spec)) < 0) {
+            throw std::invalid_argument(
+                fmt::format("invalid packet encoding: uid={} err={}", uid_, err));
+        }
+    }
+
+    net_sender_config.packet_length = device_sender_config.packet_length_ns;
+    net_sender_config.packet_interleaving = device_sender_config.packet_interleaving;
+
+    net_sender_config.fec_encoding = device_sender_config.fec_encoding;
+    net_sender_config.fec_block_source_packets =
+        device_sender_config.fec_block_source_packets;
+    net_sender_config.fec_block_repair_packets =
+        device_sender_config.fec_block_repair_packets;
+
+    net_sender_config.clock_source = ROC_CLOCK_SOURCE_EXTERNAL;
+
+    net_sender_config.latency_tuner_backend = device_sender_config.latency_tuner_backend;
+    net_sender_config.latency_tuner_profile = device_sender_config.latency_tuner_profile;
+
+    net_sender_config.resampler_backend = device_sender_config.resampler_backend;
+    net_sender_config.resampler_profile = device_sender_config.resampler_profile;
+
+    net_sender_config.target_latency = device_sender_config.target_latency_ns;
+    net_sender_config.min_latency = device_sender_config.min_latency_ns;
+    net_sender_config.max_latency = device_sender_config.max_latency_ns;
+
+    if ((err = roc_sender_open(net_context_, &net_sender_config, &net_sender_)) < 0) {
+        throw std::invalid_argument(
+            fmt::format("invalid sender config: uid={} err={}", uid_, err));
+    }
+}
+
+Sender::~Sender()
+{
+    int err = 0;
+
+    if (net_sender_) {
+        if ((err = roc_sender_close(net_sender_)) < 0) {
+            spdlog::warn("can't properly close network sender: uid={} err={}", uid_, err);
+        }
+    }
+
+    if (net_context_) {
+        if ((err = roc_context_close(net_context_)) < 0) {
+            spdlog::warn(
+                "can't properly close network context: uid={} err={}", uid_, err);
+        }
+    }
 }
 
 void Sender::bind(DeviceEndpointInfo& endpoint_info)
 {
+    throw std::invalid_argument("sender device does not support bind() currently");
 }
 
 void Sender::connect(DeviceEndpointInfo& endpoint_info)
 {
+    int err = 0;
+
+    roc_endpoint* endpoint = nullptr;
+
+    if ((err = roc_endpoint_allocate(&endpoint)) < 0) {
+        throw std::runtime_error(
+            fmt::format("can't allocate network endpoint: uid={} err={}", uid_, err));
+    }
+
+    if ((err = roc_endpoint_set_uri(endpoint, endpoint_info.uri.c_str())) < 0) {
+        throw std::invalid_argument(fmt::format(
+            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+    }
+
+    if ((err = roc_sender_connect(
+             net_sender_, endpoint_info.slot, endpoint_info.interface, endpoint)) < 0) {
+        throw std::invalid_argument(fmt::format(
+            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+    }
+
+    if ((err = roc_endpoint_deallocate(endpoint)) < 0) {
+        spdlog::warn(
+            "can't properly deallocate network endpoint: uid={} err={}", uid_, err);
+    }
 }
 
 void Sender::pause() noexcept
 {
+    // TODO: call roc_sender_pause()
+    // https://github.com/roc-streaming/roc-toolkit/issues/678
 }
 
 void Sender::resume() noexcept
 {
+    // TODO: call roc_sender_resume()
+    // https://github.com/roc-streaming/roc-toolkit/issues/678
 }
 
-void Sender::write(uint64_t timestamp, const void* bytes, size_t n_bytes) noexcept
+void Sender::write(const float* samples, size_t n_samples) noexcept
 {
+    roc_frame frame;
+    memset(&frame, 0, sizeof(frame));
+
+    frame.samples = const_cast<float*>(samples);
+    frame.samples_size = n_samples * sizeof(float);
+
+    int err;
+    if ((err = roc_sender_write(net_sender_, &frame)) < 0) {
+        if (err_count_++ % err_report_freq_ == 0) {
+            spdlog::warn(
+                "can't write frame to network sender: uid={} err={} err_count={}",
+                uid_,
+                err,
+                err_count_);
+        }
+    }
 }
 
 } // namespace rocvad

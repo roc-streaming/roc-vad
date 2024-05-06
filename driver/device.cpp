@@ -36,6 +36,16 @@ UInt32 compute_channel_count(const DeviceInfo& info)
     }
 }
 
+size_t compute_buffer_size(const DeviceInfo& info)
+{
+    if (info.device_encoding.buffer_size != 0) {
+        return info.device_encoding.buffer_size;
+    }
+
+    // one second by default (it doesn't affect latency)
+    return info.device_encoding.sample_rate * compute_channel_count(info);
+}
+
 aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 {
     aspl::DeviceParameters device_params;
@@ -118,13 +128,14 @@ aspl::StreamParameters make_stream_params(const DeviceInfo& info)
 } // namespace
 
 Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
-    std::shared_ptr<roc_context> network_context,
     IndexAllocator& index_allocator,
     UidGenerator& uid_generator,
     const DeviceInfo& device_info)
     : index_allocator_(index_allocator)
     , uid_generator_(uid_generator)
     , hal_plugin_(hal_plugin)
+    , io_buf_(compute_buffer_size(device_info))
+    , ring_buf_(compute_buffer_size(device_info))
     , info_(device_info)
 {
     assert(hal_plugin_);
@@ -159,15 +170,15 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
     hal_device_->SetIOHandler(this);
 
     if (info_.type == DeviceType::Sender) {
-        network_transceiver_ = std::make_unique<Sender>(
-            network_context, info_.uid, info_.device_encoding, *info_.sender_config);
+        net_transceiver_ = std::make_unique<Sender>(
+            info_.uid, info_.device_encoding, *info_.sender_config);
     } else {
-        network_transceiver_ = std::make_unique<Receiver>(
-            network_context, info_.uid, info_.device_encoding, *info_.receiver_config);
+        net_transceiver_ = std::make_unique<Receiver>(
+            info_.uid, info_.device_encoding, *info_.receiver_config);
     }
 
     if (!info_.enabled) {
-        network_transceiver_->pause();
+        net_transceiver_->pause();
     }
 
     sort_endpoints_();
@@ -193,7 +204,7 @@ Device::~Device()
 
     toggle(false);
 
-    network_transceiver_.reset();
+    net_transceiver_.reset();
 
     if (info_.index != 0) {
         index_allocator_.release(info_.index);
@@ -214,7 +225,7 @@ void Device::toggle(bool enabled)
             spdlog::debug("enabling device {}", info_.uid);
 
             hal_plugin_->AddDevice(hal_device_);
-            network_transceiver_->resume();
+            net_transceiver_->resume();
         } else {
             spdlog::debug("device {} is already enabled", info_.uid);
         }
@@ -223,7 +234,7 @@ void Device::toggle(bool enabled)
             spdlog::debug("disabling device {}", info_.uid);
 
             hal_plugin_->RemoveDevice(hal_device_);
-            network_transceiver_->pause();
+            net_transceiver_->pause();
         } else {
             spdlog::debug("device {} is already disabled", info_.uid);
         }
@@ -259,7 +270,7 @@ void Device::bind_endpoint_(DeviceEndpointInfo& endpoint_info)
         endpoint_info.slot,
         endpoint_info.uri);
 
-    network_transceiver_->bind(endpoint_info);
+    net_transceiver_->bind(endpoint_info);
 }
 
 void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
@@ -269,7 +280,7 @@ void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
         endpoint_info.slot,
         endpoint_info.uri);
 
-    network_transceiver_->connect(endpoint_info);
+    net_transceiver_->connect(endpoint_info);
 }
 
 void Device::sort_endpoints_()
@@ -287,24 +298,30 @@ void Device::sort_endpoints_()
     }
 }
 
-// aspl::ControlRequestHandler
+// implements aspl::ControlRequestHandler
+// called before first I/O request when first client connects
 OSStatus Device::OnStartIO()
 {
     spdlog::info("starting io on device {}", info_.uid);
 
-    network_transceiver_->resume();
+    // prepare sender/receiver for active I/O
+    net_transceiver_->resume();
 
     return kAudioHardwareNoError;
 }
 
+// implements aspl::ControlRequestHandler
+// called after last I/O request when last client disconnects
 void Device::OnStopIO()
 {
     spdlog::info("stopping io on device {}", info_.uid);
 
-    network_transceiver_->pause();
+    // tell sender/receiver to keep connection in idle state
+    net_transceiver_->pause();
 }
 
-// aspl::IORequestHandler
+// implements aspl::IORequestHandler
+// called if this is receiver device (virtual mic)
 void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
     const std::shared_ptr<aspl::Stream>& stream,
     Float64 zero_timestamp,
@@ -312,18 +329,51 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
     void* bytes,
     UInt32 bytes_count)
 {
-    // TODO: ringbuf
-    network_transceiver_->read((uint64_t)timestamp, bytes, bytes_count);
+    const auto sample_ts = (uint64_t)timestamp;
+    const auto sample_ptr = (float*)bytes;
+    const auto sample_cnt = bytes_count / sizeof(float);
+
+    const size_t wr_samples = ring_buf_.n_need_write(sample_ts + sample_cnt);
+    if (wr_samples > 0) {
+        if (io_buf_.size() < wr_samples) {
+            io_buf_.resize(wr_samples);
+        }
+        // it's time to request more samples from receiver and
+        // append to ring buffer
+        net_transceiver_->read(io_buf_.data(), wr_samples);
+        ring_buf_.write(ring_buf_.tail_timestamp(), io_buf_.data(), wr_samples);
+    }
+
+    // copy from ring buffer to client
+    ring_buf_.read(sample_ts, sample_ptr, sample_cnt);
 }
 
+// implements aspl::IORequestHandler
+// called if this is sender device (virtual speakers)
 void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
     Float64 zero_timestamp,
     Float64 timestamp,
     const void* bytes,
     UInt32 bytes_count)
 {
-    // TODO: ringbuf
-    network_transceiver_->write((uint64_t)timestamp, bytes, bytes_count);
+    const auto sample_ts = (uint64_t)timestamp;
+    const auto sample_ptr = (const float*)bytes;
+    const auto sample_cnt = bytes_count / sizeof(float);
+
+    // copy from clients to ring buffer
+    ring_buf_.write(sample_ts, sample_ptr, sample_cnt);
+
+    const size_t rd_samples = ring_buf_.n_can_read(ring_buf_pos_);
+    if (rd_samples > 0) {
+        if (io_buf_.size() < rd_samples) {
+            io_buf_.resize(rd_samples);
+        }
+        // it's time to read more samples from ring buffer and
+        // pass to sender
+        ring_buf_.read(ring_buf_pos_, io_buf_.data(), rd_samples);
+        net_transceiver_->write(io_buf_.data(), rd_samples);
+        ring_buf_pos_ += rd_samples;
+    }
 }
 
 } // namespace rocvad

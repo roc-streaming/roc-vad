@@ -16,38 +16,12 @@
 
 namespace rocvad {
 
-namespace {
-
-std::shared_ptr<roc_context> make_network_context()
-{
-    roc_context_config config;
-    memset(&config, 0, sizeof(config));
-
-    roc_context* context = nullptr;
-    int err = roc_context_open(&config, &context);
-    if (err < 0) {
-        spdlog::critical("can't open network context: err={}", err);
-        return {};
-    }
-
-    return std::shared_ptr<roc_context>(context, [](roc_context* context) {
-        int err = roc_context_close(context);
-        if (err < 0) {
-            spdlog::critical("can't close network context: err={}", err);
-        }
-    });
-}
-
-} // namespace
-
 DeviceManager::DeviceManager(std::shared_ptr<aspl::Plugin> hal_plugin,
     std::shared_ptr<aspl::Storage> hal_storage)
     : hal_plugin_(hal_plugin)
     , device_storage_(hal_storage)
 {
     assert(hal_plugin_);
-
-    network_context_ = make_network_context();
 
     load_devices_();
 }
@@ -97,8 +71,8 @@ DeviceInfo DeviceManager::add_device(DeviceInfo info)
             fmt::format("device with uid \"{}\" already exists", info.uid));
     }
 
-    auto device = std::make_shared<Device>(
-        hal_plugin_, network_context_, index_allocator_, uid_generator_, info);
+    auto device =
+        std::make_shared<Device>(hal_plugin_, index_allocator_, uid_generator_, info);
 
     info = device->info();
 

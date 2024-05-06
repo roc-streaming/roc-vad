@@ -8,33 +8,149 @@
 
 #include "receiver.hpp"
 
+#include <fmt/core.h>
+#include <spdlog/spdlog.h>
+
 namespace rocvad {
 
-Receiver::Receiver(std::shared_ptr<roc_context> network_context,
-    const std::string& uid,
+Receiver::Receiver(const std::string& uid,
     const DeviceLocalEncoding& device_encoding,
-    const DeviceReceiverConfig& receiver_config)
+    const DeviceReceiverConfig& device_receiver_config)
+    : uid_(uid)
 {
+    int err = 0;
+
+    roc_context_config net_context_config;
+    memset(&net_context_config, 0, sizeof(net_context_config));
+
+    if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
+        throw std::runtime_error(
+            fmt::format("can't open network context: uid={} err={}", uid_, err));
+    }
+
+    for (const auto& packet_encoding : device_receiver_config.packet_encodings) {
+        if ((err = roc_context_register_encoding(
+                 net_context_, packet_encoding.id, &packet_encoding.spec)) < 0) {
+            throw std::invalid_argument(
+                fmt::format("invalid packet encoding: uid={} err={}", uid_, err));
+        }
+    }
+
+    roc_receiver_config net_receiver_config;
+    memset(&net_receiver_config, 0, sizeof(net_receiver_config));
+
+    net_receiver_config.frame_encoding.rate = device_encoding.sample_rate;
+    net_receiver_config.frame_encoding.format = ROC_FORMAT_PCM_FLOAT32;
+    net_receiver_config.frame_encoding.channels = device_encoding.channel_layout;
+
+    net_receiver_config.clock_source = ROC_CLOCK_SOURCE_EXTERNAL;
+
+    net_receiver_config.latency_tuner_backend =
+        device_receiver_config.latency_tuner_backend;
+    net_receiver_config.latency_tuner_profile =
+        device_receiver_config.latency_tuner_profile;
+
+    net_receiver_config.resampler_backend = device_receiver_config.resampler_backend;
+    net_receiver_config.resampler_profile = device_receiver_config.resampler_profile;
+
+    net_receiver_config.target_latency = device_receiver_config.target_latency_ns;
+    net_receiver_config.min_latency = device_receiver_config.min_latency_ns;
+    net_receiver_config.max_latency = device_receiver_config.max_latency_ns;
+
+    net_receiver_config.no_playback_timeout =
+        device_receiver_config.no_playback_timeout_ns;
+    net_receiver_config.choppy_playback_timeout =
+        device_receiver_config.choppy_playback_timeout_ns;
+
+    if ((err = roc_receiver_open(net_context_, &net_receiver_config, &net_receiver_)) <
+        0) {
+        throw std::invalid_argument(
+            fmt::format("invalid receiver config: uid={} err={}", uid_, err));
+    }
+}
+
+Receiver::~Receiver()
+{
+    int err = 0;
+
+    if (net_receiver_) {
+        if ((err = roc_receiver_close(net_receiver_)) < 0) {
+            spdlog::warn(
+                "can't properly close network receiver: uid={} err={}", uid_, err);
+        }
+    }
+
+    if (net_context_) {
+        if ((err = roc_context_close(net_context_)) < 0) {
+            spdlog::warn(
+                "can't properly close network context: uid={} err={}", uid_, err);
+        }
+    }
 }
 
 void Receiver::bind(DeviceEndpointInfo& endpoint_info)
 {
+    int err = 0;
+
+    roc_endpoint* endpoint = nullptr;
+
+    if ((err = roc_endpoint_allocate(&endpoint)) < 0) {
+        throw std::runtime_error(
+            fmt::format("can't allocate network endpoint: uid={} err={}", uid_, err));
+    }
+
+    if ((err = roc_endpoint_set_uri(endpoint, endpoint_info.uri.c_str())) < 0) {
+        throw std::invalid_argument(fmt::format(
+            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+    }
+
+    if ((err = roc_receiver_bind(
+             net_receiver_, endpoint_info.slot, endpoint_info.interface, endpoint)) < 0) {
+        throw std::invalid_argument(fmt::format(
+            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+    }
+
+    if ((err = roc_endpoint_deallocate(endpoint)) < 0) {
+        spdlog::warn(
+            "can't properly deallocate network endpoint: uid={} err={}", uid_, err);
+    }
 }
 
 void Receiver::connect(DeviceEndpointInfo& endpoint_info)
 {
+    throw std::invalid_argument("receiver device does not support connect() currently");
 }
 
 void Receiver::pause() noexcept
 {
+    // TODO: call roc_receiver_pause()
+    // https://github.com/roc-streaming/roc-toolkit/issues/678
 }
 
 void Receiver::resume() noexcept
 {
+    // TODO: call roc_receiver_resume()
+    // https://github.com/roc-streaming/roc-toolkit/issues/678
 }
 
-void Receiver::read(uint64_t timestamp, void* bytes, size_t n_bytes) noexcept
+void Receiver::read(float* samples, size_t n_samples) noexcept
 {
+    roc_frame frame;
+    memset(&frame, 0, sizeof(frame));
+
+    frame.samples = samples;
+    frame.samples_size = n_samples * sizeof(float);
+
+    int err;
+    if ((err = roc_receiver_read(net_receiver_, &frame)) < 0) {
+        if (err_count_++ % err_report_freq_ == 0) {
+            spdlog::warn(
+                "can't read frame from network receiver: uid={} err={} err_count={}",
+                uid_,
+                err,
+                err_count_);
+        }
+    }
 }
 
 } // namespace rocvad

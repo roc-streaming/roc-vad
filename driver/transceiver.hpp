@@ -10,9 +10,9 @@
 
 #include "device_defs.hpp"
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdlib>
-#include <cstring>
 
 namespace rocvad {
 
@@ -36,14 +36,14 @@ public:
     virtual void resume() noexcept = 0;
 
     // for sender
-    virtual void write(uint64_t timestamp, const void* bytes, size_t n_bytes) noexcept
+    virtual void write(const float* samples, size_t n_samples) noexcept
     {
     }
 
     // for receiver
-    virtual void read(uint64_t timestamp, void* bytes, size_t n_bytes) noexcept
+    virtual void read(float* samples, size_t n_samples) noexcept
     {
-        memset(bytes, 0, n_bytes);
+        std::fill_n(samples, n_samples, 0);
     }
 };
 

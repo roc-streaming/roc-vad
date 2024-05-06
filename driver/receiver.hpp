@@ -18,10 +18,10 @@ namespace rocvad {
 class Receiver : public Transceiver
 {
 public:
-    Receiver(std::shared_ptr<roc_context> network_context,
-        const std::string& uid,
+    Receiver(const std::string& uid,
         const DeviceLocalEncoding& device_encoding,
-        const DeviceReceiverConfig& receiver_config);
+        const DeviceReceiverConfig& device_receiver_config);
+    ~Receiver();
 
     void bind(DeviceEndpointInfo& endpoint_info) override;
     void connect(DeviceEndpointInfo& endpoint_info) override;
@@ -29,13 +29,16 @@ public:
     void pause() noexcept override;
     void resume() noexcept override;
 
-    void read(uint64_t timestamp, void* bytes, size_t n_bytes) noexcept override;
+    void read(float* samples, size_t n_samples) noexcept override;
 
 private:
     std::string uid_;
 
-    std::shared_ptr<roc_context> net_context_;
-    std::shared_ptr<roc_receiver> net_receiver_;
+    roc_context* net_context_ = nullptr;
+    roc_receiver* net_receiver_ = nullptr;
+
+    static constexpr uint64_t err_report_freq_ = 5000;
+    uint64_t err_count_ = 0;
 };
 
 } // namespace rocvad

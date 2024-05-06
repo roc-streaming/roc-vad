@@ -10,6 +10,7 @@
 
 #include "device_defs.hpp"
 #include "index_allocator.hpp"
+#include "ring_buffer.hpp"
 #include "transceiver.hpp"
 #include "uid_generator.hpp"
 
@@ -19,6 +20,7 @@
 #include <aspl/Plugin.hpp>
 
 #include <memory>
+#include <vector>
 
 namespace rocvad {
 
@@ -27,7 +29,6 @@ class Device : private aspl::ControlRequestHandler, private aspl::IORequestHandl
 {
 public:
     Device(std::shared_ptr<aspl::Plugin> hal_plugin,
-        std::shared_ptr<roc_context> network_context,
         IndexAllocator& index_allocator,
         UidGenerator& uid_generator,
         const DeviceInfo& device_info);
@@ -78,7 +79,12 @@ private:
 
     // network sender or receiver
     // which one is used depends on device type
-    std::unique_ptr<Transceiver> network_transceiver_;
+    std::unique_ptr<Transceiver> net_transceiver_;
+
+    // buffers
+    std::vector<float> io_buf_;
+    RingBuffer ring_buf_;
+    uint64_t ring_buf_pos_ = 0;
 
     // run-time device info
     DeviceInfo info_;
