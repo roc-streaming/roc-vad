@@ -8,6 +8,8 @@
 
 #include "ring_buffer.hpp"
 
+#include <cassert>
+
 namespace rocvad {
 
 RingBuffer::RingBuffer(size_t n_samples)
@@ -37,6 +39,8 @@ void RingBuffer::write(uint64_t timestamp,
     const float* samples,
     size_t n_samples) noexcept
 {
+    assert(samples);
+
     // TODO
 }
 
@@ -48,6 +52,8 @@ size_t RingBuffer::n_can_read(uint64_t timestamp) noexcept
 
 void RingBuffer::read(uint64_t timestamp, float* samples, size_t n_samples) noexcept
 {
+    assert(samples);
+
     // TODO
 }
 

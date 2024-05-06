@@ -11,6 +11,9 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
+#include <cassert>
+#include <stdexcept>
+
 namespace rocvad {
 
 Receiver::Receiver(const std::string& uid,
@@ -135,6 +138,8 @@ void Receiver::resume() noexcept
 
 void Receiver::read(float* samples, size_t n_samples) noexcept
 {
+    assert(samples);
+
     roc_frame frame;
     memset(&frame, 0, sizeof(frame));
 

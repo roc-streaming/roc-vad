@@ -337,6 +337,8 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
     void* bytes,
     UInt32 bytes_count)
 {
+    assert(bytes);
+
     const auto sample_ts = (uint64_t)timestamp;
     const auto sample_ptr = (float*)bytes;
     const auto sample_cnt = bytes_count / sizeof(float);
@@ -364,6 +366,8 @@ void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
     const void* bytes,
     UInt32 bytes_count)
 {
+    assert(bytes);
+
     const auto sample_ts = (uint64_t)timestamp;
     const auto sample_ptr = (const float*)bytes;
     const auto sample_cnt = bytes_count / sizeof(float);
