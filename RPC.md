@@ -4,17 +4,19 @@
 ## Table of Contents
 
 - [rpc/driver_protocol.proto](#rpc_driver_protocol-proto)
+    - [RvDeviceEncoding](#rvpb-RvDeviceEncoding)
     - [RvDeviceInfo](#rvpb-RvDeviceInfo)
     - [RvDeviceList](#rvpb-RvDeviceList)
     - [RvDeviceSelector](#rvpb-RvDeviceSelector)
     - [RvDriverInfo](#rvpb-RvDriverInfo)
     - [RvEndpointInfo](#rvpb-RvEndpointInfo)
     - [RvEndpointRequest](#rvpb-RvEndpointRequest)
-    - [RvLocalConfig](#rvpb-RvLocalConfig)
     - [RvLogEntry](#rvpb-RvLogEntry)
     - [RvNone](#rvpb-RvNone)
+    - [RvPacketEncoding](#rvpb-RvPacketEncoding)
     - [RvReceiverConfig](#rvpb-RvReceiverConfig)
     - [RvSenderConfig](#rvpb-RvSenderConfig)
+    - [RvToggleRequest](#rvpb-RvToggleRequest)
   
     - [RvChannelLayout](#rvpb-RvChannelLayout)
     - [RvDeviceType](#rvpb-RvDeviceType)
@@ -23,9 +25,9 @@
     - [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend)
     - [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile)
     - [RvLogEntry.Level](#rvpb-RvLogEntry-Level)
-    - [RvPacketEncoding](#rvpb-RvPacketEncoding)
     - [RvResamplerBackend](#rvpb-RvResamplerBackend)
     - [RvResamplerProfile](#rvpb-RvResamplerProfile)
+    - [RvSampleFormat](#rvpb-RvSampleFormat)
   
     - [RvDriver](#rvpb-RvDriver)
   
@@ -37,6 +39,23 @@
 <p align="right"><a href="#top">Top</a></p>
 
 ## rpc/driver_protocol.proto
+
+
+
+<a name="rvpb-RvDeviceEncoding"></a>
+
+### RvDeviceEncoding
+Local encoding of virtual device.
+Defines how it is presented to apps.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
+| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
+
+
+
 
 
 
@@ -52,7 +71,8 @@ Virtual device info.
 | index | [uint32](#uint32) | optional | Device index identifier. Index is a small numeric value that is reused for new devices after device deletion. When retrieving device info, always present and non-zero. When creating device, keep unset to automaitcally select free index. When set, should not be zero. |
 | uid | [string](#string) | optional | Device UID identifier. UID is a long string identifier, unique across all audio devices, and very unlikely to be ever reused. When retrieving device info, always present and non-empty. When creating device, keep unset to generate random UID. When set, should not be empty. |
 | name | [string](#string) | optional | Human-readable device name. Device name is shown to the user in UI. When retrieving device info, always present and non-empty. When creating device, keep unset to generate name automatically. When set, should not be empty. |
-| local_config | [RvLocalConfig](#rvpb-RvLocalConfig) |  | Local configuration of device. Parameters of virtual device, as it&#39;s shown to the local apps. |
+| enabled | [bool](#bool) | optional | Whether device is active and visible to the user. Device can be disabled to remove it from system without losing configuration, and then re-enabled later. When retrieving device info, always present and non-empty. When creating device, if this field is unset or set to true, devices is enabled emmediately, and if it&#39;s set to false, it&#39;s created disabled. |
+| device_encoding | [RvDeviceEncoding](#rvpb-RvDeviceEncoding) |  | Local encoding of device. Parameters of virtual device, as it&#39;s shown to the apps. |
 | sender_config | [RvSenderConfig](#rvpb-RvSenderConfig) |  | Configuration for sender device. Should be used if device type is RV_DEVICE_TYPE_SENDER. |
 | receiver_config | [RvReceiverConfig](#rvpb-RvReceiverConfig) |  | Configuration for receiver device. Should be used if device type is RV_DEVICE_TYPE_RECEIVER. |
 | local_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added intially via add_device() or on fly via bind(). |
@@ -143,22 +163,6 @@ Endpoint bind or connect request.
 
 
 
-<a name="rvpb-RvLocalConfig"></a>
-
-### RvLocalConfig
-Local parameters of virtual device.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
-| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
-
-
-
-
-
-
 <a name="rvpb-RvLogEntry"></a>
 
 ### RvLogEntry
@@ -186,6 +190,25 @@ No data.
 
 
 
+<a name="rvpb-RvPacketEncoding"></a>
+
+### RvPacketEncoding
+Network packet encoding.
+Defines how samples are encoded when sent over network.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| encoding_id | [uint32](#uint32) |  | Encoding identifier (arbitrary 8-bit number). You should use the same numbers on sender and receiver to identifiy encodings. |
+| sample_rate | [uint32](#uint32) |  | Sample rate, in Hertz (e.g. 44100). |
+| sample_format | [RvSampleFormat](#rvpb-RvSampleFormat) |  | Sample format (e.g. 16-bit PCM). |
+| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) |  | Channel layout (e.g. stereo). |
+
+
+
+
+
+
 <a name="rvpb-RvReceiverConfig"></a>
 
 ### RvReceiverConfig
@@ -194,13 +217,14 @@ Parameters of receiver device.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Keep unset to use default. |
-| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Keep unset to use default. |
-| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Keep unset to use default. |
+| packet_encodings | [RvPacketEncoding](#rvpb-RvPacketEncoding) | repeated | Non-standard encodings for network packets. If your senders use non-standard packet encodings, you should also list them on receiver using the same encoding identifiers. Multiple encodings can be specified for the case when different senders use different custom encodings. |
 | latency_tuner_backend | [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend) | optional | Latency tuning algorithm. Keep unset to use default. |
 | latency_tuner_profile | [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile) | optional | Latency tuning profile. Keep unset to use default. |
 | resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
 | resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
+| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Keep unset to use default. |
+| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Keep unset to use default. |
+| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Keep unset to use default. |
 | no_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for the lack of playback. Keep unset to use default. |
 | choppy_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for choppy playback. Keep unset to use default. |
 
@@ -217,19 +241,35 @@ Parameters of sender device.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| packet_encoding | [RvPacketEncoding](#rvpb-RvPacketEncoding) | optional | Encoding for network packets. Keep unset to use default. |
+| packet_encoding | [RvPacketEncoding](#rvpb-RvPacketEncoding) | optional | Non-standard encoding for network packets. If you use non-default device encoding (e.g. change sample rate), you should also explicitly provide packet encoding on both sender and receiver, using the same encoding id. |
 | packet_length | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Duration of a single packet. Keep unset to use default. |
 | packet_interleaving | [bool](#bool) | optional | Enable packet interleaving. Keep unset to use default. |
 | fec_encoding | [RvFecEncoding](#rvpb-RvFecEncoding) | optional | Forward Error Correction encoding. Keep unset to use default. |
 | fec_block_source_packets | [uint32](#uint32) | optional | Number of source packets per FEC block. Keep unset to use default. |
 | fec_block_repair_packets | [uint32](#uint32) | optional | Number of repair packets per FEC block. Keep unset to use default. |
-| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
-| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
-| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
 | latency_tuner_backend | [RvLatencyTunerBackend](#rvpb-RvLatencyTunerBackend) | optional | Latency tuning algorithm. Use only if you need sender-side latency tuning. Keep unset to disable. |
 | latency_tuner_profile | [RvLatencyTunerProfile](#rvpb-RvLatencyTunerProfile) | optional | Latency tuning profile. Use only if you need sender-side latency tuning. Keep unset to disable. |
 | resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
 | resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
+| target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+
+
+
+
+
+
+<a name="rvpb-RvToggleRequest"></a>
+
+### RvToggleRequest
+Device enable/disable request.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| device | [RvDeviceSelector](#rvpb-RvDeviceSelector) |  | Virtual device to which request is send. |
+| enabled | [bool](#bool) |  | Should device be enabled or disabled. |
 
 
 
@@ -241,8 +281,8 @@ Parameters of sender device.
 <a name="rvpb-RvChannelLayout"></a>
 
 ### RvChannelLayout
-Device channel layout.
-Defines what channels will be shown to apps that use the device.
+Channel layout.
+Defines what channel count and their meaning.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
@@ -255,7 +295,7 @@ Defines what channels will be shown to apps that use the device.
 
 ### RvDeviceType
 Device type.
-Defines whether device will be input or output.
+Defines whether device will be input (receiver) or output (sender).
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
@@ -274,8 +314,9 @@ unreliable networks.
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | RV_FEC_ENCODING_DISABLE | 0 | No FEC encoding. |
-| RV_FEC_ENCODING_RS8M | 1 | Reed-Solomon FEC encoding (RFC 6865) with m=8. Good for small block sizes (below 256 packets). |
-| RV_FEC_ENCODING_LDPC_STAIRCASE | 2 | LDPC-Staircase FEC encoding (RFC 6816). Good for large block sizes (above 1024 packets). |
+| RV_FEC_ENCODING_DEFAULT | 1 | Default FEC encoding. |
+| RV_FEC_ENCODING_RS8M | 2 | Reed-Solomon FEC encoding (RFC 6865) with m=8. Good for small block sizes (below 256 packets). |
+| RV_FEC_ENCODING_LDPC_STAIRCASE | 3 | LDPC-Staircase FEC encoding (RFC 6816). Good for large block sizes (above 1024 packets). |
 
 
 
@@ -296,6 +337,7 @@ Endpoint interface type.
 <a name="rvpb-RvLatencyTunerBackend"></a>
 
 ### RvLatencyTunerBackend
+Latency tuner backend.
 Defines which latency is monitored and adjusted.
 
 | Name | Number | Description |
@@ -308,6 +350,7 @@ Defines which latency is monitored and adjusted.
 <a name="rvpb-RvLatencyTunerProfile"></a>
 
 ### RvLatencyTunerProfile
+Latency tuner profile.
 Defines whether latency tuning is enabled and which algorithm is used.
 
 | Name | Number | Description |
@@ -332,19 +375,6 @@ Defines whether latency tuning is enabled and which algorithm is used.
 | INFO | 3 |  |
 | DEBUG | 4 |  |
 | TRACE | 5 |  |
-
-
-
-<a name="rvpb-RvPacketEncoding"></a>
-
-### RvPacketEncoding
-Network packet encoding.
-Defines how samples are encoded when sent over network.
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| RV_PACKET_ENCODING_AVP_L16_MONO | 0 | PCM signed 16-bit (mono). &#34;L16&#34; encoding from RTP A/V Profile (RFC 3551). Uncompressed samples coded as interleaved 16-bit signed big-endian integers in two&#39;s complement notation. |
-| RV_PACKET_ENCODING_AVP_L16_STEREO | 1 | PCM signed 16-bit (stereo). &#34;L16&#34; encoding from RTP A/V Profile (RFC 3551). Uncompressed samples coded as interleaved 16-bit signed big-endian integers in two&#39;s complement notation. |
 
 
 
@@ -378,6 +408,18 @@ Each resampler backend treats profile in its own way.
 | RV_RESAMPLER_PROFILE_LOW | 3 | Low quality, high speed. |
 
 
+
+<a name="rvpb-RvSampleFormat"></a>
+
+### RvSampleFormat
+Sample format.
+Defines how audio samples are encoded.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| ROC_FORMAT_PCM_SINT16 | 0 | Uncompressed PCM, 16-bit signed integers, network endian. |
+
+
  
 
  
@@ -397,6 +439,7 @@ RPC interface for Roc Virtual Audio Device driver.
 | get_device | [RvDeviceSelector](#rvpb-RvDeviceSelector) | [RvDeviceInfo](#rvpb-RvDeviceInfo) | Get info for one virtual device. Device can be selected by index or UID. |
 | add_device | [RvDeviceInfo](#rvpb-RvDeviceInfo) | [RvDeviceInfo](#rvpb-RvDeviceInfo) | Create new virtual device. Returns updated device info with all fields set. |
 | delete_device | [RvDeviceSelector](#rvpb-RvDeviceSelector) | [RvNone](#rvpb-RvNone) | Delete virtual device. Device can be selected by index or UID. |
+| toggle_device | [RvToggleRequest](#rvpb-RvToggleRequest) | [RvNone](#rvpb-RvNone) | Enable or disable device. Device can be selected by index or UID. |
 | bind | [RvEndpointRequest](#rvpb-RvEndpointRequest) | [RvEndpointInfo](#rvpb-RvEndpointInfo) | Bind device to local endpoint. |
 | connect | [RvEndpointRequest](#rvpb-RvEndpointRequest) | [RvEndpointInfo](#rvpb-RvEndpointInfo) | Connect device to remote endpoint. |
 

@@ -62,7 +62,7 @@ fmt:
 		| xargs clang-format --verbose -i
 
 docs:
-	build/3rdparty/grpc/bin/protoc \
+	$(BUILDDIR)/3rdparty/grpc/bin/protoc \
 		--plugin=protoc-gen-doc="$$(go env GOPATH)"/bin/protoc-gen-doc \
 		--doc_out=. \
 		--doc_opt=markdown,RPC.md \
