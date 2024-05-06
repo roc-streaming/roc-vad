@@ -18,7 +18,7 @@ CmdDeviceList::CmdDeviceList(CLI::App& parent)
 {
     auto command = parent.add_subcommand("list", "List virtual devices");
 
-    command->add_flag("-F,--full", show_info_, "Show full device info");
+    command->add_flag("-D,--detail", show_info_, "Show detailed info for each device");
 
     register_command(command);
 }
