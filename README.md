@@ -163,7 +163,7 @@ Install:
 sudo make install
 ```
 
-Now, either reboot your Mac, **or** run:
+Now, either reboot your Mac, **OR** run:
 
 ```
 sudo make kickstart

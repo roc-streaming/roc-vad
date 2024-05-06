@@ -123,7 +123,7 @@ go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
 Regenerate documentation:
 
 ```
-make docs
+make rpcmd
 ```
 
 After modifying README, you need to re-generate table of contents.

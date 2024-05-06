@@ -61,7 +61,7 @@ fmt:
 	find -type f -name '*.[ch]pp' -not -name '*.pb.*' -not -path './build/*' \
 		| xargs clang-format --verbose -i
 
-docs:
+rpcmd:
 	$(BUILDDIR)/3rdparty/grpc/bin/protoc \
 		--plugin=protoc-gen-doc="$$(go env GOPATH)"/bin/protoc-gen-doc \
 		--doc_out=. \
