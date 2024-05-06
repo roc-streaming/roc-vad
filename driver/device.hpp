@@ -83,7 +83,7 @@ private:
 
     // buffers
     std::vector<float> io_buf_;
-    RingBuffer ring_buf_;
+    std::unique_ptr<RingBuffer> ring_buf_;
     uint64_t ring_buf_pos_ = 0;
 
     // run-time device info

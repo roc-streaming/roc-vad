@@ -344,6 +344,12 @@ message RvDeviceEncoding
     // Virtual device channel layout (e.g. stereo).
     // Keep unset to use default.
     optional RvChannelLayout channel_layout = 2;
+
+    // Virtual device buffer size, number of samples per channel.
+    // E.g. if sample rate is 44100 and channel layout is stereo,
+    // buffer size 44100 means 1 second.
+    // Keep unset to use default.
+    optional uint32 buffer_size = 3;
 }
 
 // Network packet encoding.

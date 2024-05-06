@@ -36,16 +36,6 @@ UInt32 compute_channel_count(const DeviceInfo& info)
     }
 }
 
-size_t compute_buffer_size(const DeviceInfo& info)
-{
-    if (info.device_encoding.buffer_size != 0) {
-        return info.device_encoding.buffer_size;
-    }
-
-    // one second by default (it doesn't affect latency)
-    return info.device_encoding.sample_rate * compute_channel_count(info);
-}
-
 aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 {
     aspl::DeviceParameters device_params;
@@ -134,11 +124,11 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
     : index_allocator_(index_allocator)
     , uid_generator_(uid_generator)
     , hal_plugin_(hal_plugin)
-    , io_buf_(compute_buffer_size(device_info))
-    , ring_buf_(compute_buffer_size(device_info))
-    , info_(device_info)
 {
     assert(hal_plugin_);
+
+    // populate device info defaults
+    info_ = device_info;
 
     if (info_.index == 0) {
         info_.index = index_allocator_.allocate_and_acquire();
@@ -154,12 +144,27 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.name = fmt::format("Roc Virtual Device #{}", info_.index);
     }
 
-    spdlog::info("creating device object, index={} uid={} type={} name=\"{}\"",
+    if (info_.device_encoding.buffer_size == 0) {
+        info_.device_encoding.buffer_size =
+            info_.device_encoding.sample_rate * compute_channel_count(info_);
+    }
+
+    spdlog::info(
+        "creating device object,"
+        " index={} uid={} type={} name=\"{}\" dev_rate={} dev_chans={} dev_buff={}",
         info_.index,
         info_.uid,
         info_.type,
-        info_.name);
+        info_.name,
+        info_.device_encoding.sample_rate,
+        compute_channel_count(info_),
+        info_.device_encoding.buffer_size);
 
+    // create buffers
+    io_buf_.resize(info_.device_encoding.buffer_size);
+    ring_buf_ = std::make_unique<RingBuffer>(info_.device_encoding.buffer_size);
+
+    // create HAL device
     hal_device_ = std::make_shared<aspl::Device>(
         hal_plugin_->GetContext(), make_device_params(info_));
 
@@ -169,6 +174,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
     hal_device_->SetControlHandler(this);
     hal_device_->SetIOHandler(this);
 
+    // create network sender or receiver
     if (info_.type == DeviceType::Sender) {
         net_transceiver_ = std::make_unique<Sender>(
             info_.uid, info_.device_encoding, *info_.sender_config);
@@ -181,6 +187,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         net_transceiver_->pause();
     }
 
+    // bind or connect endpoints
     sort_endpoints_();
 
     for (auto& endpoint : info_.local_endpoints) {
@@ -191,6 +198,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         connect_endpoint_(endpoint);
     }
 
+    // enable or disable device
     toggle(info_.enabled);
 }
 
@@ -333,7 +341,7 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
     const auto sample_ptr = (float*)bytes;
     const auto sample_cnt = bytes_count / sizeof(float);
 
-    const size_t wr_samples = ring_buf_.n_need_write(sample_ts + sample_cnt);
+    const size_t wr_samples = ring_buf_->n_need_write(sample_ts + sample_cnt);
     if (wr_samples > 0) {
         if (io_buf_.size() < wr_samples) {
             io_buf_.resize(wr_samples);
@@ -341,11 +349,11 @@ void Device::OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
         // it's time to request more samples from receiver and
         // append to ring buffer
         net_transceiver_->read(io_buf_.data(), wr_samples);
-        ring_buf_.write(ring_buf_.tail_timestamp(), io_buf_.data(), wr_samples);
+        ring_buf_->write(ring_buf_->tail_timestamp(), io_buf_.data(), wr_samples);
     }
 
     // copy from ring buffer to client
-    ring_buf_.read(sample_ts, sample_ptr, sample_cnt);
+    ring_buf_->read(sample_ts, sample_ptr, sample_cnt);
 }
 
 // implements aspl::IORequestHandler
@@ -361,16 +369,16 @@ void Device::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
     const auto sample_cnt = bytes_count / sizeof(float);
 
     // copy from clients to ring buffer
-    ring_buf_.write(sample_ts, sample_ptr, sample_cnt);
+    ring_buf_->write(sample_ts, sample_ptr, sample_cnt);
 
-    const size_t rd_samples = ring_buf_.n_can_read(ring_buf_pos_);
+    const size_t rd_samples = ring_buf_->n_can_read(ring_buf_pos_);
     if (rd_samples > 0) {
         if (io_buf_.size() < rd_samples) {
             io_buf_.resize(rd_samples);
         }
         // it's time to read more samples from ring buffer and
         // pass to sender
-        ring_buf_.read(ring_buf_pos_, io_buf_.data(), rd_samples);
+        ring_buf_->read(ring_buf_pos_, io_buf_.data(), rd_samples);
         net_transceiver_->write(io_buf_.data(), rd_samples);
         ring_buf_pos_ += rd_samples;
     }

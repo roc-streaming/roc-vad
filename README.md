@@ -324,6 +324,7 @@ When you create sender virtual device using `roc-vad device add sender`, the fol
 |--------------------------|------------------------|-----------------------------------------------------------------------------|-------------------------------|
 | --device-rate            | 44100                  | virtual device sample rate                                                  |                               |
 | --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                               |
+| --device-buffer          | selected automatically | virtual device buffer size (number of samples per channel)                  |                               |
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding   |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding   |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding   |
@@ -349,6 +350,7 @@ When you create receiver virtual device using `roc-vad device add receiver`, the
 |--------------------------|------------------------|-----------------------------------------------------------------------------|-----------------------------|
 | --device-rate            | 44100                  | virtual device sample rate                                                  |                             |
 | --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                             |
+| --device-buffer          | selected automatically | virtual device buffer size (number of samples per channel)                  |                             |
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding |

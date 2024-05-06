@@ -132,13 +132,9 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
     }
 
     // device_encoding
-    if (in.device_encoding().has_sample_rate()) {
+    if (in.device_encoding().has_sample_rate() &&
+        in.device_encoding().sample_rate() != 0) {
         out.device_encoding.sample_rate = in.device_encoding().sample_rate();
-
-        if (out.device_encoding.sample_rate == 0) {
-            throw std::invalid_argument(
-                "RvDeviceEncoding.sample_rate should be either unset or non-zero");
-        }
     }
 
     if (in.device_encoding().has_channel_layout()) {
@@ -146,6 +142,11 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
             enum_from_rpc("RvDeviceEncoding.channel_layout",
                 channel_layout_map,
                 in.device_encoding().channel_layout());
+    }
+
+    if (in.device_encoding().has_buffer_size() &&
+        in.device_encoding().buffer_size() != 0) {
+        out.device_encoding.buffer_size = in.device_encoding().buffer_size();
     }
 
     // sender_config
@@ -350,6 +351,7 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
         enum_to_rpc("RvDeviceInfo.channel_layout",
             channel_layout_map,
             in.device_encoding.channel_layout));
+    out.mutable_device_encoding()->set_buffer_size(in.device_encoding.buffer_size);
 
     // sender_config
     if (in.type == DeviceType::Sender) {

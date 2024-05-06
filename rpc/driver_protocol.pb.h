@@ -1500,6 +1500,7 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
   enum : int {
     kSampleRateFieldNumber = 1,
     kChannelLayoutFieldNumber = 2,
+    kBufferSizeFieldNumber = 3,
   };
   // optional uint32 sample_rate = 1;
   bool has_sample_rate() const;
@@ -1523,12 +1524,23 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
   void _internal_set_channel_layout(::rvpb::RvChannelLayout value);
 
   public:
+  // optional uint32 buffer_size = 3;
+  bool has_buffer_size() const;
+  void clear_buffer_size() ;
+  ::uint32_t buffer_size() const;
+  void set_buffer_size(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_buffer_size() const;
+  void _internal_set_buffer_size(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:rvpb.RvDeviceEncoding)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      1, 2, 0,
+      2, 3, 0,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -1548,6 +1560,7 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t sample_rate_;
     int channel_layout_;
+    ::uint32_t buffer_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -6171,6 +6184,34 @@ inline ::rvpb::RvChannelLayout RvDeviceEncoding::_internal_channel_layout() cons
 inline void RvDeviceEncoding::_internal_set_channel_layout(::rvpb::RvChannelLayout value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.channel_layout_ = value;
+}
+
+// optional uint32 buffer_size = 3;
+inline bool RvDeviceEncoding::has_buffer_size() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline void RvDeviceEncoding::clear_buffer_size() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.buffer_size_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::uint32_t RvDeviceEncoding::buffer_size() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceEncoding.buffer_size)
+  return _internal_buffer_size();
+}
+inline void RvDeviceEncoding::set_buffer_size(::uint32_t value) {
+  _internal_set_buffer_size(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceEncoding.buffer_size)
+}
+inline ::uint32_t RvDeviceEncoding::_internal_buffer_size() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.buffer_size_;
+}
+inline void RvDeviceEncoding::_internal_set_buffer_size(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.buffer_size_ = value;
 }
 
 // -------------------------------------------------------------------

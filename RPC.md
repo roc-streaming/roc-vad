@@ -53,6 +53,7 @@ Defines how it is presented to apps.
 | ----- | ---- | ----- | ----------- |
 | sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
 | channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
+| buffer_size | [uint32](#uint32) | optional | Virtual device buffer size, number of samples per channel. E.g. if sample rate is 44100 and channel layout is stereo, buffer size 44100 means 1 second. Keep unset to use default. |
 
 
 

@@ -29,6 +29,7 @@ private:
 
     std::optional<uint32_t> device_encoding_rate_;
     std::optional<std::string> device_encoding_chans_;
+    std::optional<uint32_t> device_encoding_buffer_;
 
     std::optional<uint8_t> packet_encoding_id_;
     std::optional<uint32_t> packet_encoding_rate_;
