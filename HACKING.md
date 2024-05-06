@@ -1,47 +1,5 @@
 # Hacking guide
 
-## Makefile targets
-
-Build:
-
-```
-make [build]
-```
-
-Clean build results:
-
-```
-make clean
-```
-
-Print various info about binaries, like size, imports, symbols, etc:
-
-```
-make info
-```
-
-Format code:
-
-```
-make fmt
-```
-
-## RPC documentation
-
-After modifying `.proto` file(s), you need to re-generate [RPC.md](RPC.md) document.
-
-Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
-
-```
-go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
-```
-
-Regenerate documentation:
-
-```
-make docs
-```
-
 ## General overview
 
 Virtual device is implemented as a plugin, a.k.a. driver, for CoreAudio sound daemon.
@@ -63,6 +21,7 @@ The project uses these libraries:
 * [CLI11](https://github.com/CLIUtils/CLI11) - command-line parsing library
 * [spdlog](https://github.com/gabime/spdlog) - logging library
 * [{fmt}](https://github.com/fmtlib/fmt) - formatting library
+* [GoogleTest](https://github.com/google/googletest) - testing library
 
 All dependencies listed above are downloaded automatically. Besides them, project needs some standard frameworks, build tools installed system-wide (README lists them), and Xcode or Xcode command-line tools with C++17 support.
 
@@ -98,3 +57,85 @@ There are two important reasons for this:
 * We can not use shared libraries for common stuff like gRPC or spdlog, because if other CoreAudio plugins will also use them, they may need different versions, and there will be a conflict.
 
 * After statically linking these libraries, we can not allow exporting their symbols from our plugin, because, again, if other plugins will use the same libraries, symbols from our plugin may overlap with the same symbols from other plugins, and there will be a mess.
+
+## Development commands
+
+Build:
+
+```
+make [build]
+```
+
+Run tests:
+
+```
+make test
+```
+
+Clean build results:
+
+```
+make clean
+```
+
+Print various info about binaries, like size, imports, symbols, etc:
+
+```
+make info
+```
+
+Format code using clang-format:
+
+```
+make fmt
+```
+
+## Debugging commands
+
+Stream driver logs from syslog (when RPC doesn't work):
+
+```
+make syslog
+```
+
+Show audio devices:
+
+```
+make sysprof
+```
+
+Restart coreaudiod:
+
+```
+make kick
+```
+
+## Documentation commands
+
+After modifying `.proto` file(s), you need to re-generate [RPC.md](RPC.md) document.
+
+Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
+
+```
+go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+```
+
+Regenerate documentation:
+
+```
+make docs
+```
+
+After modifying README, you need to re-generate table of contents.
+
+Install [markdown-toc](https://github.com/jonschlinkert/markdown-toc):
+
+```
+npm install -g markdown-toc
+```
+
+Regenerate TOC:
+
+```
+make toc
+```
