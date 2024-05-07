@@ -48,16 +48,16 @@ grpc::Status DriverService::driver_info(grpc::ServerContext* context,
 
 grpc::Status DriverService::stream_logs(grpc::ServerContext* context,
     const rvpb::RvNone* request,
-    grpc::ServerWriter<rvpb::RvLogEntry>* writer)
+    grpc::ServerWriter<rvpb::RvLogEntry>* stream_writer)
 {
     return execute_command_("stream_logs", [=]() {
-        auto log_sender = log_manager_->attach_sender(*writer);
+        auto log_streamer = log_manager_->attach_streamer(*stream_writer);
 
-        // log_sender will receive logs and write them to client stream
-        // we'll wait until client disconnects and next write to client fails
-        log_sender->wait_client_disconnect();
+        // log_streamer receives logs from spdlog and writes them to client stream
+        // here we wait until log_streamer reports that client stream is closed
+        log_streamer->wait_client_disconnect();
 
-        log_manager_->detach_sender(log_sender);
+        log_manager_->detach_streamer(log_streamer);
     });
 }
 

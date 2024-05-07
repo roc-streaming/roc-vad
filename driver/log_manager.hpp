@@ -9,7 +9,7 @@
 #pragma once
 
 #include "driver_protocol.hpp"
-#include "log_sender.hpp"
+#include "log_streamer.hpp"
 #include "log_syslog.hpp"
 
 #include <roc/log.h>
@@ -27,10 +27,10 @@ namespace rocvad {
 //
 // Configures spdlog to send logs to two destinations:
 //  - syslog
-//  - dynamically attached and detached LogSender objects
+//  - dynamically attached and detached LogStreamer objects
 //
-// Configures libroc to writes logs to spdlog.
-// Implements Tracer for libASPL that writes logs to spdlog.
+// Constructs libASPL Tracer that writes logs to spdlog.
+// Constructs libroc log handler that writes logs to spdlog.
 class LogManager
 {
 public:
@@ -41,17 +41,19 @@ public:
     LogManager& operator=(const LogManager&) = delete;
 
     // get tracer implementation to pass to libASPL
+    // returned tracer will write logs to spdlog
     std::shared_ptr<aspl::Tracer> aspl_logger();
 
     // get handler implementation to pass to roc-toolkit
+    // returned handler will write logs to spdlog
     roc_log_handler roc_logger();
 
-    // attach LogSender that duplicates all logs to gRPC stream
-    std::shared_ptr<LogSender> attach_sender(
+    // attach LogStreamer that duplicates all logs from spdlog to gRPC stream
+    std::shared_ptr<LogStreamer> attach_streamer(
         grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer);
 
-    // detach LogSender
-    void detach_sender(std::shared_ptr<LogSender> sender_sink);
+    // detach LogStreamer
+    void detach_streamer(std::shared_ptr<LogStreamer> sender_sink);
 
 private:
     std::shared_ptr<spdlog::async_logger> logger_;

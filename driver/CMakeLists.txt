@@ -14,7 +14,7 @@ add_library(${DRIVER_LIB} STATIC
   driver_service.cpp
   index_allocator.cpp
   log_manager.cpp
-  log_sender.cpp
+  log_streamer.cpp
   log_syslog.cpp
   receiver.cpp
   ring_buffer.cpp

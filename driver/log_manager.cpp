@@ -100,12 +100,12 @@ roc_log_handler LogManager::roc_logger()
     return &rocLogger;
 }
 
-std::shared_ptr<LogSender> LogManager::attach_sender(
+std::shared_ptr<LogStreamer> LogManager::attach_streamer(
     grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer)
 {
-    spdlog::debug("attaching log sender to dist sink");
+    spdlog::debug("attaching log streamer to dist sink");
 
-    auto sender_sink = std::make_shared<LogSender>(stream_writer);
+    auto sender_sink = std::make_shared<LogStreamer>(stream_writer);
     sender_sink->set_pattern("%v");
 
     dist_sink_->add_sink(sender_sink);
@@ -113,9 +113,9 @@ std::shared_ptr<LogSender> LogManager::attach_sender(
     return sender_sink;
 }
 
-void LogManager::detach_sender(std::shared_ptr<LogSender> sender_sink)
+void LogManager::detach_streamer(std::shared_ptr<LogStreamer> sender_sink)
 {
-    spdlog::debug("detaching log sender from dist sink");
+    spdlog::debug("detaching log streamer from dist sink");
 
     assert(sender_sink);
     dist_sink_->remove_sink(sender_sink);

@@ -6,7 +6,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "log_sender.hpp"
+#include "log_streamer.hpp"
 
 #include <google/protobuf/util/time_util.h>
 #include <spdlog/spdlog.h>
@@ -55,12 +55,12 @@ rvpb::RvLogEntry::Level map_level(spdlog::level::level_enum level)
 
 } // namespace
 
-LogSender::LogSender(grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer)
+LogStreamer::LogStreamer(grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer)
     : stream_writer_(stream_writer)
 {
 }
 
-void LogSender::wait_client_disconnect()
+void LogStreamer::wait_client_disconnect()
 {
     std::unique_lock lock(mutex_);
 
@@ -69,7 +69,7 @@ void LogSender::wait_client_disconnect()
     }
 }
 
-void LogSender::sink_it_(const spdlog::details::log_msg& msg)
+void LogStreamer::sink_it_(const spdlog::details::log_msg& msg)
 {
     if (stopped_) {
         return;
@@ -100,7 +100,7 @@ void LogSender::sink_it_(const spdlog::details::log_msg& msg)
     }
 }
 
-void LogSender::flush_()
+void LogStreamer::flush_()
 {
     // no-op
 }
