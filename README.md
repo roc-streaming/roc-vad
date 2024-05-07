@@ -635,31 +635,35 @@ Audio:
         Roc Virtual Device #1:
 
           Manufacturer: Roc Streaming
+          Output Channels: 2
           Current SampleRate: 44100
           Transport: Virtual
+          Output Source: Default
 ```
 
 ### Common issues
 
 * **Can't connect to driver**
 
-   Make sure you did not forget to reboot computer (preferably) or restart `coreaudiod` after installing Roc VAD.
+    Make sure you did not forget to reboot computer (preferably) or restart `coreaudiod` after installing Roc VAD.
+
+* **Device not appearing**
+
+    Try to disable device and enable it again using `device disable` and `device enable` commands.
 
 * **Network connectivity**
 
-   Ensure that sent packets reach receiver.
+    Ensure that sent packets reach receiver.
 
-   When you start streaming from sender to receiver, you should see information about connected sender in receiver's logs. If you don't, it indicates problems with network connection, e.g. you use incorrect address or port, or a firewall is blocking traffic.
+    When you start streaming from sender to receiver, you should see information about connected sender in receiver's logs. If you don't, it indicates problems with network connection, e.g. you use incorrect address or port, or a firewall is blocking traffic.
+
+* **You hear awful noises**
+
+    Make sure that `--packet-encoding` and `--fec-encoding` match on sender and receiver.
 
 * **Playback stuttering**
 
-   If you hear stuttering, try increasing target latency on the receiving side. For example, for Roc VAD receiver, try using `--target-latency=200ms` to increase latency to 200 milliseconds.
-
-* **Decreasing latency**
-
-   If your network allows lower latency, use `--target-latency` (receiver buffer size) option on receiving side and `--packet-length` (packet size), `--fec-block-nbsrc`, and `--fec-block-nbrpr` (FEC block size) on sending side.
-
-   Each FEC block consists of `--fec-block-nbsrc` packets of `--packet-length` length; `--fec-block-nbrpr` should be about 2/3 of `--fec-block-nbsrc`; `--target-latency` should be greater than FEC block size to allow packet repair to work.
+    If you hear stuttering, try increasing device buffer length of virtual device and/or target latency of the receiver. They are controlled by `--device-buffer` and `--target-latency` options.
 
 ## Programmatic control
 
