@@ -20,7 +20,6 @@ add_library(${DRIVER_LIB} STATIC
   ring_buffer.cpp
   rpc_serdes.cpp
   sender.cpp
-  tracer.cpp
   uid_generator.cpp
 )
 

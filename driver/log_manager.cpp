@@ -15,6 +15,51 @@
 
 namespace rocvad {
 
+namespace {
+
+class asplLogger : public aspl::Tracer
+{
+public:
+    asplLogger()
+        : aspl::Tracer(Mode::Custom, Style::Hierarchical)
+    {
+    }
+
+protected:
+    bool ShouldIgnore(const Operation& operation) override
+    {
+        return operation.Flags & Flags::Readonly;
+    }
+
+    void Print(const char* message) override
+    {
+        spdlog::trace("{}", std::string(message));
+    }
+};
+
+void rocLogger(const roc_log_message* msg, void* arg)
+{
+    spdlog::level::level_enum level = spdlog::level::off;
+
+    switch (msg->level) {
+    case ROC_LOG_ERROR:
+        level = spdlog::level::err;
+        break;
+
+    case ROC_LOG_INFO:
+        level = spdlog::level::info;
+        break;
+
+    default:
+        level = spdlog::level::debug;
+        break;
+    }
+
+    spdlog::log(level, "{}: {}", std::string(msg->module), std::string(msg->text));
+}
+
+} // namespace
+
 LogManager::LogManager()
 {
     spdlog::init_thread_pool(10000, 1);
@@ -43,6 +88,16 @@ LogManager::LogManager()
 LogManager::~LogManager()
 {
     spdlog::shutdown();
+}
+
+std::shared_ptr<aspl::Tracer> LogManager::aspl_logger()
+{
+    return std::make_shared<asplLogger>();
+}
+
+roc_log_handler LogManager::roc_logger()
+{
+    return &rocLogger;
 }
 
 std::shared_ptr<LogSender> LogManager::attach_sender(

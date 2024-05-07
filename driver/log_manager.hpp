@@ -12,19 +12,25 @@
 #include "log_sender.hpp"
 #include "log_syslog.hpp"
 
+#include <roc/log.h>
 #include <spdlog/async.h>
 #include <spdlog/sinks/dist_sink.h>
 #include <spdlog/spdlog.h>
+#include <aspl/Tracer.hpp>
 
 #include <memory>
 #include <mutex>
 
 namespace rocvad {
 
-// Holds default spdlog logger.
+// Driver log manager.
+//
 // Configures spdlog to send logs to two destinations:
 //  - syslog
 //  - dynamically attached and detached LogSender objects
+//
+// Configures libroc to writes logs to spdlog.
+// Implements Tracer for libASPL that writes logs to spdlog.
 class LogManager
 {
 public:
@@ -34,9 +40,17 @@ public:
     LogManager(const LogManager&) = delete;
     LogManager& operator=(const LogManager&) = delete;
 
+    // get tracer implementation to pass to libASPL
+    std::shared_ptr<aspl::Tracer> aspl_logger();
+
+    // get handler implementation to pass to roc-toolkit
+    roc_log_handler roc_logger();
+
+    // attach LogSender that duplicates all logs to gRPC stream
     std::shared_ptr<LogSender> attach_sender(
         grpc::ServerWriter<rvpb::RvLogEntry>& stream_writer);
 
+    // detach LogSender
     void detach_sender(std::shared_ptr<LogSender> sender_sink);
 
 private:

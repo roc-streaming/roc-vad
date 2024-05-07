@@ -8,7 +8,6 @@
 
 #include "driver.hpp"
 #include "plist_info.hpp"
-#include "tracer.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -34,15 +33,18 @@ Driver::Driver()
 
     spdlog::info("creating driver");
 
-    auto hal_tracer = std::make_shared<Tracer>();
-    auto hal_context = std::make_shared<aspl::Context>(hal_tracer);
+    // setup roc
+    roc_log_set_handler(log_manager_->roc_logger(), nullptr);
+    roc_log_set_level(ROC_LOG_DEBUG);
 
-    hal_plugin_ = std::make_shared<aspl::Plugin>(hal_context, make_plugin_params());
-    hal_storage_ = std::make_shared<aspl::Storage>(hal_context);
-    hal_driver_ = std::make_shared<aspl::Driver>(hal_context, hal_plugin_, hal_storage_);
+    // setup libASPL
+    hal_context_ = std::make_shared<aspl::Context>(log_manager_->aspl_logger());
+    hal_plugin_ = std::make_shared<aspl::Plugin>(hal_context_, make_plugin_params());
+    hal_storage_ = std::make_shared<aspl::Storage>(hal_context_);
+    hal_driver_ = std::make_shared<aspl::Driver>(hal_context_, hal_plugin_, hal_storage_);
 
-    // will invoke OnInitialize() later
-    // needed because persistent storage is not available until that
+    // continue initialization when persistent storage is ready
+    // this will invoke OnInitialize() later
     hal_driver_->SetDriverHandler(this);
 }
 
@@ -50,9 +52,18 @@ Driver::~Driver()
 {
     spdlog::info("destroying driver");
 
+    // teardown gRPC
     if (rpc_server_) {
         rpc_server_->Shutdown();
     }
+    rpc_server_ = {};
+
+    // teardown devices
+    driver_service_ = {};
+    device_manager_ = {};
+
+    // teardown roc
+    roc_log_set_handler(nullptr, nullptr);
 }
 
 AudioServerPlugInDriverRef Driver::reference()
@@ -66,9 +77,7 @@ OSStatus Driver::OnInitialize()
 {
     spdlog::info("received initialization request");
 
-    // creates, deletes, updates, lists devices
     device_manager_ = std::make_shared<DeviceManager>(hal_plugin_, hal_storage_);
-    // implements gRPC interface on top of device manager
     driver_service_ = std::make_unique<DriverService>(log_manager_, device_manager_);
 
     const std::string driver_socket = PlistInfo::driver_socket();
