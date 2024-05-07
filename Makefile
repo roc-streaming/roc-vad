@@ -54,11 +54,11 @@ uninstall:
 	rm -rf $(DESTDIR)/Library/Audio/Plug-Ins/HAL/roc_vad.driver
 
 dist:
-	rm -rf build/dist
-	mkdir build/dist
-	$(MAKE) install DESTDIR=build/dist
+	rm -rf $(BUILDDIR)/dist
+	mkdir $(BUILDDIR)/dist
+	$(MAKE) install DESTDIR=$(BUILDDIR)/dist
 	tar --xattrs --uname=root --uid=0 --gname=wheel --gid=0 -s /.// \
-		-C build/dist -caPvf roc-vad.tar.bz2 .
+		-C $(BUILDDIR)/dist -caPvf roc-vad.tar.bz2 .
 	ls -lh roc-vad.tar.bz2
 
 fmt:
