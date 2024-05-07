@@ -65,7 +65,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install scons autoconf automake pkg-config libtool go
+          brew install -f --overwrite scons autoconf automake pkg-config libtool go
 
       - name: Build
         run: |
