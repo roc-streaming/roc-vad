@@ -17,11 +17,23 @@ RingBuffer::RingBuffer(size_t n_samples)
     : buf_data_(n_samples)
     , buf_size_(n_samples)
 {
+    restart();
 }
 
 bool RingBuffer::first_write() const
 {
     return first_write_;
+}
+
+void RingBuffer::restart()
+{
+    std::fill_n(&buf_data_[0], buf_size_, 0);
+    buf_off_ = 0;
+
+    head_ts_ = 0;
+    tail_ts_ = 0;
+
+    first_write_ = true;
 }
 
 RingBuffer::timestamp_t RingBuffer::head_timestamp() const

@@ -30,6 +30,9 @@ public:
     // true if nothing was ever written to buffer yet
     bool first_write() const;
 
+    // restart from clean state
+    void restart();
+
     // absolute timestamps of buffer head and tail
     timestamp_t head_timestamp() const;
     timestamp_t tail_timestamp() const;

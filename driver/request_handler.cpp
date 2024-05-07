@@ -36,6 +36,9 @@ OSStatus RequestHandler::OnStartIO()
     // prepare sender/receiver for active I/O
     net_transceiver_->resume();
 
+    // start from clean state
+    ring_buf_.restart();
+
     return kAudioHardwareNoError;
 }
 
