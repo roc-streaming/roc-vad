@@ -439,12 +439,12 @@ When you create sender virtual device using `roc-vad device add sender`, the fol
 |--------------------------|------------------------|-----------------------------------------------------------------------------|-------------------------------|
 | --device-rate            | 44100                  | virtual device sample rate                                                  |                               |
 | --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                               |
-| --device-buffer          | selected automatically | virtual device buffer size (number of samples per channel)                  |                               |
+| --device-buffer          | 60ms                   | virtual device buffer size (e.g. 123ms)                                     |                               |
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding   |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding   |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding   |
 | --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo)                             | for custom network encoding   |
-| --packet-length          | 5                      | audio packet length (e.g. 123ms)                                            |                               |
+| --packet-length          | 5ms                    | audio packet length (e.g. 123ms)                                            |                               |
 | --packet-interleaving    | false                  | enable packet interleaving                                                  |                               |
 | --fec-encoding           | rs8m                   | encoding for FEC packets (default, disable, rs8m, ldpc)                     |                               |
 | --fec-block-nbsrc        | 18                     | number of source packets in FEC block                                       |                               |
@@ -467,7 +467,7 @@ When you create receiver virtual device using `roc-vad device add receiver`, the
 |--------------------------|------------------------|-----------------------------------------------------------------------------|-----------------------------|
 | --device-rate            | 44100                  | virtual device sample rate                                                  |                             |
 | --device-chans           | stereo                 | virtual device channel layout (mono, stereo)                                |                             |
-| --device-buffer          | selected automatically | virtual device buffer size (number of samples per channel)                  |                             |
+| --device-buffer          | 60ms                   | virtual device buffer size (e.g. 123ms)                                     |                             |
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding |
@@ -476,7 +476,7 @@ When you create receiver virtual device using `roc-vad device add receiver`, the
 | --resampler-profile      | medium                 | resampler profile (default, high, medium, low)                              |                             |
 | --latency-backend        | selected automatically | latency tuner backend (default, niq)                                        |                             |
 | --latency-profile        | selected automatically | latency tuner profile (default, intact, responsive, gradual)                |                             |
-| --target-latency         | 200                    | target latency (e.g. 123ms)                                                 |                             |
+| --target-latency         | 200ms                  | target latency (e.g. 123ms)                                                 |                             |
 | --min-latency            | selected automatically | minimum latency (e.g. 123ms)                                                |                             |
 | --max-latency            | selected automatically | maximum latency (e.g. 123ms)                                                |                             |
 | --no-play-timeout        | selected automatically | no playback timeout (e.g. 123ms)                                            |                             |
@@ -522,7 +522,6 @@ You can use the following options to control how Roc VAD device present itself t
 
 * `--device-rate`
 * `--device-chans`
-* `--device-buffer`
 
 By default, Roc VAD uses 44100Hz with 16-bit stereo.
 
@@ -560,6 +559,8 @@ By default, Roc VAD uses Reed-Solomon (`rs8m`) FEC encoding.
 This parameter should be provided on **both sender and receiver** and have **exact same value**.
 
 ### Tuning latency
+
+Both sender and receiver latency is affected by `--device-buffer` option, which defines how much latency device itself introduces.
 
 Receiver-side parameters essential for latency are:
 

@@ -15,8 +15,7 @@
 namespace rocvad {
 
 // Holds last N samples retrieved from receiver or written to sender.
-// Used when HAL re-requests us same samples multiple times.
-// Does not affect latency.
+// Allow HAL to request samples using absolute positions.
 class RingBuffer
 {
 public:

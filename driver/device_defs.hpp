@@ -35,8 +35,11 @@ struct DeviceLocalEncoding
 {
     uint32_t sample_rate = 44100;
     roc_channel_layout channel_layout = ROC_CHANNEL_LAYOUT_STEREO;
-    size_t channel_count = 0; // not exported via gRPC
-    size_t buffer_size = 0;
+    int64_t buffer_length_ns = 60'000'000;
+
+    // not exported via gRPC, computed locally
+    size_t channel_count = 0;
+    size_t buffer_samples = 0;
 };
 
 // Network encoding of packets.

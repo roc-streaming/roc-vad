@@ -144,9 +144,9 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 in.device_encoding().channel_layout());
     }
 
-    if (in.device_encoding().has_buffer_size() &&
-        in.device_encoding().buffer_size() != 0) {
-        out.device_encoding.buffer_size = in.device_encoding().buffer_size();
+    if (in.device_encoding().has_buffer_length()) {
+        out.device_encoding.buffer_length_ns = nanoseconds_from_rpc(
+            "RvDeviceEncoding.buffer_length", in.device_encoding().buffer_length());
     }
 
     // sender_config
@@ -348,10 +348,11 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
     // device_encoding
     out.mutable_device_encoding()->set_sample_rate(in.device_encoding.sample_rate);
     out.mutable_device_encoding()->set_channel_layout(
-        enum_to_rpc("RvDeviceInfo.channel_layout",
+        enum_to_rpc("RvDeviceEncoding.channel_layout",
             channel_layout_map,
             in.device_encoding.channel_layout));
-    out.mutable_device_encoding()->set_buffer_size(in.device_encoding.buffer_size);
+    *out.mutable_device_encoding()->mutable_buffer_length() = nanoseconds_to_rpc(
+        "RvDeviceEncoding.buffer_length", in.device_encoding.buffer_length_ns);
 
     // sender_config
     if (in.type == DeviceType::Sender) {

@@ -21,9 +21,9 @@ namespace rocvad {
 
 namespace {
 
-UInt32 compute_channel_count(const DeviceInfo& info)
+size_t compute_channel_count(roc_channel_layout channel_layout)
 {
-    switch (info.device_encoding.channel_layout) {
+    switch (channel_layout) {
     case ROC_CHANNEL_LAYOUT_MONO:
         return 1;
 
@@ -31,8 +31,21 @@ UInt32 compute_channel_count(const DeviceInfo& info)
         return 2;
 
     default:
-        throw std::runtime_error("selected channel_layout not supported by device");
+        throw std::invalid_argument("unsupported channel_layout");
     }
+}
+
+size_t compute_buffer_samples(int64_t buffer_length_ns, size_t sample_rate)
+{
+    if (buffer_length_ns < 0) {
+        throw std::invalid_argument("negative buffer_length");
+    }
+
+    if (buffer_length_ns == 0) {
+        throw std::invalid_argument("zero buffer_length");
+    }
+
+    return (size_t)std::round(buffer_length_ns / 1'000'000'000.0 * sample_rate);
 }
 
 aspl::DeviceParameters make_device_params(const DeviceInfo& info)
@@ -52,6 +65,8 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
 
     device_params.SampleRate = info.device_encoding.sample_rate;
     device_params.ChannelCount = info.device_encoding.channel_count;
+
+    device_params.ZeroTimeStampPeriod = info.device_encoding.buffer_samples;
 
     spdlog::debug(
         "device parameters: Name=\"{}\" Manufacturer=\"{}\""
@@ -143,12 +158,10 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.name = fmt::format("Roc Virtual Device #{}", info_.index);
     }
 
-    info_.device_encoding.channel_count = compute_channel_count(info_);
-
-    if (info_.device_encoding.buffer_size == 0) {
-        info_.device_encoding.buffer_size =
-            info_.device_encoding.sample_rate * info_.device_encoding.channel_count;
-    }
+    info_.device_encoding.channel_count =
+        compute_channel_count(info_.device_encoding.channel_layout);
+    info_.device_encoding.buffer_samples = compute_buffer_samples(
+        info_.device_encoding.buffer_length_ns, info_.device_encoding.sample_rate);
 
     spdlog::info(
         "creating device object,"
@@ -159,7 +172,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.name,
         info_.device_encoding.sample_rate,
         info_.device_encoding.channel_count,
-        info_.device_encoding.buffer_size);
+        info_.device_encoding.buffer_samples);
 
     // create network sender or receiver
     if (info_.type == DeviceType::Sender) {

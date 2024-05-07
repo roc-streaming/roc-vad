@@ -37,7 +37,9 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
             supported_enum_values(channel_layout_map)));
     device_encoding_opts->add_option("-b,--device-buffer",
         device_encoding_buffer_,
-        "Buffer size for virtual device (number of samples per channel)");
+        fmt::format(
+            "Buffer size for virtual device (number with one of the suffixes: {})",
+            supported_duration_suffixes()));
 
     // packet_encoding
     auto packet_encoding_opts = command->add_option_group("Packet encoding");
@@ -150,7 +152,11 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
         request.mutable_device_encoding()->set_channel_layout(channel_layout);
     }
     if (device_encoding_buffer_) {
-        request.mutable_device_encoding()->set_buffer_size(*device_encoding_buffer_);
+        if (!parse_duration("--device-buffer",
+                *device_encoding_buffer_,
+                *request.mutable_device_encoding()->mutable_buffer_length())) {
+            return false;
+        }
     }
 
     // packet_encoding

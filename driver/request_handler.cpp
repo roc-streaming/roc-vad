@@ -21,8 +21,8 @@ RequestHandler::RequestHandler(const std::string& device_uid,
     : device_uid_(device_uid)
     , chan_count_(device_encoding.channel_count)
     , net_transceiver_(net_transceiver)
-    , ring_buf_(device_encoding.buffer_size)
-    , io_buf_(device_encoding.buffer_size)
+    , ring_buf_(device_encoding.buffer_samples * device_encoding.channel_count)
+    , io_buf_(device_encoding.buffer_samples * device_encoding.channel_count)
 {
     assert(net_transceiver_);
 }

@@ -194,6 +194,8 @@ void print_device_encoding(const rvpb::RvDeviceEncoding& encoding)
     fmt::println("    rate:      {}Hz", encoding.sample_rate());
     fmt::println("    channels:  {}", //
         format_enum(channel_layout_map, encoding.channel_layout()));
+    fmt::println("    buffer:    {}", //
+        format_duration(encoding.buffer_length()));
 }
 
 void print_packet_encoding(const rvpb::RvPacketEncoding& encoding)
