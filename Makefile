@@ -43,6 +43,7 @@ info:
 	nm -gU bin/roc_vad.driver/Contents/MacOS/roc_vad
 
 install:
+	killall roc-vad 2>/dev/null || true
 	mkdir -p $(DESTDIR)/usr/local/bin/
 	cp bin/roc-vad $(DESTDIR)/usr/local/bin/
 	mkdir -p $(DESTDIR)/Library/Audio/Plug-Ins/HAL/
