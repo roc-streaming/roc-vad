@@ -95,6 +95,8 @@ Compatible Roc Toolkit senders and receivers include:
 
 If you would like to support the project financially, see details on [this page](https://roc-streaming.org/toolkit/docs/about_project/sponsors.html). This project is developed by volunteers in their free time, and your donations will help to spend more time on the project and keep it growing. Thank you!
 
+Special thanks to [Sean McNamara](https://github.com/allquixotic), whose funding helped to complete and release the first version of Roc VAD!
+
 <a href="https://liberapay.com/roc-streaming"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 
 ## Installation
