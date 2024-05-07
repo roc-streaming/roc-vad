@@ -112,7 +112,6 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
             fmt::println("");
         }
 
-        fmt::println("");
         fmt::println("    resampler_backend:  {}",
             format_enum(resampler_backend_map,
                 device_info.receiver_config().resampler_backend()));
@@ -120,6 +119,7 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
             format_enum(resampler_profile_map,
                 device_info.receiver_config().resampler_profile()));
 
+        fmt::println("");
         fmt::println("    latency_backend:  {}",
             format_enum(latency_tuner_backend_map,
                 device_info.receiver_config().latency_tuner_backend()));
