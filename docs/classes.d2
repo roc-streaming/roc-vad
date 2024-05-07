@@ -1,0 +1,65 @@
+direction: up
+
+gRPC."rpc::Server" -> Driver : {
+    target-arrowhead { shape: diamond }
+}
+
+gRPC."rpc::Server" -> DriverService
+
+DriverService -> Driver : {
+    target-arrowhead { shape: diamond }
+}
+
+DriverService -> DeviceManager
+
+DeviceManager -> Driver : {
+    target-arrowhead { shape: diamond }
+}
+
+Device.Device -> DeviceManager {
+    source-arrowhead: *
+    target-arrowhead { shape: diamond }
+}
+
+Device.RequestHandler -> Device.Device : {
+    target-arrowhead { shape: diamond }
+}
+
+Device.Transceiver -> Device.Device : {
+    target-arrowhead { shape: diamond }
+}
+
+Device.RingBuffer -> Device.RequestHandler : {
+    target-arrowhead { shape: diamond }
+}
+
+Device.RequestHandler -> Device.Transceiver
+
+DeviceStorage -> DeviceManager : {
+    target-arrowhead { shape: diamond }
+}
+
+DeviceStorage -> HAL."aspl::Storage"
+
+HAL."aspl::Device" -> Device.Device : {
+    target-arrowhead { shape: diamond }
+}
+
+HAL."aspl::Device" -> HAL."aspl::Plugin" : {
+    source-arrowhead: *
+    target-arrowhead { shape: diamond }
+}
+
+HAL."aspl::Driver" -> Driver : {
+    target-arrowhead { shape: diamond }
+}
+
+HAL."aspl::Plugin" -> HAL."aspl::Driver" : {
+    target-arrowhead { shape: diamond }
+}
+
+HAL."aspl::Storage" -> HAL."aspl::Driver" : {
+    target-arrowhead { shape: diamond }
+}
+
+HAL."aspl::Device" -> Device.RequestHandler
