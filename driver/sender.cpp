@@ -47,6 +47,8 @@ Sender::Sender(const std::string& uid,
             throw std::invalid_argument(
                 fmt::format("invalid packet encoding: uid={} err={}", uid_, err));
         }
+    } else {
+        net_sender_config.packet_encoding = ROC_PACKET_ENCODING_AVP_L16_STEREO;
     }
 
     net_sender_config.packet_length = device_sender_config.packet_length_ns;

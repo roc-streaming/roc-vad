@@ -56,7 +56,7 @@ struct DeviceSenderConfig
     uint64_t packet_length_ns = 0;
     bool packet_interleaving = false;
 
-    roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_DEFAULT;
+    roc_fec_encoding fec_encoding = ROC_FEC_ENCODING_RS8M;
     uint32_t fec_block_source_packets = 0;
     uint32_t fec_block_repair_packets = 0;
 

@@ -234,14 +234,19 @@ void print_endpoint_list(
         });
     }
 
+    bool is_first = true;
+
     for (const auto& [slot, slot_endpoints] : endpoint_table) {
-        fmt::println("");
+        if (!is_first) {
+            fmt::println("");
+        }
         fmt::println("    slot {}:", slot);
 
         for (const auto& [interface, uri] : slot_endpoints) {
             fmt::println(
                 "      {:<14} {}", format_enum(interface_map, interface) + ":", uri);
         }
+        is_first = false;
     }
 }
 
