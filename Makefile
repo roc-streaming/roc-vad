@@ -76,7 +76,8 @@ toc:
 
 kick: kickstart
 kickstart:
-	launchctl kickstart -k system/com.apple.audio.coreaudiod
+	launchctl kickstart -k system/com.apple.audio.coreaudiod 2>/dev/null \
+		|| killall -v -9 coreaudiod
 
 syslog:
 	log stream --predicate 'sender == "roc_vad"'
