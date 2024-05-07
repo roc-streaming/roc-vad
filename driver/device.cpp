@@ -51,7 +51,7 @@ aspl::DeviceParameters make_device_params(const DeviceInfo& info)
     device_params.EnableRealtimeTracing = false;
 
     device_params.SampleRate = info.device_encoding.sample_rate;
-    device_params.ChannelCount = compute_channel_count(info);
+    device_params.ChannelCount = info.device_encoding.channel_count;
 
     spdlog::debug(
         "device parameters: Name=\"{}\" Manufacturer=\"{}\""
@@ -78,7 +78,7 @@ aspl::StreamParameters make_stream_params(const DeviceInfo& info)
 {
     aspl::StreamParameters stream_params;
 
-    const UInt32 num_chans = compute_channel_count(info);
+    const UInt32 num_chans = (UInt32)info.device_encoding.channel_count;
 
     stream_params.Direction = info.type == DeviceType::Sender ? aspl::Direction::Output
                                                               : aspl::Direction::Input;
@@ -143,9 +143,11 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.name = fmt::format("Roc Virtual Device #{}", info_.index);
     }
 
+    info_.device_encoding.channel_count = compute_channel_count(info_);
+
     if (info_.device_encoding.buffer_size == 0) {
         info_.device_encoding.buffer_size =
-            info_.device_encoding.sample_rate * compute_channel_count(info_);
+            info_.device_encoding.sample_rate * info_.device_encoding.channel_count;
     }
 
     spdlog::info(
@@ -156,7 +158,7 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.type,
         info_.name,
         info_.device_encoding.sample_rate,
-        compute_channel_count(info_),
+        info_.device_encoding.channel_count,
         info_.device_encoding.buffer_size);
 
     // create network sender or receiver

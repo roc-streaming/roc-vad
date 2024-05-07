@@ -1,3 +1,4 @@
+find_package(libASPL CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
@@ -12,6 +13,7 @@ add_executable(${TEST_EXE}
   main.cpp
   test_format_parse.cpp
   test_index_allocator.cpp
+  test_request_handler.cpp
   test_ring_buffer.cpp
   test_uid_generator.cpp
 )
@@ -24,6 +26,8 @@ target_link_libraries(${TEST_EXE} PRIVATE
   ${RPC_LIB}
 
   # third-party libs
+  roc
+  aspl::libASPL
   gRPC::grpc++_unsecure
   spdlog::spdlog
   fmt::fmt

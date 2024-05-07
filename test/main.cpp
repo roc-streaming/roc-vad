@@ -6,7 +6,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include "driver/log_manager.hpp"
+
 #include <gtest/gtest.h>
+#include <roc/log.h>
 #include <spdlog/spdlog.h>
 
 #include <cstring>
@@ -28,7 +31,10 @@ int main(int argc, char** argv)
     }
 
     spdlog::set_level(verbose ? spdlog::level::trace : spdlog::level::off);
-    spdlog::set_pattern("%^%l:%$ %v");
+    spdlog::set_pattern("[%L%L] %v");
+
+    roc_log_set_handler(rocvad::LogManager::roc_logger(), nullptr);
+    roc_log_set_level(verbose ? ROC_LOG_DEBUG : ROC_LOG_NONE);
 
     testing::InitGoogleTest(&argc, argv);
 

@@ -35,6 +35,7 @@ struct DeviceLocalEncoding
 {
     uint32_t sample_rate = 44100;
     roc_channel_layout channel_layout = ROC_CHANNEL_LAYOUT_STEREO;
+    size_t channel_count = 0; // not exported via gRPC
     size_t buffer_size = 0;
 };
 

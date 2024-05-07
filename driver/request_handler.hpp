@@ -52,6 +52,8 @@ private:
 
     const std::string device_uid_;
 
+    const size_t chan_count_;
+
     std::shared_ptr<Transceiver> net_transceiver_;
 
     RingBuffer ring_buf_;

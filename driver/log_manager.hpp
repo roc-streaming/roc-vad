@@ -42,11 +42,11 @@ public:
 
     // get tracer implementation to pass to libASPL
     // returned tracer will write logs to spdlog
-    std::shared_ptr<aspl::Tracer> aspl_logger();
+    static std::shared_ptr<aspl::Tracer> aspl_logger();
 
     // get handler implementation to pass to roc-toolkit
     // returned handler will write logs to spdlog
-    roc_log_handler roc_logger();
+    static roc_log_handler roc_logger();
 
     // attach LogStreamer that duplicates all logs from spdlog to gRPC stream
     std::shared_ptr<LogStreamer> attach_streamer(

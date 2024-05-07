@@ -24,7 +24,7 @@ build:
 
 .PHONY: test
 test: build
-	cd $(BUILDDIR) && make test ARGS="-V"
+	$(BUILDDIR)/test/rocvad_test
 
 clean:
 	rm -rf bin build

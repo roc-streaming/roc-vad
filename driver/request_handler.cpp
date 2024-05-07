@@ -19,6 +19,7 @@ RequestHandler::RequestHandler(const std::string& device_uid,
     const DeviceLocalEncoding& device_encoding,
     std::shared_ptr<Transceiver> net_transceiver)
     : device_uid_(device_uid)
+    , chan_count_(device_encoding.channel_count)
     , net_transceiver_(net_transceiver)
     , ring_buf_(device_encoding.buffer_size)
     , io_buf_(device_encoding.buffer_size)
@@ -63,7 +64,7 @@ void RequestHandler::OnReadClientInput(const std::shared_ptr<aspl::Client>& clie
 {
     assert(bytes);
 
-    timestamp_t sample_ts = (timestamp_t)timestamp;
+    timestamp_t sample_ts = (timestamp_t)timestamp * chan_count_;
     float* sample_ptr = (float*)bytes;
     size_t sample_cnt = bytes_count / sizeof(float);
 
@@ -104,7 +105,7 @@ void RequestHandler::OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& str
 {
     assert(bytes);
 
-    timestamp_t sample_ts = (timestamp_t)timestamp;
+    timestamp_t sample_ts = (timestamp_t)timestamp * chan_count_;
     const float* sample_ptr = (const float*)bytes;
     size_t sample_cnt = bytes_count / sizeof(float);
 
