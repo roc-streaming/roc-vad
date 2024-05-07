@@ -16,10 +16,10 @@
 
 namespace rocvad {
 
-Receiver::Receiver(const std::string& uid,
+Receiver::Receiver(const std::string& device_uid,
     const DeviceLocalEncoding& device_encoding,
     const DeviceReceiverConfig& device_receiver_config)
-    : uid_(uid)
+    : device_uid_(device_uid)
 {
     int err = 0;
 
@@ -28,14 +28,14 @@ Receiver::Receiver(const std::string& uid,
 
     if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
         throw std::runtime_error(
-            fmt::format("can't open network context: uid={} err={}", uid_, err));
+            fmt::format("can't open network context: uid={} err={}", device_uid_, err));
     }
 
     for (const auto& packet_encoding : device_receiver_config.packet_encodings) {
         if ((err = roc_context_register_encoding(
                  net_context_, packet_encoding.id, &packet_encoding.spec)) < 0) {
             throw std::invalid_argument(
-                fmt::format("invalid packet encoding: uid={} err={}", uid_, err));
+                fmt::format("invalid packet encoding: uid={} err={}", device_uid_, err));
         }
     }
 
@@ -68,7 +68,7 @@ Receiver::Receiver(const std::string& uid,
     if ((err = roc_receiver_open(net_context_, &net_receiver_config, &net_receiver_)) <
         0) {
         throw std::invalid_argument(
-            fmt::format("invalid receiver config: uid={} err={}", uid_, err));
+            fmt::format("invalid receiver config: uid={} err={}", device_uid_, err));
     }
 }
 
@@ -79,14 +79,14 @@ Receiver::~Receiver()
     if (net_receiver_) {
         if ((err = roc_receiver_close(net_receiver_)) < 0) {
             spdlog::warn(
-                "can't properly close network receiver: uid={} err={}", uid_, err);
+                "can't properly close network receiver: uid={} err={}", device_uid_, err);
         }
     }
 
     if (net_context_) {
         if ((err = roc_context_close(net_context_)) < 0) {
             spdlog::warn(
-                "can't properly close network context: uid={} err={}", uid_, err);
+                "can't properly close network context: uid={} err={}", device_uid_, err);
         }
     }
 }
@@ -98,24 +98,29 @@ void Receiver::bind(DeviceEndpointInfo& endpoint_info)
     roc_endpoint* endpoint = nullptr;
 
     if ((err = roc_endpoint_allocate(&endpoint)) < 0) {
-        throw std::runtime_error(
-            fmt::format("can't allocate network endpoint: uid={} err={}", uid_, err));
+        throw std::runtime_error(fmt::format(
+            "can't allocate network endpoint: uid={} err={}", device_uid_, err));
     }
 
     if ((err = roc_endpoint_set_uri(endpoint, endpoint_info.uri.c_str())) < 0) {
-        throw std::invalid_argument(fmt::format(
-            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} uri={} err={}",
+            device_uid_,
+            endpoint_info.uri,
+            err));
     }
 
     if ((err = roc_receiver_bind(
              net_receiver_, endpoint_info.slot, endpoint_info.interface, endpoint)) < 0) {
-        throw std::invalid_argument(fmt::format(
-            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} uri={} err={}",
+            device_uid_,
+            endpoint_info.uri,
+            err));
     }
 
     if ((err = roc_endpoint_deallocate(endpoint)) < 0) {
-        spdlog::warn(
-            "can't properly deallocate network endpoint: uid={} err={}", uid_, err);
+        spdlog::warn("can't properly deallocate network endpoint: uid={} err={}",
+            device_uid_,
+            err);
     }
 }
 
@@ -151,7 +156,7 @@ void Receiver::read(float* samples, size_t n_samples) noexcept
         if (err_count_++ % err_report_freq_ == 0) {
             spdlog::warn(
                 "can't read frame from network receiver: uid={} err={} err_count={}",
-                uid_,
+                device_uid_,
                 err,
                 err_count_);
         }

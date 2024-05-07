@@ -16,10 +16,10 @@
 
 namespace rocvad {
 
-Sender::Sender(const std::string& uid,
+Sender::Sender(const std::string& device_uid,
     const DeviceLocalEncoding& device_encoding,
     const DeviceSenderConfig& device_sender_config)
-    : uid_(uid)
+    : device_uid_(device_uid)
 {
     int err = 0;
 
@@ -28,7 +28,7 @@ Sender::Sender(const std::string& uid,
 
     if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
         throw std::runtime_error(
-            fmt::format("can't open network context: uid={} err={}", uid_, err));
+            fmt::format("can't open network context: uid={} err={}", device_uid_, err));
     }
 
     roc_sender_config net_sender_config;
@@ -45,7 +45,7 @@ Sender::Sender(const std::string& uid,
                  device_sender_config.packet_encoding->id,
                  &device_sender_config.packet_encoding->spec)) < 0) {
             throw std::invalid_argument(
-                fmt::format("invalid packet encoding: uid={} err={}", uid_, err));
+                fmt::format("invalid packet encoding: uid={} err={}", device_uid_, err));
         }
     } else {
         net_sender_config.packet_encoding = ROC_PACKET_ENCODING_AVP_L16_STEREO;
@@ -74,7 +74,7 @@ Sender::Sender(const std::string& uid,
 
     if ((err = roc_sender_open(net_context_, &net_sender_config, &net_sender_)) < 0) {
         throw std::invalid_argument(
-            fmt::format("invalid sender config: uid={} err={}", uid_, err));
+            fmt::format("invalid sender config: uid={} err={}", device_uid_, err));
     }
 }
 
@@ -84,14 +84,15 @@ Sender::~Sender()
 
     if (net_sender_) {
         if ((err = roc_sender_close(net_sender_)) < 0) {
-            spdlog::warn("can't properly close network sender: uid={} err={}", uid_, err);
+            spdlog::warn(
+                "can't properly close network sender: uid={} err={}", device_uid_, err);
         }
     }
 
     if (net_context_) {
         if ((err = roc_context_close(net_context_)) < 0) {
             spdlog::warn(
-                "can't properly close network context: uid={} err={}", uid_, err);
+                "can't properly close network context: uid={} err={}", device_uid_, err);
         }
     }
 }
@@ -108,24 +109,29 @@ void Sender::connect(DeviceEndpointInfo& endpoint_info)
     roc_endpoint* endpoint = nullptr;
 
     if ((err = roc_endpoint_allocate(&endpoint)) < 0) {
-        throw std::runtime_error(
-            fmt::format("can't allocate network endpoint: uid={} err={}", uid_, err));
+        throw std::runtime_error(fmt::format(
+            "can't allocate network endpoint: uid={} err={}", device_uid_, err));
     }
 
     if ((err = roc_endpoint_set_uri(endpoint, endpoint_info.uri.c_str())) < 0) {
-        throw std::invalid_argument(fmt::format(
-            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} uri={} err={}",
+            device_uid_,
+            endpoint_info.uri,
+            err));
     }
 
     if ((err = roc_sender_connect(
              net_sender_, endpoint_info.slot, endpoint_info.interface, endpoint)) < 0) {
-        throw std::invalid_argument(fmt::format(
-            "invalid endpoint: uid={} uri={} err={}", uid_, endpoint_info.uri, err));
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} uri={} err={}",
+            device_uid_,
+            endpoint_info.uri,
+            err));
     }
 
     if ((err = roc_endpoint_deallocate(endpoint)) < 0) {
-        spdlog::warn(
-            "can't properly deallocate network endpoint: uid={} err={}", uid_, err);
+        spdlog::warn("can't properly deallocate network endpoint: uid={} err={}",
+            device_uid_,
+            err);
     }
 }
 
@@ -156,7 +162,7 @@ void Sender::write(const float* samples, size_t n_samples) noexcept
         if (err_count_++ % err_report_freq_ == 0) {
             spdlog::warn(
                 "can't write frame to network sender: uid={} err={} err_count={}",
-                uid_,
+                device_uid_,
                 err,
                 err_count_);
         }

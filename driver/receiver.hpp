@@ -18,7 +18,7 @@ namespace rocvad {
 class Receiver : public Transceiver
 {
 public:
-    Receiver(const std::string& uid,
+    Receiver(const std::string& device_uid,
         const DeviceLocalEncoding& device_encoding,
         const DeviceReceiverConfig& device_receiver_config);
     ~Receiver();
@@ -32,7 +32,7 @@ public:
     void read(float* samples, size_t n_samples) noexcept override;
 
 private:
-    std::string uid_;
+    std::string device_uid_;
 
     roc_context* net_context_ = nullptr;
     roc_receiver* net_receiver_ = nullptr;

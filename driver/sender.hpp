@@ -18,7 +18,7 @@ namespace rocvad {
 class Sender : public Transceiver
 {
 public:
-    Sender(const std::string& uid,
+    Sender(const std::string& device_uid,
         const DeviceLocalEncoding& device_encoding,
         const DeviceSenderConfig& device_sender_config);
     ~Sender() override;
@@ -32,7 +32,7 @@ public:
     void write(const float* samples, size_t n_samples) noexcept override;
 
 private:
-    std::string uid_;
+    std::string device_uid_;
 
     roc_context* net_context_ = nullptr;
     roc_sender* net_sender_ = nullptr;

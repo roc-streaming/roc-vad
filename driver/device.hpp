@@ -10,17 +10,14 @@
 
 #include "device_defs.hpp"
 #include "index_allocator.hpp"
-#include "ring_buffer.hpp"
+#include "request_handler.hpp"
 #include "transceiver.hpp"
 #include "uid_generator.hpp"
-
-#include <roc/context.h>
 
 #include <aspl/Device.hpp>
 #include <aspl/Plugin.hpp>
 
 #include <memory>
-#include <vector>
 
 namespace rocvad {
 
@@ -31,10 +28,10 @@ namespace rocvad {
 // device state (which in turn provides methods for gRPC service).
 //
 // Consists of:
-//  - aspl::Device - device representative in coreaudio HAL
-//  - Transceiver  - network sender or receiver (depending on device type)
-//  - RingBuffer   - a buffer between network and HAL
-class Device : private aspl::ControlRequestHandler, private aspl::IORequestHandler
+//  - aspl::Device   - device representative in coreaudio HAL
+//  - Transceiver    - network sender or receiver (depending on device type)
+//  - RequestHandler - handler for requests from HAL (uses Transceiver)
+class Device
 {
 public:
     Device(std::shared_ptr<aspl::Plugin> hal_plugin,
@@ -54,26 +51,6 @@ public:
     DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
 
 private:
-    using timestamp_t = RingBuffer::timestamp_t;
-
-    // aspl::ControlRequestHandler
-    OSStatus OnStartIO() override;
-    void OnStopIO() override;
-
-    // aspl::IORequestHandler
-    void OnReadClientInput(const std::shared_ptr<aspl::Client>& client,
-        const std::shared_ptr<aspl::Stream>& stream,
-        Float64 zero_timestamp,
-        Float64 timestamp,
-        void* bytes,
-        UInt32 bytes_count) override;
-    void OnWriteMixedOutput(const std::shared_ptr<aspl::Stream>& stream,
-        Float64 zero_timestamp,
-        Float64 timestamp,
-        const void* bytes,
-        UInt32 bytes_count) override;
-
-    // endpoints
     void bind_endpoint_(DeviceEndpointInfo& endpoint_info);
     void connect_endpoint_(DeviceEndpointInfo& endpoint_info);
     void sort_endpoints_();
@@ -90,12 +67,10 @@ private:
 
     // network sender or receiver
     // which one is used depends on device type
-    std::unique_ptr<Transceiver> net_transceiver_;
+    std::shared_ptr<Transceiver> net_transceiver_;
 
-    // buffers
-    std::vector<float> io_buf_;
-    std::unique_ptr<RingBuffer> ring_buf_;
-    uint64_t ring_buf_pos_ = 0;
+    // handler for control and I/O requests from HAL
+    std::shared_ptr<RequestHandler> req_handler_;
 
     // run-time device info
     DeviceInfo info_;

@@ -17,6 +17,7 @@ add_library(${DRIVER_LIB} STATIC
   log_streamer.cpp
   log_syslog.cpp
   receiver.cpp
+  request_handler.cpp
   ring_buffer.cpp
   rpc_serdes.cpp
   sender.cpp
