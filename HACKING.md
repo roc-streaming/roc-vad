@@ -28,6 +28,8 @@
 
 Virtual device is implemented as a plugin, a.k.a. driver, for CoreAudio sound daemon.
 
+Note that although CoreAudio calls these plugins "drivers", they're not kernel drivers (a.k.a. kernel extensions) and work in user-space.
+
 The driver is running in a sandbox, isolated from filesystem, but with network access. The streaming part is integrated right into the driver. The command-line tool controls the driver via gRPC over a TCP socket on localhost.
 
 To communicate with CoreAudio HAL, Roc VAD uses [libASPL](https://github.com/gavv/libASPL) (developed by the author of these lines). You can refer to its documentation to get familiar with CoreAudio HAL concepts, which affect Roc VAD design quite a lot.

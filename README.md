@@ -4,9 +4,11 @@
 
 <!-- toc -->
 
-- [What is this?](#what-is-this)
-- [How it works](#how-it-works)
-- [Features](#features)
+- [Summary](#summary)
+  * [What is this?](#what-is-this)
+  * [How it works?](#how-it-works)
+  * [Features](#features)
+  * [Design](#design)
 - [Donations](#donations)
 - [Installation](#installation)
   * [Supported platforms](#supported-platforms)
@@ -43,9 +45,11 @@
 
 <!-- tocstop -->
 
-## What is this?
+## Summary
 
-This repo provides macOS **Virtual Audio Device** (VAD) for **streaming audio** to or from remote devices. It is part of [Roc Toolkit](https://github.com/roc-streaming/roc-toolkit) project and is interoperable with both Roc and third-party software.
+### What is this?
+
+This repo provides macOS **Virtual Audio Device** (VAD) for real-time **audio streaming** to or from remote devices. It is part of [Roc Toolkit](https://github.com/roc-streaming/roc-toolkit) project and is interoperable with both Roc and third-party software.
 
 After installing Roc VAD, you can:
 
@@ -53,27 +57,17 @@ After installing Roc VAD, you can:
 * connect a virtual device to remote sender or receiver;
 * configure you local apps to use a virtual device instead of real microphone or speakers.
 
-## How it works
+### How it works?
 
-When you configure an app (e.g. iTunes) to use virtual device as a speaker, all sound that the app plays to the device is streamed to a remote receiver. Remote receiver could be Roc PipeWire source, or an app using Roc Toolkit library, or even a generic RTP receiver.
+When you configure your OS or individual app (e.g. VLC) to use Roc VAD output device as a speaker, all sound played to the device is streamed to a remote receiver. Remote receiver could be [PipeWire module](https://docs.pipewire.org/page_module_roc_source.html) or [PulseAudio module](https://github.com/roc-streaming/roc-pulse) running on Linux, [Roc Droid](https://github.com/roc-streaming/roc-droid) running on Android, as well as any C/Go/Java application using Roc Toolkit.
 
-And vice versa, when you configure an app (e.g. Zoom) to use virtual device as a microphone, the sound is streamed from a remote sender to the virtual device, and the app reads the received stream.
+Similarly, when you configure your OS or an app (e.g. Skype) to use Roc VAD input device as a microphone, the sound streamed from remote sender is passed to the local app connected to input device.
 
-*TODO: screenshot*
+Screenshot below shows macOS Sound Preferences with two virtual output devices named "Raspberry Pi" and "Samsung".
 
-Internally, Roc VAD consists of two components:
+<img src="docs/screenshot.png" width="450px"/>
 
-* `roc_vad.driver`
-
-    A plugin for CoreAudio Audio Server based on [libASPL](https://github.com/gavv/libASPL) library. Driver communicates with HAL, implements streaming, and provides gRPC interface that allows to add, remove, and configure virtual devices on fly.
-
-    Although CoreAudio calls these plugins "drivers", note that they're **not** kernel drivers (a.k.a. kernel extensions) and work in user-space.
-
-* `roc-vad`
-
-    A command-line tool that allows to control Roc VAD driver from terminal via its gRPC interface.
-
-## Features
+### Features
 
 Key features of Roc Toolkit streaming engine, used by Roc VAD:
 
@@ -90,6 +84,20 @@ Compatible Roc Toolkit senders and receivers include:
 * [modules for sound servers](https://roc-streaming.org/toolkit/docs/tools/sound_server_modules.html) (PulseAudio, PipeWire, macOS CoreAudio)
 * [C library](https://roc-streaming.org/toolkit/docs/api.html) and [bindings for other languages](https://roc-streaming.org/toolkit/docs/api/bindings.html)
 * [applications](https://roc-streaming.org/toolkit/docs/tools/applications.html) (Android)
+
+### Design
+
+Internally, Roc VAD consists of two components:
+
+* `roc_vad.driver`
+
+    A plugin for CoreAudio Audio Server based on [libASPL](https://github.com/gavv/libASPL) library. Driver communicates with HAL, implements streaming, and provides gRPC interface that allows to add, remove, and configure virtual devices on fly.
+
+* `roc-vad`
+
+    A command-line tool that allows to control Roc VAD driver from terminal via its gRPC interface.
+
+For more details, see [HACKING.md](HACKING.md).
 
 ## Donations
 
