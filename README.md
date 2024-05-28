@@ -585,7 +585,7 @@ You can also force specific latency tuner settings (by default they're auto-sele
   * `responsive` - quickly react to changes; good for low latency, but also requires low network jitter
   * `gradual` - smoothly react to changes; can handle high network jitter, but can't handle very low latency
 
-> Note: By default, latency tuner happens on receiver side. It is also possible (though rarely needed) to do it on sender side. For that reason, all parameters above are also available on sender, but are disabled by default. If you enabled them on sender, you likely want to disable them on receiver by using `intact` latency profile.
+> Note: By default, latency tuning happens on receiver side. It is also possible (though rarely needed) to do it on sender side. For that reason, all parameters above are also available on sender, but are disabled by default. If you enable them on sender, you likely want to disable them on receiver by using `intact` latency profile.
 
 There are also sender-side parameters that affect latency:
 
