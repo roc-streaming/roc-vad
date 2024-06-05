@@ -10,6 +10,7 @@
   * [Features](#features)
   * [Design](#design)
 - [Donations](#donations)
+- [Releases](#releases)
 - [Installation](#installation)
   * [Supported platforms](#supported-platforms)
   * [Install from binaries](#install-from-binaries)
@@ -32,13 +33,13 @@
   * [Custom packet encoding](#custom-packet-encoding)
   * [Custom FEC encoding](#custom-fec-encoding)
   * [Tuning latency](#tuning-latency)
-- [Troubleshooting](#troubleshooting)
-  * [Retrieving info](#retrieving-info)
-  * [Common issues](#common-issues)
 - [Programmatic control](#programmatic-control)
   * [gRPC interface](#grpc-interface)
   * [Socket address](#socket-address)
   * [Vendoring driver](#vendoring-driver)
+- [Troubleshooting](#troubleshooting)
+  * [Retrieving info](#retrieving-info)
+  * [Common issues](#common-issues)
 - [Hacking](#hacking)
 - [Authors](#authors)
 - [License](#license)
@@ -106,6 +107,14 @@ If you would like to support the project financially, see details on [this page]
 Special thanks to [Sean McNamara](https://github.com/allquixotic), whose funding helped to complete and release the first version of Roc VAD!
 
 <a href="https://liberapay.com/roc-streaming"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+
+## Releases
+
+The project follows [semantic versioning](https://semver.org/).
+
+The backwards compatibility promise applies only to gRPC interface (see below), but not to command-line tools.
+
+Changelog file can be found here: [CHANGES.md](CHANGES.md).
 
 ## Installation
 
@@ -595,6 +604,35 @@ There are also sender-side parameters that affect latency:
 
 For lower latency, you may need lower packet length and FEC block size. And vice versa, for higher latency and network jitter, you may need to increase both packet length (for less overhead) and FEC block size (for better repair).
 
+## Programmatic control
+
+### gRPC interface
+
+You can control Roc VAD driver from any programming language via [gRPC](https://grpc.io/) interface.
+
+You can to do everything you can do via command-line tool, which itself is just a wrapper for the same RPC calls. Unlike the command-line tool, gRPC interface will maintain backward compatibility on updates.
+
+More details are available here:
+
+* [driver_protocol.proto](rpc/driver_protocol.proto) - protocol definition
+* [RPC.md](RPC.md) - generated protocol documentation
+
+To use RPC interface, you'll need to copy `driver_protocol.proto` to your project and use gRPC tools to generate client code for the language of your choice ([1](https://grpc.io/docs/languages/), [2](https://github.com/grpc/grpc-swift)).
+
+Roc VAD RPC interface mostly mirrors underlying C API of Roc Toolkit. Please refer to the [C API reference](https://roc-streaming.org/toolkit/docs/api/reference.html) for more details on semantics of various options.
+
+### Socket address
+
+By default, driver starts (unauthenticated) gRPC server at `127.0.0.1:9712`.
+
+If you want to change the address, you can edit `DriverSocket` entry in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read address from there.
+
+### Vendoring driver
+
+If you're going to vendor a copy or a fork of Roc VAD driver and ship with your application, please change `DRIVER_BUNDLE_NAME`, `DRIVER_BUNDLE_ID`, `DRIVER_UUID`, and `DRIVER_SOCKET` via CMake.
+
+This is necessary to ensure that your copy can co-exist with the original on the same system.
+
 ## Troubleshooting
 
 ### Retrieving info
@@ -674,35 +712,6 @@ Audio:
 * **Playback stuttering**
 
     If you hear stuttering, try increasing device buffer length of virtual device and/or target latency of the receiver. They are controlled by `--device-buffer` and `--target-latency` options.
-
-## Programmatic control
-
-### gRPC interface
-
-You can control Roc VAD driver from any programming language via [gRPC](https://grpc.io/) interface.
-
-You can to do everything you can do via command-line tool, which itself is just a wrapper for the same RPC calls. Unlike the command-line tool, gRPC interface will maintain backward compatibility on updates.
-
-More details are available here:
-
-* [driver_protocol.proto](rpc/driver_protocol.proto) - protocol definition
-* [RPC.md](RPC.md) - generated protocol documentation
-
-To use RPC interface, you'll need to copy `driver_protocol.proto` to your project and use gRPC tools to generate client code for the language of your choice ([1](https://grpc.io/docs/languages/), [2](https://github.com/grpc/grpc-swift)).
-
-Roc VAD RPC interface mostly mirrors underlying C API of Roc Toolkit. Please refer to the [C API reference](https://roc-streaming.org/toolkit/docs/api/reference.html) for more details on semantics of various options.
-
-### Socket address
-
-By default, driver starts (unauthenticated) gRPC server at `127.0.0.1:9712`.
-
-If you want to change the address, you can edit `DriverSocket` entry in `/Library/Audio/Plug-Ins/HAL/roc_vad.driver/Contents/Info.plist` plist file. Both driver and command-line tool read address from there.
-
-### Vendoring driver
-
-If you're going to vendor a copy or a fork of Roc VAD driver and ship with your application, please change `DRIVER_BUNDLE_NAME`, `DRIVER_BUNDLE_ID`, `DRIVER_UUID`, and `DRIVER_SOCKET` via CMake.
-
-This is necessary to ensure that your copy can co-exist with the original on the same system.
 
 ## Hacking
 
