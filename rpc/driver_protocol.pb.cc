@@ -150,8 +150,7 @@ inline constexpr RvSenderConfig::Impl_::Impl_(
         packet_encoding_{nullptr},
         packet_length_{nullptr},
         target_latency_{nullptr},
-        min_latency_{nullptr},
-        max_latency_{nullptr},
+        latency_tolerance_{nullptr},
         packet_interleaving_{false},
         fec_encoding_{static_cast< ::rvpb::RvFecEncoding >(0)},
         fec_block_source_packets_{0u},
@@ -180,10 +179,9 @@ inline constexpr RvReceiverConfig::Impl_::Impl_(
       : _cached_size_{0},
         packet_encodings_{},
         target_latency_{nullptr},
-        min_latency_{nullptr},
-        max_latency_{nullptr},
         no_playback_timeout_{nullptr},
         choppy_playback_timeout_{nullptr},
+        latency_tolerance_{nullptr},
         latency_tuner_backend_{static_cast< ::rvpb::RvLatencyTunerBackend >(0)},
         latency_tuner_profile_{static_cast< ::rvpb::RvLatencyTunerProfile >(0)},
         resampler_backend_{static_cast< ::rvpb::RvResamplerBackend >(0)},
@@ -463,10 +461,10 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.resampler_backend_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.resampler_profile_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.target_latency_),
-        PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.min_latency_),
-        PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.max_latency_),
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvSenderConfig, _impl_.latency_tolerance_),
         0,
         1,
+        4,
         5,
         6,
         7,
@@ -474,10 +472,8 @@ const ::uint32_t
         9,
         10,
         11,
-        12,
         2,
         3,
-        4,
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _internal_metadata_),
         ~0u,  // no _extensions_
@@ -492,20 +488,18 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.resampler_backend_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.resampler_profile_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.target_latency_),
-        PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.min_latency_),
-        PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.max_latency_),
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.latency_tolerance_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.no_playback_timeout_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvReceiverConfig, _impl_.choppy_playback_timeout_),
         ~0u,
+        4,
         5,
         6,
         7,
-        8,
         0,
+        3,
         1,
         2,
-        3,
-        4,
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _internal_metadata_),
         ~0u,  // no _extensions_
@@ -545,10 +539,10 @@ static const ::_pbi::MigrationSchema
         {81, 91, -1, sizeof(::rvpb::RvToggleRequest)},
         {93, 103, -1, sizeof(::rvpb::RvEndpointRequest)},
         {105, 116, -1, sizeof(::rvpb::RvEndpointInfo)},
-        {119, 140, -1, sizeof(::rvpb::RvSenderConfig)},
-        {153, 171, -1, sizeof(::rvpb::RvReceiverConfig)},
-        {181, 192, -1, sizeof(::rvpb::RvDeviceEncoding)},
-        {195, -1, -1, sizeof(::rvpb::RvPacketEncoding)},
+        {119, 139, -1, sizeof(::rvpb::RvSenderConfig)},
+        {151, 168, -1, sizeof(::rvpb::RvReceiverConfig)},
+        {177, 188, -1, sizeof(::rvpb::RvDeviceEncoding)},
+        {191, -1, -1, sizeof(::rvpb::RvPacketEncoding)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::rvpb::_RvNone_default_instance_._instance,
@@ -595,7 +589,7 @@ const char descriptor_table_protodef_driver_5fprotocol_2eproto[] ABSL_ATTRIBUTE_
     ".RvDeviceSelector\022&\n\010endpoint\030\002 \001(\0132\024.rv"
     "pb.RvEndpointInfo\"_\n\016RvEndpointInfo\022\021\n\004s"
     "lot\030\001 \001(\rH\000\210\001\001\022$\n\tinterface\030\002 \001(\0162\021.rvpb"
-    ".RvInterface\022\013\n\003uri\030\003 \001(\tB\007\n\005_slot\"\321\007\n\016R"
+    ".RvInterface\022\013\n\003uri\030\003 \001(\tB\007\n\005_slot\"\230\007\n\016R"
     "vSenderConfig\0224\n\017packet_encoding\030\001 \001(\0132\026"
     ".rvpb.RvPacketEncodingH\000\210\001\001\0225\n\rpacket_le"
     "ngth\030\002 \001(\0132\031.google.protobuf.DurationH\001\210"
@@ -610,87 +604,84 @@ const char descriptor_table_protodef_driver_5fprotocol_2eproto[] ABSL_ATTRIBUTE_
     "\030.rvpb.RvResamplerBackendH\010\210\001\001\0228\n\021resamp"
     "ler_profile\030\n \001(\0162\030.rvpb.RvResamplerProf"
     "ileH\t\210\001\001\0226\n\016target_latency\030\013 \001(\0132\031.googl"
-    "e.protobuf.DurationH\n\210\001\001\0223\n\013min_latency\030"
-    "\014 \001(\0132\031.google.protobuf.DurationH\013\210\001\001\0223\n"
-    "\013max_latency\030\r \001(\0132\031.google.protobuf.Dur"
-    "ationH\014\210\001\001B\022\n\020_packet_encodingB\020\n\016_packe"
-    "t_lengthB\026\n\024_packet_interleavingB\017\n\r_fec"
-    "_encodingB\033\n\031_fec_block_source_packetsB\033"
-    "\n\031_fec_block_repair_packetsB\030\n\026_latency_"
-    "tuner_backendB\030\n\026_latency_tuner_profileB"
-    "\024\n\022_resampler_backendB\024\n\022_resampler_prof"
-    "ileB\021\n\017_target_latencyB\016\n\014_min_latencyB\016"
-    "\n\014_max_latency\"\241\006\n\020RvReceiverConfig\0220\n\020p"
-    "acket_encodings\030\001 \003(\0132\026.rvpb.RvPacketEnc"
-    "oding\022\?\n\025latency_tuner_backend\030\002 \001(\0162\033.r"
-    "vpb.RvLatencyTunerBackendH\000\210\001\001\022\?\n\025latenc"
-    "y_tuner_profile\030\003 \001(\0162\033.rvpb.RvLatencyTu"
-    "nerProfileH\001\210\001\001\0228\n\021resampler_backend\030\004 \001"
-    "(\0162\030.rvpb.RvResamplerBackendH\002\210\001\001\0228\n\021res"
-    "ampler_profile\030\005 \001(\0162\030.rvpb.RvResamplerP"
-    "rofileH\003\210\001\001\0226\n\016target_latency\030\006 \001(\0132\031.go"
-    "ogle.protobuf.DurationH\004\210\001\001\0223\n\013min_laten"
-    "cy\030\007 \001(\0132\031.google.protobuf.DurationH\005\210\001\001"
-    "\0223\n\013max_latency\030\010 \001(\0132\031.google.protobuf."
-    "DurationH\006\210\001\001\022;\n\023no_playback_timeout\030\t \001"
-    "(\0132\031.google.protobuf.DurationH\007\210\001\001\022\?\n\027ch"
-    "oppy_playback_timeout\030\n \001(\0132\031.google.pro"
-    "tobuf.DurationH\010\210\001\001B\030\n\026_latency_tuner_ba"
-    "ckendB\030\n\026_latency_tuner_profileB\024\n\022_resa"
-    "mpler_backendB\024\n\022_resampler_profileB\021\n\017_"
-    "target_latencyB\016\n\014_min_latencyB\016\n\014_max_l"
-    "atencyB\026\n\024_no_playback_timeoutB\032\n\030_chopp"
-    "y_playback_timeout\"\314\001\n\020RvDeviceEncoding\022"
-    "\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\0222\n\016channel_lay"
-    "out\030\002 \001(\0162\025.rvpb.RvChannelLayoutH\001\210\001\001\0225\n"
-    "\rbuffer_length\030\003 \001(\0132\031.google.protobuf.D"
-    "urationH\002\210\001\001B\016\n\014_sample_rateB\021\n\017_channel"
-    "_layoutB\020\n\016_buffer_length\"\230\001\n\020RvPacketEn"
-    "coding\022\023\n\013encoding_id\030\001 \001(\r\022\023\n\013sample_ra"
-    "te\030\002 \001(\r\022+\n\rsample_format\030\003 \001(\0162\024.rvpb.R"
-    "vSampleFormat\022-\n\016channel_layout\030\004 \001(\0162\025."
-    "rvpb.RvChannelLayout*F\n\014RvDeviceType\022\031\n\025"
-    "RV_DEVICE_TYPE_SENDER\020\000\022\033\n\027RV_DEVICE_TYP"
-    "E_RECEIVER\020\001*\212\001\n\013RvInterface\022\035\n\031RV_INTER"
-    "FACE_CONSOLIDATED\020\000\022\035\n\031RV_INTERFACE_AUDI"
-    "O_SOURCE\020\001\022\035\n\031RV_INTERFACE_AUDIO_REPAIR\020"
-    "\002\022\036\n\032RV_INTERFACE_AUDIO_CONTROL\020\003*+\n\016RvS"
-    "ampleFormat\022\031\n\025ROC_FORMAT_PCM_SINT16\020\000*K"
-    "\n\017RvChannelLayout\022\032\n\026RV_CHANNEL_LAYOUT_M"
-    "ONO\020\000\022\034\n\030RV_CHANNEL_LAYOUT_STEREO\020\001*\207\001\n\r"
-    "RvFecEncoding\022\033\n\027RV_FEC_ENCODING_DISABLE"
-    "\020\000\022\033\n\027RV_FEC_ENCODING_DEFAULT\020\001\022\030\n\024RV_FE"
-    "C_ENCODING_RS8M\020\002\022\"\n\036RV_FEC_ENCODING_LDP"
-    "C_STAIRCASE\020\003*_\n\025RvLatencyTunerBackend\022$"
-    "\n RV_LATENCY_TUNER_BACKEND_DEFAULT\020\000\022 \n\034"
-    "RV_LATENCY_TUNER_BACKEND_NIQ\020\002*\261\001\n\025RvLat"
-    "encyTunerProfile\022$\n RV_LATENCY_TUNER_PRO"
-    "FILE_DEFAULT\020\000\022#\n\037RV_LATENCY_TUNER_PROFI"
-    "LE_INTACT\020\001\022\'\n#RV_LATENCY_TUNER_PROFILE_"
-    "RESPONSIVE\020\002\022$\n RV_LATENCY_TUNER_PROFILE"
-    "_GRADUAL\020\003*\233\001\n\022RvResamplerBackend\022 \n\034RV_"
-    "RESAMPLER_BACKEND_DEFAULT\020\000\022 \n\034RV_RESAMP"
-    "LER_BACKEND_BUILTIN\020\001\022\036\n\032RV_RESAMPLER_BA"
-    "CKEND_SPEEX\020\002\022!\n\035RV_RESAMPLER_BACKEND_SP"
-    "EEXDEC\020\003*\224\001\n\022RvResamplerProfile\022 \n\034RV_RE"
-    "SAMPLER_PROFILE_DEFAULT\020\000\022\035\n\031RV_RESAMPLE"
-    "R_PROFILE_HIGH\020\001\022\037\n\033RV_RESAMPLER_PROFILE"
-    "_MEDIUM\020\002\022\034\n\030RV_RESAMPLER_PROFILE_LOW\020\0032"
-    "\247\004\n\010RvDriver\022$\n\004ping\022\014.rvpb.RvNone\032\014.rvp"
-    "b.RvNone\"\000\0221\n\013driver_info\022\014.rvpb.RvNone\032"
-    "\022.rvpb.RvDriverInfo\"\000\0221\n\013stream_logs\022\014.r"
-    "vpb.RvNone\032\020.rvpb.RvLogEntry\"\0000\001\0225\n\017get_"
-    "all_devices\022\014.rvpb.RvNone\032\022.rvpb.RvDevic"
-    "eList\"\000\022:\n\nget_device\022\026.rvpb.RvDeviceSel"
-    "ector\032\022.rvpb.RvDeviceInfo\"\000\0226\n\nadd_devic"
-    "e\022\022.rvpb.RvDeviceInfo\032\022.rvpb.RvDeviceInf"
-    "o\"\000\0227\n\rdelete_device\022\026.rvpb.RvDeviceSele"
-    "ctor\032\014.rvpb.RvNone\"\000\0226\n\rtoggle_device\022\025."
-    "rvpb.RvToggleRequest\032\014.rvpb.RvNone\"\000\0227\n\004"
-    "bind\022\027.rvpb.RvEndpointRequest\032\024.rvpb.RvE"
-    "ndpointInfo\"\000\022:\n\007connect\022\027.rvpb.RvEndpoi"
-    "ntRequest\032\024.rvpb.RvEndpointInfo\"\000b\006proto"
-    "3"
+    "e.protobuf.DurationH\n\210\001\001\0229\n\021latency_tole"
+    "rance\030\r \001(\0132\031.google.protobuf.DurationH\013"
+    "\210\001\001B\022\n\020_packet_encodingB\020\n\016_packet_lengt"
+    "hB\026\n\024_packet_interleavingB\017\n\r_fec_encodi"
+    "ngB\033\n\031_fec_block_source_packetsB\033\n\031_fec_"
+    "block_repair_packetsB\030\n\026_latency_tuner_b"
+    "ackendB\030\n\026_latency_tuner_profileB\024\n\022_res"
+    "ampler_backendB\024\n\022_resampler_profileB\021\n\017"
+    "_target_latencyB\024\n\022_latency_tolerance\"\350\005"
+    "\n\020RvReceiverConfig\0220\n\020packet_encodings\030\001"
+    " \003(\0132\026.rvpb.RvPacketEncoding\022\?\n\025latency_"
+    "tuner_backend\030\002 \001(\0162\033.rvpb.RvLatencyTune"
+    "rBackendH\000\210\001\001\022\?\n\025latency_tuner_profile\030\003"
+    " \001(\0162\033.rvpb.RvLatencyTunerProfileH\001\210\001\001\0228"
+    "\n\021resampler_backend\030\004 \001(\0162\030.rvpb.RvResam"
+    "plerBackendH\002\210\001\001\0228\n\021resampler_profile\030\005 "
+    "\001(\0162\030.rvpb.RvResamplerProfileH\003\210\001\001\0226\n\016ta"
+    "rget_latency\030\006 \001(\0132\031.google.protobuf.Dur"
+    "ationH\004\210\001\001\0229\n\021latency_tolerance\030\013 \001(\0132\031."
+    "google.protobuf.DurationH\005\210\001\001\022;\n\023no_play"
+    "back_timeout\030\t \001(\0132\031.google.protobuf.Dur"
+    "ationH\006\210\001\001\022\?\n\027choppy_playback_timeout\030\n "
+    "\001(\0132\031.google.protobuf.DurationH\007\210\001\001B\030\n\026_"
+    "latency_tuner_backendB\030\n\026_latency_tuner_"
+    "profileB\024\n\022_resampler_backendB\024\n\022_resamp"
+    "ler_profileB\021\n\017_target_latencyB\024\n\022_laten"
+    "cy_toleranceB\026\n\024_no_playback_timeoutB\032\n\030"
+    "_choppy_playback_timeout\"\314\001\n\020RvDeviceEnc"
+    "oding\022\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\0222\n\016chann"
+    "el_layout\030\002 \001(\0162\025.rvpb.RvChannelLayoutH\001"
+    "\210\001\001\0225\n\rbuffer_length\030\003 \001(\0132\031.google.prot"
+    "obuf.DurationH\002\210\001\001B\016\n\014_sample_rateB\021\n\017_c"
+    "hannel_layoutB\020\n\016_buffer_length\"\230\001\n\020RvPa"
+    "cketEncoding\022\023\n\013encoding_id\030\001 \001(\r\022\023\n\013sam"
+    "ple_rate\030\002 \001(\r\022+\n\rsample_format\030\003 \001(\0162\024."
+    "rvpb.RvSampleFormat\022-\n\016channel_layout\030\004 "
+    "\001(\0162\025.rvpb.RvChannelLayout*F\n\014RvDeviceTy"
+    "pe\022\031\n\025RV_DEVICE_TYPE_SENDER\020\000\022\033\n\027RV_DEVI"
+    "CE_TYPE_RECEIVER\020\001*\212\001\n\013RvInterface\022\035\n\031RV"
+    "_INTERFACE_CONSOLIDATED\020\000\022\035\n\031RV_INTERFAC"
+    "E_AUDIO_SOURCE\020\001\022\035\n\031RV_INTERFACE_AUDIO_R"
+    "EPAIR\020\002\022\036\n\032RV_INTERFACE_AUDIO_CONTROL\020\003*"
+    "+\n\016RvSampleFormat\022\031\n\025ROC_FORMAT_PCM_SINT"
+    "16\020\000*K\n\017RvChannelLayout\022\032\n\026RV_CHANNEL_LA"
+    "YOUT_MONO\020\000\022\034\n\030RV_CHANNEL_LAYOUT_STEREO\020"
+    "\001*\207\001\n\rRvFecEncoding\022\033\n\027RV_FEC_ENCODING_D"
+    "ISABLE\020\000\022\033\n\027RV_FEC_ENCODING_DEFAULT\020\001\022\030\n"
+    "\024RV_FEC_ENCODING_RS8M\020\002\022\"\n\036RV_FEC_ENCODI"
+    "NG_LDPC_STAIRCASE\020\003*_\n\025RvLatencyTunerBac"
+    "kend\022$\n RV_LATENCY_TUNER_BACKEND_DEFAULT"
+    "\020\000\022 \n\034RV_LATENCY_TUNER_BACKEND_NIQ\020\002*\261\001\n"
+    "\025RvLatencyTunerProfile\022$\n RV_LATENCY_TUN"
+    "ER_PROFILE_DEFAULT\020\000\022#\n\037RV_LATENCY_TUNER"
+    "_PROFILE_INTACT\020\001\022\'\n#RV_LATENCY_TUNER_PR"
+    "OFILE_RESPONSIVE\020\002\022$\n RV_LATENCY_TUNER_P"
+    "ROFILE_GRADUAL\020\003*\233\001\n\022RvResamplerBackend\022"
+    " \n\034RV_RESAMPLER_BACKEND_DEFAULT\020\000\022 \n\034RV_"
+    "RESAMPLER_BACKEND_BUILTIN\020\001\022\036\n\032RV_RESAMP"
+    "LER_BACKEND_SPEEX\020\002\022!\n\035RV_RESAMPLER_BACK"
+    "END_SPEEXDEC\020\003*\224\001\n\022RvResamplerProfile\022 \n"
+    "\034RV_RESAMPLER_PROFILE_DEFAULT\020\000\022\035\n\031RV_RE"
+    "SAMPLER_PROFILE_HIGH\020\001\022\037\n\033RV_RESAMPLER_P"
+    "ROFILE_MEDIUM\020\002\022\034\n\030RV_RESAMPLER_PROFILE_"
+    "LOW\020\0032\247\004\n\010RvDriver\022$\n\004ping\022\014.rvpb.RvNone"
+    "\032\014.rvpb.RvNone\"\000\0221\n\013driver_info\022\014.rvpb.R"
+    "vNone\032\022.rvpb.RvDriverInfo\"\000\0221\n\013stream_lo"
+    "gs\022\014.rvpb.RvNone\032\020.rvpb.RvLogEntry\"\0000\001\0225"
+    "\n\017get_all_devices\022\014.rvpb.RvNone\032\022.rvpb.R"
+    "vDeviceList\"\000\022:\n\nget_device\022\026.rvpb.RvDev"
+    "iceSelector\032\022.rvpb.RvDeviceInfo\"\000\0226\n\nadd"
+    "_device\022\022.rvpb.RvDeviceInfo\032\022.rvpb.RvDev"
+    "iceInfo\"\000\0227\n\rdelete_device\022\026.rvpb.RvDevi"
+    "ceSelector\032\014.rvpb.RvNone\"\000\0226\n\rtoggle_dev"
+    "ice\022\025.rvpb.RvToggleRequest\032\014.rvpb.RvNone"
+    "\"\000\0227\n\004bind\022\027.rvpb.RvEndpointRequest\032\024.rv"
+    "pb.RvEndpointInfo\"\000\022:\n\007connect\022\027.rvpb.Rv"
+    "EndpointRequest\032\024.rvpb.RvEndpointInfo\"\000b"
+    "\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2eproto_deps[2] =
     {
@@ -701,7 +692,7 @@ static ::absl::once_flag descriptor_table_driver_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_driver_5fprotocol_2eproto = {
     false,
     false,
-    4921,
+    4807,
     descriptor_table_protodef_driver_5fprotocol_2eproto,
     "driver_protocol.proto",
     &descriptor_table_driver_5fprotocol_2eproto_once,
@@ -3246,15 +3237,10 @@ void RvSenderConfig::clear_target_latency() {
   if (_impl_.target_latency_ != nullptr) _impl_.target_latency_->Clear();
   _impl_._has_bits_[0] &= ~0x00000004u;
 }
-void RvSenderConfig::clear_min_latency() {
+void RvSenderConfig::clear_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.min_latency_ != nullptr) _impl_.min_latency_->Clear();
+  if (_impl_.latency_tolerance_ != nullptr) _impl_.latency_tolerance_->Clear();
   _impl_._has_bits_[0] &= ~0x00000008u;
-}
-void RvSenderConfig::clear_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.max_latency_ != nullptr) _impl_.max_latency_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000010u;
 }
 RvSenderConfig::RvSenderConfig(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
@@ -3286,11 +3272,8 @@ RvSenderConfig::RvSenderConfig(
   _impl_.target_latency_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
                               arena, *from._impl_.target_latency_)
                         : nullptr;
-  _impl_.min_latency_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
-                              arena, *from._impl_.min_latency_)
-                        : nullptr;
-  _impl_.max_latency_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
-                              arena, *from._impl_.max_latency_)
+  _impl_.latency_tolerance_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
+                              arena, *from._impl_.latency_tolerance_)
                         : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, packet_interleaving_),
@@ -3326,8 +3309,7 @@ inline void RvSenderConfig::SharedDtor() {
   delete _impl_.packet_encoding_;
   delete _impl_.packet_length_;
   delete _impl_.target_latency_;
-  delete _impl_.min_latency_;
-  delete _impl_.max_latency_;
+  delete _impl_.latency_tolerance_;
   _impl_.~Impl_();
 }
 
@@ -3353,7 +3335,7 @@ PROTOBUF_NOINLINE void RvSenderConfig::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       ABSL_DCHECK(_impl_.packet_encoding_ != nullptr);
       _impl_.packet_encoding_->Clear();
@@ -3367,23 +3349,19 @@ PROTOBUF_NOINLINE void RvSenderConfig::Clear() {
       _impl_.target_latency_->Clear();
     }
     if (cached_has_bits & 0x00000008u) {
-      ABSL_DCHECK(_impl_.min_latency_ != nullptr);
-      _impl_.min_latency_->Clear();
-    }
-    if (cached_has_bits & 0x00000010u) {
-      ABSL_DCHECK(_impl_.max_latency_ != nullptr);
-      _impl_.max_latency_->Clear();
+      ABSL_DCHECK(_impl_.latency_tolerance_ != nullptr);
+      _impl_.latency_tolerance_->Clear();
     }
   }
-  if (cached_has_bits & 0x000000e0u) {
+  if (cached_has_bits & 0x000000f0u) {
     ::memset(&_impl_.packet_interleaving_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.fec_block_source_packets_) -
-        reinterpret_cast<char*>(&_impl_.packet_interleaving_)) + sizeof(_impl_.fec_block_source_packets_));
+        reinterpret_cast<char*>(&_impl_.fec_block_repair_packets_) -
+        reinterpret_cast<char*>(&_impl_.packet_interleaving_)) + sizeof(_impl_.fec_block_repair_packets_));
   }
-  if (cached_has_bits & 0x00001f00u) {
-    ::memset(&_impl_.fec_block_repair_packets_, 0, static_cast<::size_t>(
+  if (cached_has_bits & 0x00000f00u) {
+    ::memset(&_impl_.latency_tuner_backend_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.resampler_profile_) -
-        reinterpret_cast<char*>(&_impl_.fec_block_repair_packets_)) + sizeof(_impl_.resampler_profile_));
+        reinterpret_cast<char*>(&_impl_.latency_tuner_backend_)) + sizeof(_impl_.resampler_profile_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -3397,16 +3375,16 @@ const char* RvSenderConfig::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
+const ::_pbi::TcParseTable<4, 12, 4, 0, 2> RvSenderConfig::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_._has_bits_),
     0, // no _extensions_
     13, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294959104,  // skipmap
+    4294961152,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    13,  // num_field_entries
-    5,  // num_aux_entries
+    12,  // num_field_entries
+    4,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_RvSenderConfig_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -3422,38 +3400,36 @@ const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
     {::_pbi::TcParser::FastMtS1,
      {18, 1, 1, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_length_)}},
     // optional bool packet_interleaving = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RvSenderConfig, _impl_.packet_interleaving_), 5>(),
-     {24, 5, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_interleaving_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RvSenderConfig, _impl_.packet_interleaving_), 4>(),
+     {24, 4, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_interleaving_)}},
     // optional .rvpb.RvFecEncoding fec_encoding = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_encoding_), 6>(),
-     {32, 6, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_encoding_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_encoding_), 5>(),
+     {32, 5, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_encoding_)}},
     // optional uint32 fec_block_source_packets = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_block_source_packets_), 7>(),
-     {40, 7, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_source_packets_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_block_source_packets_), 6>(),
+     {40, 6, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_source_packets_)}},
     // optional uint32 fec_block_repair_packets = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_block_repair_packets_), 8>(),
-     {48, 8, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_repair_packets_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.fec_block_repair_packets_), 7>(),
+     {48, 7, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_repair_packets_)}},
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 7;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.latency_tuner_backend_), 9>(),
-     {56, 9, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_backend_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.latency_tuner_backend_), 8>(),
+     {56, 8, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_backend_)}},
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 8;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.latency_tuner_profile_), 10>(),
-     {64, 10, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_profile_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.latency_tuner_profile_), 9>(),
+     {64, 9, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_profile_)}},
     // optional .rvpb.RvResamplerBackend resampler_backend = 9;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.resampler_backend_), 11>(),
-     {72, 11, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_backend_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.resampler_backend_), 10>(),
+     {72, 10, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_backend_)}},
     // optional .rvpb.RvResamplerProfile resampler_profile = 10;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.resampler_profile_), 12>(),
-     {80, 12, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_profile_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvSenderConfig, _impl_.resampler_profile_), 11>(),
+     {80, 11, 0, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_profile_)}},
     // optional .google.protobuf.Duration target_latency = 11;
     {::_pbi::TcParser::FastMtS1,
      {90, 2, 2, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.target_latency_)}},
-    // optional .google.protobuf.Duration min_latency = 12;
+    {::_pbi::TcParser::MiniParse, {}},
+    // optional .google.protobuf.Duration latency_tolerance = 13;
     {::_pbi::TcParser::FastMtS1,
-     {98, 3, 3, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.min_latency_)}},
-    // optional .google.protobuf.Duration max_latency = 13;
-    {::_pbi::TcParser::FastMtS1,
-     {106, 4, 4, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.max_latency_)}},
+     {106, 3, 3, PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tolerance_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
@@ -3466,41 +3442,37 @@ const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
     {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_length_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional bool packet_interleaving = 3;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_interleaving_), _Internal::kHasBitsOffset + 5, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.packet_interleaving_), _Internal::kHasBitsOffset + 4, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kBool)},
     // optional .rvpb.RvFecEncoding fec_encoding = 4;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_encoding_), _Internal::kHasBitsOffset + 6, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_encoding_), _Internal::kHasBitsOffset + 5, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional uint32 fec_block_source_packets = 5;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_source_packets_), _Internal::kHasBitsOffset + 7, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_source_packets_), _Internal::kHasBitsOffset + 6, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // optional uint32 fec_block_repair_packets = 6;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_repair_packets_), _Internal::kHasBitsOffset + 8, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.fec_block_repair_packets_), _Internal::kHasBitsOffset + 7, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 7;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_backend_), _Internal::kHasBitsOffset + 9, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_backend_), _Internal::kHasBitsOffset + 8, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 8;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_profile_), _Internal::kHasBitsOffset + 10, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tuner_profile_), _Internal::kHasBitsOffset + 9, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvResamplerBackend resampler_backend = 9;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_backend_), _Internal::kHasBitsOffset + 11, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_backend_), _Internal::kHasBitsOffset + 10, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvResamplerProfile resampler_profile = 10;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_profile_), _Internal::kHasBitsOffset + 12, 0,
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.resampler_profile_), _Internal::kHasBitsOffset + 11, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .google.protobuf.Duration target_latency = 11;
     {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.target_latency_), _Internal::kHasBitsOffset + 2, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .google.protobuf.Duration min_latency = 12;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.min_latency_), _Internal::kHasBitsOffset + 3, 3,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .google.protobuf.Duration max_latency = 13;
-    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.max_latency_), _Internal::kHasBitsOffset + 4, 4,
+    // optional .google.protobuf.Duration latency_tolerance = 13;
+    {PROTOBUF_FIELD_OFFSET(RvSenderConfig, _impl_.latency_tolerance_), _Internal::kHasBitsOffset + 3, 3,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::rvpb::RvPacketEncoding>()},
-    {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
@@ -3529,56 +3501,56 @@ const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
   }
 
   // optional bool packet_interleaving = 3;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteBoolToArray(
         3, this->_internal_packet_interleaving(), target);
   }
 
   // optional .rvpb.RvFecEncoding fec_encoding = 4;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         4, this->_internal_fec_encoding(), target);
   }
 
   // optional uint32 fec_block_source_packets = 5;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
         5, this->_internal_fec_block_source_packets(), target);
   }
 
   // optional uint32 fec_block_repair_packets = 6;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
         6, this->_internal_fec_block_repair_packets(), target);
   }
 
   // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 7;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000100u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         7, this->_internal_latency_tuner_backend(), target);
   }
 
   // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 8;
-  if (cached_has_bits & 0x00000400u) {
+  if (cached_has_bits & 0x00000200u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         8, this->_internal_latency_tuner_profile(), target);
   }
 
   // optional .rvpb.RvResamplerBackend resampler_backend = 9;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00000400u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         9, this->_internal_resampler_backend(), target);
   }
 
   // optional .rvpb.RvResamplerProfile resampler_profile = 10;
-  if (cached_has_bits & 0x00001000u) {
+  if (cached_has_bits & 0x00000800u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         10, this->_internal_resampler_profile(), target);
@@ -3590,16 +3562,10 @@ const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
         11, *_impl_.target_latency_, _impl_.target_latency_->GetCachedSize(), target, stream);
   }
 
-  // optional .google.protobuf.Duration min_latency = 12;
+  // optional .google.protobuf.Duration latency_tolerance = 13;
   if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        12, *_impl_.min_latency_, _impl_.min_latency_->GetCachedSize(), target, stream);
-  }
-
-  // optional .google.protobuf.Duration max_latency = 13;
-  if (cached_has_bits & 0x00000010u) {
-    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        13, *_impl_.max_latency_, _impl_.max_latency_->GetCachedSize(), target, stream);
+        13, *_impl_.latency_tolerance_, _impl_.latency_tolerance_->GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3639,63 +3605,57 @@ const ::_pbi::TcParseTable<4, 13, 5, 0, 2> RvSenderConfig::_table_ = {
           1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.target_latency_);
     }
 
-    // optional .google.protobuf.Duration min_latency = 12;
+    // optional .google.protobuf.Duration latency_tolerance = 13;
     if (cached_has_bits & 0x00000008u) {
       total_size +=
-          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.min_latency_);
-    }
-
-    // optional .google.protobuf.Duration max_latency = 13;
-    if (cached_has_bits & 0x00000010u) {
-      total_size +=
-          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.max_latency_);
+          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.latency_tolerance_);
     }
 
     // optional bool packet_interleaving = 3;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 2;
     }
 
     // optional .rvpb.RvFecEncoding fec_encoding = 4;
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_fec_encoding());
     }
 
     // optional uint32 fec_block_source_packets = 5;
-    if (cached_has_bits & 0x00000080u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this->_internal_fec_block_source_packets());
     }
 
-  }
-  if (cached_has_bits & 0x00001f00u) {
     // optional uint32 fec_block_repair_packets = 6;
-    if (cached_has_bits & 0x00000100u) {
+    if (cached_has_bits & 0x00000080u) {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this->_internal_fec_block_repair_packets());
     }
 
+  }
+  if (cached_has_bits & 0x00000f00u) {
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 7;
-    if (cached_has_bits & 0x00000200u) {
+    if (cached_has_bits & 0x00000100u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_latency_tuner_backend());
     }
 
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 8;
-    if (cached_has_bits & 0x00000400u) {
+    if (cached_has_bits & 0x00000200u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_latency_tuner_profile());
     }
 
     // optional .rvpb.RvResamplerBackend resampler_backend = 9;
-    if (cached_has_bits & 0x00000800u) {
+    if (cached_has_bits & 0x00000400u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_resampler_backend());
     }
 
     // optional .rvpb.RvResamplerProfile resampler_profile = 10;
-    if (cached_has_bits & 0x00001000u) {
+    if (cached_has_bits & 0x00000800u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_resampler_profile());
     }
@@ -3744,47 +3704,38 @@ void RvSenderConfig::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::
       }
     }
     if (cached_has_bits & 0x00000008u) {
-      ABSL_DCHECK(from._impl_.min_latency_ != nullptr);
-      if (_this->_impl_.min_latency_ == nullptr) {
-        _this->_impl_.min_latency_ =
-            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.min_latency_);
+      ABSL_DCHECK(from._impl_.latency_tolerance_ != nullptr);
+      if (_this->_impl_.latency_tolerance_ == nullptr) {
+        _this->_impl_.latency_tolerance_ =
+            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.latency_tolerance_);
       } else {
-        _this->_impl_.min_latency_->MergeFrom(*from._impl_.min_latency_);
+        _this->_impl_.latency_tolerance_->MergeFrom(*from._impl_.latency_tolerance_);
       }
     }
     if (cached_has_bits & 0x00000010u) {
-      ABSL_DCHECK(from._impl_.max_latency_ != nullptr);
-      if (_this->_impl_.max_latency_ == nullptr) {
-        _this->_impl_.max_latency_ =
-            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.max_latency_);
-      } else {
-        _this->_impl_.max_latency_->MergeFrom(*from._impl_.max_latency_);
-      }
-    }
-    if (cached_has_bits & 0x00000020u) {
       _this->_impl_.packet_interleaving_ = from._impl_.packet_interleaving_;
     }
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000020u) {
       _this->_impl_.fec_encoding_ = from._impl_.fec_encoding_;
     }
-    if (cached_has_bits & 0x00000080u) {
+    if (cached_has_bits & 0x00000040u) {
       _this->_impl_.fec_block_source_packets_ = from._impl_.fec_block_source_packets_;
     }
-  }
-  if (cached_has_bits & 0x00001f00u) {
-    if (cached_has_bits & 0x00000100u) {
+    if (cached_has_bits & 0x00000080u) {
       _this->_impl_.fec_block_repair_packets_ = from._impl_.fec_block_repair_packets_;
     }
-    if (cached_has_bits & 0x00000200u) {
+  }
+  if (cached_has_bits & 0x00000f00u) {
+    if (cached_has_bits & 0x00000100u) {
       _this->_impl_.latency_tuner_backend_ = from._impl_.latency_tuner_backend_;
     }
-    if (cached_has_bits & 0x00000400u) {
+    if (cached_has_bits & 0x00000200u) {
       _this->_impl_.latency_tuner_profile_ = from._impl_.latency_tuner_profile_;
     }
-    if (cached_has_bits & 0x00000800u) {
+    if (cached_has_bits & 0x00000400u) {
       _this->_impl_.resampler_backend_ = from._impl_.resampler_backend_;
     }
-    if (cached_has_bits & 0x00001000u) {
+    if (cached_has_bits & 0x00000800u) {
       _this->_impl_.resampler_profile_ = from._impl_.resampler_profile_;
     }
   }
@@ -3834,25 +3785,20 @@ void RvReceiverConfig::clear_target_latency() {
   if (_impl_.target_latency_ != nullptr) _impl_.target_latency_->Clear();
   _impl_._has_bits_[0] &= ~0x00000001u;
 }
-void RvReceiverConfig::clear_min_latency() {
+void RvReceiverConfig::clear_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.min_latency_ != nullptr) _impl_.min_latency_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000002u;
-}
-void RvReceiverConfig::clear_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.max_latency_ != nullptr) _impl_.max_latency_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000004u;
+  if (_impl_.latency_tolerance_ != nullptr) _impl_.latency_tolerance_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000008u;
 }
 void RvReceiverConfig::clear_no_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.no_playback_timeout_ != nullptr) _impl_.no_playback_timeout_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
 }
 void RvReceiverConfig::clear_choppy_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (_impl_.choppy_playback_timeout_ != nullptr) _impl_.choppy_playback_timeout_->Clear();
-  _impl_._has_bits_[0] &= ~0x00000010u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
 }
 RvReceiverConfig::RvReceiverConfig(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
@@ -3879,17 +3825,14 @@ RvReceiverConfig::RvReceiverConfig(
   _impl_.target_latency_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
                               arena, *from._impl_.target_latency_)
                         : nullptr;
-  _impl_.min_latency_ = (cached_has_bits & 0x00000002u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
-                              arena, *from._impl_.min_latency_)
-                        : nullptr;
-  _impl_.max_latency_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
-                              arena, *from._impl_.max_latency_)
-                        : nullptr;
-  _impl_.no_playback_timeout_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
+  _impl_.no_playback_timeout_ = (cached_has_bits & 0x00000002u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
                               arena, *from._impl_.no_playback_timeout_)
                         : nullptr;
-  _impl_.choppy_playback_timeout_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
+  _impl_.choppy_playback_timeout_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
                               arena, *from._impl_.choppy_playback_timeout_)
+                        : nullptr;
+  _impl_.latency_tolerance_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(
+                              arena, *from._impl_.latency_tolerance_)
                         : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, latency_tuner_backend_),
@@ -3924,10 +3867,9 @@ RvReceiverConfig::~RvReceiverConfig() {
 inline void RvReceiverConfig::SharedDtor() {
   ABSL_DCHECK(GetArena() == nullptr);
   delete _impl_.target_latency_;
-  delete _impl_.min_latency_;
-  delete _impl_.max_latency_;
   delete _impl_.no_playback_timeout_;
   delete _impl_.choppy_playback_timeout_;
+  delete _impl_.latency_tolerance_;
   _impl_.~Impl_();
 }
 
@@ -3954,34 +3896,29 @@ PROTOBUF_NOINLINE void RvReceiverConfig::Clear() {
 
   _impl_.packet_encodings_.Clear();
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       ABSL_DCHECK(_impl_.target_latency_ != nullptr);
       _impl_.target_latency_->Clear();
     }
     if (cached_has_bits & 0x00000002u) {
-      ABSL_DCHECK(_impl_.min_latency_ != nullptr);
-      _impl_.min_latency_->Clear();
-    }
-    if (cached_has_bits & 0x00000004u) {
-      ABSL_DCHECK(_impl_.max_latency_ != nullptr);
-      _impl_.max_latency_->Clear();
-    }
-    if (cached_has_bits & 0x00000008u) {
       ABSL_DCHECK(_impl_.no_playback_timeout_ != nullptr);
       _impl_.no_playback_timeout_->Clear();
     }
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000004u) {
       ABSL_DCHECK(_impl_.choppy_playback_timeout_ != nullptr);
       _impl_.choppy_playback_timeout_->Clear();
     }
+    if (cached_has_bits & 0x00000008u) {
+      ABSL_DCHECK(_impl_.latency_tolerance_ != nullptr);
+      _impl_.latency_tolerance_->Clear();
+    }
   }
-  if (cached_has_bits & 0x000000e0u) {
+  if (cached_has_bits & 0x000000f0u) {
     ::memset(&_impl_.latency_tuner_backend_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.resampler_backend_) -
-        reinterpret_cast<char*>(&_impl_.latency_tuner_backend_)) + sizeof(_impl_.resampler_backend_));
+        reinterpret_cast<char*>(&_impl_.resampler_profile_) -
+        reinterpret_cast<char*>(&_impl_.latency_tuner_backend_)) + sizeof(_impl_.resampler_profile_));
   }
-  _impl_.resampler_profile_ = 0;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -3994,16 +3931,16 @@ const char* RvReceiverConfig::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
+const ::_pbi::TcParseTable<4, 9, 5, 0, 2> RvReceiverConfig::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_._has_bits_),
     0, // no _extensions_
-    10, 120,  // max_field_number, fast_idx_mask
+    11, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966272,  // skipmap
+    4294965440,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
-    6,  // num_aux_entries
+    9,  // num_field_entries
+    5,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_RvReceiverConfig_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -4016,33 +3953,31 @@ const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
     {::_pbi::TcParser::FastMtR1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.packet_encodings_)}},
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.latency_tuner_backend_), 5>(),
-     {16, 5, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_backend_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.latency_tuner_backend_), 4>(),
+     {16, 4, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_backend_)}},
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.latency_tuner_profile_), 6>(),
-     {24, 6, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_profile_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.latency_tuner_profile_), 5>(),
+     {24, 5, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_profile_)}},
     // optional .rvpb.RvResamplerBackend resampler_backend = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.resampler_backend_), 7>(),
-     {32, 7, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_backend_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.resampler_backend_), 6>(),
+     {32, 6, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_backend_)}},
     // optional .rvpb.RvResamplerProfile resampler_profile = 5;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.resampler_profile_), 8>(),
-     {40, 8, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_profile_)}},
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvReceiverConfig, _impl_.resampler_profile_), 7>(),
+     {40, 7, 0, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_profile_)}},
     // optional .google.protobuf.Duration target_latency = 6;
     {::_pbi::TcParser::FastMtS1,
      {50, 0, 1, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.target_latency_)}},
-    // optional .google.protobuf.Duration min_latency = 7;
-    {::_pbi::TcParser::FastMtS1,
-     {58, 1, 2, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.min_latency_)}},
-    // optional .google.protobuf.Duration max_latency = 8;
-    {::_pbi::TcParser::FastMtS1,
-     {66, 2, 3, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.max_latency_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
     // optional .google.protobuf.Duration no_playback_timeout = 9;
     {::_pbi::TcParser::FastMtS1,
-     {74, 3, 4, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.no_playback_timeout_)}},
+     {74, 1, 2, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.no_playback_timeout_)}},
     // optional .google.protobuf.Duration choppy_playback_timeout = 10;
     {::_pbi::TcParser::FastMtS1,
-     {82, 4, 5, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.choppy_playback_timeout_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {82, 2, 3, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.choppy_playback_timeout_)}},
+    // optional .google.protobuf.Duration latency_tolerance = 11;
+    {::_pbi::TcParser::FastMtS1,
+     {90, 3, 4, PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tolerance_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -4054,35 +3989,31 @@ const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
     {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.packet_encodings_), -1, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_backend_), _Internal::kHasBitsOffset + 5, 0,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_backend_), _Internal::kHasBitsOffset + 4, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 3;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_profile_), _Internal::kHasBitsOffset + 6, 0,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tuner_profile_), _Internal::kHasBitsOffset + 5, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvResamplerBackend resampler_backend = 4;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_backend_), _Internal::kHasBitsOffset + 7, 0,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_backend_), _Internal::kHasBitsOffset + 6, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .rvpb.RvResamplerProfile resampler_profile = 5;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_profile_), _Internal::kHasBitsOffset + 8, 0,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.resampler_profile_), _Internal::kHasBitsOffset + 7, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional .google.protobuf.Duration target_latency = 6;
     {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.target_latency_), _Internal::kHasBitsOffset + 0, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .google.protobuf.Duration min_latency = 7;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.min_latency_), _Internal::kHasBitsOffset + 1, 2,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .google.protobuf.Duration max_latency = 8;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.max_latency_), _Internal::kHasBitsOffset + 2, 3,
-    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .google.protobuf.Duration no_playback_timeout = 9;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.no_playback_timeout_), _Internal::kHasBitsOffset + 3, 4,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.no_playback_timeout_), _Internal::kHasBitsOffset + 1, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .google.protobuf.Duration choppy_playback_timeout = 10;
-    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.choppy_playback_timeout_), _Internal::kHasBitsOffset + 4, 5,
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.choppy_playback_timeout_), _Internal::kHasBitsOffset + 2, 3,
+    (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // optional .google.protobuf.Duration latency_tolerance = 11;
+    {PROTOBUF_FIELD_OFFSET(RvReceiverConfig, _impl_.latency_tolerance_), _Internal::kHasBitsOffset + 3, 4,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::rvpb::RvPacketEncoding>()},
-    {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
@@ -4111,28 +4042,28 @@ const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
 
   cached_has_bits = _impl_._has_bits_[0];
   // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         2, this->_internal_latency_tuner_backend(), target);
   }
 
   // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 3;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         3, this->_internal_latency_tuner_profile(), target);
   }
 
   // optional .rvpb.RvResamplerBackend resampler_backend = 4;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         4, this->_internal_resampler_backend(), target);
   }
 
   // optional .rvpb.RvResamplerProfile resampler_profile = 5;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         5, this->_internal_resampler_profile(), target);
@@ -4144,28 +4075,22 @@ const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
         6, *_impl_.target_latency_, _impl_.target_latency_->GetCachedSize(), target, stream);
   }
 
-  // optional .google.protobuf.Duration min_latency = 7;
-  if (cached_has_bits & 0x00000002u) {
-    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        7, *_impl_.min_latency_, _impl_.min_latency_->GetCachedSize(), target, stream);
-  }
-
-  // optional .google.protobuf.Duration max_latency = 8;
-  if (cached_has_bits & 0x00000004u) {
-    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-        8, *_impl_.max_latency_, _impl_.max_latency_->GetCachedSize(), target, stream);
-  }
-
   // optional .google.protobuf.Duration no_playback_timeout = 9;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         9, *_impl_.no_playback_timeout_, _impl_.no_playback_timeout_->GetCachedSize(), target, stream);
   }
 
   // optional .google.protobuf.Duration choppy_playback_timeout = 10;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
         10, *_impl_.choppy_playback_timeout_, _impl_.choppy_playback_timeout_->GetCachedSize(), target, stream);
+  }
+
+  // optional .google.protobuf.Duration latency_tolerance = 11;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        11, *_impl_.latency_tolerance_, _impl_.latency_tolerance_->GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4198,55 +4123,49 @@ const ::_pbi::TcParseTable<4, 10, 6, 0, 2> RvReceiverConfig::_table_ = {
           1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.target_latency_);
     }
 
-    // optional .google.protobuf.Duration min_latency = 7;
-    if (cached_has_bits & 0x00000002u) {
-      total_size +=
-          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.min_latency_);
-    }
-
-    // optional .google.protobuf.Duration max_latency = 8;
-    if (cached_has_bits & 0x00000004u) {
-      total_size +=
-          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.max_latency_);
-    }
-
     // optional .google.protobuf.Duration no_playback_timeout = 9;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000002u) {
       total_size +=
           1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.no_playback_timeout_);
     }
 
     // optional .google.protobuf.Duration choppy_playback_timeout = 10;
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size +=
           1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.choppy_playback_timeout_);
     }
 
+    // optional .google.protobuf.Duration latency_tolerance = 11;
+    if (cached_has_bits & 0x00000008u) {
+      total_size +=
+          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.latency_tolerance_);
+    }
+
     // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_latency_tuner_backend());
     }
 
     // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 3;
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_latency_tuner_profile());
     }
 
     // optional .rvpb.RvResamplerBackend resampler_backend = 4;
-    if (cached_has_bits & 0x00000080u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_resampler_backend());
     }
 
-  }
-  // optional .rvpb.RvResamplerProfile resampler_profile = 5;
-  if (cached_has_bits & 0x00000100u) {
-    total_size += 1 +
-                  ::_pbi::WireFormatLite::EnumSize(this->_internal_resampler_profile());
-  }
+    // optional .rvpb.RvResamplerProfile resampler_profile = 5;
+    if (cached_has_bits & 0x00000080u) {
+      total_size += 1 +
+                    ::_pbi::WireFormatLite::EnumSize(this->_internal_resampler_profile());
+    }
 
+  }
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -4274,24 +4193,6 @@ void RvReceiverConfig::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
       }
     }
     if (cached_has_bits & 0x00000002u) {
-      ABSL_DCHECK(from._impl_.min_latency_ != nullptr);
-      if (_this->_impl_.min_latency_ == nullptr) {
-        _this->_impl_.min_latency_ =
-            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.min_latency_);
-      } else {
-        _this->_impl_.min_latency_->MergeFrom(*from._impl_.min_latency_);
-      }
-    }
-    if (cached_has_bits & 0x00000004u) {
-      ABSL_DCHECK(from._impl_.max_latency_ != nullptr);
-      if (_this->_impl_.max_latency_ == nullptr) {
-        _this->_impl_.max_latency_ =
-            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.max_latency_);
-      } else {
-        _this->_impl_.max_latency_->MergeFrom(*from._impl_.max_latency_);
-      }
-    }
-    if (cached_has_bits & 0x00000008u) {
       ABSL_DCHECK(from._impl_.no_playback_timeout_ != nullptr);
       if (_this->_impl_.no_playback_timeout_ == nullptr) {
         _this->_impl_.no_playback_timeout_ =
@@ -4300,7 +4201,7 @@ void RvReceiverConfig::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
         _this->_impl_.no_playback_timeout_->MergeFrom(*from._impl_.no_playback_timeout_);
       }
     }
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000004u) {
       ABSL_DCHECK(from._impl_.choppy_playback_timeout_ != nullptr);
       if (_this->_impl_.choppy_playback_timeout_ == nullptr) {
         _this->_impl_.choppy_playback_timeout_ =
@@ -4309,18 +4210,27 @@ void RvReceiverConfig::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
         _this->_impl_.choppy_playback_timeout_->MergeFrom(*from._impl_.choppy_playback_timeout_);
       }
     }
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000008u) {
+      ABSL_DCHECK(from._impl_.latency_tolerance_ != nullptr);
+      if (_this->_impl_.latency_tolerance_ == nullptr) {
+        _this->_impl_.latency_tolerance_ =
+            ::google::protobuf::Message::CopyConstruct<::google::protobuf::Duration>(arena, *from._impl_.latency_tolerance_);
+      } else {
+        _this->_impl_.latency_tolerance_->MergeFrom(*from._impl_.latency_tolerance_);
+      }
+    }
+    if (cached_has_bits & 0x00000010u) {
       _this->_impl_.latency_tuner_backend_ = from._impl_.latency_tuner_backend_;
     }
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000020u) {
       _this->_impl_.latency_tuner_profile_ = from._impl_.latency_tuner_profile_;
     }
-    if (cached_has_bits & 0x00000080u) {
+    if (cached_has_bits & 0x00000040u) {
       _this->_impl_.resampler_backend_ = from._impl_.resampler_backend_;
     }
-  }
-  if (cached_has_bits & 0x00000100u) {
-    _this->_impl_.resampler_profile_ = from._impl_.resampler_profile_;
+    if (cached_has_bits & 0x00000080u) {
+      _this->_impl_.resampler_profile_ = from._impl_.resampler_profile_;
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);

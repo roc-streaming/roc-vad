@@ -224,8 +224,7 @@ Parameters of receiver device.
 | resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
 | resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
 | target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Keep unset to use default. |
-| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Keep unset to use default. |
-| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Keep unset to use default. |
+| latency_tolerance | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum deviation of latency from target. Keep unset to disable. |
 | no_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for the lack of playback. Keep unset to use default. |
 | choppy_playback_timeout | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Timeout for choppy playback. Keep unset to use default. |
 
@@ -253,8 +252,7 @@ Parameters of sender device.
 | resampler_backend | [RvResamplerBackend](#rvpb-RvResamplerBackend) | optional | Resampling algorithm. Keep unset to use default. |
 | resampler_profile | [RvResamplerProfile](#rvpb-RvResamplerProfile) | optional | Resampling quality. Keep unset to use default. |
 | target_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Target latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
-| min_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Minimum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
-| max_latency | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum latency. Use only if you need sender-side latency tuning. Keep unset to disable. |
+| latency_tolerance | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Maximum deviation of latency from target. Use only if you need sender-side latency tuning. Keep unset to disable. |
 
 
 

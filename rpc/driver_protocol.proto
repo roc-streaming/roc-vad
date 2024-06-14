@@ -275,15 +275,10 @@ message RvSenderConfig
     // Keep unset to disable.
     optional google.protobuf.Duration target_latency = 11;
 
-    // Minimum latency.
+    // Maximum deviation of latency from target.
     // Use only if you need sender-side latency tuning.
     // Keep unset to disable.
-    optional google.protobuf.Duration min_latency = 12;
-
-    // Maximum latency.
-    // Use only if you need sender-side latency tuning.
-    // Keep unset to disable.
-    optional google.protobuf.Duration max_latency = 13;
+    optional google.protobuf.Duration latency_tolerance = 13;
 }
 
 // Parameters of receiver device.
@@ -316,13 +311,9 @@ message RvReceiverConfig
     // Keep unset to use default.
     optional google.protobuf.Duration target_latency = 6;
 
-    // Minimum latency.
-    // Keep unset to use default.
-    optional google.protobuf.Duration min_latency = 7;
-
-    // Maximum latency.
-    // Keep unset to use default.
-    optional google.protobuf.Duration max_latency = 8;
+    // Maximum deviation of latency from target.
+    // Keep unset to disable.
+    optional google.protobuf.Duration latency_tolerance = 11;
 
     // Timeout for the lack of playback.
     // Keep unset to use default.

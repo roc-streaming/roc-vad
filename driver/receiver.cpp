@@ -57,8 +57,7 @@ Receiver::Receiver(const std::string& device_uid,
     net_receiver_config.resampler_profile = device_receiver_config.resampler_profile;
 
     net_receiver_config.target_latency = device_receiver_config.target_latency_ns;
-    net_receiver_config.min_latency = device_receiver_config.min_latency_ns;
-    net_receiver_config.max_latency = device_receiver_config.max_latency_ns;
+    net_receiver_config.latency_tolerance = device_receiver_config.latency_tolerance_ns;
 
     net_receiver_config.no_playback_timeout =
         device_receiver_config.no_playback_timeout_ns;

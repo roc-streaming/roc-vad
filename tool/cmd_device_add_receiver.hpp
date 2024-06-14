@@ -43,8 +43,7 @@ private:
     std::optional<std::string> latency_tuner_profile_;
 
     std::optional<std::string> target_latency_;
-    std::optional<std::string> min_latency_;
-    std::optional<std::string> max_latency_;
+    std::optional<std::string> latency_tolerance_;
 
     std::optional<std::string> no_playback_timeout_;
     std::optional<std::string> choppy_playback_timeout_;

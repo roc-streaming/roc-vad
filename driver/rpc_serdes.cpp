@@ -228,16 +228,11 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 "RvSenderConfig.target_latency", in.sender_config().target_latency());
         }
 
-        // min_latency
-        if (in.sender_config().has_min_latency()) {
-            out.sender_config->min_latency_ns = nanoseconds_from_rpc(
-                "RvSenderConfig.min_latency", in.sender_config().min_latency());
-        }
-
-        // max_latency
-        if (in.sender_config().has_max_latency()) {
-            out.sender_config->max_latency_ns = nanoseconds_from_rpc(
-                "RvSenderConfig.max_latency", in.sender_config().max_latency());
+        // latency_tolerance
+        if (in.sender_config().has_latency_tolerance()) {
+            out.sender_config->latency_tolerance_ns =
+                nanoseconds_from_rpc("RvSenderConfig.latency_tolerance",
+                    in.sender_config().latency_tolerance());
         }
     }
 
@@ -289,16 +284,11 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 "RvReceiverConfig.target_latency", in.receiver_config().target_latency());
         }
 
-        // min_latency
-        if (in.receiver_config().has_min_latency()) {
-            out.receiver_config->min_latency_ns = nanoseconds_from_rpc(
-                "RvReceiverConfig.min_latency", in.receiver_config().min_latency());
-        }
-
-        // max_latency
-        if (in.receiver_config().has_max_latency()) {
-            out.receiver_config->max_latency_ns = nanoseconds_from_rpc(
-                "RvReceiverConfig.max_latency", in.receiver_config().max_latency());
+        // latency_tolerance
+        if (in.receiver_config().has_latency_tolerance()) {
+            out.receiver_config->latency_tolerance_ns =
+                nanoseconds_from_rpc("RvReceiverConfig.latency_tolerance",
+                    in.receiver_config().latency_tolerance());
         }
 
         // no_playback_timeout
@@ -417,13 +407,9 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
         *out.mutable_sender_config()->mutable_target_latency() = nanoseconds_to_rpc(
             "RvSenderConfig.target_latency", in.sender_config->target_latency_ns);
 
-        // min_latency
-        *out.mutable_sender_config()->mutable_min_latency() = nanoseconds_to_rpc(
-            "RvSenderConfig.min_latency", in.sender_config->min_latency_ns);
-
-        // max_latency
-        *out.mutable_sender_config()->mutable_max_latency() = nanoseconds_to_rpc(
-            "RvSenderConfig.max_latency", in.sender_config->max_latency_ns);
+        // latency_tolerance
+        *out.mutable_sender_config()->mutable_latency_tolerance() = nanoseconds_to_rpc(
+            "RvSenderConfig.latency_tolerance", in.sender_config->latency_tolerance_ns);
     }
 
     // receiver_config
@@ -468,13 +454,10 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
         *out.mutable_receiver_config()->mutable_target_latency() = nanoseconds_to_rpc(
             "RvReceiverConfig.target_latency", in.receiver_config->target_latency_ns);
 
-        // min_latency
-        *out.mutable_receiver_config()->mutable_min_latency() = nanoseconds_to_rpc(
-            "RvReceiverConfig.min_latency", in.receiver_config->min_latency_ns);
-
-        // max_latency
-        *out.mutable_receiver_config()->mutable_max_latency() = nanoseconds_to_rpc(
-            "RvReceiverConfig.max_latency", in.receiver_config->max_latency_ns);
+        // latency_tolerance
+        *out.mutable_receiver_config()->mutable_latency_tolerance() =
+            nanoseconds_to_rpc("RvReceiverConfig.latency_tolerance",
+                in.receiver_config->latency_tolerance_ns);
 
         // no_playback_timeout
         *out.mutable_receiver_config()->mutable_no_playback_timeout() =

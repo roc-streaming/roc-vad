@@ -109,10 +109,9 @@ CmdDeviceAddSender::CmdDeviceAddSender(CLI::App& parent)
         target_latency_,
         fmt::format("Target latency (number with one of the suffixes: {})",
             supported_duration_suffixes()));
-    latency_opts->add_option(
-        "--min-latency", min_latency_, "Minimum latency (same format)");
-    latency_opts->add_option(
-        "--max-latency", max_latency_, "Maximum latency (same format)");
+    latency_opts->add_option("--latency-tolerance",
+        latency_tolerance_,
+        "Maximum deviation of latency from target (same format)");
 
     register_command(command);
 }
@@ -279,17 +278,10 @@ bool CmdDeviceAddSender::execute(const Environment& env)
             return false;
         }
     }
-    if (min_latency_) {
-        if (!parse_duration("--min-latency",
-                *min_latency_,
-                *request.mutable_sender_config()->mutable_min_latency())) {
-            return false;
-        }
-    }
-    if (max_latency_) {
-        if (!parse_duration("--max-latency",
-                *max_latency_,
-                *request.mutable_sender_config()->mutable_max_latency())) {
+    if (latency_tolerance_) {
+        if (!parse_duration("--latency-tolerance",
+                *latency_tolerance_,
+                *request.mutable_sender_config()->mutable_latency_tolerance())) {
             return false;
         }
     }

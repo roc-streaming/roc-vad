@@ -471,8 +471,7 @@ When you create sender virtual device using `roc-vad device add sender`, the fol
 | --latency-backend        | disabled               | latency tuner backend (default, niq)                                        | for sender-side latency tuner |
 | --latency-profile        | disabled               | latency tuner profile (default, intact, responsive, gradual)                | for sender-side latency tuner |
 | --target-latency         | disabled               | target latency (e.g. 123ms)                                                 | for sender-side latency tuner |
-| --min-latency            | disabled               | minimum latency (e.g. 123ms)                                                | for sender-side latency tuner |
-| --max-latency            | disabled               | maximum latency (e.g. 123ms)                                                | for sender-side latency tuner |
+| --latency-tolerance      | disabled               | maximum latency deviation (e.g. 123ms)                                      | for sender-side latency tuner |
 
 ### Receiver options
 
@@ -494,8 +493,7 @@ When you create receiver virtual device using `roc-vad device add receiver`, the
 | --latency-backend        | selected automatically | latency tuner backend (default, niq)                                        |                             |
 | --latency-profile        | selected automatically | latency tuner profile (default, intact, responsive, gradual)                |                             |
 | --target-latency         | 200ms                  | target latency (e.g. 123ms)                                                 |                             |
-| --min-latency            | selected automatically | minimum latency (e.g. 123ms)                                                |                             |
-| --max-latency            | selected automatically | maximum latency (e.g. 123ms)                                                |                             |
+| --latency-tolerance      | selected automatically | maximum latency deviation (e.g. 123ms)                                      |                             |
 | --no-play-timeout        | selected automatically | no playback timeout (e.g. 123ms)                                            |                             |
 | --choppy-play-timeout    | selected automatically | choppy playback timeout (e.g. 123ms)                                        |                             |
 
@@ -582,8 +580,7 @@ Both sender and receiver latency is affected by `--device-buffer` option, which 
 Receiver-side parameters essential for latency are:
 
 * `--target-latency` - which latency should be maintained
-* `--min-latency` - which minimum latency causes session restart
-* `--max-latency` - which maximum latency causes session restart
+* `--latency-tolerance` - maximum allowed deviation of current latency from target
 
 You can also force specific latency tuner settings (by default they're auto-selected based on target latency):
 

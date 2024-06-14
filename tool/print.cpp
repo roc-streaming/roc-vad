@@ -95,12 +95,10 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
                 device_info.sender_config().latency_tuner_profile()));
 
         fmt::println("");
-        fmt::println("    target_latency:  {}",
+        fmt::println("    target_latency:     {}",
             format_duration(device_info.sender_config().target_latency()));
-        fmt::println("    min_latency:     {}",
-            format_duration(device_info.sender_config().min_latency()));
-        fmt::println("    max_latency:     {}",
-            format_duration(device_info.sender_config().max_latency()));
+        fmt::println("    latency_tolerance:  {}",
+            format_duration(device_info.sender_config().latency_tolerance()));
     }
 
     if (device_info.has_receiver_config()) {
@@ -128,12 +126,10 @@ void print_device_info(const rvpb::RvDeviceInfo& device_info)
                 device_info.receiver_config().latency_tuner_profile()));
 
         fmt::println("");
-        fmt::println("    target_latency:  {}",
+        fmt::println("    target_latency:    {}",
             format_duration(device_info.receiver_config().target_latency()));
-        fmt::println("    min_latency:     {}",
-            format_duration(device_info.receiver_config().min_latency()));
-        fmt::println("    max_latency:     {}",
-            format_duration(device_info.receiver_config().max_latency()));
+        fmt::println("    latency_tolerance:  {}",
+            format_duration(device_info.receiver_config().latency_tolerance()));
 
         fmt::println("");
         fmt::println("    no_play_timeout:      {}",

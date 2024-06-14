@@ -71,8 +71,7 @@ struct DeviceSenderConfig
     roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_DEFAULT;
 
     int64_t target_latency_ns = 0;
-    int64_t min_latency_ns = 0;
-    int64_t max_latency_ns = 0;
+    int64_t latency_tolerance_ns = 0;
 };
 
 // Network parameters of sender device.
@@ -87,8 +86,7 @@ struct DeviceReceiverConfig
     roc_resampler_profile resampler_profile = ROC_RESAMPLER_PROFILE_DEFAULT;
 
     int64_t target_latency_ns = 0;
-    int64_t min_latency_ns = 0;
-    int64_t max_latency_ns = 0;
+    int64_t latency_tolerance_ns = 0;
 
     int64_t no_playback_timeout_ns = 0;
     int64_t choppy_playback_timeout_ns = 0;

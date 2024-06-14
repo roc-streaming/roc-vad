@@ -1686,8 +1686,7 @@ class RvSenderConfig final : public ::google::protobuf::Message
     kPacketEncodingFieldNumber = 1,
     kPacketLengthFieldNumber = 2,
     kTargetLatencyFieldNumber = 11,
-    kMinLatencyFieldNumber = 12,
-    kMaxLatencyFieldNumber = 13,
+    kLatencyToleranceFieldNumber = 13,
     kPacketInterleavingFieldNumber = 3,
     kFecEncodingFieldNumber = 4,
     kFecBlockSourcePacketsFieldNumber = 5,
@@ -1742,34 +1741,19 @@ class RvSenderConfig final : public ::google::protobuf::Message
   ::google::protobuf::Duration* _internal_mutable_target_latency();
 
   public:
-  // optional .google.protobuf.Duration min_latency = 12;
-  bool has_min_latency() const;
-  void clear_min_latency() ;
-  const ::google::protobuf::Duration& min_latency() const;
-  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_min_latency();
-  ::google::protobuf::Duration* mutable_min_latency();
-  void set_allocated_min_latency(::google::protobuf::Duration* value);
-  void unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value);
-  ::google::protobuf::Duration* unsafe_arena_release_min_latency();
+  // optional .google.protobuf.Duration latency_tolerance = 13;
+  bool has_latency_tolerance() const;
+  void clear_latency_tolerance() ;
+  const ::google::protobuf::Duration& latency_tolerance() const;
+  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_latency_tolerance();
+  ::google::protobuf::Duration* mutable_latency_tolerance();
+  void set_allocated_latency_tolerance(::google::protobuf::Duration* value);
+  void unsafe_arena_set_allocated_latency_tolerance(::google::protobuf::Duration* value);
+  ::google::protobuf::Duration* unsafe_arena_release_latency_tolerance();
 
   private:
-  const ::google::protobuf::Duration& _internal_min_latency() const;
-  ::google::protobuf::Duration* _internal_mutable_min_latency();
-
-  public:
-  // optional .google.protobuf.Duration max_latency = 13;
-  bool has_max_latency() const;
-  void clear_max_latency() ;
-  const ::google::protobuf::Duration& max_latency() const;
-  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_max_latency();
-  ::google::protobuf::Duration* mutable_max_latency();
-  void set_allocated_max_latency(::google::protobuf::Duration* value);
-  void unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value);
-  ::google::protobuf::Duration* unsafe_arena_release_max_latency();
-
-  private:
-  const ::google::protobuf::Duration& _internal_max_latency() const;
-  ::google::protobuf::Duration* _internal_mutable_max_latency();
+  const ::google::protobuf::Duration& _internal_latency_tolerance() const;
+  ::google::protobuf::Duration* _internal_mutable_latency_tolerance();
 
   public:
   // optional bool packet_interleaving = 3;
@@ -1865,7 +1849,7 @@ class RvSenderConfig final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 13, 5,
+      4, 12, 4,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -1886,8 +1870,7 @@ class RvSenderConfig final : public ::google::protobuf::Message
     ::rvpb::RvPacketEncoding* packet_encoding_;
     ::google::protobuf::Duration* packet_length_;
     ::google::protobuf::Duration* target_latency_;
-    ::google::protobuf::Duration* min_latency_;
-    ::google::protobuf::Duration* max_latency_;
+    ::google::protobuf::Duration* latency_tolerance_;
     bool packet_interleaving_;
     int fec_encoding_;
     ::uint32_t fec_block_source_packets_;
@@ -2030,10 +2013,9 @@ class RvReceiverConfig final : public ::google::protobuf::Message
   enum : int {
     kPacketEncodingsFieldNumber = 1,
     kTargetLatencyFieldNumber = 6,
-    kMinLatencyFieldNumber = 7,
-    kMaxLatencyFieldNumber = 8,
     kNoPlaybackTimeoutFieldNumber = 9,
     kChoppyPlaybackTimeoutFieldNumber = 10,
+    kLatencyToleranceFieldNumber = 11,
     kLatencyTunerBackendFieldNumber = 2,
     kLatencyTunerProfileFieldNumber = 3,
     kResamplerBackendFieldNumber = 4,
@@ -2071,36 +2053,6 @@ class RvReceiverConfig final : public ::google::protobuf::Message
   ::google::protobuf::Duration* _internal_mutable_target_latency();
 
   public:
-  // optional .google.protobuf.Duration min_latency = 7;
-  bool has_min_latency() const;
-  void clear_min_latency() ;
-  const ::google::protobuf::Duration& min_latency() const;
-  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_min_latency();
-  ::google::protobuf::Duration* mutable_min_latency();
-  void set_allocated_min_latency(::google::protobuf::Duration* value);
-  void unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value);
-  ::google::protobuf::Duration* unsafe_arena_release_min_latency();
-
-  private:
-  const ::google::protobuf::Duration& _internal_min_latency() const;
-  ::google::protobuf::Duration* _internal_mutable_min_latency();
-
-  public:
-  // optional .google.protobuf.Duration max_latency = 8;
-  bool has_max_latency() const;
-  void clear_max_latency() ;
-  const ::google::protobuf::Duration& max_latency() const;
-  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_max_latency();
-  ::google::protobuf::Duration* mutable_max_latency();
-  void set_allocated_max_latency(::google::protobuf::Duration* value);
-  void unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value);
-  ::google::protobuf::Duration* unsafe_arena_release_max_latency();
-
-  private:
-  const ::google::protobuf::Duration& _internal_max_latency() const;
-  ::google::protobuf::Duration* _internal_mutable_max_latency();
-
-  public:
   // optional .google.protobuf.Duration no_playback_timeout = 9;
   bool has_no_playback_timeout() const;
   void clear_no_playback_timeout() ;
@@ -2129,6 +2081,21 @@ class RvReceiverConfig final : public ::google::protobuf::Message
   private:
   const ::google::protobuf::Duration& _internal_choppy_playback_timeout() const;
   ::google::protobuf::Duration* _internal_mutable_choppy_playback_timeout();
+
+  public:
+  // optional .google.protobuf.Duration latency_tolerance = 11;
+  bool has_latency_tolerance() const;
+  void clear_latency_tolerance() ;
+  const ::google::protobuf::Duration& latency_tolerance() const;
+  PROTOBUF_NODISCARD ::google::protobuf::Duration* release_latency_tolerance();
+  ::google::protobuf::Duration* mutable_latency_tolerance();
+  void set_allocated_latency_tolerance(::google::protobuf::Duration* value);
+  void unsafe_arena_set_allocated_latency_tolerance(::google::protobuf::Duration* value);
+  ::google::protobuf::Duration* unsafe_arena_release_latency_tolerance();
+
+  private:
+  const ::google::protobuf::Duration& _internal_latency_tolerance() const;
+  ::google::protobuf::Duration* _internal_mutable_latency_tolerance();
 
   public:
   // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
@@ -2180,7 +2147,7 @@ class RvReceiverConfig final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 10, 6,
+      4, 9, 5,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -2200,10 +2167,9 @@ class RvReceiverConfig final : public ::google::protobuf::Message
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::RepeatedPtrField< ::rvpb::RvPacketEncoding > packet_encodings_;
     ::google::protobuf::Duration* target_latency_;
-    ::google::protobuf::Duration* min_latency_;
-    ::google::protobuf::Duration* max_latency_;
     ::google::protobuf::Duration* no_playback_timeout_;
     ::google::protobuf::Duration* choppy_playback_timeout_;
+    ::google::protobuf::Duration* latency_tolerance_;
     int latency_tuner_backend_;
     int latency_tuner_profile_;
     int resampler_backend_;
@@ -5015,13 +4981,13 @@ inline void RvSenderConfig::set_allocated_packet_length(::google::protobuf::Dura
 
 // optional bool packet_interleaving = 3;
 inline bool RvSenderConfig::has_packet_interleaving() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_packet_interleaving() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.packet_interleaving_ = false;
-  _impl_._has_bits_[0] &= ~0x00000020u;
+  _impl_._has_bits_[0] &= ~0x00000010u;
 }
 inline bool RvSenderConfig::packet_interleaving() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.packet_interleaving)
@@ -5029,7 +4995,7 @@ inline bool RvSenderConfig::packet_interleaving() const {
 }
 inline void RvSenderConfig::set_packet_interleaving(bool value) {
   _internal_set_packet_interleaving(value);
-  _impl_._has_bits_[0] |= 0x00000020u;
+  _impl_._has_bits_[0] |= 0x00000010u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.packet_interleaving)
 }
 inline bool RvSenderConfig::_internal_packet_interleaving() const {
@@ -5043,13 +5009,13 @@ inline void RvSenderConfig::_internal_set_packet_interleaving(bool value) {
 
 // optional .rvpb.RvFecEncoding fec_encoding = 4;
 inline bool RvSenderConfig::has_fec_encoding() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_fec_encoding() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_encoding_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000040u;
+  _impl_._has_bits_[0] &= ~0x00000020u;
 }
 inline ::rvpb::RvFecEncoding RvSenderConfig::fec_encoding() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_encoding)
@@ -5057,7 +5023,7 @@ inline ::rvpb::RvFecEncoding RvSenderConfig::fec_encoding() const {
 }
 inline void RvSenderConfig::set_fec_encoding(::rvpb::RvFecEncoding value) {
   _internal_set_fec_encoding(value);
-  _impl_._has_bits_[0] |= 0x00000040u;
+  _impl_._has_bits_[0] |= 0x00000020u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_encoding)
 }
 inline ::rvpb::RvFecEncoding RvSenderConfig::_internal_fec_encoding() const {
@@ -5071,13 +5037,13 @@ inline void RvSenderConfig::_internal_set_fec_encoding(::rvpb::RvFecEncoding val
 
 // optional uint32 fec_block_source_packets = 5;
 inline bool RvSenderConfig::has_fec_block_source_packets() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_fec_block_source_packets() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_source_packets_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000080u;
+  _impl_._has_bits_[0] &= ~0x00000040u;
 }
 inline ::uint32_t RvSenderConfig::fec_block_source_packets() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_block_source_packets)
@@ -5085,7 +5051,7 @@ inline ::uint32_t RvSenderConfig::fec_block_source_packets() const {
 }
 inline void RvSenderConfig::set_fec_block_source_packets(::uint32_t value) {
   _internal_set_fec_block_source_packets(value);
-  _impl_._has_bits_[0] |= 0x00000080u;
+  _impl_._has_bits_[0] |= 0x00000040u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_block_source_packets)
 }
 inline ::uint32_t RvSenderConfig::_internal_fec_block_source_packets() const {
@@ -5099,13 +5065,13 @@ inline void RvSenderConfig::_internal_set_fec_block_source_packets(::uint32_t va
 
 // optional uint32 fec_block_repair_packets = 6;
 inline bool RvSenderConfig::has_fec_block_repair_packets() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_fec_block_repair_packets() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.fec_block_repair_packets_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000100u;
+  _impl_._has_bits_[0] &= ~0x00000080u;
 }
 inline ::uint32_t RvSenderConfig::fec_block_repair_packets() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.fec_block_repair_packets)
@@ -5113,7 +5079,7 @@ inline ::uint32_t RvSenderConfig::fec_block_repair_packets() const {
 }
 inline void RvSenderConfig::set_fec_block_repair_packets(::uint32_t value) {
   _internal_set_fec_block_repair_packets(value);
-  _impl_._has_bits_[0] |= 0x00000100u;
+  _impl_._has_bits_[0] |= 0x00000080u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.fec_block_repair_packets)
 }
 inline ::uint32_t RvSenderConfig::_internal_fec_block_repair_packets() const {
@@ -5127,13 +5093,13 @@ inline void RvSenderConfig::_internal_set_fec_block_repair_packets(::uint32_t va
 
 // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 7;
 inline bool RvSenderConfig::has_latency_tuner_backend() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000200u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_latency_tuner_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000200u;
+  _impl_._has_bits_[0] &= ~0x00000100u;
 }
 inline ::rvpb::RvLatencyTunerBackend RvSenderConfig::latency_tuner_backend() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.latency_tuner_backend)
@@ -5141,7 +5107,7 @@ inline ::rvpb::RvLatencyTunerBackend RvSenderConfig::latency_tuner_backend() con
 }
 inline void RvSenderConfig::set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   _internal_set_latency_tuner_backend(value);
-  _impl_._has_bits_[0] |= 0x00000200u;
+  _impl_._has_bits_[0] |= 0x00000100u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.latency_tuner_backend)
 }
 inline ::rvpb::RvLatencyTunerBackend RvSenderConfig::_internal_latency_tuner_backend() const {
@@ -5155,13 +5121,13 @@ inline void RvSenderConfig::_internal_set_latency_tuner_backend(::rvpb::RvLatenc
 
 // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 8;
 inline bool RvSenderConfig::has_latency_tuner_profile() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000400u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000200u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_latency_tuner_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000400u;
+  _impl_._has_bits_[0] &= ~0x00000200u;
 }
 inline ::rvpb::RvLatencyTunerProfile RvSenderConfig::latency_tuner_profile() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.latency_tuner_profile)
@@ -5169,7 +5135,7 @@ inline ::rvpb::RvLatencyTunerProfile RvSenderConfig::latency_tuner_profile() con
 }
 inline void RvSenderConfig::set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   _internal_set_latency_tuner_profile(value);
-  _impl_._has_bits_[0] |= 0x00000400u;
+  _impl_._has_bits_[0] |= 0x00000200u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.latency_tuner_profile)
 }
 inline ::rvpb::RvLatencyTunerProfile RvSenderConfig::_internal_latency_tuner_profile() const {
@@ -5183,13 +5149,13 @@ inline void RvSenderConfig::_internal_set_latency_tuner_profile(::rvpb::RvLatenc
 
 // optional .rvpb.RvResamplerBackend resampler_backend = 9;
 inline bool RvSenderConfig::has_resampler_backend() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000800u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_resampler_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000800u;
+  _impl_._has_bits_[0] &= ~0x00000400u;
 }
 inline ::rvpb::RvResamplerBackend RvSenderConfig::resampler_backend() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.resampler_backend)
@@ -5197,7 +5163,7 @@ inline ::rvpb::RvResamplerBackend RvSenderConfig::resampler_backend() const {
 }
 inline void RvSenderConfig::set_resampler_backend(::rvpb::RvResamplerBackend value) {
   _internal_set_resampler_backend(value);
-  _impl_._has_bits_[0] |= 0x00000800u;
+  _impl_._has_bits_[0] |= 0x00000400u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.resampler_backend)
 }
 inline ::rvpb::RvResamplerBackend RvSenderConfig::_internal_resampler_backend() const {
@@ -5211,13 +5177,13 @@ inline void RvSenderConfig::_internal_set_resampler_backend(::rvpb::RvResamplerB
 
 // optional .rvpb.RvResamplerProfile resampler_profile = 10;
 inline bool RvSenderConfig::has_resampler_profile() const {
-  bool value = (_impl_._has_bits_[0] & 0x00001000u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000800u) != 0;
   return value;
 }
 inline void RvSenderConfig::clear_resampler_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = 0;
-  _impl_._has_bits_[0] &= ~0x00001000u;
+  _impl_._has_bits_[0] &= ~0x00000800u;
 }
 inline ::rvpb::RvResamplerProfile RvSenderConfig::resampler_profile() const {
   // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.resampler_profile)
@@ -5225,7 +5191,7 @@ inline ::rvpb::RvResamplerProfile RvSenderConfig::resampler_profile() const {
 }
 inline void RvSenderConfig::set_resampler_profile(::rvpb::RvResamplerProfile value) {
   _internal_set_resampler_profile(value);
-  _impl_._has_bits_[0] |= 0x00001000u;
+  _impl_._has_bits_[0] |= 0x00000800u;
   // @@protoc_insertion_point(field_set:rvpb.RvSenderConfig.resampler_profile)
 }
 inline ::rvpb::RvResamplerProfile RvSenderConfig::_internal_resampler_profile() const {
@@ -5328,40 +5294,40 @@ inline void RvSenderConfig::set_allocated_target_latency(::google::protobuf::Dur
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.target_latency)
 }
 
-// optional .google.protobuf.Duration min_latency = 12;
-inline bool RvSenderConfig::has_min_latency() const {
+// optional .google.protobuf.Duration latency_tolerance = 13;
+inline bool RvSenderConfig::has_latency_tolerance() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.min_latency_ != nullptr);
+  PROTOBUF_ASSUME(!value || _impl_.latency_tolerance_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& RvSenderConfig::_internal_min_latency() const {
+inline const ::google::protobuf::Duration& RvSenderConfig::_internal_latency_tolerance() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::google::protobuf::Duration* p = _impl_.min_latency_;
+  const ::google::protobuf::Duration* p = _impl_.latency_tolerance_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& RvSenderConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.min_latency)
-  return _internal_min_latency();
+inline const ::google::protobuf::Duration& RvSenderConfig::latency_tolerance() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.latency_tolerance)
+  return _internal_latency_tolerance();
 }
-inline void RvSenderConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::unsafe_arena_set_allocated_latency_tolerance(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.latency_tolerance_);
   }
-  _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
+  _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000008u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.latency_tolerance)
 }
-inline ::google::protobuf::Duration* RvSenderConfig::release_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::release_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::google::protobuf::Duration* released = _impl_.min_latency_;
-  _impl_.min_latency_ = nullptr;
+  ::google::protobuf::Duration* released = _impl_.latency_tolerance_;
+  _impl_.latency_tolerance_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
   released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -5375,34 +5341,34 @@ inline ::google::protobuf::Duration* RvSenderConfig::release_min_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.min_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.latency_tolerance)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::google::protobuf::Duration* temp = _impl_.min_latency_;
-  _impl_.min_latency_ = nullptr;
+  ::google::protobuf::Duration* temp = _impl_.latency_tolerance_;
+  _impl_.latency_tolerance_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_min_latency() {
+inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.min_latency_ == nullptr) {
+  if (_impl_.latency_tolerance_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
-    _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(p);
+    _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(p);
   }
-  return _impl_.min_latency_;
+  return _impl_.latency_tolerance_;
 }
-inline ::google::protobuf::Duration* RvSenderConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::google::protobuf::Duration* RvSenderConfig::mutable_latency_tolerance() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
-  ::google::protobuf::Duration* _msg = _internal_mutable_min_latency();
-  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.min_latency)
+  ::google::protobuf::Duration* _msg = _internal_mutable_latency_tolerance();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.latency_tolerance)
   return _msg;
 }
-inline void RvSenderConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvSenderConfig::set_allocated_latency_tolerance(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.latency_tolerance_);
   }
 
   if (value != nullptr) {
@@ -5415,99 +5381,8 @@ inline void RvSenderConfig::set_allocated_min_latency(::google::protobuf::Durati
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
-  _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.min_latency)
-}
-
-// optional .google.protobuf.Duration max_latency = 13;
-inline bool RvSenderConfig::has_max_latency() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.max_latency_ != nullptr);
-  return value;
-}
-inline const ::google::protobuf::Duration& RvSenderConfig::_internal_max_latency() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::google::protobuf::Duration* p = _impl_.max_latency_;
-  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
-}
-inline const ::google::protobuf::Duration& RvSenderConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rvpb.RvSenderConfig.max_latency)
-  return _internal_max_latency();
-}
-inline void RvSenderConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
-  }
-  _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000010u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000010u;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvSenderConfig.max_latency)
-}
-inline ::google::protobuf::Duration* RvSenderConfig::release_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-
-  _impl_._has_bits_[0] &= ~0x00000010u;
-  ::google::protobuf::Duration* released = _impl_.max_latency_;
-  _impl_.max_latency_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
-  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-  if (GetArena() == nullptr) {
-    delete old;
-  }
-#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArena() != nullptr) {
-    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return released;
-}
-inline ::google::protobuf::Duration* RvSenderConfig::unsafe_arena_release_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rvpb.RvSenderConfig.max_latency)
-
-  _impl_._has_bits_[0] &= ~0x00000010u;
-  ::google::protobuf::Duration* temp = _impl_.max_latency_;
-  _impl_.max_latency_ = nullptr;
-  return temp;
-}
-inline ::google::protobuf::Duration* RvSenderConfig::_internal_mutable_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.max_latency_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
-    _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(p);
-  }
-  return _impl_.max_latency_;
-}
-inline ::google::protobuf::Duration* RvSenderConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000010u;
-  ::google::protobuf::Duration* _msg = _internal_mutable_max_latency();
-  // @@protoc_insertion_point(field_mutable:rvpb.RvSenderConfig.max_latency)
-  return _msg;
-}
-inline void RvSenderConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
-  }
-
-  if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
-    if (message_arena != submessage_arena) {
-      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
-    }
-    _impl_._has_bits_[0] |= 0x00000010u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000010u;
-  }
-
-  _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.max_latency)
+  _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvSenderConfig.latency_tolerance)
 }
 
 // -------------------------------------------------------------------
@@ -5565,13 +5440,13 @@ RvReceiverConfig::_internal_mutable_packet_encodings() {
 
 // optional .rvpb.RvLatencyTunerBackend latency_tuner_backend = 2;
 inline bool RvReceiverConfig::has_latency_tuner_backend() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline void RvReceiverConfig::clear_latency_tuner_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_backend_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000020u;
+  _impl_._has_bits_[0] &= ~0x00000010u;
 }
 inline ::rvpb::RvLatencyTunerBackend RvReceiverConfig::latency_tuner_backend() const {
   // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.latency_tuner_backend)
@@ -5579,7 +5454,7 @@ inline ::rvpb::RvLatencyTunerBackend RvReceiverConfig::latency_tuner_backend() c
 }
 inline void RvReceiverConfig::set_latency_tuner_backend(::rvpb::RvLatencyTunerBackend value) {
   _internal_set_latency_tuner_backend(value);
-  _impl_._has_bits_[0] |= 0x00000020u;
+  _impl_._has_bits_[0] |= 0x00000010u;
   // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.latency_tuner_backend)
 }
 inline ::rvpb::RvLatencyTunerBackend RvReceiverConfig::_internal_latency_tuner_backend() const {
@@ -5593,13 +5468,13 @@ inline void RvReceiverConfig::_internal_set_latency_tuner_backend(::rvpb::RvLate
 
 // optional .rvpb.RvLatencyTunerProfile latency_tuner_profile = 3;
 inline bool RvReceiverConfig::has_latency_tuner_profile() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline void RvReceiverConfig::clear_latency_tuner_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.latency_tuner_profile_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000040u;
+  _impl_._has_bits_[0] &= ~0x00000020u;
 }
 inline ::rvpb::RvLatencyTunerProfile RvReceiverConfig::latency_tuner_profile() const {
   // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.latency_tuner_profile)
@@ -5607,7 +5482,7 @@ inline ::rvpb::RvLatencyTunerProfile RvReceiverConfig::latency_tuner_profile() c
 }
 inline void RvReceiverConfig::set_latency_tuner_profile(::rvpb::RvLatencyTunerProfile value) {
   _internal_set_latency_tuner_profile(value);
-  _impl_._has_bits_[0] |= 0x00000040u;
+  _impl_._has_bits_[0] |= 0x00000020u;
   // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.latency_tuner_profile)
 }
 inline ::rvpb::RvLatencyTunerProfile RvReceiverConfig::_internal_latency_tuner_profile() const {
@@ -5621,13 +5496,13 @@ inline void RvReceiverConfig::_internal_set_latency_tuner_profile(::rvpb::RvLate
 
 // optional .rvpb.RvResamplerBackend resampler_backend = 4;
 inline bool RvReceiverConfig::has_resampler_backend() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline void RvReceiverConfig::clear_resampler_backend() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_backend_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000080u;
+  _impl_._has_bits_[0] &= ~0x00000040u;
 }
 inline ::rvpb::RvResamplerBackend RvReceiverConfig::resampler_backend() const {
   // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.resampler_backend)
@@ -5635,7 +5510,7 @@ inline ::rvpb::RvResamplerBackend RvReceiverConfig::resampler_backend() const {
 }
 inline void RvReceiverConfig::set_resampler_backend(::rvpb::RvResamplerBackend value) {
   _internal_set_resampler_backend(value);
-  _impl_._has_bits_[0] |= 0x00000080u;
+  _impl_._has_bits_[0] |= 0x00000040u;
   // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.resampler_backend)
 }
 inline ::rvpb::RvResamplerBackend RvReceiverConfig::_internal_resampler_backend() const {
@@ -5649,13 +5524,13 @@ inline void RvReceiverConfig::_internal_set_resampler_backend(::rvpb::RvResample
 
 // optional .rvpb.RvResamplerProfile resampler_profile = 5;
 inline bool RvReceiverConfig::has_resampler_profile() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline void RvReceiverConfig::clear_resampler_profile() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.resampler_profile_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000100u;
+  _impl_._has_bits_[0] &= ~0x00000080u;
 }
 inline ::rvpb::RvResamplerProfile RvReceiverConfig::resampler_profile() const {
   // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.resampler_profile)
@@ -5663,7 +5538,7 @@ inline ::rvpb::RvResamplerProfile RvReceiverConfig::resampler_profile() const {
 }
 inline void RvReceiverConfig::set_resampler_profile(::rvpb::RvResamplerProfile value) {
   _internal_set_resampler_profile(value);
-  _impl_._has_bits_[0] |= 0x00000100u;
+  _impl_._has_bits_[0] |= 0x00000080u;
   // @@protoc_insertion_point(field_set:rvpb.RvReceiverConfig.resampler_profile)
 }
 inline ::rvpb::RvResamplerProfile RvReceiverConfig::_internal_resampler_profile() const {
@@ -5766,40 +5641,40 @@ inline void RvReceiverConfig::set_allocated_target_latency(::google::protobuf::D
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.target_latency)
 }
 
-// optional .google.protobuf.Duration min_latency = 7;
-inline bool RvReceiverConfig::has_min_latency() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.min_latency_ != nullptr);
+// optional .google.protobuf.Duration latency_tolerance = 11;
+inline bool RvReceiverConfig::has_latency_tolerance() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.latency_tolerance_ != nullptr);
   return value;
 }
-inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_min_latency() const {
+inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_latency_tolerance() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::google::protobuf::Duration* p = _impl_.min_latency_;
+  const ::google::protobuf::Duration* p = _impl_.latency_tolerance_;
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
 }
-inline const ::google::protobuf::Duration& RvReceiverConfig::min_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.min_latency)
-  return _internal_min_latency();
+inline const ::google::protobuf::Duration& RvReceiverConfig::latency_tolerance() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.latency_tolerance)
+  return _internal_latency_tolerance();
 }
-inline void RvReceiverConfig::unsafe_arena_set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::unsafe_arena_set_allocated_latency_tolerance(::google::protobuf::Duration* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.latency_tolerance_);
   }
-  _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
+  _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.latency_tolerance)
 }
-inline ::google::protobuf::Duration* RvReceiverConfig::release_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::release_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
-  ::google::protobuf::Duration* released = _impl_.min_latency_;
-  _impl_.min_latency_ = nullptr;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::google::protobuf::Duration* released = _impl_.latency_tolerance_;
+  _impl_.latency_tolerance_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
   released = ::google::protobuf::internal::DuplicateIfNonNull(released);
@@ -5813,34 +5688,34 @@ inline ::google::protobuf::Duration* RvReceiverConfig::release_min_latency() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return released;
 }
-inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.min_latency)
+  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.latency_tolerance)
 
-  _impl_._has_bits_[0] &= ~0x00000002u;
-  ::google::protobuf::Duration* temp = _impl_.min_latency_;
-  _impl_.min_latency_ = nullptr;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::google::protobuf::Duration* temp = _impl_.latency_tolerance_;
+  _impl_.latency_tolerance_ = nullptr;
   return temp;
 }
-inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_min_latency() {
+inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_latency_tolerance() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.min_latency_ == nullptr) {
+  if (_impl_.latency_tolerance_ == nullptr) {
     auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
-    _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(p);
+    _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(p);
   }
-  return _impl_.min_latency_;
+  return _impl_.latency_tolerance_;
 }
-inline ::google::protobuf::Duration* RvReceiverConfig::mutable_min_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000002u;
-  ::google::protobuf::Duration* _msg = _internal_mutable_min_latency();
-  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.min_latency)
+inline ::google::protobuf::Duration* RvReceiverConfig::mutable_latency_tolerance() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000008u;
+  ::google::protobuf::Duration* _msg = _internal_mutable_latency_tolerance();
+  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.latency_tolerance)
   return _msg;
 }
-inline void RvReceiverConfig::set_allocated_min_latency(::google::protobuf::Duration* value) {
+inline void RvReceiverConfig::set_allocated_latency_tolerance(::google::protobuf::Duration* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.min_latency_);
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.latency_tolerance_);
   }
 
   if (value != nullptr) {
@@ -5848,109 +5723,18 @@ inline void RvReceiverConfig::set_allocated_min_latency(::google::protobuf::Dura
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000002u;
+    _impl_._has_bits_[0] |= 0x00000008u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000002u;
+    _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
-  _impl_.min_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.min_latency)
-}
-
-// optional .google.protobuf.Duration max_latency = 8;
-inline bool RvReceiverConfig::has_max_latency() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
-  PROTOBUF_ASSUME(!value || _impl_.max_latency_ != nullptr);
-  return value;
-}
-inline const ::google::protobuf::Duration& RvReceiverConfig::_internal_max_latency() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  const ::google::protobuf::Duration* p = _impl_.max_latency_;
-  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Duration&>(::google::protobuf::_Duration_default_instance_);
-}
-inline const ::google::protobuf::Duration& RvReceiverConfig::max_latency() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:rvpb.RvReceiverConfig.max_latency)
-  return _internal_max_latency();
-}
-inline void RvReceiverConfig::unsafe_arena_set_allocated_max_latency(::google::protobuf::Duration* value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
-  }
-  _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000004u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.max_latency)
-}
-inline ::google::protobuf::Duration* RvReceiverConfig::release_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::google::protobuf::Duration* released = _impl_.max_latency_;
-  _impl_.max_latency_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
-  released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-  if (GetArena() == nullptr) {
-    delete old;
-  }
-#else   // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArena() != nullptr) {
-    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return released;
-}
-inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.max_latency)
-
-  _impl_._has_bits_[0] &= ~0x00000004u;
-  ::google::protobuf::Duration* temp = _impl_.max_latency_;
-  _impl_.max_latency_ = nullptr;
-  return temp;
-}
-inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_max_latency() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (_impl_.max_latency_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Duration>(GetArena());
-    _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(p);
-  }
-  return _impl_.max_latency_;
-}
-inline ::google::protobuf::Duration* RvReceiverConfig::mutable_max_latency() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000004u;
-  ::google::protobuf::Duration* _msg = _internal_mutable_max_latency();
-  // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.max_latency)
-  return _msg;
-}
-inline void RvReceiverConfig::set_allocated_max_latency(::google::protobuf::Duration* value) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (message_arena == nullptr) {
-    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.max_latency_);
-  }
-
-  if (value != nullptr) {
-    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
-    if (message_arena != submessage_arena) {
-      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
-    }
-    _impl_._has_bits_[0] |= 0x00000004u;
-  } else {
-    _impl_._has_bits_[0] &= ~0x00000004u;
-  }
-
-  _impl_.max_latency_ = reinterpret_cast<::google::protobuf::Duration*>(value);
-  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.max_latency)
+  _impl_.latency_tolerance_ = reinterpret_cast<::google::protobuf::Duration*>(value);
+  // @@protoc_insertion_point(field_set_allocated:rvpb.RvReceiverConfig.latency_tolerance)
 }
 
 // optional .google.protobuf.Duration no_playback_timeout = 9;
 inline bool RvReceiverConfig::has_no_playback_timeout() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.no_playback_timeout_ != nullptr);
   return value;
 }
@@ -5970,16 +5754,16 @@ inline void RvReceiverConfig::unsafe_arena_set_allocated_no_playback_timeout(::g
   }
   _impl_.no_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000008u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000008u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.no_playback_timeout)
 }
 inline ::google::protobuf::Duration* RvReceiverConfig::release_no_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::google::protobuf::Duration* released = _impl_.no_playback_timeout_;
   _impl_.no_playback_timeout_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
@@ -5999,7 +5783,7 @@ inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_no_p
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.no_playback_timeout)
 
-  _impl_._has_bits_[0] &= ~0x00000008u;
+  _impl_._has_bits_[0] &= ~0x00000002u;
   ::google::protobuf::Duration* temp = _impl_.no_playback_timeout_;
   _impl_.no_playback_timeout_ = nullptr;
   return temp;
@@ -6013,7 +5797,7 @@ inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_no_play
   return _impl_.no_playback_timeout_;
 }
 inline ::google::protobuf::Duration* RvReceiverConfig::mutable_no_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000008u;
+  _impl_._has_bits_[0] |= 0x00000002u;
   ::google::protobuf::Duration* _msg = _internal_mutable_no_playback_timeout();
   // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.no_playback_timeout)
   return _msg;
@@ -6030,9 +5814,9 @@ inline void RvReceiverConfig::set_allocated_no_playback_timeout(::google::protob
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000008u;
+    _impl_._has_bits_[0] |= 0x00000002u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000008u;
+    _impl_._has_bits_[0] &= ~0x00000002u;
   }
 
   _impl_.no_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);
@@ -6041,7 +5825,7 @@ inline void RvReceiverConfig::set_allocated_no_playback_timeout(::google::protob
 
 // optional .google.protobuf.Duration choppy_playback_timeout = 10;
 inline bool RvReceiverConfig::has_choppy_playback_timeout() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.choppy_playback_timeout_ != nullptr);
   return value;
 }
@@ -6061,16 +5845,16 @@ inline void RvReceiverConfig::unsafe_arena_set_allocated_choppy_playback_timeout
   }
   _impl_.choppy_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);
   if (value != nullptr) {
-    _impl_._has_bits_[0] |= 0x00000010u;
+    _impl_._has_bits_[0] |= 0x00000004u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000010u;
+    _impl_._has_bits_[0] &= ~0x00000004u;
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rvpb.RvReceiverConfig.choppy_playback_timeout)
 }
 inline ::google::protobuf::Duration* RvReceiverConfig::release_choppy_playback_timeout() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
 
-  _impl_._has_bits_[0] &= ~0x00000010u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
   ::google::protobuf::Duration* released = _impl_.choppy_playback_timeout_;
   _impl_.choppy_playback_timeout_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
@@ -6090,7 +5874,7 @@ inline ::google::protobuf::Duration* RvReceiverConfig::unsafe_arena_release_chop
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   // @@protoc_insertion_point(field_release:rvpb.RvReceiverConfig.choppy_playback_timeout)
 
-  _impl_._has_bits_[0] &= ~0x00000010u;
+  _impl_._has_bits_[0] &= ~0x00000004u;
   ::google::protobuf::Duration* temp = _impl_.choppy_playback_timeout_;
   _impl_.choppy_playback_timeout_ = nullptr;
   return temp;
@@ -6104,7 +5888,7 @@ inline ::google::protobuf::Duration* RvReceiverConfig::_internal_mutable_choppy_
   return _impl_.choppy_playback_timeout_;
 }
 inline ::google::protobuf::Duration* RvReceiverConfig::mutable_choppy_playback_timeout() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  _impl_._has_bits_[0] |= 0x00000010u;
+  _impl_._has_bits_[0] |= 0x00000004u;
   ::google::protobuf::Duration* _msg = _internal_mutable_choppy_playback_timeout();
   // @@protoc_insertion_point(field_mutable:rvpb.RvReceiverConfig.choppy_playback_timeout)
   return _msg;
@@ -6121,9 +5905,9 @@ inline void RvReceiverConfig::set_allocated_choppy_playback_timeout(::google::pr
     if (message_arena != submessage_arena) {
       value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
     }
-    _impl_._has_bits_[0] |= 0x00000010u;
+    _impl_._has_bits_[0] |= 0x00000004u;
   } else {
-    _impl_._has_bits_[0] &= ~0x00000010u;
+    _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
   _impl_.choppy_playback_timeout_ = reinterpret_cast<::google::protobuf::Duration*>(value);

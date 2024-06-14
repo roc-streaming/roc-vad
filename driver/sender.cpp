@@ -69,8 +69,7 @@ Sender::Sender(const std::string& device_uid,
     net_sender_config.resampler_profile = device_sender_config.resampler_profile;
 
     net_sender_config.target_latency = device_sender_config.target_latency_ns;
-    net_sender_config.min_latency = device_sender_config.min_latency_ns;
-    net_sender_config.max_latency = device_sender_config.max_latency_ns;
+    net_sender_config.latency_tolerance = device_sender_config.latency_tolerance_ns;
 
     if ((err = roc_sender_open(net_context_, &net_sender_config, &net_sender_)) < 0) {
         throw std::invalid_argument(
