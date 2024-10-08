@@ -73,7 +73,7 @@ Screenshot below shows macOS Sound Preferences with two virtual output devices n
 Key features of Roc Toolkit streaming engine, used by Roc VAD:
 
 * real-time streaming with guaranteed latency;
-* robust work on unreliable networks like Wi-Fi, due to use of Forward Erasure Correction codes;
+* robust work on unreliable networks like Wi-Fi, due to the use of Forward Erasure Correction codes;
 * CD-quality audio;
 * multiple profiles for different CPU and latency requirements;
 * relying on open, standard protocols, like RTP and FECFRAME;
@@ -92,7 +92,7 @@ Internally, Roc VAD consists of two components:
 
 * `roc_vad.driver`
 
-    A plugin for CoreAudio Audio Server based on [libASPL](https://github.com/gavv/libASPL) library. Driver communicates with HAL, implements streaming, and provides gRPC interface that allows to add, remove, and configure virtual devices on fly.
+    A plugin for CoreAudio Audio Server based on [libASPL](https://github.com/gavv/libASPL) library. Driver communicates with HAL, implements streaming, and provides gRPC interface that allows to add, remove, and configure virtual devices on the fly.
 
 * `roc-vad`
 
@@ -112,7 +112,7 @@ Special thanks to [Sean McNamara](https://github.com/allquixotic), whose funding
 
 The project follows [semantic versioning](https://semver.org/).
 
-The backwards compatibility promise applies only to gRPC interface (see below), but not to command-line tools.
+The backward compatibility promise applies only to gRPC interface (see below), but not to command-line tools.
 
 Changelog file can be found here: [CHANGES.md](CHANGES.md).
 
@@ -374,7 +374,7 @@ Each roc-vad device has:
 * `uid` - long string identifier; each newly created device has a unique uid
 * `name` - human-readable device name presented in Sound Preferences
 
-By default, these fields are generated automatically, however you can specify `uid` or `name` explicitly, e.g.:
+By default, these fields are generated automatically, but you can specify `uid` or `name` explicitly, e.g.:
 
 ```
 $ roc-vad device add sender --uid "my_unique_id" --name "My Device Name"
@@ -511,7 +511,7 @@ Another possibility is to create multiple *slots* within a single sender or rece
 
 * For sender, you can create multiple slots, and connect each slot to different remote receiver. The sound written to sender device will be sent to every slot.
 
-* For receiver, you can create multiple slots, and bind each slot to different set of endpoints, e.g. using different network interface or protocol. The sound retrieved from all slots is mixed.
+* For receiver, you can create multiple slots, and bind each slot to different set of endpoints, e.g. using a different network interface or protocol. The sound retrieved from all slots is mixed.
 
 To use slots, just provide `--slot` argument to `device bind` or `device connect` command. Each slot is identified by a number; you can use any number, it does not have any semantics. When `--slot` is omitted, slot `0` is used.
 
@@ -607,7 +607,7 @@ For lower latency, you may need lower packet length and FEC block size. And vice
 
 You can control Roc VAD driver from any programming language via [gRPC](https://grpc.io/) interface.
 
-You can to do everything you can do via command-line tool, which itself is just a wrapper for the same RPC calls. Unlike the command-line tool, gRPC interface will maintain backward compatibility on updates.
+With gRPC you can do everything you can via the command-line tool, which by itself is just a wrapper for the same RPC calls. Unlike the command-line tool, gRPC interface will maintain backward compatibility on updates.
 
 More details are available here:
 
