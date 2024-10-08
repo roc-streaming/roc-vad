@@ -67,7 +67,7 @@ link_directories(
 # libASPL
 ExternalProject_Add(aspl_lib
   GIT_REPOSITORY "https://github.com/gavv/libASPL.git"
-  GIT_TAG "v3.1.0"
+  GIT_TAG "v3.1.1"
   GIT_SHALLOW OFF
   GIT_PROGRESS ON
   UPDATE_DISCONNECTED ON
