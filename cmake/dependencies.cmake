@@ -15,6 +15,18 @@ else()
   set(ENABLE_LOGS YES)
 endif()
 
+set(TOOL_LIST
+  scons autoconf automake pkg-config libtool go
+)
+foreach(TOOL IN LISTS TOOL_LIST)
+  find_program(${TOOL}_EXE ${TOOL})
+  if(NOT ${TOOL}_EXE)
+    string(REPLACE ";" " " TOOL_LIST "${TOOL_LIST}")
+    message(FATAL_ERROR
+      "\nMissing required build tool: '${TOOL}'\nTry running:\nbrew install ${TOOL_LIST}\n")
+  endif()
+endforeach()
+
 # Roc
 set(SCONS_CMD
   scons -j ${NUM_CPU}

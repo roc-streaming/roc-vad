@@ -15,9 +15,9 @@ all: build
 build:
 	mkdir -p $(BUILDDIR)
 	if [ ! -e $(BUILDDIR)/3rdparty/bootstrap.commit ]; then \
-		cd $(BUILDDIR) ;\
-		cmake -DBOOTSTRAP=ON ../.. ;\
-		make --no-print-directory -j$(NUM_CPU) ;\
+		cd $(BUILDDIR) &&\
+		cmake -DBOOTSTRAP=ON ../.. &&\
+		make --no-print-directory -j$(NUM_CPU) || exit 1;\
 	fi
 	cd $(BUILDDIR) && cmake -DBOOTSTRAP=OFF ../..
 	cd $(BUILDDIR) && make --no-print-directory -j$(NUM_CPU)
