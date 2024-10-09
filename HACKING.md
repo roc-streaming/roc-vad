@@ -113,7 +113,9 @@ The project uses these libraries:
 * [{fmt}](https://github.com/fmtlib/fmt) - formatting library
 * [GoogleTest](https://github.com/google/googletest) - testing library
 
-All dependencies listed above are downloaded automatically. Besides them, project needs some standard frameworks, build tools installed system-wide (README lists them), and Xcode or Xcode command-line tools with C++17 support.
+All dependencies listed above are downloaded and built automatically and linked into executable as static libraries.
+
+Besides that, the project uses some standard macOS frameworks, build tools installed system-wide (README lists them), and Xcode or Xcode command-line tools with C++17 support.
 
 ### Build phases
 
@@ -137,16 +139,6 @@ brew install ccache
 ```
 
 If you frequently do a full clean and rebuild, it can significantly speed up your workflow.
-
-### Linker symbols
-
-All dependencies are build into static libraries and linked into the driver. All driver symbols, except plugin entry point, are hidden.
-
-There are two important reasons for this:
-
-* We can not use shared libraries for common stuff like gRPC or spdlog, because if other CoreAudio plugins will also use them, they may need different versions, and there will be a conflict.
-
-* After statically linking these libraries, we can not allow exporting their symbols from our plugin, because, again, if other plugins will use the same libraries, symbols from our plugin may overlap with the same symbols from other plugins, and there will be a mess.
 
 ## Makefile targets
 
