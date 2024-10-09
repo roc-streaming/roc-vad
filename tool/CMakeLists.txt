@@ -67,3 +67,16 @@ add_custom_command(TARGET ${TOOL_EXE} POST_BUILD
     $<TARGET_FILE:${TOOL_EXE}>
     ${PROJECT_ROOT}/bin
 )
+
+set(TOOL_EXE_PATH
+  "${PROJECT_ROOT}/bin/${TOOL_EXE}")
+string(REPLACE ";" " "
+  ARCHS
+  "${CMAKE_OSX_ARCHITECTURES}")
+add_custom_command(TARGET ${TOOL_EXE} POST_BUILD
+  COMMENT "Validating ${TOOL_EXE}"
+  COMMAND bash -c
+    "lipo ${TOOL_EXE_PATH} -verify_arch ${ARCHS} || \
+      (echo ERROR: ${TOOL_EXE_PATH} is not ${ARCHS}; exit 1)"
+  VERBATIM
+)

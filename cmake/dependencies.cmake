@@ -16,7 +16,11 @@ else()
 endif()
 
 set(TOOL_LIST
-  scons autoconf automake pkg-config libtool go
+  scons
+  pkg-config
+  autoconf
+  automake
+  libtool
 )
 foreach(TOOL IN LISTS TOOL_LIST)
   find_program(${TOOL}_EXE ${TOOL})

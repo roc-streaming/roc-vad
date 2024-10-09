@@ -84,3 +84,17 @@ add_custom_command(TARGET ${DRIVER_BUNDLE_NAME} POST_BUILD
     ${CMAKE_CURRENT_BINARY_DIR}/${DRIVER_BUNDLE_NAME}.driver
     ${PROJECT_ROOT}/bin
 )
+
+set(DRIVER_EXE_PATH
+  "${PROJECT_ROOT}/bin/${DRIVER_BUNDLE_NAME}.driver/Contents/MacOS/${DRIVER_BUNDLE_NAME}"
+)
+string(REPLACE ";" " "
+  ARCHS
+  "${CMAKE_OSX_ARCHITECTURES}")
+add_custom_command(TARGET ${DRIVER_BUNDLE_NAME} POST_BUILD
+  COMMENT "Validating ${DRIVER_BUNDLE_NAME}.driver"
+  COMMAND bash -c
+    "lipo ${DRIVER_EXE_PATH} -verify_arch ${ARCHS} || \
+      (echo ERROR: ${DRIVER_EXE_PATH} is not [${ARCHS}]; exit 1)"
+  VERBATIM
+)
