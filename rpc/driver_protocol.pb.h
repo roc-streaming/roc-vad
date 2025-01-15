@@ -240,6 +240,7 @@ inline bool RvSampleFormat_Parse(absl::string_view name, RvSampleFormat* value) 
 enum RvChannelLayout : int {
   RV_CHANNEL_LAYOUT_MONO = 0,
   RV_CHANNEL_LAYOUT_STEREO = 1,
+  RV_CHANNEL_LAYOUT_MULTITRACK = 2,
   RvChannelLayout_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   RvChannelLayout_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -249,8 +250,8 @@ enum RvChannelLayout : int {
 bool RvChannelLayout_IsValid(int value);
 extern const uint32_t RvChannelLayout_internal_data_[];
 constexpr RvChannelLayout RvChannelLayout_MIN = static_cast<RvChannelLayout>(0);
-constexpr RvChannelLayout RvChannelLayout_MAX = static_cast<RvChannelLayout>(1);
-constexpr int RvChannelLayout_ARRAYSIZE = 1 + 1;
+constexpr RvChannelLayout RvChannelLayout_MAX = static_cast<RvChannelLayout>(2);
+constexpr int RvChannelLayout_ARRAYSIZE = 2 + 1;
 const ::google::protobuf::EnumDescriptor*
 RvChannelLayout_descriptor();
 template <typename T>
@@ -263,7 +264,7 @@ const std::string& RvChannelLayout_Name(T value) {
 template <>
 inline const std::string& RvChannelLayout_Name(RvChannelLayout value) {
   return ::google::protobuf::internal::NameOfDenseEnum<RvChannelLayout_descriptor,
-                                                 0, 1>(
+                                                 0, 2>(
       static_cast<int>(value));
 }
 inline bool RvChannelLayout_Parse(absl::string_view name, RvChannelLayout* value) {
@@ -578,6 +579,7 @@ class RvPacketEncoding final : public ::google::protobuf::Message
     kSampleRateFieldNumber = 2,
     kSampleFormatFieldNumber = 3,
     kChannelLayoutFieldNumber = 4,
+    kTrackCountFieldNumber = 5,
   };
   // uint32 encoding_id = 1;
   void clear_encoding_id() ;
@@ -619,12 +621,23 @@ class RvPacketEncoding final : public ::google::protobuf::Message
   void _internal_set_channel_layout(::rvpb::RvChannelLayout value);
 
   public:
+  // optional uint32 track_count = 5;
+  bool has_track_count() const;
+  void clear_track_count() ;
+  ::uint32_t track_count() const;
+  void set_track_count(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_track_count() const;
+  void _internal_set_track_count(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:rvpb.RvPacketEncoding)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      2, 4, 0,
+      3, 5, 0,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -640,11 +653,13 @@ class RvPacketEncoding final : public ::google::protobuf::Message
                           ::google::protobuf::Arena* arena);
     inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
                           ::google::protobuf::Arena* arena, const Impl_& from);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    mutable ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t encoding_id_;
     ::uint32_t sample_rate_;
     int sample_format_;
     int channel_layout_;
-    mutable ::google::protobuf::internal::CachedSize _cached_size_;
+    ::uint32_t track_count_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2725,6 +2740,7 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
     kBufferLengthFieldNumber = 3,
     kSampleRateFieldNumber = 1,
     kChannelLayoutFieldNumber = 2,
+    kTrackCountFieldNumber = 4,
   };
   // optional .google.protobuf.Duration buffer_length = 3;
   bool has_buffer_length() const;
@@ -2763,12 +2779,23 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
   void _internal_set_channel_layout(::rvpb::RvChannelLayout value);
 
   public:
+  // optional uint32 track_count = 4;
+  bool has_track_count() const;
+  void clear_track_count() ;
+  ::uint32_t track_count() const;
+  void set_track_count(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_track_count() const;
+  void _internal_set_track_count(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:rvpb.RvDeviceEncoding)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      2, 3, 1,
+      2, 4, 1,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -2789,6 +2816,7 @@ class RvDeviceEncoding final : public ::google::protobuf::Message
     ::google::protobuf::Duration* buffer_length_;
     ::uint32_t sample_rate_;
     int channel_layout_;
+    ::uint32_t track_count_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -6065,6 +6093,34 @@ inline void RvDeviceEncoding::set_allocated_buffer_length(::google::protobuf::Du
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceEncoding.buffer_length)
 }
 
+// optional uint32 track_count = 4;
+inline bool RvDeviceEncoding::has_track_count() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline void RvDeviceEncoding::clear_track_count() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline ::uint32_t RvDeviceEncoding::track_count() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceEncoding.track_count)
+  return _internal_track_count();
+}
+inline void RvDeviceEncoding::set_track_count(::uint32_t value) {
+  _internal_set_track_count(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceEncoding.track_count)
+}
+inline ::uint32_t RvDeviceEncoding::_internal_track_count() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.track_count_;
+}
+inline void RvDeviceEncoding::_internal_set_track_count(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // RvPacketEncoding
@@ -6155,6 +6211,34 @@ inline ::rvpb::RvChannelLayout RvPacketEncoding::_internal_channel_layout() cons
 inline void RvPacketEncoding::_internal_set_channel_layout(::rvpb::RvChannelLayout value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   _impl_.channel_layout_ = value;
+}
+
+// optional uint32 track_count = 5;
+inline bool RvPacketEncoding::has_track_count() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline void RvPacketEncoding::clear_track_count() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000001u;
+}
+inline ::uint32_t RvPacketEncoding::track_count() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvPacketEncoding.track_count)
+  return _internal_track_count();
+}
+inline void RvPacketEncoding::set_track_count(::uint32_t value) {
+  _internal_set_track_count(value);
+  _impl_._has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_set:rvpb.RvPacketEncoding.track_count)
+}
+inline ::uint32_t RvPacketEncoding::_internal_track_count() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.track_count_;
+}
+inline void RvPacketEncoding::_internal_set_track_count(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = value;
 }
 
 #ifdef __GNUC__

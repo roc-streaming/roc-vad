@@ -29,12 +29,14 @@ private:
 
     std::optional<uint32_t> device_encoding_rate_;
     std::optional<std::string> device_encoding_chans_;
+    std::optional<uint32_t> device_encoding_tracks_;
     std::optional<std::string> device_encoding_buffer_;
 
     std::optional<uint8_t> packet_encoding_id_;
     std::optional<uint32_t> packet_encoding_rate_;
     std::optional<std::string> packet_encoding_format_;
     std::optional<std::string> packet_encoding_chans_;
+    std::optional<uint32_t> packet_encoding_tracks_;
 
     std::optional<std::string> resampler_backend_;
     std::optional<std::string> resampler_profile_;

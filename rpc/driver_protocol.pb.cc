@@ -25,11 +25,12 @@ namespace rvpb {
 
 inline constexpr RvPacketEncoding::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
-      : encoding_id_{0u},
+      : _cached_size_{0},
+        encoding_id_{0u},
         sample_rate_{0u},
         sample_format_{static_cast< ::rvpb::RvSampleFormat >(0)},
         channel_layout_{static_cast< ::rvpb::RvChannelLayout >(0)},
-        _cached_size_{0} {}
+        track_count_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR RvPacketEncoding::RvPacketEncoding(::_pbi::ConstantInitialized)
@@ -249,7 +250,8 @@ inline constexpr RvDeviceEncoding::Impl_::Impl_(
       : _cached_size_{0},
         buffer_length_{nullptr},
         sample_rate_{0u},
-        channel_layout_{static_cast< ::rvpb::RvChannelLayout >(0)} {}
+        channel_layout_{static_cast< ::rvpb::RvChannelLayout >(0)},
+        track_count_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR RvDeviceEncoding::RvDeviceEncoding(::_pbi::ConstantInitialized)
@@ -511,10 +513,12 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.sample_rate_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.channel_layout_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.buffer_length_),
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.track_count_),
         1,
         2,
         0,
-        ~0u,  // no _has_bits_
+        3,
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
@@ -526,6 +530,12 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_.sample_rate_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_.sample_format_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_.channel_layout_),
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_.track_count_),
+        ~0u,
+        ~0u,
+        ~0u,
+        ~0u,
+        0,
 };
 
 static const ::_pbi::MigrationSchema
@@ -541,8 +551,8 @@ static const ::_pbi::MigrationSchema
         {105, 116, -1, sizeof(::rvpb::RvEndpointInfo)},
         {119, 139, -1, sizeof(::rvpb::RvSenderConfig)},
         {151, 168, -1, sizeof(::rvpb::RvReceiverConfig)},
-        {177, 188, -1, sizeof(::rvpb::RvDeviceEncoding)},
-        {191, -1, -1, sizeof(::rvpb::RvPacketEncoding)},
+        {177, 189, -1, sizeof(::rvpb::RvDeviceEncoding)},
+        {193, 206, -1, sizeof(::rvpb::RvPacketEncoding)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::rvpb::_RvNone_default_instance_._instance,
@@ -631,57 +641,60 @@ const char descriptor_table_protodef_driver_5fprotocol_2eproto[] ABSL_ATTRIBUTE_
     "profileB\024\n\022_resampler_backendB\024\n\022_resamp"
     "ler_profileB\021\n\017_target_latencyB\024\n\022_laten"
     "cy_toleranceB\026\n\024_no_playback_timeoutB\032\n\030"
-    "_choppy_playback_timeout\"\314\001\n\020RvDeviceEnc"
+    "_choppy_playback_timeout\"\366\001\n\020RvDeviceEnc"
     "oding\022\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\0222\n\016chann"
     "el_layout\030\002 \001(\0162\025.rvpb.RvChannelLayoutH\001"
     "\210\001\001\0225\n\rbuffer_length\030\003 \001(\0132\031.google.prot"
-    "obuf.DurationH\002\210\001\001B\016\n\014_sample_rateB\021\n\017_c"
-    "hannel_layoutB\020\n\016_buffer_length\"\230\001\n\020RvPa"
-    "cketEncoding\022\023\n\013encoding_id\030\001 \001(\r\022\023\n\013sam"
-    "ple_rate\030\002 \001(\r\022+\n\rsample_format\030\003 \001(\0162\024."
-    "rvpb.RvSampleFormat\022-\n\016channel_layout\030\004 "
-    "\001(\0162\025.rvpb.RvChannelLayout*F\n\014RvDeviceTy"
-    "pe\022\031\n\025RV_DEVICE_TYPE_SENDER\020\000\022\033\n\027RV_DEVI"
-    "CE_TYPE_RECEIVER\020\001*\212\001\n\013RvInterface\022\035\n\031RV"
-    "_INTERFACE_CONSOLIDATED\020\000\022\035\n\031RV_INTERFAC"
-    "E_AUDIO_SOURCE\020\001\022\035\n\031RV_INTERFACE_AUDIO_R"
-    "EPAIR\020\002\022\036\n\032RV_INTERFACE_AUDIO_CONTROL\020\003*"
-    "+\n\016RvSampleFormat\022\031\n\025ROC_FORMAT_PCM_SINT"
-    "16\020\000*K\n\017RvChannelLayout\022\032\n\026RV_CHANNEL_LA"
-    "YOUT_MONO\020\000\022\034\n\030RV_CHANNEL_LAYOUT_STEREO\020"
-    "\001*\207\001\n\rRvFecEncoding\022\033\n\027RV_FEC_ENCODING_D"
-    "ISABLE\020\000\022\033\n\027RV_FEC_ENCODING_DEFAULT\020\001\022\030\n"
-    "\024RV_FEC_ENCODING_RS8M\020\002\022\"\n\036RV_FEC_ENCODI"
-    "NG_LDPC_STAIRCASE\020\003*_\n\025RvLatencyTunerBac"
-    "kend\022$\n RV_LATENCY_TUNER_BACKEND_DEFAULT"
-    "\020\000\022 \n\034RV_LATENCY_TUNER_BACKEND_NIQ\020\002*\261\001\n"
-    "\025RvLatencyTunerProfile\022$\n RV_LATENCY_TUN"
-    "ER_PROFILE_DEFAULT\020\000\022#\n\037RV_LATENCY_TUNER"
-    "_PROFILE_INTACT\020\001\022\'\n#RV_LATENCY_TUNER_PR"
-    "OFILE_RESPONSIVE\020\002\022$\n RV_LATENCY_TUNER_P"
-    "ROFILE_GRADUAL\020\003*\233\001\n\022RvResamplerBackend\022"
-    " \n\034RV_RESAMPLER_BACKEND_DEFAULT\020\000\022 \n\034RV_"
-    "RESAMPLER_BACKEND_BUILTIN\020\001\022\036\n\032RV_RESAMP"
-    "LER_BACKEND_SPEEX\020\002\022!\n\035RV_RESAMPLER_BACK"
-    "END_SPEEXDEC\020\003*\224\001\n\022RvResamplerProfile\022 \n"
-    "\034RV_RESAMPLER_PROFILE_DEFAULT\020\000\022\035\n\031RV_RE"
-    "SAMPLER_PROFILE_HIGH\020\001\022\037\n\033RV_RESAMPLER_P"
-    "ROFILE_MEDIUM\020\002\022\034\n\030RV_RESAMPLER_PROFILE_"
-    "LOW\020\0032\247\004\n\010RvDriver\022$\n\004ping\022\014.rvpb.RvNone"
-    "\032\014.rvpb.RvNone\"\000\0221\n\013driver_info\022\014.rvpb.R"
-    "vNone\032\022.rvpb.RvDriverInfo\"\000\0221\n\013stream_lo"
-    "gs\022\014.rvpb.RvNone\032\020.rvpb.RvLogEntry\"\0000\001\0225"
-    "\n\017get_all_devices\022\014.rvpb.RvNone\032\022.rvpb.R"
-    "vDeviceList\"\000\022:\n\nget_device\022\026.rvpb.RvDev"
-    "iceSelector\032\022.rvpb.RvDeviceInfo\"\000\0226\n\nadd"
-    "_device\022\022.rvpb.RvDeviceInfo\032\022.rvpb.RvDev"
-    "iceInfo\"\000\0227\n\rdelete_device\022\026.rvpb.RvDevi"
-    "ceSelector\032\014.rvpb.RvNone\"\000\0226\n\rtoggle_dev"
-    "ice\022\025.rvpb.RvToggleRequest\032\014.rvpb.RvNone"
-    "\"\000\0227\n\004bind\022\027.rvpb.RvEndpointRequest\032\024.rv"
-    "pb.RvEndpointInfo\"\000\022:\n\007connect\022\027.rvpb.Rv"
-    "EndpointRequest\032\024.rvpb.RvEndpointInfo\"\000b"
-    "\006proto3"
+    "obuf.DurationH\002\210\001\001\022\030\n\013track_count\030\004 \001(\rH"
+    "\003\210\001\001B\016\n\014_sample_rateB\021\n\017_channel_layoutB"
+    "\020\n\016_buffer_lengthB\016\n\014_track_count\"\302\001\n\020Rv"
+    "PacketEncoding\022\023\n\013encoding_id\030\001 \001(\r\022\023\n\013s"
+    "ample_rate\030\002 \001(\r\022+\n\rsample_format\030\003 \001(\0162"
+    "\024.rvpb.RvSampleFormat\022-\n\016channel_layout\030"
+    "\004 \001(\0162\025.rvpb.RvChannelLayout\022\030\n\013track_co"
+    "unt\030\005 \001(\rH\000\210\001\001B\016\n\014_track_count*F\n\014RvDevi"
+    "ceType\022\031\n\025RV_DEVICE_TYPE_SENDER\020\000\022\033\n\027RV_"
+    "DEVICE_TYPE_RECEIVER\020\001*\212\001\n\013RvInterface\022\035"
+    "\n\031RV_INTERFACE_CONSOLIDATED\020\000\022\035\n\031RV_INTE"
+    "RFACE_AUDIO_SOURCE\020\001\022\035\n\031RV_INTERFACE_AUD"
+    "IO_REPAIR\020\002\022\036\n\032RV_INTERFACE_AUDIO_CONTRO"
+    "L\020\003*+\n\016RvSampleFormat\022\031\n\025ROC_FORMAT_PCM_"
+    "SINT16\020\000*m\n\017RvChannelLayout\022\032\n\026RV_CHANNE"
+    "L_LAYOUT_MONO\020\000\022\034\n\030RV_CHANNEL_LAYOUT_STE"
+    "REO\020\001\022 \n\034RV_CHANNEL_LAYOUT_MULTITRACK\020\002*"
+    "\207\001\n\rRvFecEncoding\022\033\n\027RV_FEC_ENCODING_DIS"
+    "ABLE\020\000\022\033\n\027RV_FEC_ENCODING_DEFAULT\020\001\022\030\n\024R"
+    "V_FEC_ENCODING_RS8M\020\002\022\"\n\036RV_FEC_ENCODING"
+    "_LDPC_STAIRCASE\020\003*_\n\025RvLatencyTunerBacke"
+    "nd\022$\n RV_LATENCY_TUNER_BACKEND_DEFAULT\020\000"
+    "\022 \n\034RV_LATENCY_TUNER_BACKEND_NIQ\020\002*\261\001\n\025R"
+    "vLatencyTunerProfile\022$\n RV_LATENCY_TUNER"
+    "_PROFILE_DEFAULT\020\000\022#\n\037RV_LATENCY_TUNER_P"
+    "ROFILE_INTACT\020\001\022\'\n#RV_LATENCY_TUNER_PROF"
+    "ILE_RESPONSIVE\020\002\022$\n RV_LATENCY_TUNER_PRO"
+    "FILE_GRADUAL\020\003*\233\001\n\022RvResamplerBackend\022 \n"
+    "\034RV_RESAMPLER_BACKEND_DEFAULT\020\000\022 \n\034RV_RE"
+    "SAMPLER_BACKEND_BUILTIN\020\001\022\036\n\032RV_RESAMPLE"
+    "R_BACKEND_SPEEX\020\002\022!\n\035RV_RESAMPLER_BACKEN"
+    "D_SPEEXDEC\020\003*\224\001\n\022RvResamplerProfile\022 \n\034R"
+    "V_RESAMPLER_PROFILE_DEFAULT\020\000\022\035\n\031RV_RESA"
+    "MPLER_PROFILE_HIGH\020\001\022\037\n\033RV_RESAMPLER_PRO"
+    "FILE_MEDIUM\020\002\022\034\n\030RV_RESAMPLER_PROFILE_LO"
+    "W\020\0032\247\004\n\010RvDriver\022$\n\004ping\022\014.rvpb.RvNone\032\014"
+    ".rvpb.RvNone\"\000\0221\n\013driver_info\022\014.rvpb.RvN"
+    "one\032\022.rvpb.RvDriverInfo\"\000\0221\n\013stream_logs"
+    "\022\014.rvpb.RvNone\032\020.rvpb.RvLogEntry\"\0000\001\0225\n\017"
+    "get_all_devices\022\014.rvpb.RvNone\032\022.rvpb.RvD"
+    "eviceList\"\000\022:\n\nget_device\022\026.rvpb.RvDevic"
+    "eSelector\032\022.rvpb.RvDeviceInfo\"\000\0226\n\nadd_d"
+    "evice\022\022.rvpb.RvDeviceInfo\032\022.rvpb.RvDevic"
+    "eInfo\"\000\0227\n\rdelete_device\022\026.rvpb.RvDevice"
+    "Selector\032\014.rvpb.RvNone\"\000\0226\n\rtoggle_devic"
+    "e\022\025.rvpb.RvToggleRequest\032\014.rvpb.RvNone\"\000"
+    "\0227\n\004bind\022\027.rvpb.RvEndpointRequest\032\024.rvpb"
+    ".RvEndpointInfo\"\000\022:\n\007connect\022\027.rvpb.RvEn"
+    "dpointRequest\032\024.rvpb.RvEndpointInfo\"\000b\006p"
+    "roto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_driver_5fprotocol_2eproto_deps[2] =
     {
@@ -692,7 +705,7 @@ static ::absl::once_flag descriptor_table_driver_5fprotocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_driver_5fprotocol_2eproto = {
     false,
     false,
-    4807,
+    4925,
     descriptor_table_protodef_driver_5fprotocol_2eproto,
     "driver_protocol.proto",
     &descriptor_table_driver_5fprotocol_2eproto_once,
@@ -778,9 +791,9 @@ const ::google::protobuf::EnumDescriptor* RvChannelLayout_descriptor() {
   return file_level_enum_descriptors_driver_5fprotocol_2eproto[4];
 }
 PROTOBUF_CONSTINIT const uint32_t RvChannelLayout_internal_data_[] = {
-    131072u, 0u, };
+    196608u, 0u, };
 bool RvChannelLayout_IsValid(int value) {
-  return 0 <= value && value <= 1;
+  return 0 <= value && value <= 2;
 }
 const ::google::protobuf::EnumDescriptor* RvFecEncoding_descriptor() {
   ::google::protobuf::internal::AssignDescriptors(&descriptor_table_driver_5fprotocol_2eproto);
@@ -4307,9 +4320,9 @@ RvDeviceEncoding::RvDeviceEncoding(
                offsetof(Impl_, sample_rate_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, sample_rate_),
-           offsetof(Impl_, channel_layout_) -
+           offsetof(Impl_, track_count_) -
                offsetof(Impl_, sample_rate_) +
-               sizeof(Impl_::channel_layout_));
+               sizeof(Impl_::track_count_));
 
   // @@protoc_insertion_point(copy_constructor:rvpb.RvDeviceEncoding)
 }
@@ -4323,9 +4336,9 @@ inline void RvDeviceEncoding::SharedCtor(::_pb::Arena* arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, buffer_length_),
            0,
-           offsetof(Impl_, channel_layout_) -
+           offsetof(Impl_, track_count_) -
                offsetof(Impl_, buffer_length_) +
-               sizeof(Impl_::channel_layout_));
+               sizeof(Impl_::track_count_));
 }
 RvDeviceEncoding::~RvDeviceEncoding() {
   // @@protoc_insertion_point(destructor:rvpb.RvDeviceEncoding)
@@ -4364,10 +4377,10 @@ PROTOBUF_NOINLINE void RvDeviceEncoding::Clear() {
     ABSL_DCHECK(_impl_.buffer_length_ != nullptr);
     _impl_.buffer_length_->Clear();
   }
-  if (cached_has_bits & 0x00000006u) {
+  if (cached_has_bits & 0x0000000eu) {
     ::memset(&_impl_.sample_rate_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.channel_layout_) -
-        reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.channel_layout_));
+        reinterpret_cast<char*>(&_impl_.track_count_) -
+        reinterpret_cast<char*>(&_impl_.sample_rate_)) + sizeof(_impl_.track_count_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -4381,15 +4394,15 @@ const char* RvDeviceEncoding::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
+const ::_pbi::TcParseTable<2, 4, 1, 0, 2> RvDeviceEncoding::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_._has_bits_),
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    4,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_RvDeviceEncoding_default_instance_._instance,
@@ -4398,7 +4411,9 @@ const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
     ::_pbi::TcParser::GetTable<::rvpb::RvDeviceEncoding>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
+    // optional uint32 track_count = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvDeviceEncoding, _impl_.track_count_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.track_count_)}},
     // optional uint32 sample_rate = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvDeviceEncoding, _impl_.sample_rate_), 1>(),
      {8, 1, 0, PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.sample_rate_)}},
@@ -4420,6 +4435,9 @@ const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
     // optional .google.protobuf.Duration buffer_length = 3;
     {PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.buffer_length_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // optional uint32 track_count = 4;
+    {PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.track_count_), _Internal::kHasBitsOffset + 3, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }}, {{
     {::_pbi::TcParser::GetTable<::google::protobuf::Duration>()},
   }}, {{
@@ -4454,6 +4472,13 @@ const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
         3, *_impl_.buffer_length_, _impl_.buffer_length_->GetCachedSize(), target, stream);
   }
 
+  // optional uint32 track_count = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        4, this->_internal_track_count(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -4472,7 +4497,7 @@ const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     // optional .google.protobuf.Duration buffer_length = 3;
     if (cached_has_bits & 0x00000001u) {
       total_size +=
@@ -4491,6 +4516,12 @@ const ::_pbi::TcParseTable<2, 3, 1, 0, 2> RvDeviceEncoding::_table_ = {
                     ::_pbi::WireFormatLite::EnumSize(this->_internal_channel_layout());
     }
 
+    // optional uint32 track_count = 4;
+    if (cached_has_bits & 0x00000008u) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this->_internal_track_count());
+    }
+
   }
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
@@ -4506,7 +4537,7 @@ void RvDeviceEncoding::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       ABSL_DCHECK(from._impl_.buffer_length_ != nullptr);
       if (_this->_impl_.buffer_length_ == nullptr) {
@@ -4521,6 +4552,9 @@ void RvDeviceEncoding::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
     }
     if (cached_has_bits & 0x00000004u) {
       _this->_impl_.channel_layout_ = from._impl_.channel_layout_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      _this->_impl_.track_count_ = from._impl_.track_count_;
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -4543,8 +4577,8 @@ void RvDeviceEncoding::InternalSwap(RvDeviceEncoding* PROTOBUF_RESTRICT other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.channel_layout_)
-      + sizeof(RvDeviceEncoding::_impl_.channel_layout_)
+      PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.track_count_)
+      + sizeof(RvDeviceEncoding::_impl_.track_count_)
       - PROTOBUF_FIELD_OFFSET(RvDeviceEncoding, _impl_.buffer_length_)>(
           reinterpret_cast<char*>(&_impl_.buffer_length_),
           reinterpret_cast<char*>(&other->_impl_.buffer_length_));
@@ -4559,6 +4593,9 @@ void RvDeviceEncoding::InternalSwap(RvDeviceEncoding* PROTOBUF_RESTRICT other) {
 
 class RvPacketEncoding::_Internal {
  public:
+  using HasBits = decltype(std::declval<RvPacketEncoding>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_._has_bits_);
 };
 
 RvPacketEncoding::RvPacketEncoding(::google::protobuf::Arena* arena)
@@ -4581,9 +4618,9 @@ inline void RvPacketEncoding::SharedCtor(::_pb::Arena* arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, encoding_id_),
            0,
-           offsetof(Impl_, channel_layout_) -
+           offsetof(Impl_, track_count_) -
                offsetof(Impl_, encoding_id_) +
-               sizeof(Impl_::channel_layout_));
+               sizeof(Impl_::track_count_));
 }
 RvPacketEncoding::~RvPacketEncoding() {
   // @@protoc_insertion_point(destructor:rvpb.RvPacketEncoding)
@@ -4619,6 +4656,8 @@ PROTOBUF_NOINLINE void RvPacketEncoding::Clear() {
   ::memset(&_impl_.encoding_id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.channel_layout_) -
       reinterpret_cast<char*>(&_impl_.encoding_id_)) + sizeof(_impl_.channel_layout_));
+  _impl_.track_count_ = 0u;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -4630,15 +4669,15 @@ const char* RvPacketEncoding::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 0, 0, 2> RvPacketEncoding::_table_ = {
+const ::_pbi::TcParseTable<3, 5, 0, 0, 2> RvPacketEncoding::_table_ = {
   {
-    0,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_RvPacketEncoding_default_instance_._instance,
@@ -4647,9 +4686,7 @@ const ::_pbi::TcParseTable<2, 4, 0, 0, 2> RvPacketEncoding::_table_ = {
     ::_pbi::TcParser::GetTable<::rvpb::RvPacketEncoding>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .rvpb.RvChannelLayout channel_layout = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvPacketEncoding, _impl_.channel_layout_), 63>(),
-     {32, 63, 0, PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.channel_layout_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // uint32 encoding_id = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvPacketEncoding, _impl_.encoding_id_), 63>(),
      {8, 63, 0, PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.encoding_id_)}},
@@ -4659,21 +4696,32 @@ const ::_pbi::TcParseTable<2, 4, 0, 0, 2> RvPacketEncoding::_table_ = {
     // .rvpb.RvSampleFormat sample_format = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvPacketEncoding, _impl_.sample_format_), 63>(),
      {24, 63, 0, PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.sample_format_)}},
+    // .rvpb.RvChannelLayout channel_layout = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvPacketEncoding, _impl_.channel_layout_), 63>(),
+     {32, 63, 0, PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.channel_layout_)}},
+    // optional uint32 track_count = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RvPacketEncoding, _impl_.track_count_), 0>(),
+     {40, 0, 0, PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.track_count_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // uint32 encoding_id = 1;
-    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.encoding_id_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.encoding_id_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUInt32)},
     // uint32 sample_rate = 2;
-    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.sample_rate_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.sample_rate_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUInt32)},
     // .rvpb.RvSampleFormat sample_format = 3;
-    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.sample_format_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.sample_format_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
     // .rvpb.RvChannelLayout channel_layout = 4;
-    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.channel_layout_), 0, 0,
+    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.channel_layout_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
+    // optional uint32 track_count = 5;
+    {PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.track_count_), _Internal::kHasBitsOffset + 0, 0,
+    (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
@@ -4713,6 +4761,14 @@ const ::_pbi::TcParseTable<2, 4, 0, 0, 2> RvPacketEncoding::_table_ = {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
         4, this->_internal_channel_layout(), target);
+  }
+
+  cached_has_bits = _impl_._has_bits_[0];
+  // optional uint32 track_count = 5;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        5, this->_internal_track_count(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4756,6 +4812,13 @@ const ::_pbi::TcParseTable<2, 4, 0, 0, 2> RvPacketEncoding::_table_ = {
                   ::_pbi::WireFormatLite::EnumSize(this->_internal_channel_layout());
   }
 
+  // optional uint32 track_count = 5;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+        this->_internal_track_count());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -4780,6 +4843,11 @@ void RvPacketEncoding::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
   if (from._internal_channel_layout() != 0) {
     _this->_impl_.channel_layout_ = from._impl_.channel_layout_;
   }
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    _this->_impl_.track_count_ = from._impl_.track_count_;
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -4797,9 +4865,10 @@ PROTOBUF_NOINLINE bool RvPacketEncoding::IsInitialized() const {
 void RvPacketEncoding::InternalSwap(RvPacketEncoding* PROTOBUF_RESTRICT other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.channel_layout_)
-      + sizeof(RvPacketEncoding::_impl_.channel_layout_)
+      PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.track_count_)
+      + sizeof(RvPacketEncoding::_impl_.track_count_)
       - PROTOBUF_FIELD_OFFSET(RvPacketEncoding, _impl_.encoding_id_)>(
           reinterpret_cast<char*>(&_impl_.encoding_id_),
           reinterpret_cast<char*>(&other->_impl_.encoding_id_));

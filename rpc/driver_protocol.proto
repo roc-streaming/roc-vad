@@ -339,6 +339,11 @@ message RvDeviceEncoding
     // Virtual device buffer size.
     // Keep unset to use default.
     optional google.protobuf.Duration buffer_length = 3;
+
+    // Number of tracks when RV_CHANNEL_LAYOUT_MULTITRACK is
+    // specified in RvChannelLayout.
+    // Should be in range 1 - 1024.
+    optional uint32 track_count = 4;
 }
 
 // Network packet encoding.
@@ -358,6 +363,11 @@ message RvPacketEncoding
 
     // Channel layout (e.g. stereo).
     RvChannelLayout channel_layout = 4;
+
+    // Number of tracks when RV_CHANNEL_LAYOUT_MULTITRACK is
+    // specified in RvChannelLayout.
+    // Should be in range 1 - 1024.
+    optional uint32 track_count = 5;
 }
 
 // Device type.
@@ -404,6 +414,9 @@ enum RvChannelLayout
 
     // Two channels: left and right.
     RV_CHANNEL_LAYOUT_STEREO = 1;
+
+    // Multi-track audio.
+    RV_CHANNEL_LAYOUT_MULTITRACK = 2;
 }
 
 // Forward Error Correction encoding.
