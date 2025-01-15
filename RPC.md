@@ -54,6 +54,8 @@ Defines how it is presented to apps.
 | sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
 | channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
 | buffer_length | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Virtual device buffer size. Keep unset to use default. |
+| track_count    | [uint32](#uint32) | optional | Track count when channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK (e.g. 9).                                                                                |
+
 
 
 
@@ -198,12 +200,13 @@ Network packet encoding.
 Defines how samples are encoded when sent over network.
 
 
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| encoding_id | [uint32](#uint32) |  | Encoding identifier (arbitrary 8-bit number). You should use the same numbers on sender and receiver to identifiy encodings. |
-| sample_rate | [uint32](#uint32) |  | Sample rate, in Hertz (e.g. 44100). |
-| sample_format | [RvSampleFormat](#rvpb-RvSampleFormat) |  | Sample format (e.g. 16-bit PCM). |
-| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) |  | Channel layout (e.g. stereo). |
+| Field          | Type | Label | Description                                                                                                                  |
+|----------------| --- | ----- |------------------------------------------------------------------------------------------------------------------------------|
+| encoding_id    | [uint32](#uint32) |  | Encoding identifier (arbitrary 8-bit number). You should use the same numbers on sender and receiver to identifiy encodings. |
+| sample_rate    | [uint32](#uint32) |  | Sample rate, in Hertz (e.g. 44100).                                                                                          |
+| sample_format  | [RvSampleFormat](#rvpb-RvSampleFormat) |  | Sample format (e.g. 16-bit PCM).                                                                                             |
+| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) |  | Channel layout (e.g. stereo).                                                                                                |
+| track_count    | [uint32](#uint32) | optional | Track count when channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK (e.g. 9).                                                                                |
 
 
 
@@ -283,10 +286,11 @@ Device enable/disable request.
 Channel layout.
 Defines what channel count and their meaning.
 
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| RV_CHANNEL_LAYOUT_MONO | 0 | One monochromatic channel. |
-| RV_CHANNEL_LAYOUT_STEREO | 1 | Two channels: left and right. |
+| Name                         | Number | Description                               |
+|------------------------------|--------|-------------------------------------------|
+| RV_CHANNEL_LAYOUT_MONO       | 0      | One monochromatic channel.                |
+| RV_CHANNEL_LAYOUT_STEREO     | 1      | Two channels: left and right.             |
+| RV_CHANNEL_LAYOUT_MULTITRACK | 2      | Multi-track audio with up to 1024 tracks. |
 
 
 

@@ -35,6 +35,9 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
         device_encoding_chans_,
         fmt::format("Channel set for virtual device (supported values: {})",
             supported_enum_values(channel_layout_map)));
+    device_encoding_opts->add_option("-t,--device-tracks",
+        device_encoding_tracks_,
+        "Track count when using multitrack, in range 1 - 1024");
     device_encoding_opts->add_option("-b,--device-buffer",
         device_encoding_buffer_,
         fmt::format(
@@ -58,6 +61,9 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
         packet_encoding_chans_,
         fmt::format("Channel layout to use for packet encoding (supported values: {})",
             supported_enum_values(channel_layout_map)));
+    packet_encoding_opts->add_option("--packet-encoding-tracks",
+        packet_encoding_tracks_,
+        "Packet track count when using multitrack, in range 1 - 1024");
 
     // resampler
     auto resampler_opts = command->add_option_group("Resampler");
@@ -149,6 +155,14 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
             return false;
         }
         request.mutable_device_encoding()->set_channel_layout(channel_layout);
+
+        if (channel_layout == rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
+            if (device_encoding_tracks_) {
+                request.mutable_device_encoding()->set_track_count(*device_encoding_tracks_);
+            } else {
+                return false;
+            }
+        }
     }
     if (device_encoding_buffer_) {
         if (!parse_duration("--device-buffer",
@@ -188,6 +202,14 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
                 return false;
             }
             packet_encoding.set_channel_layout(channel_layout);
+
+            if (channel_layout == rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
+                if (packet_encoding_tracks_) {
+                    packet_encoding.set_track_count(*packet_encoding_tracks_);
+                } else {
+                    return false;
+                }
+            }
         }
 
         *request.mutable_receiver_config()->add_packet_encodings() = packet_encoding;

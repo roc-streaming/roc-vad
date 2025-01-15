@@ -21,6 +21,7 @@ namespace rocvad {
 
 namespace {
 
+
 size_t compute_channel_count(roc_channel_layout channel_layout)
 {
     switch (channel_layout) {
@@ -158,8 +159,12 @@ Device::Device(std::shared_ptr<aspl::Plugin> hal_plugin,
         info_.name = fmt::format("Roc Virtual Device #{}", info_.index);
     }
 
-    info_.device_encoding.channel_count =
-        compute_channel_count(info_.device_encoding.channel_layout);
+    // channel_count will have been directly taken from rpc in the case of multi-track
+    if (info_.device_encoding.channel_layout != ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        info_.device_encoding.channel_count =
+            compute_channel_count(info_.device_encoding.channel_layout);
+    }
+
     info_.device_encoding.buffer_samples = compute_buffer_samples(
         info_.device_encoding.buffer_length_ns, info_.device_encoding.sample_rate);
 

@@ -144,6 +144,10 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 in.device_encoding().channel_layout());
     }
 
+    if (in.device_encoding().has_track_count()) {
+        out.device_encoding.channel_count = in.device_encoding().track_count();
+    }
+
     if (in.device_encoding().has_buffer_length()) {
         out.device_encoding.buffer_length_ns = nanoseconds_from_rpc(
             "RvDeviceEncoding.buffer_length", in.device_encoding().buffer_length());
@@ -341,6 +345,10 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
         enum_to_rpc("RvDeviceEncoding.channel_layout",
             channel_layout_map,
             in.device_encoding.channel_layout));
+    if (in.device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        out.mutable_device_encoding()->set_track_count((uint32_t)in.device_encoding.channel_count);
+    }
+
     *out.mutable_device_encoding()->mutable_buffer_length() = nanoseconds_to_rpc(
         "RvDeviceEncoding.buffer_length", in.device_encoding.buffer_length_ns);
 
@@ -507,6 +515,10 @@ void packet_encoding_from_rpc(DevicePacketEncoding& out, const rvpb::RvPacketEnc
 
     out.spec.channels = enum_from_rpc(
         "RvPacketEncoding.channel_layout", channel_layout_map, in.channel_layout());
+
+    if (out.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        out.spec.tracks = in.track_count();
+    }
 }
 
 void packet_encoding_to_rpc(rvpb::RvPacketEncoding& out, const DevicePacketEncoding& in)
@@ -517,6 +529,9 @@ void packet_encoding_to_rpc(rvpb::RvPacketEncoding& out, const DevicePacketEncod
         enum_to_rpc("RvPacketEncoding.sample_format", sample_format_map, in.spec.format));
     out.set_channel_layout(enum_to_rpc(
         "RvPacketEncoding.channel_layout", channel_layout_map, in.spec.channels));
+    if (in.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        out.set_track_count(in.spec.tracks);
+    }
 }
 
 void endpoint_info_from_rpc(DeviceEndpointInfo& out, const rvpb::RvEndpointInfo& in)

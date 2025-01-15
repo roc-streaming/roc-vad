@@ -37,12 +37,14 @@ struct DeviceLocalEncoding
     roc_channel_layout channel_layout = ROC_CHANNEL_LAYOUT_STEREO;
     int64_t buffer_length_ns = 60'000'000;
 
-    // not exported via gRPC, computed locally
+    // exported via gRPC for multi-track and computed locally for mono and stereo
     size_t channel_count = 0;
+    // not exported via gRPC, computed locally
     size_t buffer_samples = 0;
 };
 
 // Network encoding of packets.
+// track_count only applies when format is multi-track, for mono and stereo it will be 0
 struct DevicePacketEncoding
 {
     roc_packet_encoding id = (roc_packet_encoding)0;
@@ -50,6 +52,7 @@ struct DevicePacketEncoding
         .rate = 0,
         .format = (roc_format)0,
         .channels = (roc_channel_layout)0,
+        .tracks = 0
     };
 };
 
