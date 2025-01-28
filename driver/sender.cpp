@@ -38,6 +38,10 @@ Sender::Sender(const std::string& device_uid,
     net_sender_config.frame_encoding.format = ROC_FORMAT_PCM_FLOAT32;
     net_sender_config.frame_encoding.channels = device_encoding.channel_layout;
 
+    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        net_sender_config.frame_encoding.tracks = device_encoding.channel_count;
+    }
+
     if (device_sender_config.packet_encoding) {
         net_sender_config.packet_encoding = device_sender_config.packet_encoding->id;
 
