@@ -45,6 +45,9 @@ Receiver::Receiver(const std::string& device_uid,
     net_receiver_config.frame_encoding.rate = device_encoding.sample_rate;
     net_receiver_config.frame_encoding.format = ROC_FORMAT_PCM_FLOAT32;
     net_receiver_config.frame_encoding.channels = device_encoding.channel_layout;
+    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        net_receiver_config.frame_encoding.tracks = device_encoding.channel_count;
+    }
 
     net_receiver_config.clock_source = ROC_CLOCK_SOURCE_EXTERNAL;
 

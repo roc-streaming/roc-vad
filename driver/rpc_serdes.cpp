@@ -517,6 +517,9 @@ void packet_encoding_from_rpc(DevicePacketEncoding& out, const rvpb::RvPacketEnc
         "RvPacketEncoding.channel_layout", channel_layout_map, in.channel_layout());
 
     if (out.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        if (in.track_count() == 0){
+            throw std::invalid_argument("For multi-track track count should be in range [1; 1000]");
+        }
         out.spec.tracks = in.track_count();
     }
 }
@@ -530,6 +533,9 @@ void packet_encoding_to_rpc(rvpb::RvPacketEncoding& out, const DevicePacketEncod
     out.set_channel_layout(enum_to_rpc(
         "RvPacketEncoding.channel_layout", channel_layout_map, in.spec.channels));
     if (in.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        if (in.spec.tracks == 0){
+            throw std::invalid_argument("For multi-track track count should be in range [1; 1000]");
+        }
         out.set_track_count(in.spec.tracks);
     }
 }
