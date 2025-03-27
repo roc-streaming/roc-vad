@@ -4,10 +4,15 @@ on:
   push:
     branches:
       - main
+      - v*
     tags:
       - v*
 
   pull_request:
+
+  repository_dispatch:
+    types:
+      - trigger_build
 
   workflow_dispatch:
 
@@ -15,7 +20,7 @@ on:
     - cron: '0 0 * * 1'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: build-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -54,8 +59,11 @@ jobs:
           sudo make install
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
     needs: [build]
+    if: |
+      github.repository_owner == 'roc-streaming' &&
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/v')
 
     runs-on: macos-13
     steps:

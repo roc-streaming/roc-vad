@@ -65,9 +65,6 @@ fmt:
 	find -type f -name '*.[ch]pp' -not -name '*.pb.*' -not -path './build/*' \
 		| xargs clang-format --verbose -i
 
-d2:
-	d2 docs/classes.d2 docs/classes.svg
-
 rpcmd:
 	$(BUILDDIR)/3rdparty/grpc/bin/protoc \
 		--plugin=protoc-gen-doc="$$(go env GOPATH)"/bin/protoc-gen-doc \
@@ -75,9 +72,15 @@ rpcmd:
 		--doc_opt=markdown,RPC.md \
 		rpc/*.proto
 
-toc:
+tocmd:
 	markdown-toc --maxdepth 3 -i README.md
 	markdown-toc --maxdepth 3 -i HACKING.md
+
+md: tocmd
+	md-authors --format modern --append AUTHORS.md
+
+d2:
+	d2 docs/classes.d2 docs/classes.svg
 
 kick: kickstart
 kickstart:

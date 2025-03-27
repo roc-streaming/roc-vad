@@ -718,7 +718,9 @@ If you would like to dig into the project internals, have a look at [HACKING.md]
 
 ## Authors
 
-See [here](https://github.com/roc-streaming/roc-vad/graphs/contributors).
+You can find list of authors and contributors [here](AUTHORS.md). Feel free to send a pull request if you're missing from the list or want to change your appearance.
+
+For Roc Toolkit authors, see [here](https://roc-streaming.org/toolkit/docs/about_project/authors.html).
 
 ## License
 

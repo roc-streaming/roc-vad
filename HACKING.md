@@ -14,7 +14,6 @@
   * [Dependencies](#dependencies)
   * [Build phases](#build-phases)
   * [Using ccache](#using-ccache)
-  * [Linker symbols](#linker-symbols)
 - [Makefile targets](#makefile-targets)
   * [Development commands](#development-commands)
   * [Debugging commands](#debugging-commands)
@@ -210,6 +209,20 @@ Regenerate documentation:
 make rpcmd
 ```
 
+After modifying sections in README.md or HACKING.md, you need to re-generate table of contents.
+
+Install [markdown-toc](https://github.com/jonschlinkert/markdown-toc):
+
+```
+npm install -g markdown-toc
+```
+
+Regenerate TOC:
+
+```
+make tocmd
+```
+
 After modifying `.d2` file(s), you need to re-generate `.svg` images.
 
 Install [d2](https://d2lang.com/):
@@ -222,18 +235,4 @@ Regenerate images:
 
 ```
 make d2
-```
-
-After modifying sections in README.md or HACKING.md, you need to re-generate table of contents.
-
-Install [markdown-toc](https://github.com/jonschlinkert/markdown-toc):
-
-```
-npm install -g markdown-toc
-```
-
-Regenerate TOC:
-
-```
-make toc
 ```

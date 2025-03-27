@@ -1,0 +1,25 @@
+name: "detect_conflicts"
+
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "!*"
+  repository_dispatch:
+    types:
+      - pull_request_opened
+      - pull_request_reopened
+      - pull_request_synchronize
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: detect-conflicts
+
+jobs:
+  main:
+    uses: roc-streaming/ci/.github/workflows/detect_conflicts.yml@main
+    secrets:
+      triage-token: ${{ secrets.REPO_TRIAGE }}
