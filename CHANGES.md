@@ -1,5 +1,16 @@
 # Changelog
 
+## [v0.0.4][v0.0.4] - 29 Mar 2025
+
+* Add support for multi-track encoding (arbitrary channel count) ([gh-10][gh-10])
+* Fix typos in documentation
+* Improve error checking in `install.sh`
+* Check `make install` and `install.sh` on CI
+
+[v0.0.4]: https://github.com/roc-streaming/roc-vad/releases/tag/v0.0.4
+
+[gh-10]: https://github.com/roc-streaming/roc-vad/pull/10
+
 ## [v0.0.3][v0.0.3] - 09 Oct 2024
 
 * Produce and deploy universal binaries ([gh-1][gh-1])

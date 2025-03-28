@@ -33,6 +33,7 @@
   * [Custom packet encoding](#custom-packet-encoding)
   * [Custom FEC encoding](#custom-fec-encoding)
   * [Tuning latency](#tuning-latency)
+  * [Multi-track channel layout](#multi-track-channel-layout)
 - [Programmatic control](#programmatic-control)
   * [gRPC interface](#grpc-interface)
   * [Socket address](#socket-address)
