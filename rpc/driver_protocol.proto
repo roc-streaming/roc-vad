@@ -336,14 +336,14 @@ message RvDeviceEncoding
     // Keep unset to use default.
     optional RvChannelLayout channel_layout = 2;
 
-    // Virtual device buffer size.
-    // Keep unset to use default.
-    optional google.protobuf.Duration buffer_length = 3;
-
     // Number of tracks when RV_CHANNEL_LAYOUT_MULTITRACK is
     // specified in RvChannelLayout.
     // Should be in range 1 - 1024.
     optional uint32 track_count = 4;
+
+    // Virtual device buffer size.
+    // Keep unset to use default.
+    optional google.protobuf.Duration buffer_length = 3;
 }
 
 // Network packet encoding.

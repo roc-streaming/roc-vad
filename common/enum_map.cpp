@@ -23,9 +23,9 @@ enum_map<rvpb::RvSampleFormat, roc_format> sample_format_map {
 };
 
 enum_map<rvpb::RvChannelLayout, roc_channel_layout> channel_layout_map {
+    {rvpb::RV_CHANNEL_LAYOUT_MULTITRACK, ROC_CHANNEL_LAYOUT_MULTITRACK, "multitrack"},
     {rvpb::RV_CHANNEL_LAYOUT_MONO, ROC_CHANNEL_LAYOUT_MONO, "mono"},
     {rvpb::RV_CHANNEL_LAYOUT_STEREO, ROC_CHANNEL_LAYOUT_STEREO, "stereo"},
-    {rvpb::RV_CHANNEL_LAYOUT_MULTITRACK, ROC_CHANNEL_LAYOUT_MULTITRACK, "multitrack"},
 };
 
 enum_map<rvpb::RvFecEncoding, roc_fec_encoding> fec_encoding_map {
