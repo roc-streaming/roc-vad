@@ -6002,6 +6002,34 @@ inline void RvDeviceEncoding::_internal_set_channel_layout(::rvpb::RvChannelLayo
   _impl_.channel_layout_ = value;
 }
 
+// optional uint32 track_count = 4;
+inline bool RvDeviceEncoding::has_track_count() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline void RvDeviceEncoding::clear_track_count() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = 0u;
+  _impl_._has_bits_[0] &= ~0x00000008u;
+}
+inline ::uint32_t RvDeviceEncoding::track_count() const {
+  // @@protoc_insertion_point(field_get:rvpb.RvDeviceEncoding.track_count)
+  return _internal_track_count();
+}
+inline void RvDeviceEncoding::set_track_count(::uint32_t value) {
+  _internal_set_track_count(value);
+  _impl_._has_bits_[0] |= 0x00000008u;
+  // @@protoc_insertion_point(field_set:rvpb.RvDeviceEncoding.track_count)
+}
+inline ::uint32_t RvDeviceEncoding::_internal_track_count() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.track_count_;
+}
+inline void RvDeviceEncoding::_internal_set_track_count(::uint32_t value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.track_count_ = value;
+}
+
 // optional .google.protobuf.Duration buffer_length = 3;
 inline bool RvDeviceEncoding::has_buffer_length() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
@@ -6091,34 +6119,6 @@ inline void RvDeviceEncoding::set_allocated_buffer_length(::google::protobuf::Du
 
   _impl_.buffer_length_ = reinterpret_cast<::google::protobuf::Duration*>(value);
   // @@protoc_insertion_point(field_set_allocated:rvpb.RvDeviceEncoding.buffer_length)
-}
-
-// optional uint32 track_count = 4;
-inline bool RvDeviceEncoding::has_track_count() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
-  return value;
-}
-inline void RvDeviceEncoding::clear_track_count() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.track_count_ = 0u;
-  _impl_._has_bits_[0] &= ~0x00000008u;
-}
-inline ::uint32_t RvDeviceEncoding::track_count() const {
-  // @@protoc_insertion_point(field_get:rvpb.RvDeviceEncoding.track_count)
-  return _internal_track_count();
-}
-inline void RvDeviceEncoding::set_track_count(::uint32_t value) {
-  _internal_set_track_count(value);
-  _impl_._has_bits_[0] |= 0x00000008u;
-  // @@protoc_insertion_point(field_set:rvpb.RvDeviceEncoding.track_count)
-}
-inline ::uint32_t RvDeviceEncoding::_internal_track_count() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.track_count_;
-}
-inline void RvDeviceEncoding::_internal_set_track_count(::uint32_t value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.track_count_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -53,9 +53,8 @@ Defines how it is presented to apps.
 | ----- | ---- | ----- | ----------- |
 | sample_rate | [uint32](#uint32) | optional | Virtual device sample rate, in Hertz (e.g. 44100). Keep unset to use default. |
 | channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) | optional | Virtual device channel layout (e.g. stereo). Keep unset to use default. |
+| track_count | [uint32](#uint32) | optional | Number of tracks when RV_CHANNEL_LAYOUT_MULTITRACK is specified in RvChannelLayout. Should be in range 1 - 1024. |
 | buffer_length | [google.protobuf.Duration](#google-protobuf-Duration) | optional | Virtual device buffer size. Keep unset to use default. |
-| track_count    | [uint32](#uint32) | optional | Track count when channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK (e.g. 9).                                                                                |
-
 
 
 
@@ -71,15 +70,15 @@ Virtual device info.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | type | [RvDeviceType](#rvpb-RvDeviceType) |  | Device type. Each virtual device can be either sender (output device) or receiver (input device). Required field. |
-| index | [uint32](#uint32) | optional | Device index identifier. Index is a small numeric value that is reused for new devices after device deletion. When retrieving device info, always present and non-zero. When creating device, keep unset to automaitcally select free index. When set, should not be zero. |
+| index | [uint32](#uint32) | optional | Device index identifier. Index is a small numeric value that is reused for new devices after device deletion. When retrieving device info, always present and non-zero. When creating device, keep unset to automatically select free index. When set, should not be zero. |
 | uid | [string](#string) | optional | Device UID identifier. UID is a long string identifier, unique across all audio devices, and very unlikely to be ever reused. When retrieving device info, always present and non-empty. When creating device, keep unset to generate random UID. When set, should not be empty. |
 | name | [string](#string) | optional | Human-readable device name. Device name is shown to the user in UI. When retrieving device info, always present and non-empty. When creating device, keep unset to generate name automatically. When set, should not be empty. |
-| enabled | [bool](#bool) | optional | Whether device is active and visible to the user. Device can be disabled to remove it from system without losing configuration, and then re-enabled later. When retrieving device info, always present and non-empty. When creating device, if this field is unset or set to true, devices is enabled emmediately, and if it&#39;s set to false, it&#39;s created disabled. |
+| enabled | [bool](#bool) | optional | Whether device is active and visible to the user. Device can be disabled to remove it from system without losing configuration, and then re-enabled later. When retrieving device info, always present and non-empty. When creating device, if this field is unset or set to true, devices is enabled immediately, and if it&#39;s set to false, it&#39;s created disabled. |
 | device_encoding | [RvDeviceEncoding](#rvpb-RvDeviceEncoding) |  | Local encoding of device. Parameters of virtual device, as it&#39;s shown to the apps. |
 | sender_config | [RvSenderConfig](#rvpb-RvSenderConfig) |  | Configuration for sender device. Should be used if device type is RV_DEVICE_TYPE_SENDER. |
 | receiver_config | [RvReceiverConfig](#rvpb-RvReceiverConfig) |  | Configuration for receiver device. Should be used if device type is RV_DEVICE_TYPE_RECEIVER. |
-| local_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added intially via add_device() or on fly via bind(). |
-| remote_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of remote endpoints to which device is sending traffic or control requests. Remote endpoints can be added intially via add_device() or on fly via connect(). |
+| local_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of local endpoints on which device is receiving traffic or control requests. Local endpoints can be added initially via add_device() or on fly via bind(). |
+| remote_endpoints | [RvEndpointInfo](#rvpb-RvEndpointInfo) | repeated | List of remote endpoints to which device is sending traffic or control requests. Remote endpoints can be added initially via add_device() or on fly via connect(). |
 
 
 
@@ -142,7 +141,7 @@ Endpoint description.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | slot | [uint32](#uint32) | optional | Slot to which this endpoint belongs. Slot is a group of related endpoints, like complementary transport and control stream pair connecting two peers. Multiple slots can be used to connect a sender to a few remote addresses, or to bind a receiver to a few different local addresses. When an endpoint is bound or connected, specified slot is created automatically if it does not exist yet. When retrieving endpoint info, always present. When sending endpoint info, keep unset to use default slot (0). |
-| interface | [RvInterface](#rvpb-RvInterface) |  | Interface to which this endpoint attached. Interface defines type of data transfered via endpoint, and list of allowed endpoint protocols (URI schemas). Each slot can have up to one endpoint of every interface type, e.g. one source endpoint and one control endpoint. |
+| interface | [RvInterface](#rvpb-RvInterface) |  | Interface to which this endpoint attached. Interface defines type of data transferred via endpoint, and list of allowed endpoint protocols (URI schemas). Each slot can have up to one endpoint of every interface type, e.g. one source endpoint and one control endpoint. |
 | uri | [string](#string) |  | URI is address associated with endpoint. For local endpoint, URI defines address to which endpoint is bound. For remote endpoint, URI defines address to which endpoint is connected. Allowed URI schemas are defined by endpoint interface. |
 
 
@@ -200,13 +199,13 @@ Network packet encoding.
 Defines how samples are encoded when sent over network.
 
 
-| Field          | Type | Label | Description                                                                                                                  |
-|----------------| --- | ----- |------------------------------------------------------------------------------------------------------------------------------|
-| encoding_id    | [uint32](#uint32) |  | Encoding identifier (arbitrary 8-bit number). You should use the same numbers on sender and receiver to identifiy encodings. |
-| sample_rate    | [uint32](#uint32) |  | Sample rate, in Hertz (e.g. 44100).                                                                                          |
-| sample_format  | [RvSampleFormat](#rvpb-RvSampleFormat) |  | Sample format (e.g. 16-bit PCM).                                                                                             |
-| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) |  | Channel layout (e.g. stereo).                                                                                                |
-| track_count    | [uint32](#uint32) | optional | Track count when channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK (e.g. 9).                                                                                |
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| encoding_id | [uint32](#uint32) |  | Encoding identifier (arbitrary 8-bit number). You should use the same numbers on sender and receiver to identify encodings. |
+| sample_rate | [uint32](#uint32) |  | Sample rate, in Hertz (e.g. 44100). |
+| sample_format | [RvSampleFormat](#rvpb-RvSampleFormat) |  | Sample format (e.g. 16-bit PCM). |
+| channel_layout | [RvChannelLayout](#rvpb-RvChannelLayout) |  | Channel layout (e.g. stereo). |
+| track_count | [uint32](#uint32) | optional | Number of tracks when RV_CHANNEL_LAYOUT_MULTITRACK is specified in RvChannelLayout. Should be in range 1 - 1024. |
 
 
 
@@ -286,11 +285,11 @@ Device enable/disable request.
 Channel layout.
 Defines what channel count and their meaning.
 
-| Name                         | Number | Description                               |
-|------------------------------|--------|-------------------------------------------|
-| RV_CHANNEL_LAYOUT_MONO       | 0      | One monochromatic channel.                |
-| RV_CHANNEL_LAYOUT_STEREO     | 1      | Two channels: left and right.             |
-| RV_CHANNEL_LAYOUT_MULTITRACK | 2      | Multi-track audio with up to 1024 tracks. |
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| RV_CHANNEL_LAYOUT_MONO | 0 | One monochromatic channel. |
+| RV_CHANNEL_LAYOUT_STEREO | 1 | Two channels: left and right. |
+| RV_CHANNEL_LAYOUT_MULTITRACK | 2 | Multi-track audio. |
 
 
 
@@ -392,7 +391,7 @@ Affects speed and quality.
 | RV_RESAMPLER_BACKEND_DEFAULT | 0 | Select best backend automatically. |
 | RV_RESAMPLER_BACKEND_BUILTIN | 1 | CPU-demanding good-quality built-in resampler. Works fine with any latency. |
 | RV_RESAMPLER_BACKEND_SPEEX | 2 | Fast good-quality resampler from SpeexDSP. Works fine with higher latency. |
-| RV_RESAMPLER_BACKEND_SPEEXDEC | 3 | Lower quiality fast resampler combining SpeexDSP and decimation. Works fine with any latency. |
+| RV_RESAMPLER_BACKEND_SPEEXDEC | 3 | Lower quality fast resampler combining SpeexDSP and decimation. Works fine with any latency. |
 
 
 

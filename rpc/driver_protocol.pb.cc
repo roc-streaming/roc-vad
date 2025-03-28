@@ -512,12 +512,12 @@ const ::uint32_t
         ~0u,  // no sizeof(Split)
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.sample_rate_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.channel_layout_),
-        PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.buffer_length_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.track_count_),
+        PROTOBUF_FIELD_OFFSET(::rvpb::RvDeviceEncoding, _impl_.buffer_length_),
         1,
         2,
-        0,
         3,
+        0,
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _impl_._has_bits_),
         PROTOBUF_FIELD_OFFSET(::rvpb::RvPacketEncoding, _internal_metadata_),
         ~0u,  // no _extensions_
@@ -644,10 +644,10 @@ const char descriptor_table_protodef_driver_5fprotocol_2eproto[] ABSL_ATTRIBUTE_
     "_choppy_playback_timeout\"\366\001\n\020RvDeviceEnc"
     "oding\022\030\n\013sample_rate\030\001 \001(\rH\000\210\001\001\0222\n\016chann"
     "el_layout\030\002 \001(\0162\025.rvpb.RvChannelLayoutH\001"
-    "\210\001\001\0225\n\rbuffer_length\030\003 \001(\0132\031.google.prot"
-    "obuf.DurationH\002\210\001\001\022\030\n\013track_count\030\004 \001(\rH"
+    "\210\001\001\022\030\n\013track_count\030\004 \001(\rH\002\210\001\001\0225\n\rbuffer_"
+    "length\030\003 \001(\0132\031.google.protobuf.DurationH"
     "\003\210\001\001B\016\n\014_sample_rateB\021\n\017_channel_layoutB"
-    "\020\n\016_buffer_lengthB\016\n\014_track_count\"\302\001\n\020Rv"
+    "\016\n\014_track_countB\020\n\016_buffer_length\"\302\001\n\020Rv"
     "PacketEncoding\022\023\n\013encoding_id\030\001 \001(\r\022\023\n\013s"
     "ample_rate\030\002 \001(\r\022+\n\rsample_format\030\003 \001(\0162"
     "\024.rvpb.RvSampleFormat\022-\n\016channel_layout\030"
