@@ -200,7 +200,7 @@ After modifying `.proto` file(s), you need to re-generate [RPC.md](RPC.md) docum
 Install [protoc-gen-doc](https://github.com/pseudomuto/protoc-gen-doc):
 
 ```
-go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v1.5.1
 ```
 
 Regenerate documentation:
