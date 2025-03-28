@@ -1,0 +1,45 @@
+name: "release"
+
+on:
+  push:
+    tags:
+      - v*
+
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  release:
+    needs: [build]
+
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        uses: tecolicom/actions-use-homebrew-tools@v1
+        with:
+          tools: scons autoconf automake pkg-config libtool go
+
+      - name: Build
+        run: |
+          make
+
+      - name: Create tarball
+        run: |
+          make dist
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: roc-vad.tar.bz2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

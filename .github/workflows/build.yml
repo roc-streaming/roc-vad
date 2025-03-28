@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-      - v*
-    tags:
-      - v*
 
   pull_request:
 
@@ -15,6 +12,7 @@ on:
       - trigger_build
 
   workflow_dispatch:
+  workflow_call:
 
   schedule:
     - cron: '0 0 * * 1'
@@ -30,7 +28,7 @@ jobs:
         macos: [latest, 15, 14, 13]
 
     runs-on: macos-${{ matrix.macos }}
-    name: macos-${{ matrix.macos }}
+    name: build/macos-${{ matrix.macos }}
 
     steps:
       - name: Checkout
@@ -54,18 +52,13 @@ jobs:
         run: |
           make test
 
-      - name: Install
+      - name: Check
         run: |
-          sudo make install
+          bin/roc-vad --help
 
-  release:
-    needs: [build]
-    if: |
-      github.repository_owner == 'roc-streaming' &&
-      github.event_name == 'push' &&
-      startsWith(github.ref, 'refs/tags/v')
+  install:
+    runs-on: macos-latest
 
-    runs-on: macos-13
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,17 +70,72 @@ jobs:
         with:
           tools: scons autoconf automake pkg-config libtool go
 
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+
       - name: Build
         run: |
           make
 
-      - name: Create tarball
+      - name: Install
+        run: |
+          make install
+
+      - name: Check
+        run: |
+          [ -e /usr/local/bin/roc-vad ]
+          [ -e /Library/Audio/Plug-Ins/HAL/roc_vad.driver ]
+          /usr/local/bin/roc-vad --help
+
+      - name: Uninstall
+        run: |
+          make uninstall
+
+      - name: Check
+        run: |
+          [ ! -e /usr/local/bin/roc-vad ]
+          [ ! -e /Library/Audio/Plug-Ins/HAL/roc_vad.driver ]
+
+  dist:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        uses: tecolicom/actions-use-homebrew-tools@v1
+        with:
+          tools: scons autoconf automake pkg-config libtool go
+
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+
+      - name: Build
+        run: |
+          make
+
+      - name: Dist
         run: |
           make dist
 
-      - name: Publish release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: roc-vad.tar.bz2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install
+        run: |
+          ./install.sh roc-vad.tar.bz2
+
+      - name: Check
+        run: |
+          [ -e /usr/local/bin/roc-vad ]
+          [ -e /Library/Audio/Plug-Ins/HAL/roc_vad.driver ]
+          /usr/local/bin/roc-vad --help
+
+      - name: Uninstall
+        run: |
+          /usr/local/bin/roc-vad uninstall
+
+      - name: Check
+        run: |
+          [ ! -e /usr/local/bin/roc-vad ]
+          [ ! -e /Library/Audio/Plug-Ins/HAL/roc_vad.driver ]

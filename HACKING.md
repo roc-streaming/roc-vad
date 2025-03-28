@@ -206,7 +206,7 @@ go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
 Regenerate documentation:
 
 ```
-make rpcmd
+make md_rpc
 ```
 
 After modifying sections in README.md or HACKING.md, you need to re-generate table of contents.
@@ -220,7 +220,7 @@ npm install -g markdown-toc
 Regenerate TOC:
 
 ```
-make tocmd
+make md_toc
 ```
 
 After modifying `.d2` file(s), you need to re-generate `.svg` images.
