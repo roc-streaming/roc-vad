@@ -21,7 +21,6 @@ namespace rocvad {
 
 namespace {
 
-
 size_t compute_channel_count(roc_channel_layout channel_layout)
 {
     switch (channel_layout) {

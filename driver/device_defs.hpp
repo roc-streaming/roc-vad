@@ -52,7 +52,7 @@ struct DevicePacketEncoding
         .rate = 0,
         .format = (roc_format)0,
         .channels = (roc_channel_layout)0,
-        .tracks = 0
+        .tracks = 0,
     };
 };
 
