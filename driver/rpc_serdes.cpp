@@ -7,6 +7,7 @@
  */
 
 #include "rpc_serdes.hpp"
+#include "constants.hpp"
 #include "enum_map.hpp"
 
 #include <fmt/core.h>
@@ -144,8 +145,26 @@ void device_info_from_rpc(DeviceInfo& out, const rvpb::RvDeviceInfo& in)
                 in.device_encoding().channel_layout());
     }
 
-    if (in.device_encoding().has_track_count()) {
+    if (out.device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+        if (!in.device_encoding().has_track_count()) {
+            throw std::invalid_argument(
+                "if RvDeviceInfo.channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK,"
+                " RvDeviceInfo.track_count should be set");
+        }
+        if (in.device_encoding().track_count() < MIN_TRACK_COUNT ||
+            in.device_encoding().track_count() > MAX_TRACK_COUNT) {
+            throw std::invalid_argument(
+                fmt::format("RvDeviceInfo.track_count should be in range [{}; {}]",
+                    MIN_TRACK_COUNT,
+                    MAX_TRACK_COUNT));
+        }
         out.device_encoding.channel_count = in.device_encoding().track_count();
+    } else {
+        if (in.device_encoding().has_track_count()) {
+            throw std::invalid_argument(
+                "if RvDeviceInfo.channel_layout is not RV_CHANNEL_LAYOUT_MULTITRACK,"
+                " RvDeviceInfo.track_count should not be set");
+        }
     }
 
     if (in.device_encoding().has_buffer_length()) {
@@ -346,7 +365,8 @@ void device_info_to_rpc(rvpb::RvDeviceInfo& out, const DeviceInfo& in)
             channel_layout_map,
             in.device_encoding.channel_layout));
     if (in.device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
-        out.mutable_device_encoding()->set_track_count((uint32_t)in.device_encoding.channel_count);
+        out.mutable_device_encoding()->set_track_count(
+            (uint32_t)in.device_encoding.channel_count);
     }
 
     *out.mutable_device_encoding()->mutable_buffer_length() = nanoseconds_to_rpc(
@@ -517,10 +537,24 @@ void packet_encoding_from_rpc(DevicePacketEncoding& out, const rvpb::RvPacketEnc
         "RvPacketEncoding.channel_layout", channel_layout_map, in.channel_layout());
 
     if (out.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
-        if (in.track_count() == 0){
-            throw std::invalid_argument("For multi-track track count should be in range [1; 1000]");
+        if (!in.has_track_count()) {
+            throw std::invalid_argument(
+                "if RvPacketEncoding.channel_layout is RV_CHANNEL_LAYOUT_MULTITRACK,"
+                " RvPacketEncoding.track_count should be set");
+        }
+        if (in.track_count() < MIN_TRACK_COUNT || in.track_count() > MAX_TRACK_COUNT) {
+            throw std::invalid_argument(
+                fmt::format("RvPacketEncoding.track_count should be in range [{}; {}]",
+                    MIN_TRACK_COUNT,
+                    MAX_TRACK_COUNT));
         }
         out.spec.tracks = in.track_count();
+    } else {
+        if (in.has_track_count()) {
+            throw std::invalid_argument(
+                "if RvPacketEncoding.channel_layout is not RV_CHANNEL_LAYOUT_MULTITRACK,"
+                " RvPacketEncoding.track_count should not be set");
+        }
     }
 }
 
@@ -533,10 +567,7 @@ void packet_encoding_to_rpc(rvpb::RvPacketEncoding& out, const DevicePacketEncod
     out.set_channel_layout(enum_to_rpc(
         "RvPacketEncoding.channel_layout", channel_layout_map, in.spec.channels));
     if (in.spec.channels == ROC_CHANNEL_LAYOUT_MULTITRACK) {
-        if (in.spec.tracks == 0){
-            throw std::invalid_argument("For multi-track track count should be in range [1; 1000]");
-        }
-        out.set_track_count(in.spec.tracks);
+        out.set_track_count((uint32_t)in.spec.tracks);
     }
 }
 

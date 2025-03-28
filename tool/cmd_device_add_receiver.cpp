@@ -8,6 +8,7 @@
 
 #include "cmd_device_add_receiver.hpp"
 #include "connector.hpp"
+#include "constants.hpp"
 #include "parse.hpp"
 #include "print.hpp"
 
@@ -37,7 +38,10 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
             supported_enum_values(channel_layout_map)));
     device_encoding_opts->add_option("-t,--device-tracks",
         device_encoding_tracks_,
-        "Track count when using multitrack, in range 1 - 1024");
+        fmt::format("Track count for virtual device when using --device-chans=multitrack,"
+                    " in range [{}; {}]",
+            MIN_TRACK_COUNT,
+            MAX_TRACK_COUNT));
     device_encoding_opts->add_option("-b,--device-buffer",
         device_encoding_buffer_,
         fmt::format(
@@ -63,7 +67,10 @@ CmdDeviceAddReceiver::CmdDeviceAddReceiver(CLI::App& parent)
             supported_enum_values(channel_layout_map)));
     packet_encoding_opts->add_option("--packet-encoding-tracks",
         packet_encoding_tracks_,
-        "Packet track count when using multitrack, in range 1 - 1024");
+        fmt::format("Track count to use for packet encoding when using"
+                    " --packet-encoding-chans=multitrack, in range [{}; {}]",
+            MIN_TRACK_COUNT,
+            MAX_TRACK_COUNT));
 
     // resampler
     auto resampler_opts = command->add_option_group("Resampler");
@@ -155,13 +162,19 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
             return false;
         }
         request.mutable_device_encoding()->set_channel_layout(channel_layout);
-
-        if (channel_layout == rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
-            if (device_encoding_tracks_) {
-                request.mutable_device_encoding()->set_track_count(*device_encoding_tracks_);
-            } else {
-                return false;
-            }
+    }
+    if (request.device_encoding().channel_layout() ==
+        rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
+        if (!device_encoding_tracks_) {
+            spdlog::error("--device-chans=multitrack requires --device-tracks");
+            return false;
+        }
+        request.mutable_device_encoding()->set_track_count(*device_encoding_tracks_);
+    } else {
+        if (device_encoding_tracks_) {
+            spdlog::error(
+                "--device-tracks can be used only with --device-chans=multitrack");
+            return false;
         }
     }
     if (device_encoding_buffer_) {
@@ -174,7 +187,7 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
 
     // packet_encoding
     if (packet_encoding_id_ || packet_encoding_rate_ || packet_encoding_format_ ||
-        packet_encoding_chans_) {
+        packet_encoding_chans_ || packet_encoding_tracks_) {
         rvpb::RvPacketEncoding packet_encoding;
 
         if (packet_encoding_id_) {
@@ -202,13 +215,21 @@ bool CmdDeviceAddReceiver::execute(const Environment& env)
                 return false;
             }
             packet_encoding.set_channel_layout(channel_layout);
-
-            if (channel_layout == rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
-                if (packet_encoding_tracks_) {
-                    packet_encoding.set_track_count(*packet_encoding_tracks_);
-                } else {
-                    return false;
-                }
+        }
+        if (packet_encoding.channel_layout() == rvpb::RV_CHANNEL_LAYOUT_MULTITRACK) {
+            if (!packet_encoding_tracks_) {
+                spdlog::error(
+                    "--packet-encoding-chans=multitrack requires"
+                    " --packet-encoding-tracks");
+                return false;
+            }
+            packet_encoding.set_track_count(*packet_encoding_tracks_);
+        } else {
+            if (packet_encoding_tracks_) {
+                spdlog::error(
+                    "--packet-encoding-tracks can be used only with"
+                    " --packet-encoding-chans=multitrack");
+                return false;
             }
         }
 

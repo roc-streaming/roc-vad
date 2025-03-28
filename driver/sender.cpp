@@ -37,7 +37,6 @@ Sender::Sender(const std::string& device_uid,
     net_sender_config.frame_encoding.rate = device_encoding.sample_rate;
     net_sender_config.frame_encoding.format = ROC_FORMAT_PCM_FLOAT32;
     net_sender_config.frame_encoding.channels = device_encoding.channel_layout;
-
     if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
         net_sender_config.frame_encoding.tracks = device_encoding.channel_count;
     }
