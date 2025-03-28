@@ -460,7 +460,8 @@ When you create sender virtual device using `roc-vad device add sender`, the fol
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding   |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding   |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding   |
-| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo)                             | for custom network encoding   |
+| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo, multitrack)                 | for custom network encoding   |
+| --packet-encoding-tracks | none                   | number of tracks (channels) when using multitrack                           | for custom network encoding   |
 | --packet-length          | 5ms                    | audio packet length (e.g. 123ms)                                            |                               |
 | --packet-interleaving    | false                  | enable packet interleaving                                                  |                               |
 | --fec-encoding           | rs8m                   | encoding for FEC packets (default, disable, rs8m, ldpc)                     |                               |
@@ -487,7 +488,8 @@ When you create receiver virtual device using `roc-vad device add receiver`, the
 | --packet-encoding-id     | 10                     | encoding id for audio packets (any number, but same on sender and receiver) | for custom network encoding |
 | --packet-encoding-rate   | 44100                  | sample rate for audio packets                                               | for custom network encoding |
 | --packet-encoding-format | s16                    | sample format for audio packets (s16)                                       | for custom network encoding |
-| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo)                             | for custom network encoding |
+| --packet-encoding-chans  | stereo                 | channel layout for audio packets (mono, stereo, multitrack)                 | for custom network encoding |
+| --packet-encoding-tracks | none                   | number of tracks (channels) when using multitrack                           | for custom network encoding |
 | --resampler-backend      | selected automatically | resampler backend (default, builtin, speex, speexdec)                       |                             |
 | --resampler-profile      | medium                 | resampler profile (default, high, medium, low)                              |                             |
 | --latency-backend        | selected automatically | latency tuner backend (default, niq)                                        |                             |
@@ -535,8 +537,9 @@ $ roc-vad device connect 1 --slot 1 \
 
 You can use the following options to control how Roc VAD device present itself to local applications:
 
-* `--device-rate`
-* `--device-chans`
+* `--device-rate` - sampling rate (e.g. 44100)
+* `--device-chans` - channel layout (e.g. `stereo`)
+* `--device-tracks` - number or tracks (channels) if channel layout is `multitrack`
 
 By default, Roc VAD uses 44100Hz with 16-bit stereo.
 
@@ -554,6 +557,7 @@ The following options can be used if you want Roc VAD to use specific encoding f
 * `--packet-encoding-rate` - sampling rate (e.g. 44100)
 * `--packet-encoding-format` - sample format (e.g. `s16` for 16-bit signed integers)
 * `--packet-encoding-chans` - channel layout (e.g. `stereo`)
+* `--packet-encoding-tracks` - number or tracks (channels) if channel layout is `multitrack`
 
 By default, Roc VAD uses 44100Hz with 16-bit stereo.
 
@@ -600,6 +604,14 @@ There are also sender-side parameters that affect latency:
 * `--fec-block-nbrpr` - number of redundancy packets in a FEC block (if FEC is enabled)
 
 For lower latency, you may need lower packet length and FEC block size. And vice versa, for higher latency and network jitter, you may need to increase both packet length (for less overhead) and FEC block size (for better repair).
+
+### Multi-track channel layout
+
+You can use `--device-chans=multitrack` and `--packet-encoding-chans=multitrack` to employ arbitrary number of channels. The number of channels is then defined by `--device-tracks` and `--packet-encoding-tracks` options and can be any value from 1 to 1024.
+
+In multitrack mode, channel numbers don't have any semantics (hence they have a more generic name "tracks") and the usual channel downmixing and upmixing are not performed.
+
+For example, if packet encoding is stereo and receiver's device is mono, receiver will downmix stereo to mono. However, if packet encoding is multitrack with 2 tracks, and receiver's device is multitrack with 1 track, receiver will just use the first track and drop the second.
 
 ## Programmatic control
 
