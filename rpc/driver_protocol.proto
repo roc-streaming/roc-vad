@@ -118,7 +118,7 @@ message RvDeviceInfo
     // Index is a small numeric value that is reused for new devices
     // after device deletion.
     // When retrieving device info, always present and non-zero.
-    // When creating device, keep unset to automaitcally select free index.
+    // When creating device, keep unset to automatically select free index.
     // When set, should not be zero.
     optional uint32 index = 2;
 
@@ -142,7 +142,7 @@ message RvDeviceInfo
     // and then re-enabled later.
     // When retrieving device info, always present and non-empty.
     // When creating device, if this field is unset or set to true, devices is
-    // enabled emmediately, and if it's set to false, it's created disabled.
+    // enabled immediately, and if it's set to false, it's created disabled.
     optional bool enabled = 5;
 
     // Local encoding of device.
@@ -163,11 +163,11 @@ message RvDeviceInfo
     }
 
     // List of local endpoints on which device is receiving traffic or control requests.
-    // Local endpoints can be added intially via add_device() or on fly via bind().
+    // Local endpoints can be added initially via add_device() or on fly via bind().
     repeated RvEndpointInfo local_endpoints = 9;
 
     // List of remote endpoints to which device is sending traffic or control requests.
-    // Remote endpoints can be added intially via add_device() or on fly via connect().
+    // Remote endpoints can be added initially via add_device() or on fly via connect().
     repeated RvEndpointInfo remote_endpoints = 10;
 }
 
@@ -211,7 +211,7 @@ message RvEndpointInfo
     optional uint32 slot = 1;
 
     // Interface to which this endpoint attached.
-    // Interface defines type of data transfered via endpoint, and list of allowed
+    // Interface defines type of data transferred via endpoint, and list of allowed
     // endpoint protocols (URI schemas). Each slot can have up to one endpoint of
     // every interface type, e.g. one source endpoint and one control endpoint.
     RvInterface interface = 2;
@@ -347,7 +347,7 @@ message RvPacketEncoding
 {
     // Encoding identifier (arbitrary 8-bit number).
     // You should use the same numbers on sender and receiver
-    // to identifiy encodings.
+    // to identify encodings.
     uint32 encoding_id = 1;
 
     // Sample rate, in Hertz (e.g. 44100).
@@ -472,7 +472,7 @@ enum RvResamplerBackend
     // Works fine with higher latency.
     RV_RESAMPLER_BACKEND_SPEEX = 2;
 
-    // Lower quiality fast resampler combining SpeexDSP and decimation.
+    // Lower quality fast resampler combining SpeexDSP and decimation.
     // Works fine with any latency.
     RV_RESAMPLER_BACKEND_SPEEXDEC = 3;
 }
