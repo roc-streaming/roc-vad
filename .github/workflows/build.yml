@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         uses: roc-streaming/ci/actions/install-packages@main
         with:
-          packages: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkgconf libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies
         uses: roc-streaming/ci/actions/install-packages@main
         with:
-          packages: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkgconf libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -112,7 +112,7 @@ jobs:
       - name: Install dependencies
         uses: roc-streaming/ci/actions/install-packages@main
         with:
-          packages: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkgconf libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
