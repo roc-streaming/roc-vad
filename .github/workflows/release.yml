@@ -41,5 +41,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: roc-vad.tar.bz2
+          draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
