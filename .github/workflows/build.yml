@@ -37,9 +37,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: tecolicom/actions-use-homebrew-tools@v1
+        uses: roc-streaming/ci/actions/install-packages@main
         with:
-          tools: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkg-config libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -68,9 +68,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: tecolicom/actions-use-homebrew-tools@v1
+        uses: roc-streaming/ci/actions/install-packages@main
         with:
-          tools: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkg-config libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
@@ -110,9 +110,9 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: tecolicom/actions-use-homebrew-tools@v1
+        uses: roc-streaming/ci/actions/install-packages@main
         with:
-          tools: scons autoconf automake pkg-config libtool go
+          packages: scons autoconf automake pkg-config libtool go
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1.2
