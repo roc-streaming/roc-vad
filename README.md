@@ -107,7 +107,7 @@ If you would like to support the project financially, see details on [this page]
 
 Special thanks to [Sean McNamara](https://github.com/allquixotic), whose funding helped to complete and release the first version of Roc VAD!
 
-<a href="https://liberapay.com/roc-streaming"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+<a href="https://github.com/sponsors/roc-streaming"><img alt="Donate on GitHub Sponsors" src="https://roc-streaming.org/images/logos/github_sponsors.svg"></a>
 
 ## Releases
 
