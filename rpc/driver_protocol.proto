@@ -53,7 +53,7 @@ service RvDriver
     // Connect device to remote endpoint.
     rpc connect(RvEndpointRequest) returns (RvEndpointInfo) {}
 
-    // Unlink device from remote endpoint.
+    // Unlink device from remote endpoints.
     rpc unlink(RvUnlinkRequest) returns (RvNone) {}
 }
 
@@ -193,7 +193,7 @@ message RvToggleRequest
 // Endpoint bind or connect request.
 message RvEndpointRequest
 {
-    // Virtual device to which request is send.
+    // Virtual device to which request is sent.
     RvDeviceSelector device = 1;
 
     // New local or remote endpoint to be bound or connected.
@@ -203,7 +203,7 @@ message RvEndpointRequest
 // Device unlink request.
 message RvUnlinkRequest
 {
-    // Virtual device to which request is send.
+    // Virtual device to which request is sent.
     RvDeviceSelector device = 1;
 
     // Slot to unlink, keep unset to use default slot (0).
