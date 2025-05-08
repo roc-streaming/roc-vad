@@ -26,7 +26,7 @@ Receiver::Receiver(const std::string& device_uid,
     roc_context_config net_context_config;
     memset(&net_context_config, 0, sizeof(net_context_config));
 
-    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK) {
+    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK && device_encoding.channel_count > 4) {
         net_context_config.max_packet_size = device_encoding.channel_count * 512;
         net_context_config.max_frame_size = device_encoding.channel_count * 1024;
     }
