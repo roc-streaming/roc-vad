@@ -284,6 +284,15 @@ DeviceEndpointInfo Device::connect(DeviceEndpointInfo endpoint_info)
     return endpoint_info;
 }
 
+void Device::unlink(roc_slot slot)
+{
+    unlink_endpoints_(slot);
+
+    while (remove_slot_endpoint_(slot)){}
+
+    sort_endpoints_();
+}
+
 void Device::bind_endpoint_(DeviceEndpointInfo& endpoint_info)
 {
     spdlog::info("binding device {} slot {} to endpoint {}",
@@ -302,6 +311,27 @@ void Device::connect_endpoint_(DeviceEndpointInfo& endpoint_info)
         endpoint_info.uri);
 
     net_transceiver_->connect(endpoint_info);
+}
+
+
+bool Device::remove_slot_endpoint_(roc_slot slot)
+{
+    for (unsigned i=0; i<info_.remote_endpoints.size(); ++i){
+        if (info_.remote_endpoints[i].slot == slot) {
+            info_.remote_endpoints.erase(info_.remote_endpoints.begin() + i);
+            return true;
+        }
+    }
+    return false;
+}
+
+void Device::unlink_endpoints_(roc_slot slot)
+{
+    spdlog::info("unlinking device {} slot {} from all endpoints",
+        info_.uid,
+        slot);
+
+    net_transceiver_->unlink(slot);
 }
 
 void Device::sort_endpoints_()

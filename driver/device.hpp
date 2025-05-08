@@ -49,11 +49,14 @@ public:
 
     DeviceEndpointInfo bind(DeviceEndpointInfo endpoint_info);
     DeviceEndpointInfo connect(DeviceEndpointInfo endpoint_info);
+    void unlink(roc_slot slot);
 
 private:
     void bind_endpoint_(DeviceEndpointInfo& endpoint_info);
     void connect_endpoint_(DeviceEndpointInfo& endpoint_info);
+    void unlink_endpoints_(roc_slot slot);
     void sort_endpoints_();
+    bool remove_slot_endpoint_(roc_slot slot);
 
     // to generate new device index and uid
     IndexAllocator& index_allocator_;

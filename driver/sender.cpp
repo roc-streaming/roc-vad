@@ -137,6 +137,18 @@ void Sender::connect(DeviceEndpointInfo& endpoint_info)
     }
 }
 
+void Sender::unlink(roc_slot slot)
+{
+    int err = 0;
+
+    if ((err = roc_sender_unlink(net_sender_, slot)) < 0) {
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} err={}",
+            device_uid_,
+            err));
+    }
+
+}
+
 void Sender::pause() noexcept
 {
     // TODO: call roc_sender_pause()

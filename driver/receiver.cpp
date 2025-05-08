@@ -131,6 +131,11 @@ void Receiver::connect(DeviceEndpointInfo& endpoint_info)
     throw std::invalid_argument("receiver device does not support connect() currently");
 }
 
+void Receiver::unlink(roc_slot slot)
+{
+    throw std::invalid_argument("receiver device does not support unlink() currently");
+}
+
 void Receiver::pause() noexcept
 {
     // TODO: call roc_receiver_pause()

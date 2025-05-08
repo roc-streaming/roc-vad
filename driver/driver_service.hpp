@@ -67,6 +67,10 @@ public:
         const rvpb::RvEndpointRequest* request,
         rvpb::RvEndpointInfo* response) override;
 
+    grpc::Status unlink(grpc::ServerContext* context,
+        const rvpb::RvUnlinkRequest* request,
+        rvpb::RvNone* response) override;
+
 private:
     grpc::Status execute_command_(const char* name, std::function<void()> func);
 

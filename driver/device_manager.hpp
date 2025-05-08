@@ -57,6 +57,9 @@ public:
     DeviceEndpointInfo connect_device(const std::string& uid,
         DeviceEndpointInfo endpoint);
 
+    void unlink_device(index_t index, roc_slot slot);
+    void unlink_device(const std::string& uid, roc_slot slot);
+
 private:
     std::shared_ptr<Device> find_device_(index_t index);
     std::shared_ptr<Device> find_device_(const std::string& uid);

@@ -32,6 +32,7 @@ static const char* RvDriver_method_names[] = {
   "/rvpb.RvDriver/toggle_device",
   "/rvpb.RvDriver/bind",
   "/rvpb.RvDriver/connect",
+  "/rvpb.RvDriver/unlink",
 };
 
 std::unique_ptr< RvDriver::Stub> RvDriver::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -51,6 +52,7 @@ RvDriver::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, 
   , rpcmethod_toggle_device_(RvDriver_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_bind_(RvDriver_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_connect_(RvDriver_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_unlink_(RvDriver_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status RvDriver::Stub::ping(::grpc::ClientContext* context, const ::rvpb::RvNone& request, ::rvpb::RvNone* response) {
@@ -276,6 +278,29 @@ void RvDriver::Stub::async::connect(::grpc::ClientContext* context, const ::rvpb
   return result;
 }
 
+::grpc::Status RvDriver::Stub::unlink(::grpc::ClientContext* context, const ::rvpb::RvUnlinkRequest& request, ::rvpb::RvNone* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::rvpb::RvUnlinkRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_unlink_, context, request, response);
+}
+
+void RvDriver::Stub::async::unlink(::grpc::ClientContext* context, const ::rvpb::RvUnlinkRequest* request, ::rvpb::RvNone* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::rvpb::RvUnlinkRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_unlink_, context, request, response, std::move(f));
+}
+
+void RvDriver::Stub::async::unlink(::grpc::ClientContext* context, const ::rvpb::RvUnlinkRequest* request, ::rvpb::RvNone* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_unlink_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::rvpb::RvNone>* RvDriver::Stub::PrepareAsyncunlinkRaw(::grpc::ClientContext* context, const ::rvpb::RvUnlinkRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::rvpb::RvNone, ::rvpb::RvUnlinkRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_unlink_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::rvpb::RvNone>* RvDriver::Stub::AsyncunlinkRaw(::grpc::ClientContext* context, const ::rvpb::RvUnlinkRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncunlinkRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 RvDriver::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       RvDriver_method_names[0],
@@ -377,6 +402,16 @@ RvDriver::Service::Service() {
              ::rvpb::RvEndpointInfo* resp) {
                return service->connect(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      RvDriver_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< RvDriver::Service, ::rvpb::RvUnlinkRequest, ::rvpb::RvNone, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](RvDriver::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::rvpb::RvUnlinkRequest* req,
+             ::rvpb::RvNone* resp) {
+               return service->unlink(ctx, req, resp);
+             }, this)));
 }
 
 RvDriver::Service::~Service() {
@@ -446,6 +481,13 @@ RvDriver::Service::~Service() {
 }
 
 ::grpc::Status RvDriver::Service::connect(::grpc::ServerContext* context, const ::rvpb::RvEndpointRequest* request, ::rvpb::RvEndpointInfo* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status RvDriver::Service::unlink(::grpc::ServerContext* context, const ::rvpb::RvUnlinkRequest* request, ::rvpb::RvNone* response) {
   (void) context;
   (void) request;
   (void) response;
