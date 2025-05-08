@@ -26,6 +26,11 @@ Receiver::Receiver(const std::string& device_uid,
     roc_context_config net_context_config;
     memset(&net_context_config, 0, sizeof(net_context_config));
 
+    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK && device_encoding.channel_count > 4) {
+        net_context_config.max_packet_size = device_encoding.channel_count * 512;
+        net_context_config.max_frame_size = device_encoding.channel_count * 1024;
+    }
+
     if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
         throw std::runtime_error(
             fmt::format("can't open network context: uid={} err={}", device_uid_, err));
@@ -129,6 +134,11 @@ void Receiver::bind(DeviceEndpointInfo& endpoint_info)
 void Receiver::connect(DeviceEndpointInfo& endpoint_info)
 {
     throw std::invalid_argument("receiver device does not support connect() currently");
+}
+
+void Receiver::unlink(roc_slot slot)
+{
+    throw std::invalid_argument("receiver device does not support unlink() currently");
 }
 
 void Receiver::pause() noexcept

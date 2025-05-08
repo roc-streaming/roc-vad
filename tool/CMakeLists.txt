@@ -13,6 +13,7 @@ add_library(${TOOL_LIB} STATIC
   cmd_device_add_sender.cpp
   cmd_device_bind.cpp
   cmd_device_connect.cpp
+  cmd_device_unlink.cpp
   cmd_device_delete.cpp
   cmd_device_disable.cpp
   cmd_device_enable.cpp

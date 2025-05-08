@@ -10,6 +10,7 @@
 #include "cmd_device_add.hpp"
 #include "cmd_device_bind.hpp"
 #include "cmd_device_connect.hpp"
+#include "cmd_device_unlink.hpp"
 #include "cmd_device_delete.hpp"
 #include "cmd_device_disable.hpp"
 #include "cmd_device_enable.hpp"
@@ -35,4 +36,5 @@ CmdDevice::CmdDevice(CLI::App& parent)
 
     register_subcommand(std::make_shared<CmdDeviceBind>(*command));
     register_subcommand(std::make_shared<CmdDeviceConnect>(*command));
+    register_subcommand(std::make_shared<CmdDeviceUnlink>(*command));
 }

@@ -30,6 +30,7 @@ public:
     // may throw
     virtual void bind(DeviceEndpointInfo& endpoint_info) = 0;
     virtual void connect(DeviceEndpointInfo& endpoint_info) = 0;
+    virtual void unlink(roc_slot slot) = 0;
 
     // called when I/O is stopped / started
     virtual void pause() noexcept = 0;

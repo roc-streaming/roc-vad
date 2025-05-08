@@ -35,15 +35,18 @@ void spdlog_init(const Environment& env)
 
 void grpc_init()
 {
-    gpr_set_log_verbosity(GPR_LOG_SEVERITY_DEBUG);
-    gpr_set_log_function([](gpr_log_func_args* args) {
-        spdlog::log(spdlog::level::trace,
-            "(gpr:{}) {}",
-            args->severity == GPR_LOG_SEVERITY_ERROR  ? "e"
-            : args->severity == GPR_LOG_SEVERITY_INFO ? "i"
-                                                      : "d",
-            std::string(args->message));
-    });
+
+// These functions are deprecated and have now been removed from grpc
+
+//    gpr_set_log_verbosity(GPR_LOG_SEVERITY_DEBUG);
+//    gpr_set_log_function([](gpr_log_func_args* args) {
+//        spdlog::log(spdlog::level::trace,
+//            "(gpr:{}) {}",
+//            args->severity == GPR_LOG_SEVERITY_ERROR  ? "e"
+//            : args->severity == GPR_LOG_SEVERITY_INFO ? "i"
+//                                                      : "d",
+//            std::string(args->message));
+//    });
 }
 
 } // namespace

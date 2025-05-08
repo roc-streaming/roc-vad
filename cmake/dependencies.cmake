@@ -128,7 +128,7 @@ list(PREPEND CMAKE_PREFIX_PATH
 # gRPC
 ExternalProject_Add(grpc_lib
   GIT_REPOSITORY "https://github.com/grpc/grpc.git"
-  GIT_TAG "v1.63.0"
+  GIT_TAG "v1.72.0"
   GIT_SHALLOW ON
   GIT_PROGRESS ON
   UPDATE_DISCONNECTED ON

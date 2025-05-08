@@ -193,6 +193,27 @@ DeviceEndpointInfo DeviceManager::connect_device(const std::string& uid,
     return info;
 }
 
+void DeviceManager::unlink_device(index_t index, roc_slot slot)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(index);
+    device->unlink(slot);
+
+    save_devices_();
+
+}
+
+void DeviceManager::unlink_device(const std::string& uid, roc_slot slot)
+{
+    std::lock_guard lock(mutex_);
+
+    auto device = find_device_(uid);
+    device->unlink(slot);
+
+    save_devices_();
+}
+
 std::shared_ptr<Device> DeviceManager::find_device_(index_t index)
 {
     if (!device_by_index_.count(index)) {

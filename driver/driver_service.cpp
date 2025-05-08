@@ -169,6 +169,20 @@ grpc::Status DriverService::connect(grpc::ServerContext* context,
     });
 }
 
+grpc::Status DriverService::unlink(grpc::ServerContext* context,
+    const rvpb::RvUnlinkRequest* request,
+    rvpb::RvNone* response)
+{
+    return execute_command_("unlink", [=]() {
+        int slot = request->has_slot() ? request->slot() : 0;
+        if (request->device().has_index()) {
+            device_manager_->unlink_device(request->device().index(), slot);
+        } else {
+            device_manager_->unlink_device(request->device().uid(), slot);
+        }
+    });
+}
+
 grpc::Status DriverService::execute_command_(const char* name, std::function<void()> func)
 {
     spdlog::debug("running {} command", name);

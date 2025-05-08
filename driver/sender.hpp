@@ -25,6 +25,7 @@ public:
 
     void bind(DeviceEndpointInfo& endpoint_info) override;
     void connect(DeviceEndpointInfo& endpoint_info) override;
+    void unlink(roc_slot slot) override;
 
     void pause() noexcept override;
     void resume() noexcept override;

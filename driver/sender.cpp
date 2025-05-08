@@ -26,6 +26,11 @@ Sender::Sender(const std::string& device_uid,
     roc_context_config net_context_config;
     memset(&net_context_config, 0, sizeof(net_context_config));
 
+    if (device_encoding.channel_layout == ROC_CHANNEL_LAYOUT_MULTITRACK && device_encoding.channel_count > 4) {
+        net_context_config.max_packet_size = device_encoding.channel_count * 512;
+        net_context_config.max_frame_size = device_encoding.channel_count * 1024;
+    }
+
     if ((err = roc_context_open(&net_context_config, &net_context_)) < 0) {
         throw std::runtime_error(
             fmt::format("can't open network context: uid={} err={}", device_uid_, err));
@@ -135,6 +140,18 @@ void Sender::connect(DeviceEndpointInfo& endpoint_info)
             device_uid_,
             err);
     }
+}
+
+void Sender::unlink(roc_slot slot)
+{
+    int err = 0;
+
+    if ((err = roc_sender_unlink(net_sender_, slot)) < 0) {
+        throw std::invalid_argument(fmt::format("invalid endpoint: uid={} err={}",
+            device_uid_,
+            err));
+    }
+
 }
 
 void Sender::pause() noexcept
